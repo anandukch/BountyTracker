@@ -1,8 +1,18 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, ValidateNested } from "class-validator";
+import {
+    IsEmail,
+    IsEnum,
+    IsNotEmpty,
+    IsNumber,
+    IsOptional,
+    IsString,
+    ValidateNested,
+} from "class-validator";
 import { Type } from "class-transformer";
 import "reflect-metadata";
 import { Role } from "../utils/role.enum";
 import Employee from "../entity/employee.entity";
+
+export class CreateEmployeeDto {}
 
 export class EmployeeResposneDto {
     password: string;
