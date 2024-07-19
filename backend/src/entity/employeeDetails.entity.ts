@@ -1,7 +1,8 @@
-import { Column, JoinColumn, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 import AbstractEntity from "./abstract.entity";
 import Employee from "./employee.entity";
 
+@Entity()
 class EmployeeDetails extends AbstractEntity {
     @OneToOne(() => Employee, (employee) => employee.details)
     @JoinColumn()

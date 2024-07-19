@@ -29,7 +29,7 @@ class Employee extends AbstractEntity {
 
     @OneToOne(
         () => EmployeeDetails,
-        (employeeDetails) => employeeDetails.employee
+        (employeeDetails: EmployeeDetails) => employeeDetails.employee
     )
     details: EmployeeDetails;
 
