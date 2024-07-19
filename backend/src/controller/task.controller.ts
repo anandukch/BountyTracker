@@ -8,7 +8,7 @@ class TaskController {
         this.router = Router();
         this.router.get("/", this.getAllTasks);
         this.router.get("/:id", this.getTaskById);
-        this.router.post("/",this.createTask)
+        this.router.post("/", this.createTask);
     }
 
     public getAllTasks = async (req: RequestWithRole, res: Response, next: NextFunction) => {
@@ -40,8 +40,10 @@ class TaskController {
 
     public createTask = async (req: RequestWithRole, res: Response, next: NextFunction) => {
         try {
-            const { id } = req.params;
-            const tasks = await this.taskService.getTaskById(parseInt(id));
+            const task = req.body;
+            console.log(task);
+            
+            const tasks = await this.taskService.createTask(task);
             res.status(200).json({
                 success: true,
                 message: "Tasks fetched successfully",

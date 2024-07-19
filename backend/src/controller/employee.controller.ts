@@ -11,7 +11,6 @@ class EmployeeController {
     public router: Router;
     constructor(private employeeService: EmployeeService) {
         this.router = Router();
-
         this.router.get("/", this.getAllEmployees);
         this.router.get("/:id", this.getEmployeeByID);
         this.router.get("/tasks", this.getEmployeeAssignedTasks);

@@ -18,6 +18,6 @@ export class CreateTaskDto {
     maxParticipants: number;
 
     @IsNotEmpty()
-    @IsDate()
+    @IsString()
     deadLine: Date;
 }
