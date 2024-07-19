@@ -1,0 +1,7 @@
+node_modules
+dist
+.env
+local.env
+postgres
+docker-compose2.yml
+docker.env

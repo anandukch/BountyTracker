@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  server:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    container_name: bounty-backend
+    env_file:
+      - local.env
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - postgres
+    ports:
+      - "3000:3000"
+    networks:
+      - bounty-network
+  postgres:
+    container_name: postgres-bounty
+    image: postgres
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: bounty
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    ports:
+      - "5435:5432"
+    networks:
+      - bounty-network
+      
+networks:
+  bounty-network:
+    driver: bridge
