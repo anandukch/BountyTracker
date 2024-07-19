@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from "express";
 import EmployeeService from "../service/employee.service";
 import { RequestWithRole } from "../utils/requestWithRole";
-
+import authorize from "../middleware/authorize.middleware";
 class EmployeeController {
     public router: Router;
     constructor(private employeeService: EmployeeService) {
