@@ -14,7 +14,7 @@ class Task extends AbstractEntity {
     status: string;
 
     @ManyToOne(() => Employee, (employee) => employee.tasks)
-    createBy: number;
+    createdBy: Employee;
 }
 
 export default Task;

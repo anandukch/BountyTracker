@@ -23,7 +23,7 @@ class Employee extends AbstractEntity {
     @OneToOne()
     details: EmployeeDetails;
 
-    @OneToMany(() => Task, (task: Task) => task.employee)
+    @OneToMany(() => Task, (task) => task.createdBy)
     tasks: Task[];
 }
 
