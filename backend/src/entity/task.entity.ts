@@ -15,6 +15,12 @@ class Task extends AbstractEntity {
 
     @ManyToOne(() => Employee, (employee) => employee.tasks)
     createdBy: Employee;
+
+    @Column()
+    maxParticipants: number;
+
+    @Column()
+    totalBounty: number;
 }
 
 export default Task;
