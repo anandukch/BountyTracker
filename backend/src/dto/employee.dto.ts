@@ -3,36 +3,31 @@ import "reflect-metadata";
 import { Role } from "../utils/role.enum";
 import Employee from "../entity/employee.entity";
 import { EmployeeDetailsDto } from "./employeeDetails.dto";
+import { IsEmail, IsEnum, IsNotEmpty, IsString, ValidateNested } from "class-validator";
 
 export class CreateEmployeeDto {
     @IsNotEmpty()
     @IsString()
-    name: string
+    name: string;
 
     @IsEmail()
     @IsNotEmpty()
     @IsString()
-    email:string
+    email: string;
 
     @IsNotEmpty()
     @IsString()
-    password:string
+    password: string;
 
     @IsNotEmpty()
     @IsString()
     @IsEnum(Role)
-    role:Role
-    
+    role: Role;
+
     @IsNotEmpty()
-    @ValidateNested({each:true})
-    @Type(()=> EmployeeDetailsDto)
-    details:EmployeeDetailsDto
-
-    
-
-
-
-
+    @ValidateNested({ each: true })
+    @Type(() => EmployeeDetailsDto)
+    details: EmployeeDetailsDto;
 }
 
 export class EmployeeResposneDto {
