@@ -1,6 +1,8 @@
 import { Column, Entity, ManyToOne, OneToMany, OneToOne } from "typeorm";
 import AbstractEntity from "./abstract.entity";
 import { Role } from "../utils/role.enum";
+import EmployeeDetails from "./employeeDetails.entity";
+import Task from "./task.entity";
 
 @Entity()
 class Employee extends AbstractEntity {
@@ -13,13 +15,16 @@ class Employee extends AbstractEntity {
     email: string;
 
     @Column()
-    age: number;
+    password: string;
 
     @Column()
     role: Role;
 
-    @Column()
-    totalBounty: number;
+    @OneToOne()
+    details: EmployeeDetails;
+
+    @OneToMany(() => Task, (task: Task) => task.employee)
+    tasks: Task[];
 }
 
 export default Employee;
