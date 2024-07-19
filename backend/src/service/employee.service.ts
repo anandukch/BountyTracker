@@ -6,7 +6,7 @@ import IncorrectPasswordException from "../exceptions/incorrectPasswordException
 import EmployeeRepository from "../repository/employee.repository";
 import { jwtPayload } from "../utils/jwtPayload.type";
 import TaskService from "./task.service";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import jsonwebtoken from "jsonwebtoken";
 import { JWT_SECRET, JWT_VALIDITY } from "../utils/constants";
 import EmployeeDetails from "../entity/employeeDetails.entity";
@@ -48,17 +48,17 @@ class EmployeeService {
         const employee = new Employee();
         employee.name = employeeDto.name;
         employee.email = employeeDto.email;
-        employee.password = employeeDto.password;
+        employee.password = await bcrypt.hash(employeeDto.password, 10);
         employee.role = employeeDto.role;
 
         const newEmployeeDetails = new EmployeeDetails();
         newEmployeeDetails.gender = employeeDto.details.gender;
-        newEmployeeDetails.birthday = employeeDto.details.birthday;
+        newEmployeeDetails.birthday = new Date(employeeDto.details.birthday);
         newEmployeeDetails.phoneNo = employeeDto.details.phoneNo;
         newEmployeeDetails.totalBounty = employeeDto.details.totalBounty;
         employee.details = newEmployeeDetails;
-        // TODO
-        return;
+        await this.employeeRespository.save(employee);
+        return employee;
     };
 }
 

@@ -16,13 +16,9 @@ class EmployeeController {
         this.router.get("/tasks", this.getEmployeeAssignedTasks);
         this.router.post("/login", this.loginEmployee);
         this.router.post("/", this.createEmployee);
-    }
+    }2
 
-    public getAllEmployees = async (
-        req: RequestWithRole,
-        res: Response,
-        next: NextFunction
-    ) => {
+    public getAllEmployees = async (req: RequestWithRole, res: Response, next: NextFunction) => {
         try {
             const employees = await this.employeeService.getAllEmployees();
             res.status(200).send(employees);
@@ -31,43 +27,26 @@ class EmployeeController {
         }
     };
 
-    public getEmployeeByID = async (
-        req: RequestWithRole,
-        res: Response,
-        next: NextFunction
-    ) => {
+    public getEmployeeByID = async (req: RequestWithRole, res: Response, next: NextFunction) => {
         try {
             const employeeID = parseInt(req.params.id);
             if (!employeeID) {
-                throw new HttpException(
-                    400,
-                    "Employee ID should be an integer!"
-                );
+                throw new HttpException(400, "Employee ID should be an integer!");
             }
-            const employee = await this.employeeService.getEmployeeByID(
-                employeeID
-            );
+            const employee = await this.employeeService.getEmployeeByID(employeeID);
 
             res.status(200).send(employee);
         } catch (error) {
             next(error);
         }
     };
-    public getEmployeeAssignedTasks = async (
-        req: RequestWithRole,
-        res: Response,
-        next: NextFunction
-    ) => {
+    public getEmployeeAssignedTasks = async (req: RequestWithRole, res: Response, next: NextFunction) => {
         try {
             const employeeID = parseInt(req.params.id);
             if (!employeeID) {
-                throw new HttpException(
-                    400,
-                    "Employee ID should be an integer!"
-                );
+                throw new HttpException(400, "Employee ID should be an integer!");
             }
-            const employeeAssignedTasks =
-                this.employeeService.getEmployeeTasksByID(employeeID);
+            const employeeAssignedTasks = this.employeeService.getEmployeeTasksByID(employeeID);
 
             res.status(200).send(employeeAssignedTasks);
         } catch (error) {
@@ -75,11 +54,7 @@ class EmployeeController {
         }
     };
 
-    public loginEmployee = async (
-        req: RequestWithRole,
-        res: Response,
-        next: NextFunction
-    ) => {
+    public loginEmployee = async (req: RequestWithRole, res: Response, next: NextFunction) => {
         try {
             const { email, password } = req.body;
             if (!email || !password) {
@@ -92,28 +67,19 @@ class EmployeeController {
         }
     };
 
-    public createEmployee = async (
-        req: RequestWithRole,
-        res: Response,
-        next: NextFunction
-    ) => {
+    public createEmployee = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            if (req.role > Role.LEAD) {
-                throw new HttpException(403, "Access Denied");
-            }
+            // if (req.role > Role.LEAD) {
+            //     throw new HttpException(403, "Access Denied");
+            // }
             const employeeDto = plainToInstance(CreateEmployeeDto, req.body);
             const errors = await validate(employeeDto);
-            const validationErrorConstraints =
-                getValidationErrorConstraints(errors);
-            if (validationErrorConstraints) {
-                throw new HttpException(
-                    403,
-                    "Validation Error",
-                    validationErrorConstraints
-                );
+            // const validationErrorConstraints = getValidationErrorConstraints(errors);
+            if (errors.length > 0) {
+                
+                throw new HttpException(403, "Validation Error", errors);
             }
-            const createdEmployee =
-                this.employeeService.createEmployee(employeeDto);
+            const createdEmployee = this.employeeService.createEmployee(employeeDto);
 
             res.status(201).send(createdEmployee);
         } catch (error) {

@@ -19,11 +19,18 @@ class Task extends AbstractEntity {
     @Column()
     maxParticipants: number;
 
+    @Column({
+        nullable: true,
+        default: 0,
+    })
+    currentParticipants: number;
+
     @Column()
     totalBounty: number;
 
     @Column()
     deadLine: Date;
+
 }
 
 export default Task;

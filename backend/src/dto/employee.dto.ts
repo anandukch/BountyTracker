@@ -20,7 +20,6 @@ export class CreateEmployeeDto {
     password: string;
 
     @IsNotEmpty()
-    @IsString()
     @IsEnum(Role)
     role: Role;
 

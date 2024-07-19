@@ -6,8 +6,8 @@ export class EmployeeDetailsDto{
     gender:string;
 
     @IsNotEmpty()
-    @IsDate()
-    birthday:Date;
+    @IsString()
+    birthday:string;
 
     @IsNotEmpty()
     @IsString()
