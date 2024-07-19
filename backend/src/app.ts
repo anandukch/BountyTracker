@@ -7,11 +7,13 @@ import { loggerMiddleWare } from "./middleware/logger.middleware";
 import dataSource from "./db/dataSource.db";
 import errorMiddleware from "./middleware/error.middleware";
 import cors from "cors";
+import employeeRouter from "./routes/employee.routes";
 
 const server = express();
 server.use(bodyParser.json());
-server.use(cors())
+server.use(cors());
 server.use(loggerMiddleWare);
+server.use("/employees", employeeRouter);
 
 server.get("/", (req: Request, res: Response) => {
     res.status(200).send("Hello world");
