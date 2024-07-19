@@ -10,9 +10,6 @@ import AbstractEntity from "./abstract.entity";
 import { Role } from "../utils/role.enum";
 import EmployeeDetails from "./employeeDetails.entity";
 import Task from "./task.entity";
-import { Role } from "../utils/role.enum";
-import EmployeeDetails from "./employeeDetails.entity";
-import Task from "./task.entity";
 
 @Entity()
 class Employee extends AbstractEntity {
