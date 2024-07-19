@@ -1,4 +1,5 @@
 import { CreateEmployeeDto } from "../dto/employee.dto";
+import { CreateEmployeeDto } from "../dto/employee.dto";
 import Employee from "../entity/employee.entity";
 import Task from "../entity/task.entity";
 import EntityNotFoundException from "../exceptions/entityNotFoundException";
@@ -15,7 +16,17 @@ class EmployeeService {
         private employeeRespository: EmployeeRepository,
         taskService: TaskService
     ) {}
+    constructor(
+        private employeeRespository: EmployeeRepository,
+        taskService: TaskService
+    ) {}
 
+    // getMe = async (name: string, email: string): Promise<Employee> => {
+    //     return this.employeeRespository.findOneBy({
+    //         name,
+    //         email,
+    //     });
+    // };
     // getMe = async (name: string, email: string): Promise<Employee> => {
     //     return this.employeeRespository.findOneBy({
     //         name,

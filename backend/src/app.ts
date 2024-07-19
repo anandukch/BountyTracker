@@ -13,6 +13,7 @@ import taskRouter from "./routes/task.routes";
 const server = express();
 server.use(bodyParser.json());
 server.use(cors());
+
 server.use(loggerMiddleWare);
 server.use("/employees", employeeRouter);
 server.use("/tasks", taskRouter);
