@@ -1,12 +1,3 @@
-import {
-    IsEmail,
-    IsEnum,
-    IsNotEmpty,
-    IsNumber,
-    IsOptional,
-    IsString,
-    ValidateNested,
-} from "class-validator";
 import { Type } from "class-transformer";
 import "reflect-metadata";
 import { Role } from "../utils/role.enum";

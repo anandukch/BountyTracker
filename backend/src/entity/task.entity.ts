@@ -21,6 +21,9 @@ class Task extends AbstractEntity {
 
     @Column()
     totalBounty: number;
+
+    @Column()
+    deadLine: Date;
 }
 
 export default Task;
