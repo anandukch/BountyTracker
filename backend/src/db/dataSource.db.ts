@@ -1,8 +1,8 @@
 import "reflect-metadata";
-import { DataSource } from "typeorm";
-import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { NODE_ENV } from "../utils/constants";
 import { config } from "dotenv";
+import { DataSource } from "typeorm";
+import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 config();
 
 const dataSource = new DataSource({

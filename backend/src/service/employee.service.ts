@@ -2,9 +2,13 @@ import { CreateEmployeeDto } from "../dto/employee.dto";
 import Employee from "../entity/employee.entity";
 import Task from "../entity/task.entity";
 import EmployeeRepository from "../repository/employee.repository";
+import TaskService from "./task.service";
 
 class EmployeeService {
-    constructor(private employeeRespository: EmployeeRepository) {}
+    constructor(
+        private employeeRespository: EmployeeRepository,
+        taskService: TaskService
+    ) {}
 
     // getMe = async (name: string, email: string): Promise<Employee> => {
     //     return this.employeeRespository.findOneBy({
