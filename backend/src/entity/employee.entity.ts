@@ -1,4 +1,11 @@
-import { Column, Entity, ManyToOne, OneToMany, OneToOne } from "typeorm";
+import {
+    Column,
+    Entity,
+    JoinColumn,
+    ManyToOne,
+    OneToMany,
+    OneToOne,
+} from "typeorm";
 import AbstractEntity from "./abstract.entity";
 import { Role } from "../utils/role.enum";
 import EmployeeDetails from "./employeeDetails.entity";
@@ -20,7 +27,10 @@ class Employee extends AbstractEntity {
     @Column()
     role: Role;
 
-    @OneToOne()
+    @OneToOne(
+        () => EmployeeDetails,
+        (employeeDetails) => employeeDetails.employee
+    )
     details: EmployeeDetails;
 
     @OneToMany(() => Task, (task) => task.createdBy)
