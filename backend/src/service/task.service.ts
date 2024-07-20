@@ -16,7 +16,6 @@ class TaskService {
 
 	createTask = async (task: CreateTaskDto,user:Employee) => {
 		let newTask = new Task();
-		
 		newTask.title = task.title;
 		newTask.description = task.description;
 		// newTask.status = task.status;
@@ -29,6 +28,10 @@ class TaskService {
 
 		await this.taskRepository.save(newTask);
 	};
+
+	updateTask = async (id: number, task: Partial<Task>) => {
+		return this.taskRepository.update(id, task);
+	}
 }
 
 export default TaskService;
