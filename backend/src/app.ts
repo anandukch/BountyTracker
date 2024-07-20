@@ -19,19 +19,19 @@ server.use("/employees", employeeRouter);
 server.use("/tasks", taskRouter);
 
 server.get("/", (req: Request, res: Response) => {
-    res.status(200).send("Hello world");
+	res.status(200).send("Hello world");
 });
 
 server.use(errorMiddleware);
 
 (async () => {
-    try {
-        await dataSource.initialize();
-    } catch (e) {
-        console.log("Failed", e);
-        process.exit(1);
-    }
-    server.listen(3000, () => {
-        console.log("server listening to 3000");
-    });
+	try {
+		await dataSource.initialize();
+	} catch (e) {
+		console.log("Failed", e);
+		process.exit(1);
+	}
+	server.listen(3000, () => {
+		console.log("server listening to 3000");
+	});
 })();

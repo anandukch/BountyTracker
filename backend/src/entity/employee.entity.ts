@@ -7,31 +7,31 @@ import TaskParticipants from "./taskParticipants.entity";
 
 @Entity()
 class Employee extends AbstractEntity {
-    @Column()
-    name: string;
+	@Column()
+	name: string;
 
-    @Column({
-        unique: true,
-    })
-    @Column({
-        unique: true,
-    })
-    email: string;
+	@Column({
+		unique: true,
+	})
+	@Column({
+		unique: true,
+	})
+	email: string;
 
-    @Column()
-    password: string;
+	@Column()
+	password: string;
 
-    @Column()
-    role: Role;
+	@Column()
+	role: Role;
 
-    @OneToOne(() => EmployeeDetails, (employeeDetails: EmployeeDetails) => employeeDetails.employee)
-    details: EmployeeDetails;
+	@OneToOne(() => EmployeeDetails, (employeeDetails: EmployeeDetails) => employeeDetails.employee)
+	details: EmployeeDetails;
 
-    @OneToMany(() => Task, (task) => task.createdBy)
-    tasks: Task[];
+	@OneToMany(() => Task, (task) => task.createdBy)
+	tasks: Task[];
 
-    @OneToMany(() => TaskParticipants, (taskParticipants) => taskParticipants.employee)
-    participatingTasks: TaskParticipants[];
+	@OneToMany(() => TaskParticipants, (taskParticipants) => taskParticipants.employee)
+	participatingTasks: TaskParticipants[];
 }
 
 export default Employee;

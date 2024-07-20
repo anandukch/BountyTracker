@@ -5,14 +5,14 @@ import Employee from "./employee.entity";
 
 @Entity()
 class TaskParticipants extends AbstractEntity {
-    @ManyToOne(() => Task, (task) => task.participants)
-    task: Task;
+	@ManyToOne(() => Task, (task) => task.participants)
+	task: Task;
 
-    @ManyToOne(() => Employee, (employee) => employee.participatingTasks)
-    employee: Employee;
+	@ManyToOne(() => Employee, (employee) => employee.participatingTasks)
+	employee: Employee;
 
-    @Column()
-    contribution: number;
+	@Column()
+	contribution: number;
 }
 
 export default TaskParticipants;

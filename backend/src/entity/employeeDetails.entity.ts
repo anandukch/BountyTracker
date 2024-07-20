@@ -4,21 +4,21 @@ import Employee from "./employee.entity";
 
 @Entity()
 class EmployeeDetails extends AbstractEntity {
-    @OneToOne(() => Employee, (employee) => employee.details)
-    @JoinColumn()
-    employee: Employee;
+	@OneToOne(() => Employee, (employee) => employee.details)
+	@JoinColumn()
+	employee: Employee;
 
-    @Column()
-    gender: string;
+	@Column()
+	gender: string;
 
-    @Column()
-    birthday: Date;
+	@Column()
+	birthday: Date;
 
-    @Column()
-    phoneNo: string;
+	@Column()
+	phoneNo: string;
 
-    @Column()
-    totalBounty: number;
+	@Column()
+	totalBounty: number;
 }
 
 export default EmployeeDetails;

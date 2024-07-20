@@ -5,35 +5,35 @@ import TaskParticipants from "./taskParticipants.entity";
 
 @Entity()
 class Task extends AbstractEntity {
-    @Column()
-    title: string;
+	@Column()
+	title: string;
 
-    @Column()
-    description: string;
+	@Column()
+	description: string;
 
-    @Column()
-    status: string;
+	@Column()
+	status: string;
 
-    @ManyToOne(() => Employee, (employee) => employee.tasks)
-    createdBy: Employee;
+	@ManyToOne(() => Employee, (employee) => employee.tasks)
+	createdBy: Employee;
 
-    @Column()
-    maxParticipants: number;
+	@Column()
+	maxParticipants: number;
 
-    @Column({
-        nullable: true,
-        default: 0,
-    })
-    currentParticipants: number;
+	@Column({
+		nullable: true,
+		default: 0,
+	})
+	currentParticipants: number;
 
-    @Column()
-    totalBounty: number;
+	@Column()
+	totalBounty: number;
 
-    @Column()
-    deadLine: Date;
+	@Column()
+	deadLine: Date;
 
-    @OneToMany(() => TaskParticipants, (taskParticipants) => taskParticipants.task)
-    participants: TaskParticipants[];
+	@OneToMany(() => TaskParticipants, (taskParticipants) => taskParticipants.task)
+	participants: TaskParticipants[];
 }
 
 export default Task;

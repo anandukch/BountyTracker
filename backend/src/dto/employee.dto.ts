@@ -6,34 +6,34 @@ import { EmployeeDetailsDto } from "./employeeDetails.dto";
 import { IsEmail, IsEnum, IsNotEmpty, IsString, ValidateNested } from "class-validator";
 
 export class CreateEmployeeDto {
-    @IsNotEmpty()
-    @IsString()
-    name: string;
+	@IsNotEmpty()
+	@IsString()
+	name: string;
 
-    @IsEmail()
-    @IsNotEmpty()
-    @IsString()
-    email: string;
+	@IsEmail()
+	@IsNotEmpty()
+	@IsString()
+	email: string;
 
-    @IsNotEmpty()
-    @IsString()
-    password: string;
+	@IsNotEmpty()
+	@IsString()
+	password: string;
 
-    @IsNotEmpty()
-    @IsEnum(Role)
-    role: Role;
+	@IsNotEmpty()
+	@IsEnum(Role)
+	role: Role;
 
-    @IsNotEmpty()
-    @ValidateNested({ each: true })
-    @Type(() => EmployeeDetailsDto)
-    details: EmployeeDetailsDto;
+	@IsNotEmpty()
+	@ValidateNested({ each: true })
+	@Type(() => EmployeeDetailsDto)
+	details: EmployeeDetailsDto;
 }
 
 export class EmployeeResposneDto {
-    password: string;
+	password: string;
 
-    public constructor(employee: Employee) {
-        Object.assign(this, employee);
-        delete this.password;
-    }
+	public constructor(employee: Employee) {
+		Object.assign(this, employee);
+		delete this.password;
+	}
 }

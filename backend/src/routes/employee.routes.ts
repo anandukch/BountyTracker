@@ -8,10 +8,10 @@ import EmployeeService from "../service/employee.service";
 import TaskService from "../service/task.service";
 
 const employeeController = new EmployeeController(
-    new EmployeeService(
-        new EmployeeRepository(dataSource.getRepository(Employee)),
-        new TaskService(new TaskRepository(dataSource.getRepository(Task)))
-    )
+	new EmployeeService(
+		new EmployeeRepository(dataSource.getRepository(Employee)),
+		new TaskService(new TaskRepository(dataSource.getRepository(Task)))
+	)
 );
 const employeeRouter = employeeController.router;
 
