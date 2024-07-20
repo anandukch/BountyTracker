@@ -40,7 +40,9 @@ class EmployeeService {
             email: employee.email,
             role: employee.role,
         };
-        const token = jsonwebtoken.sign(payload, JWT_SECRET, { expiresIn: JWT_VALIDITY });
+        const token = jsonwebtoken.sign(payload, JWT_SECRET, {
+            expiresIn: JWT_VALIDITY,
+        });
         return;
     };
 

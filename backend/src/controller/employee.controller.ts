@@ -16,7 +16,7 @@ class EmployeeController {
         this.router.get("/tasks", this.getEmployeeAssignedTasks);
         this.router.post("/login", this.loginEmployee);
         this.router.post("/", this.createEmployee);
-    }2
+    }
 
     public getAllEmployees = async (req: RequestWithRole, res: Response, next: NextFunction) => {
         try {
@@ -76,7 +76,6 @@ class EmployeeController {
             const errors = await validate(employeeDto);
             // const validationErrorConstraints = getValidationErrorConstraints(errors);
             if (errors.length > 0) {
-                
                 throw new HttpException(403, "Validation Error", errors);
             }
             const createdEmployee = this.employeeService.createEmployee(employeeDto);

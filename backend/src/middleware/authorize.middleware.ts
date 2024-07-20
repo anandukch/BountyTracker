@@ -4,11 +4,7 @@ import jsonwebtoken from "jsonwebtoken";
 import { JWT_SECRET } from "../utils/constants";
 import { jwtPayload } from "../utils/jwtPayload.type";
 import HttpException from "../exceptions/http.exceptions";
-const authorize = async (
-    req: RequestWithRole,
-    res: Response,
-    next: NextFunction
-) => {
+const authorize = async (req: RequestWithRole, res: Response, next: NextFunction) => {
     try {
         const token = getTokenFromRequestHeader(req);
         if (!token) {

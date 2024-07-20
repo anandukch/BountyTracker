@@ -1,20 +1,19 @@
 import { IsDate, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
-export class EmployeeDetailsDto{
+export class EmployeeDetailsDto {
     @IsNotEmpty()
     @IsString()
-    gender:string;
+    gender: string;
 
     @IsNotEmpty()
     @IsString()
-    birthday:string;
+    birthday: string;
 
     @IsNotEmpty()
     @IsString()
-    phoneNo:string;
+    phoneNo: string;
 
     @IsNotEmpty()
     @IsNumber()
-    totalBounty:number;
-
+    totalBounty: number;
 }

@@ -42,7 +42,7 @@ class TaskController {
         try {
             const task = req.body;
             console.log(task);
-            
+
             const tasks = await this.taskService.createTask(task);
             res.status(200).json({
                 success: true,

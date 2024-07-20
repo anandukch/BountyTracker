@@ -1,8 +1,8 @@
-class EntityNotFoundException extends Error{
-    public status:number;
-    constructor(status:number,message:string){
+class EntityNotFoundException extends Error {
+    public status: number;
+    constructor(status: number, message: string) {
         super(message);
-        this.status=status;
+        this.status = status;
     }
 }
-export default EntityNotFoundException
+export default EntityNotFoundException;

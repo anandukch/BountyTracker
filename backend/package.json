@@ -11,7 +11,8 @@
         "migration:generate": "npm run build && npx typeorm migration:generate -d dist/db/dataSource.db.js",
         "migration:run": "npm run build && npx typeorm migration:run -d dist/db/dataSource.db.js",
         "migration:revert": "npm run build && npx typeorm migration:revert -d dist/db/dataSource.db.js",
-        "dev": "cross-env NODE_ENV=dev nodemon --exec ts-node src/app.ts"
+        "dev": "cross-env NODE_ENV=dev nodemon --exec ts-node src/app.ts",
+        "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\""
     },
     "keywords": [],
     "author": "",
@@ -46,7 +47,8 @@
         "jest-when": "^3.6.0",
         "nodemon": "^3.1.4",
         "ts-node": "^10.9.2",
-        "typescript": "^5.5.3"
+        "typescript": "^5.5.3",
+        "prettier": "^2.5.1"
     },
     "jest": {
         "transform": {

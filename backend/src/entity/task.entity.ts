@@ -34,7 +34,6 @@ class Task extends AbstractEntity {
 
     @OneToMany(() => TaskParticipants, (taskParticipants) => taskParticipants.task)
     participants: TaskParticipants[];
-
 }
 
 export default Task;
