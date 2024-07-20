@@ -12,11 +12,12 @@ class EmployeeController {
 	public router: Router;
 	constructor(private employeeService: EmployeeService) {
 		this.router = Router();
-		this.router.get("/",authorize, this.getAllEmployees);
+		this.router.get("/", authorize, this.getAllEmployees);
 		this.router.get("/:id", this.getEmployeeByID);
 		this.router.get("/tasks", this.getEmployeeAssignedTasks);
 		this.router.post("/login", this.loginEmployee);
 		this.router.post("/", this.createEmployee);
+		this.router.post("/tasks/:id", authorize, this.joinTask);
 	}
 
 	public getAllEmployees = async (req: RequestWithRole, res: Response, next: NextFunction) => {
@@ -82,6 +83,25 @@ class EmployeeController {
 			const createdEmployee = this.employeeService.createEmployee(employeeDto);
 
 			res.status(201).send(createdEmployee);
+		} catch (error) {
+			next(error);
+		}
+	};
+
+	public joinTask = async (req: RequestWithRole, res: Response, next: NextFunction) => {
+		try {
+			const taskId = parseInt(req.params.id);
+			if (!taskId) {
+				throw new HttpException(400, "Task ID should be an integer!");
+			}
+
+			const employee = req.user;
+			await this.employeeService.joinTask(taskId, employee);
+
+			res.status(201).json({
+				success: true,
+				message: "Task joined successfully",
+			});
 		} catch (error) {
 			next(error);
 		}

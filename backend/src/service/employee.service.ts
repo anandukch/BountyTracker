@@ -10,8 +10,13 @@ import bcrypt from "bcryptjs";
 import jsonwebtoken from "jsonwebtoken";
 import { JWT_SECRET, JWT_VALIDITY } from "../utils/constants";
 import EmployeeDetails from "../entity/employeeDetails.entity";
+import TaskParticipantService from "./taskParticipant.service";
 class EmployeeService {
-	constructor(private employeeRespository: EmployeeRepository, taskService: TaskService) {}
+	constructor(
+		private employeeRespository: EmployeeRepository,
+		private taskService: TaskService,
+		private taskParticipantService: TaskParticipantService
+	) {}
 
 	getAllEmployees = async (): Promise<Employee[]> => {
 		return this.employeeRespository.find();
@@ -19,7 +24,7 @@ class EmployeeService {
 
 	getEmployeeByEmail = async (email: string): Promise<Employee> => {
 		return this.employeeRespository.findOneBy({ email });
-	}
+	};
 	getEmployeeByID = async (employeeID: number): Promise<Employee> => {
 		return this.employeeRespository.findOneBy({ id: employeeID });
 	};
@@ -46,8 +51,8 @@ class EmployeeService {
 		const token = jsonwebtoken.sign(payload, JWT_SECRET, {
 			expiresIn: JWT_VALIDITY,
 		});
-		
-		return token
+
+		return token;
 	};
 
 	createEmployee = async (employeeDto: CreateEmployeeDto): Promise<Employee> => {
@@ -65,6 +70,17 @@ class EmployeeService {
 		employee.details = newEmployeeDetails;
 		await this.employeeRespository.save(employee);
 		return employee;
+	};
+
+	joinTask = async (taskId: number, employee: Employee) => {
+		const task = await this.taskService.getTaskById(taskId);
+		if (!task) {
+			throw new EntityNotFoundException(404, "Task not found");
+		}
+
+		const taskParticipant =  await this.taskParticipantService.create(task, employee);
+		
+		return taskParticipant
 	};
 }
 
