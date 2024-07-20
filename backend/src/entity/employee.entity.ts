@@ -13,9 +13,6 @@ class Employee extends AbstractEntity {
 	@Column({
 		unique: true,
 	})
-	@Column({
-		unique: true,
-	})
 	email: string;
 
 	@Column()
