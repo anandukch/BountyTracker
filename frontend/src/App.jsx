@@ -4,6 +4,7 @@ import CreateTask from "./pages/CreateTask/createTask";
 import Login from "./pages/Login/login";
 import CreateUser from "./pages/CreateUser/createUser";
 import Hero from "./components/Hero/Hero";
+import EmployeeDashboard from "./pages/Dashboard/employeeDashboard";
 
 const App = () => {
     const router = createBrowserRouter([

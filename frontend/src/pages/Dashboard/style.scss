@@ -1,0 +1,98 @@
+.employeeDashboardWrapper {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+
+  .employeeDashboard {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+
+    .employeeDetailsWrapper {
+      border-radius: 20px;
+      display: flex;
+
+      .employeeProfileWrapper {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        width: 20%;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+
+        .employeeProfilePage p,
+        .employeeProfilePage h3 {
+          display: flex;
+          justify-content: center;
+        }
+
+        .taskCountWrapper {
+          display: flex;
+
+          .totalTasksProfile,
+          .pendingTasksProfile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 50%;
+          }
+        }
+
+        // .totalBounty {
+        // }
+      }
+
+      .employeeDetailsGrid {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+        width: 80%;
+        height: 100%;
+        padding-left: 20px;
+      }
+    }
+
+    .employeeTasksWrapper {
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+
+      .taskDataRow {
+        display: grid;
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+      }
+
+      .taskDataColumn {
+        display: flex;
+        align-items: center;
+        padding-left: 10px;
+        // justify-content: center;
+      }
+
+      .taskHeaderWrapper {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .taskBarWrapper {
+        display: flex;
+        padding: 15px;
+        //button design
+      }
+
+      .taskLogWrapper {
+        padding: 5px;
+
+        .taskDetailsWrapper {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+    }
+  }
+}

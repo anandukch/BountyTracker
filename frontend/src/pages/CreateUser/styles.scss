@@ -1,0 +1,68 @@
+.createUser {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   width: 50%;
+   row-gap: 50px;
+   h1 {
+      color: var(--textBlack);
+   }
+   .formComponent {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 30px;
+      row-gap: 30px;
+      .fields {
+         display: flex;
+         flex-direction: column;
+
+         input,
+         select {
+            /* width: 30%; */
+            height: 40px;
+            padding-left: 10px;
+            border-radius: 5px;
+            font-size: small;
+            border: 1px solid var(--borderColor);
+            outline: none;
+            background-color: #fafafa;
+         }
+         input:focus {
+            outline: none;
+            border-color: var(--navBlue);
+            caret-color: var(--navBlue);
+         }
+         label {
+            margin-bottom: 10px;
+            font-size: 15px;
+            color: var(--textBlack);
+         }
+      }
+   }
+   .formButtons {
+      display: flex;
+      flex-direction: row;
+      gap: 30px;
+      .create,
+      .cancel {
+         height: 30px;
+         border-radius: 5px;
+         font-weight: 500;
+         font-size: 14px;
+         width: 100px;
+      }
+      .create {
+         background-color: var(--navBlue);
+         border: var(--navBlue);
+         box-shadow: 0.5px 0.5px 1px var(--textGray);
+         color: var(--bgWhite);
+      }
+      .cancel {
+         background-color: var(--bgWhite);
+         border: 1px solid var(--textGray);
+         box-shadow: 0.5px 0.5px 1px var(--textGray);
+         color: var(--textBlack);
+      }
+   }
+}
