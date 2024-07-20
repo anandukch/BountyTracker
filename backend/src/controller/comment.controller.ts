@@ -1,5 +1,5 @@
 import { NextFunction, Response, Router } from "express";
-import TaskService from "../service/task.service";
+import CommentService from "../service/comment.service";
 import { RequestWithRole } from "../utils/requestWithRole";
 import authorize from "../middleware/authorize.middleware";
 
