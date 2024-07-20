@@ -96,7 +96,11 @@
             border: 1px solid var(--borderColor);
             outline: none;
          }
-
+         input:focus {
+            outline: none;
+            border-color: var(--navBlue);
+            caret-color: var(--navBlue);
+         }
          label {
             margin-bottom: 10px;
             font-size: 15px;

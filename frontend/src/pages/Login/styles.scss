@@ -14,7 +14,9 @@
    align-items: center;
    justify-content: center;
    row-gap: 30px;
-
+   h1 {
+      color: var(--textBlack);
+   }
    form {
       display: flex;
       flex-direction: column;
@@ -26,6 +28,7 @@
          border-radius: 7px;
          border-style: solid;
          border-width: 1px;
+         background-color: #fafafa;
          /* font-size: large; */
       }
 
@@ -35,6 +38,7 @@
          caret-color: var(--navBlue);
       }
       label {
+         color: var(--textBlack);
          margin-bottom: 7px;
          padding-left: 5px;
       }
@@ -55,10 +59,15 @@
    }
    span {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      color: var(--textBlack);
+      gap: 5px;
+
+      .registerLink {
+         font-weight: 600;
+      }
    }
 
-  
    .error_msg {
       height: 10px;
       text-align: right;
@@ -67,5 +76,4 @@
       padding: 5px;
       color: rgb(209, 0, 0);
    }
-
 }

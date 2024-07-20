@@ -7,7 +7,7 @@ const CreateUser = () => {
    const [formData, setFormData] = useState({});
    const form_fields = [
       {
-         name: "Usename",
+         name: "Username",
          id: "name",
          type: "text",
       },
@@ -34,7 +34,7 @@ const CreateUser = () => {
       {
          id: "role",
          name: "Role",
-         values: [{ value: "UX" }, { value: "UI" }, { value: "HR" }, { value: "Developer" }],
+         values: [{ option: "UX" }, { option: "UI" }, { option: "HR" }, { option: "Developer" }],
          Component: Select,
       },
       {
@@ -59,7 +59,7 @@ const CreateUser = () => {
    }, [formData]);
    return (
       <main className="createUser">
-         <div className="title">Register</div>
+         <h1>Register</h1>
          <FormComponent formFields={form_fields} onChange={handleChange} />
          <div className="formButtons">
             <Button text="Create" className="create" />
