@@ -31,6 +31,9 @@ class Task extends AbstractEntity {
 	totalBounty: number;
 
 	@Column()
+	startDate: Date;
+	
+	@Column()
 	deadLine: Date;
 
 	@OneToMany(() => TaskParticipants, (taskParticipants) => taskParticipants.task)

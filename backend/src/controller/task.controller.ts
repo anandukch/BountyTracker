@@ -1,14 +1,15 @@
 import { NextFunction, Response, Router } from "express";
 import TaskService from "../service/task.service";
 import { RequestWithRole } from "../utils/requestWithRole";
+import authorize from "../middleware/authorize.middleware";
 
 class TaskController {
 	public router: Router;
 	constructor(private taskService: TaskService) {
 		this.router = Router();
-		this.router.get("/", this.getAllTasks);
+		this.router.get("/",authorize, this.getAllTasks);
 		this.router.get("/:id", this.getTaskById);
-		this.router.post("/", this.createTask);
+		this.router.post("/", authorize,this.createTask);
 	}
 
 	public getAllTasks = async (req: RequestWithRole, res: Response, next: NextFunction) => {
@@ -46,8 +47,7 @@ class TaskController {
 			const tasks = await this.taskService.createTask(task);
 			res.status(200).json({
 				success: true,
-				message: "Tasks fetched successfully",
-				data: tasks,
+				message: "Tasks created successfully"
 			});
 		} catch (error) {
 			next(error);

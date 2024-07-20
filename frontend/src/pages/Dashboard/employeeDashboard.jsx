@@ -13,13 +13,26 @@ const EmployeeDashboard = () => {
     bounty: "Bounty",
   };
 
+  const employee = {
+    name: "John Doe",
+    tasksPending: "4",
+    tasksTotal: "15",
+    totalBounty: "1400",
+    role: "Fullstack Lead",
+    email: "johndoe@gmail.com",
+    tier: "Gold",
+    birthday: "24/11/2001",
+    gender: "Male",
+    phone: "1234567890",
+  };
+
   const employeeDetails = [
-    { header: "Role", content: "Fullstack Lead" },
-    { header: "Email", content: "username@gmail.com" },
-    { header: "Tier", content: "Gold" },
-    { header: "Address", content: "Ernakulam" },
-    { header: "Pincode", content: "600249" },
-    { header: "Phone", content: "6543672891" },
+    { header: "Role", content: employee.role },
+    { header: "Email", content: employee.email },
+    { header: "Tier", content: employee.tier },
+    { header: "Birthday", content: employee.birthday },
+    { header: "Gender", content: employee.gender },
+    { header: "Phone", content: employee.phone },
   ];
 
   const tasks = [
@@ -75,19 +88,27 @@ const EmployeeDashboard = () => {
           <div className="employeeProfileWrapper">
             <div className="employeeProfilePage">
               <img src={profilImg} />
-              <h3 className="employeeNameText">User Name</h3>
+              <h3 className="employeeNameText">{employee.name}</h3>
+              <h3 className="employeeNameText">{employee.name}</h3>
               <div className="taskCountWrapper">
                 <div className="totalTasksProfile">
-                  <h4>15</h4>
+                  <h4>{employee.tasksTotal}</h4>
+                  <h4>{employee.tasksTotal}</h4>
                   <p>Total</p>
                 </div>
                 <div className="pendingTasksProfile">
-                  <h4>4</h4>
+                  <h4>{employee.tasksPending}</h4>
+                  <h4>{employee.tasksPending}</h4>
                   <p>Pending</p>
                 </div>
               </div>
               <p className="totalBounty">
-                KoYns : <span className="bountyValue">230 </span> Kyns
+                KoYns :{" "}
+                <span className="bountyValue">{employee.totalBounty} </span>{" "}
+                Kyns
+                KoYns :{" "}
+                <span className="bountyValue">{employee.totalBounty} </span>{" "}
+                Kyns
               </p>
             </div>
           </div>

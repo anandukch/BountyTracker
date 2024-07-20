@@ -19,5 +19,9 @@ export class CreateTaskDto {
 
 	@IsNotEmpty()
 	@IsString()
+	startDate: Date;
+
+	@IsNotEmpty()
+	@IsString()
 	deadLine: Date;
 }

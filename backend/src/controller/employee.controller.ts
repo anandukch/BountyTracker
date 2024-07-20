@@ -7,11 +7,12 @@ import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
 import { CreateEmployeeDto } from "../dto/employee.dto";
 import getValidationErrorConstraints from "../utils/validationErrorConstraints";
+import authorize from "../middleware/authorize.middleware";
 class EmployeeController {
 	public router: Router;
 	constructor(private employeeService: EmployeeService) {
 		this.router = Router();
-		this.router.get("/", this.getAllEmployees);
+		this.router.get("/",authorize, this.getAllEmployees);
 		this.router.get("/:id", this.getEmployeeByID);
 		this.router.get("/tasks", this.getEmployeeAssignedTasks);
 		this.router.post("/login", this.loginEmployee);
@@ -60,7 +61,7 @@ class EmployeeController {
 			if (!email || !password) {
 				throw new HttpException(400, "Provide email and password!");
 			}
-			const token = this.employeeService.loginEmployee(email, password);
+			const token = await this.employeeService.loginEmployee(email, password);
 			res.status(200).send({ token });
 		} catch (error) {
 			next(error);
