@@ -17,6 +17,9 @@ class EmployeeService {
 		return this.employeeRespository.find();
 	};
 
+	getEmployeeByEmail = async (email: string): Promise<Employee> => {
+		return this.employeeRespository.findOneBy({ email });
+	}
 	getEmployeeByID = async (employeeID: number): Promise<Employee> => {
 		return this.employeeRespository.findOneBy({ id: employeeID });
 	};
@@ -43,7 +46,8 @@ class EmployeeService {
 		const token = jsonwebtoken.sign(payload, JWT_SECRET, {
 			expiresIn: JWT_VALIDITY,
 		});
-		return;
+		
+		return token
 	};
 
 	createEmployee = async (employeeDto: CreateEmployeeDto): Promise<Employee> => {
