@@ -18,6 +18,10 @@ export class CreateTaskDto {
 	maxParticipants: number;
 
 	@IsNotEmpty()
+	@IsNumber()
+	currentParticipants: number;
+
+	@IsNotEmpty()
 	@IsString()
 	startDate: Date;
 

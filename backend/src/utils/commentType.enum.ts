@@ -1,4 +1,4 @@
-enum CommentType {
+export enum CommentType {
 	Normal = "Normal",
 	Review = "Review",
 }

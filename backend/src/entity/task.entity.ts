@@ -12,7 +12,9 @@ class Task extends AbstractEntity {
 	@Column()
 	description: string;
 
-	@Column()
+	@Column({
+		nullable: true,
+	})
 	status: string;
 
 	@ManyToOne(() => Employee, (employee) => employee.tasks)

@@ -41,10 +41,10 @@ class TaskController {
 
 	public createTask = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
+			// const task = req.body;
+			//extract task form req.body and add req.user to task inthe creadedBy field
 			const task = req.body;
-			console.log(task);
-
-			const tasks = await this.taskService.createTask(task);
+			await this.taskService.createTask(task,req.user);
 			res.status(200).json({
 				success: true,
 				message: "Tasks created successfully"

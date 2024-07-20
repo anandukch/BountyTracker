@@ -2,6 +2,7 @@ import { Column, Entity, ManyToOne } from "typeorm";
 import AbstractEntity from "./abstract.entity";
 import Task from "./task.entity";
 import TaskParticipants from "./taskParticipants.entity";
+import { CommentType } from "../utils/commentType.enum";
 
 @Entity()
 class Comment extends AbstractEntity {
