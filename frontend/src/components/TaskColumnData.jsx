@@ -1,7 +1,7 @@
-const TaskColumnData = () => {
+const TaskColumnData = ({ content }) => {
   return (
     <div className="taskDataColumn">
-      <p>Task 1</p>
+      <p>{content}</p>
     </div>
   );
 };

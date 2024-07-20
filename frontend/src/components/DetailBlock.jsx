@@ -1,8 +1,8 @@
-const DetailBlock = () => {
+const DetailBlock = ({ header, content }) => {
   return (
     <div className="employeeDetailBlock">
-      <h4>Gender</h4>
-      <p>Female</p>
+      <h4>{header}</h4>
+      <p>{content}</p>
     </div>
   );
 };

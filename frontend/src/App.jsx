@@ -7,43 +7,42 @@ import Hero from "./components/Hero/Hero";
 import EmployeeDashboard from "./pages/Dashboard/employeeDashboard";
 
 const App = () => {
-    const router = createBrowserRouter([
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Hero />,
+      children: [
         {
-            path: "/",
-            element: <Hero />,
-            children: [
-                {
-                    index: true,
-                    element: <Login />,
-                },
-
-                {
-                    path: "/register",
-                    element: <CreateUser />,
-                },
-            ],
+          index: true,
+          element: <Login />,
         },
-
         {
-            path: "/user",
-            element: <SideBar />,
-            children: [
-                {
-                    index: true,
-                    element: <CreateTask />,
-                },
-                //  { path: "create", element: <CreateEmployee /> },
-                //  { path: "edit/:id", element: <EditEmployee /> },
-                //  { path: "details/:id", element: <EmployeeDetailsPage /> },
-            ],
+          path: "/register",
+          element: <CreateUser />,
         },
-    ]);
+      ],
+    },
 
-    return (
-        //    <Provider store={store}>
-        <main className="App">
-            <RouterProvider router={router} />
-        </main>
-    );
+    {
+      path: "/user",
+      element: <SideBar />,
+      children: [
+        {
+          index: true,
+          element: <EmployeeDashboard />,
+        },
+        //  { path: "create", element: <CreateEmployee /> },
+        //  { path: "edit/:id", element: <EditEmployee /> },
+        //  { path: "details/:id", element: <EmployeeDetailsPage /> },
+      ],
+    },
+  ]);
+
+  return (
+    //    <Provider store={store}>
+    <main className="App">
+      <RouterProvider router={router} />
+    </main>
+  );
 };
 export default App;

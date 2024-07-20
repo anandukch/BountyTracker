@@ -1,119 +1,116 @@
-
 :root {
-   --navBlue: #0C53FB;
-   --bgWhite: #FFFDFE;
-   --bgGray: #F2F5FA;
-   --textGray: #8C96A0;
-   --textBlack: #2A3644;
-   --borderColor:#e2e5eb;
+  --navBlue: #0c53fb;
+  --bgWhite: #fffdfe;
+  --bgGray: #f2f5fa;
+  --textGray: #8c96a0;
+  --textBlack: #2a3644;
+  --borderColor: #e2e5eb;
+  --koynsText: #dec08e;
 }
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Nunito", sans-serif;
-    color: var(--textBlack);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
+  color: var(--textBlack);
 }
 .page {
-   display: flex;
-   flex-direction: column;
-   background-color: var(--bgGray);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bgGray);
 }
 .header {
-   height: 90px;
-   display: flex;
-   flex-direction: row;
-   position: fixed;
-   .logo {
-      width: 300px;
-      height: 90px;
-      background-color: #fafafa;
-      justify-content: center;
-      align-items: center;
-      display: flex;
-      flex-direction: row;
-      padding: 10px;
-      gap:10px;
-      .logo-image{
-         height: 70%;
-         padding: 2px;
-         border-radius:50% ;
-         border: 1px solid #60391f;
+  height: 90px;
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  .logo {
+    width: 300px;
+    height: 90px;
+    background-color: #fafafa;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    gap: 10px;
+    .logo-image {
+      height: 70%;
+      padding: 2px;
+      border-radius: 50%;
+      border: 1px solid #60391f;
+    }
+    .logo-text {
+      height: 60%;
+    }
+  }
 
-      }
-      .logo-text{
-         height: 60%;
-      }
-   }
+  h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    width: calc(100vw - 300px);
+    text-align: center;
+    align-content: center;
+    font-weight: 600;
+  }
 
-   h1 {
-      font-family: Arial, Helvetica, sans-serif;
-      width: calc(100vw - 300px);
-      text-align: center;
-      align-content: center;
-      font-weight: 600;
-    
-      
-   }
-
-   border-bottom: solid 1px var(--borderColor);
+  border-bottom: solid 1px var(--borderColor);
 }
 
 .imglogo {
-   background-color: var(--bgWhite);
-   position: relative;
-   width: 280px;
+  background-color: var(--bgWhite);
+  position: relative;
+  width: 280px;
 }
 .SideBar {
-   position: fixed;
-   width: 300px;
-   height: calc(100vh - 90px);
-   left: 0;
-   top: 90px;
-   background-color: var(--bgWhite);
-   display: flex;
-   flex-direction: column;
-   justify-content: space-between;
-   padding-top: 25px;
-   .links {
-      text-decoration: none;
+  position: fixed;
+  width: 300px;
+  height: calc(100vh - 90px);
+  left: 0;
+  top: 90px;
+  background-color: var(--bgWhite);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 25px;
+  .links {
+    text-decoration: none;
+    background-color: var(--bgWhite);
+  }
+  .details {
+    width: 290px;
+    padding-bottom: 25px;
+    height: 55px;
+    background-color: var(--bgWhite);
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    color: black;
+    font-size: 14px;
+    // font-weight: 500;
+    label {
       background-color: var(--bgWhite);
-   }
-   .details {
-      width: 290px;
-      padding-bottom: 25px;
-      height: 55px;
-      background-color: var(--bgWhite);
-      display: flex;
-      align-items: center;
-      padding-left: 10px;
-      color: black;
-      font-size: 14px;
-      // font-weight: 500;
-      label {
-         background-color: var(--bgWhite);
-      }
-   }
-   .icon {
-      background-color: var(--bgWhite);
-      border-radius: 100%;
-      width: 25x;
-      height: 25x;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 5px;
-      margin-right: 10px;
-   }
-   .imgicon {
-      width: 25px;
-      height: 25px;
-      background-color: var(--bgWhite);
-   }
+    }
+  }
+  .icon {
+    background-color: var(--bgWhite);
+    border-radius: 100%;
+    width: 25x;
+    height: 25x;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    margin-right: 10px;
+  }
+  .imgicon {
+    width: 25px;
+    height: 25px;
+    background-color: var(--bgWhite);
+  }
 }
 .content {
-   margin-top: 90px;
-   width: calc(100vw - 300px);
-   margin-left: 300px;
-   height: calc(100vh - 90px);
+  margin-top: 90px;
+  width: calc(100vw - 300px);
+  margin-left: 300px;
+  height: calc(100vh - 90px);
 }
