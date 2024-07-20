@@ -2,42 +2,10 @@ import TextField from "../../components/TextField/TextField";
 import Select from "../../components/Select/Select";
 import { useState } from "react";
 
-const FormComponent = ({ onChange }) => {
+
+const FormComponent = ({ onChange ,formFields}) => {
    const [type, setType] = useState(false);
-   const form_fields = [
-      {
-         id: "name",
-         name: "Task Name",
-         type: "text",
-      },
-      {
-         id: "bounty",
-         name: "Bounty",
-         type: "number",
-      },
-      {
-         id: "description",
-         name: "Description",
-         type: "text",
-         Component: "text-area",
-      },
-      {
-         id: "due date",
-         name: "Due Date",
-         type: "date",
-      },
-      {
-         id: "type",
-         name: "Type",
-         values: [{ option: "Individual" }, { option: "Group" }],
-         Component: Select,
-      },
-      {
-         id: "skills",
-         name: "Skills",
-         type: "text",
-      },
-   ];
+   const form_fields = formFields
    const handleChange = (props) => {
       if (props.type === "Group") setType(true);
       if (props.type === "Individual") setType(false);

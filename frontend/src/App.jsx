@@ -1,9 +1,31 @@
 import SideBar from "./layouts/SideBar";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import CreateTask from "./pages/CreateTask/createTask";
+import Login from "./pages/Login/login";
+import CreateUser from "./pages/CreateUser/createUser";
+import Hero from "./components/Hero/Hero";
 
 const App = () => {
    const router = createBrowserRouter([
+      {
+         path: "/",
+         element: <Hero />,
+         children:[
+            {
+               
+                  index:true,
+                  element:<Login />
+               
+            },
+            {
+               
+               path:"/register",
+               element:<CreateUser />
+            
+         }
+         ]
+      },
+
       {
          path: "/user",
          element: <SideBar />,
@@ -11,7 +33,6 @@ const App = () => {
             {
                index: true,
                element: <CreateTask />,
-
             },
             //  { path: "create", element: <CreateEmployee /> },
             //  { path: "edit/:id", element: <EditEmployee /> },

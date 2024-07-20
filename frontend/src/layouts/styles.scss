@@ -28,8 +28,22 @@
       width: 300px;
       height: 90px;
       background-color: #fafafa;
-      text-align: center;
-      align-content: center;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      padding: 10px;
+      gap:10px;
+      .logo-image{
+         height: 70%;
+         padding: 2px;
+         border-radius:50% ;
+         border: 1px solid #60391f;
+
+      }
+      .logo-text{
+         height: 60%;
+      }
    }
 
    h1 {
@@ -37,7 +51,8 @@
       width: calc(100vw - 300px);
       text-align: center;
       align-content: center;
-      font-weight: 500;
+      font-weight: 600;
+    
       
    }
 
