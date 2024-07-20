@@ -8,7 +8,7 @@ class Comment extends AbstractEntity {
 	@ManyToOne(() => Task, (task) => task.comments)
 	task: Task;
 
-	@ManyToOne(() => TaskParticipants, (taskParticipants) => taskParticipants.comments)
+	@ManyToOne(() => TaskParticipants, (taskParticipants) => taskParticipants)
 	taskParticipant: TaskParticipants;
 
 	@Column()

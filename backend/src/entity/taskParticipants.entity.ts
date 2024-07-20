@@ -1,7 +1,8 @@
-import { Column, Entity, ManyToOne } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
 import AbstractEntity from "./abstract.entity";
 import Task from "./task.entity";
 import Employee from "./employee.entity";
+import Comment from "./comment.entity";
 
 @Entity()
 class TaskParticipants extends AbstractEntity {
@@ -13,6 +14,9 @@ class TaskParticipants extends AbstractEntity {
 
 	@Column()
 	contribution: number;
+
+	@OneToMany(() => Comment, (comment) => comment.taskParticipant)
+	comments: Comment[];
 }
 
 export default TaskParticipants;
