@@ -9,11 +9,18 @@ class CommentRepository {
 	};
 
 	findBy = async (filter: Partial<Comment>): Promise<Comment[]> => {
-		return this.repository.find({ where: filter });
+		return this.repository.find({
+			where: filter,
+		});
 	};
 
 	findOneBy = async (filter: Partial<Comment>): Promise<Comment> => {
-		return this.repository.findOne({ where: filter });
+		return this.repository.findOne({
+			where: filter,
+			relations: {
+				mentionComment: true,
+			},
+		});
 	};
 
 	create = async (data: Comment): Promise<Comment> => {

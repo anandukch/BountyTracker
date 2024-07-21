@@ -17,7 +17,11 @@ class CommentService {
 	};
 
 	getCommentByCommentId = async (id: number) => {
-		return this.commentRepository.findOneBy({ id });
+		const comment = await this.commentRepository.findOneBy({ id });
+		if (!comment) {
+			throw new HttpException(404, "Comment not found");
+		}
+		return comment;
 	};
 
 	createComment = async (taskId: number, employee: Employee, commentDto: CreateComementDto) => {
