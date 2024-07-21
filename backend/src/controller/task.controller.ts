@@ -11,8 +11,9 @@ class TaskController {
 	constructor(private taskService: TaskService, private commentService: CommentService) {
 		this.router = Router();
 		this.router.get("/", this.getAllTasks);
-		this.router.get("/:taskId", this.getTaskById);
+		this.router.get("/created", this.getTaskCreatedByUser);
 		this.router.post("/", this.createTask);
+		this.router.get("/:taskId", this.getTaskById);
 		// this.router.use("/:taskId/comments", commentRouter);
 		this.router.get("/:taskId/comments", this.getAllTaskComments);
 		this.router.get("/comments/:commentId", this.getCommentById);
@@ -23,6 +24,19 @@ class TaskController {
 	public getAllTasks = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			const tasks = await this.taskService.getAllTasks();
+			res.status(200).json({
+				success: true,
+				message: "Tasks fetched successfully",
+				data: tasks,
+			});
+		} catch (error) {
+			next(error);
+		}
+	};
+
+	public getTaskCreatedByUser = async (req: RequestWithRole, res: Response, next: NextFunction) => {
+		try {
+			const tasks = await this.taskService.getTaskCreatedByUser(req.user.id);
 			res.status(200).json({
 				success: true,
 				message: "Tasks fetched successfully",
@@ -121,6 +135,7 @@ class TaskController {
 
 			const comments = await this.commentService.updateComment(parseInt(id), comment);
 
+			await this.taskService.createTask(task, req.user);
 			res.status(200).json({
 				success: true,
 				message: "Comment reviewed succesfully",

@@ -11,11 +11,15 @@ class TaskParticipantService {
 		return this.repository.find();
 	};
 
-	getById = async (id: number) => {
-		return this.repository.findOneBy({ id });
+	// getById = async (id: number) => {
+	// 	return this.repository.findOneBy({ id });
+	// };
+
+	getTask = async (filter: Partial<TaskParticipants>) => {
+		return this.repository.findOneBy(filter);
 	};
 
-	create = async (task:Task, employee:Employee) => {
+	create = async (task: Task, employee: Employee) => {
 		let newTaskParticipant = new TaskParticipants();
 		newTaskParticipant.task = task;
 		newTaskParticipant.employee = employee;
@@ -24,9 +28,9 @@ class TaskParticipantService {
 		await this.repository.save(newTaskParticipant);
 	};
 
-	// updateTask = async () => {
-	// 	return this.repository.update(id, task);
-	// }
+	updateTaskParticipants = async (data: TaskParticipants) => {
+		return this.repository.save(data);
+	};
 }
 
 export default TaskParticipantService;

@@ -21,6 +21,9 @@ class Task extends AbstractEntity {
 	createdBy: Employee;
 
 	@Column()
+	createdById: number;
+
+	@Column()
 	maxParticipants: number;
 
 	@Column({
