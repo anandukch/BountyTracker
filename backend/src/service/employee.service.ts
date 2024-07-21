@@ -29,9 +29,14 @@ class EmployeeService {
 		return this.employeeRespository.findOneBy({ id: employeeID });
 	};
 
-	getEmployeeTasksByID = async (employeeID: number): Promise<Task[]> => {
-		//TODO
-		return;
+	getEmployeeTasksByID = async (employeeID: number) => {
+		
+		const employee = await this.employeeRespository.findOneBy({ id: employeeID });
+		if (!employee) {
+			throw new EntityNotFoundException(404, "Employee not found");
+		}
+		
+		return employee.participatingTasks;
 	};
 
 	loginEmployee = async (email: string, password: string): Promise<string> => {
@@ -77,6 +82,9 @@ class EmployeeService {
 		if (!task) {
 			throw new EntityNotFoundException(404, "Task not found");
 		}
+
+		task.currentParticipants += 1;
+		await this.taskService.updateTask(taskId, task);
 
 		const taskParticipant =  await this.taskParticipantService.create(task, employee);
 		

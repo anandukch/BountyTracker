@@ -13,8 +13,8 @@ class EmployeeController {
 	constructor(private employeeService: EmployeeService) {
 		this.router = Router();
 		this.router.get("/", authorize, this.getAllEmployees);
+		this.router.get("/tasks", authorize, this.getEmployeeAssignedTasks);
 		this.router.get("/:id", this.getEmployeeByID);
-		this.router.get("/tasks", this.getEmployeeAssignedTasks);
 		this.router.post("/login", this.loginEmployee);
 		this.router.post("/", this.createEmployee);
 		this.router.post("/tasks/:id", authorize, this.joinTask);
@@ -44,13 +44,9 @@ class EmployeeController {
 	};
 	public getEmployeeAssignedTasks = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			const employeeID = parseInt(req.params.id);
-			if (!employeeID) {
-				throw new HttpException(400, "Employee ID should be an integer!");
-			}
-			const employeeAssignedTasks = this.employeeService.getEmployeeTasksByID(employeeID);
+			const employeeAssignedTasks =await this.employeeService.getEmployeeTasksByID(req.user.id);
 
-			res.status(200).send(employeeAssignedTasks);
+			res.status(200).json(employeeAssignedTasks);
 		} catch (error) {
 			next(error);
 		}
@@ -95,8 +91,7 @@ class EmployeeController {
 				throw new HttpException(400, "Task ID should be an integer!");
 			}
 
-			const employee = req.user;
-			await this.employeeService.joinTask(taskId, employee);
+			await this.employeeService.joinTask(taskId, req.user);
 
 			res.status(201).json({
 				success: true,
