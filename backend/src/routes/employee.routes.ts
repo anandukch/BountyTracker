@@ -9,8 +9,8 @@ import TaskParticipantRepository from "../repository/taskParticipant.repository"
 import EmployeeService from "../service/employee.service";
 import TaskService from "../service/task.service";
 import TaskParticipantService from "../service/taskParticipant.service";
+import { taskService } from "./task.routes";
 
-const taskService = new TaskService(new TaskRepository(dataSource.getRepository(Task)));
 const taskParticipantService = new TaskParticipantService(
 	new TaskParticipantRepository(dataSource.getRepository(TaskParticipants))
 );
@@ -22,4 +22,4 @@ const employeeService = new EmployeeService(
 const employeeController = new EmployeeController(employeeService);
 const employeeRouter = employeeController.router;
 
-export { employeeRouter as default, employeeService, taskService, taskParticipantService };
+export { employeeRouter as default, employeeService, taskParticipantService };
