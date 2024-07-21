@@ -4,7 +4,9 @@ import { RequestWithRole } from "../utils/requestWithRole";
 import CommentService from "../service/comment.service";
 import { CommentType } from "../utils/commentType.enum";
 import { plainToInstance } from "class-transformer";
-import { CreateComementDto } from "../dto/comment.dto";
+import { CreateComementDto, UpdateCommentDto } from "../dto/comment.dto";
+import { validate } from "class-validator";
+import HttpException from "../exceptions/http.exceptions";
 
 class TaskController {
 	public router: Router;
@@ -18,7 +20,7 @@ class TaskController {
 		this.router.get("/:taskId/comments", this.getAllTaskComments);
 		this.router.get("/comments/:commentId", this.getCommentById);
 		this.router.post("/:taskId/comments", this.createComment);
-		this.router.patch("/:taskId/comments/:commentId", this.updateComment);
+		this.router.patch("/comments/:commentId", this.updateComment);
 	}
 
 	public getAllTasks = async (req: RequestWithRole, res: Response, next: NextFunction) => {
@@ -112,10 +114,13 @@ class TaskController {
 	public createComment = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			const comment = req.body;
-
 			const commentDto = plainToInstance(CreateComementDto, comment);
-
-			const response = await this.commentService.createComment(comment);
+			const errors = await validate(commentDto);
+			if (errors.length) {
+				// TODO: send error list
+				throw new HttpException(400, "Validation Error");
+			}
+			const response = await this.commentService.createComment(commentDto);
 
 			res.status(201).json({
 				success: true,
@@ -129,17 +134,19 @@ class TaskController {
 
 	public updateComment = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			const { id } = req.params;
-
+			const { commentId } = req.params;
 			const comment = req.body;
-
-			const comments = await this.commentService.updateComment(parseInt(id), comment);
-
-			await this.taskService.createTask(task, req.user);
+			const commentDto = plainToInstance(UpdateCommentDto, comment);
+			const errors = await validate(commentDto);
+			if (errors.length) {
+				// TODO: send error list
+				throw new HttpException(400, "Validation Error");
+			}
+			const response = await this.commentService.updateComment(parseInt(commentId), commentDto);
 			res.status(200).json({
 				success: true,
 				message: "Comment reviewed succesfully",
-				data: comment,
+				data: response,
 			});
 		} catch (error) {
 			next(error);
