@@ -56,6 +56,10 @@
          box-shadow: 0.5px 1px 1px #206ce7;
          font-weight: 600;
       }
+      .fields{
+         display: flex;
+         flex-direction: column;
+      }
    }
    span {
       display: flex;

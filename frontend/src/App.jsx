@@ -5,6 +5,7 @@ import Login from "./pages/Login/login";
 import CreateUser from "./pages/CreateUser/createUser";
 import Hero from "./components/Hero/Hero";
 import EmployeeDashboard from "./pages/Dashboard/employeeDashboard";
+import TaskDetail from "./pages/Task Detail/taskDetail";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -24,20 +25,21 @@ const App = () => {
     },
 
 
-    {
-      path: "/user",
-      element: <SideBar />,
-      children: [
-        {
-          index: true,
-          element: <EmployeeDashboard />,
-        },
-        //  { path: "create", element: <CreateEmployee /> },
-        //  { path: "edit/:id", element: <EditEmployee /> },
-        //  { path: "details/:id", element: <EmployeeDetailsPage /> },
-      ],
-    },
-  ]);
+      {
+         path: "/user",
+         element: <SideBar />,
+         children: [
+            {
+               index: true,
+               element: <EmployeeDashboard />,
+            },
+            { path: "create", element: <CreateTask /> },
+             { path: "taskDetail", element: <TaskDetail /> },
+            //  { path: "details/:id", element: <EmployeeDetailsPage /> },
+         ],
+      },
+
+   ]);
 
   return (
     //    <Provider store={store}>

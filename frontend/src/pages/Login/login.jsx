@@ -14,11 +14,11 @@ const Login = () => {
                //   value={userName}
                //   ref={unameRef}
                type="text"
-               className=""
+               className="fields"
                //   error={err}
                //   onChange={setUserName}
             />
-            <TextField label="Password" type="password" className="" />
+            <TextField label="Password" type="password" className="fields" />
             <Button text="Login" className="" />
          </form>
 
