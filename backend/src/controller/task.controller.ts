@@ -26,7 +26,7 @@ class TaskController {
 
 	public getAllTasks = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			const tasks = await this.taskService.getAllTasks();
+			const tasks = await this.taskService.getAllTasks(["createdBy"]);
 			res.status(200).json({
 				success: true,
 				message: "Tasks fetched successfully",
