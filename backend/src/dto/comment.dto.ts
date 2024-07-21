@@ -18,10 +18,10 @@ export class CreateComementDto {
 
 	@IsOptional()
 	@IsString()
-	mentionCommentId: string;
+	mentionCommentId: number;
 }
 
-export class UpdateCommentDto {
+export class ReviewCommentDto {
 	@IsNotEmpty()
 	@IsEnum(ReviewStatus)
 	reviewStatus: ReviewStatus;

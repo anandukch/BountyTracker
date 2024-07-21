@@ -19,20 +19,20 @@ class CommentRepository {
 	create = async (data: Comment): Promise<Comment> => {
 		return this.repository.create(data);
 	};
-	update = async (id: number, employee: Partial<Comment>) => {
-		return this.repository.update({ id }, employee);
+	update = async (id: number, comment: Partial<Comment>) => {
+		return this.repository.update({ id }, comment);
 	};
 
-	save = async (employee: Comment): Promise<Comment> => {
-		return this.repository.save(employee);
+	save = async (comment: Comment): Promise<Comment> => {
+		return this.repository.save(comment);
 	};
 
 	delete = async (filter: Partial<Comment>): Promise<void> => {
 		await this.repository.delete(filter.id);
 	};
 
-	softDelete = async (employee: Comment): Promise<void> => {
-		await this.repository.softRemove(employee);
+	softDelete = async (comment: Comment): Promise<void> => {
+		await this.repository.softRemove(comment);
 	};
 }
 

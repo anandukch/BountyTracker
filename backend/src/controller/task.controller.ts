@@ -4,7 +4,7 @@ import { RequestWithRole } from "../utils/requestWithRole";
 import CommentService from "../service/comment.service";
 import { CommentType } from "../utils/commentType.enum";
 import { plainToInstance } from "class-transformer";
-import { CreateComementDto, UpdateCommentDto } from "../dto/comment.dto";
+import { CreateComementDto, ReviewCommentDto } from "../dto/comment.dto";
 import { validate } from "class-validator";
 import HttpException from "../exceptions/http.exceptions";
 import { CreateTaskDto } from "../dto/task.dto";
@@ -21,7 +21,7 @@ class TaskController {
 		this.router.get("/:taskId/comments", this.getAllTaskComments);
 		this.router.get("/comments/:commentId", this.getCommentById);
 		this.router.post("/:taskId/comments", this.createComment);
-		this.router.patch("/comments/:commentId", this.updateComment);
+		this.router.patch("/comments/:commentId", this.reviewComment);
 	}
 
 	public getAllTasks = async (req: RequestWithRole, res: Response, next: NextFunction) => {
@@ -143,17 +143,17 @@ class TaskController {
 		}
 	};
 
-	public updateComment = async (req: RequestWithRole, res: Response, next: NextFunction) => {
+	public reviewComment = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			const { commentId } = req.params;
-			const comment = req.body;
-			const commentDto = plainToInstance(UpdateCommentDto, comment);
-			const errors = await validate(commentDto);
+			const commentReview = req.body;
+			const commentReviewDto = plainToInstance(ReviewCommentDto, commentReview);
+			const errors = await validate(commentReviewDto);
 			if (errors.length) {
 				// TODO: send error list
-				throw new HttpException(400, "Validation Error");
+				throw new HttpException(400, "Validation Error", errors);
 			}
-			const response = await this.commentService.updateComment(parseInt(commentId), commentDto);
+			const response = await this.commentService.reviewComment(parseInt(commentId), commentReviewDto);
 			res.status(200).json({
 				success: true,
 				message: "Comment reviewed succesfully",
