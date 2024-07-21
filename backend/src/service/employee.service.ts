@@ -30,12 +30,11 @@ class EmployeeService {
 	};
 
 	getEmployeeTasksByID = async (employeeID: number) => {
-		
 		const employee = await this.employeeRespository.findOneBy({ id: employeeID });
 		if (!employee) {
 			throw new EntityNotFoundException(404, "Employee not found");
 		}
-		
+
 		return employee.participatingTasks;
 	};
 
@@ -86,9 +85,40 @@ class EmployeeService {
 		task.currentParticipants += 1;
 		await this.taskService.updateTask(taskId, task);
 
-		const taskParticipant =  await this.taskParticipantService.create(task, employee);
-		
-		return taskParticipant
+		const taskParticipant = await this.taskParticipantService.create(task, employee);
+
+		return taskParticipant;
+	};
+
+	getTaskNotJoined = async (employeeId: number) => {
+		const tasks = await this.taskService.getAllTasks();
+		const tasksNotJoined = tasks.filter((task) => {
+			return !task.participants.some((participant) => participant.employee.id === employeeId);
+		});
+		return tasksNotJoined;
+	};
+
+	giveContribution = async (taskId: number, employeeId: number, contribution: number) => {
+		const task = await this.taskService.getTaskById(taskId);
+		if (!task) {
+			throw new EntityNotFoundException(404, "Task not found");
+		}
+		const employee = await this.employeeRespository.findOneBy({
+			id: employeeId,
+		});
+		if (!employee) {
+			throw new EntityNotFoundException(404, "Employee not found");
+		}
+		const taskParticipant = await this.taskParticipantService.getByFilter({
+			task,
+			employee,
+		});
+		if (!taskParticipant) {
+			throw new EntityNotFoundException(404, "Employee not found in task");
+		}
+		taskParticipant.contribution = contribution;
+		await this.taskParticipantService.updateTaskParticipants(taskParticipant);
+		return taskParticipant;
 	};
 }
 

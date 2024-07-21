@@ -14,16 +14,42 @@ class EmployeeController {
 		this.router = Router();
 		this.router.get("/", authorize, this.getAllEmployees);
 		this.router.get("/tasks", authorize, this.getEmployeeAssignedTasks);
+		this.router.get("/tasks/not-joined", authorize, this.getTasksNotJoinedByEmployee);
 		this.router.get("/:id", this.getEmployeeByID);
 		this.router.post("/login", this.loginEmployee);
 		this.router.post("/", this.createEmployee);
 		this.router.post("/tasks/:id", authorize, this.joinTask);
+		this.router.put("/:employeeId/tasks/:taskId/contributions", authorize, this.joinTask);
 	}
+
+	public giveContribution = async (req: RequestWithRole, res: Response, next: NextFunction) => {
+		try {
+			const taskId = parseInt(req.params.taskId);
+			const employeeId = parseInt(req.params.employeeId);
+			const contribution = req.body.contribution;
+			if (!taskId || !employeeId || !contribution) {
+				throw new HttpException(400, "Task ID, Employee ID and Contribution should be an integer!");
+			}
+
+			await this.employeeService.giveContribution(taskId, employeeId, contribution);
+
+			res.status(201).json({
+				success: true,
+				message: "Contribution added successfully",
+			});
+		} catch (error) {
+			next(error);
+		}
+	};
 
 	public getAllEmployees = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			const employees = await this.employeeService.getAllEmployees();
-			res.status(200).send(employees);
+			res.status(200).json({
+				success: true,
+				message: "Employees fetched successfully",
+				data: employees,
+			});
 		} catch (error) {
 			next(error);
 		}
@@ -37,16 +63,24 @@ class EmployeeController {
 			}
 			const employee = await this.employeeService.getEmployeeByID(employeeID);
 
-			res.status(200).send(employee);
+			res.status(200).json({
+				success: true,
+				message: "Employee fetched successfully",
+				data: employee,
+			});
 		} catch (error) {
 			next(error);
 		}
 	};
 	public getEmployeeAssignedTasks = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			const employeeAssignedTasks =await this.employeeService.getEmployeeTasksByID(req.user.id);
+			const employeeAssignedTasks = await this.employeeService.getEmployeeTasksByID(req.user.id);
 
-			res.status(200).json(employeeAssignedTasks);
+			res.status(200).json({
+				success: true,
+				message: "Employee tasks fetched successfully",
+				data: employeeAssignedTasks,
+			});
 		} catch (error) {
 			next(error);
 		}
@@ -96,6 +130,19 @@ class EmployeeController {
 			res.status(201).json({
 				success: true,
 				message: "Task joined successfully",
+			});
+		} catch (error) {
+			next(error);
+		}
+	};
+
+	public getTasksNotJoinedByEmployee = async (req: RequestWithRole, res: Response, next: NextFunction) => {
+		try {
+			const tasks = await this.employeeService.getTaskNotJoined(req.user.id);
+			res.status(200).json({
+				success: true,
+				message: "Tasks fetched successfully",
+				data: tasks,
 			});
 		} catch (error) {
 			next(error);
