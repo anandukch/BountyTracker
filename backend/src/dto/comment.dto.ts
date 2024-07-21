@@ -5,10 +5,6 @@ import ReviewStatus from "../utils/reviewStatus.enum";
 
 export class CreateComementDto {
 	@IsNotEmpty()
-	@IsString()
-	taskId: string;
-
-	@IsNotEmpty()
 	@IsEnum(CommentType)
 	commentType: CommentType;
 

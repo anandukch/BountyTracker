@@ -4,14 +4,15 @@ import Task from "./task.entity";
 import TaskParticipants from "./taskParticipants.entity";
 import { CommentType } from "../utils/commentType.enum";
 import ReviewStatus from "../utils/reviewStatus.enum";
+import Employee from "./employee.entity";
 
 @Entity()
 class Comment extends AbstractEntity {
 	@ManyToOne(() => Task, (task) => task.comments)
 	task: Task;
 
-	@ManyToOne(() => TaskParticipants, (taskParticipants) => taskParticipants)
-	taskParticipant: TaskParticipants;
+	@ManyToOne(() => Employee, (employee) => employee.comments)
+	employee: Employee;
 
 	@Column()
 	commentType: CommentType;
@@ -19,7 +20,7 @@ class Comment extends AbstractEntity {
 	@Column()
 	content: string;
 
-	@Column()
+	@Column({ nullable: true })
 	fileUrl: string;
 
 	@ManyToOne(() => Comment, (comment) => comment, { nullable: true })

@@ -7,10 +7,9 @@ import TaskRepository from "../repository/task.repository";
 import CommentService from "../service/comment.service";
 import TaskService from "../service/task.service";
 
-const taskController = new TaskController(
-	new TaskService(new TaskRepository(dataSource.getRepository(Task))),
-	new CommentService(new CommentRepository(dataSource.getRepository(Comment)))
-);
+const taskService = new TaskService(new TaskRepository(dataSource.getRepository(Task)));
+const commentService = new CommentService(new CommentRepository(dataSource.getRepository(Comment)));
+const taskController = new TaskController(taskService, commentService);
 const taskRouter = taskController.router;
 
-export default taskRouter;
+export { taskRouter as default, commentService, taskService };

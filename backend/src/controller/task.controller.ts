@@ -120,14 +120,18 @@ class TaskController {
 
 	public createComment = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
+			const { taskId } = req.params;
+			console.log(taskId);
+			const employee = req.user;
 			const comment = req.body;
 			const commentDto = plainToInstance(CreateComementDto, comment);
 			const errors = await validate(commentDto);
 			if (errors.length) {
 				// TODO: send error list
-				throw new HttpException(400, "Validation Error");
+				throw new HttpException(400, "Validation Error", errors);
 			}
-			const response = await this.commentService.createComment(commentDto);
+			console.log("here");
+			const response = await this.commentService.createComment(parseInt(taskId), employee, commentDto);
 
 			res.status(201).json({
 				success: true,

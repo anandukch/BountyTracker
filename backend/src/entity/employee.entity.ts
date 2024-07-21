@@ -4,6 +4,7 @@ import { Role } from "../utils/role.enum";
 import EmployeeDetails from "./employeeDetails.entity";
 import Task from "./task.entity";
 import TaskParticipants from "./taskParticipants.entity";
+import Comment from "./comment.entity";
 
 @Entity()
 class Employee extends AbstractEntity {
@@ -31,6 +32,9 @@ class Employee extends AbstractEntity {
 
 	@OneToMany(() => TaskParticipants, (taskParticipants) => taskParticipants.employee)
 	participatingTasks: TaskParticipants[];
+
+	@OneToMany(() => Comment, (comment) => comment.employee)
+	comments: Comment[];
 }
 
 export default Employee;

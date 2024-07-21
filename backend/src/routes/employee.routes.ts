@@ -10,13 +10,16 @@ import EmployeeService from "../service/employee.service";
 import TaskService from "../service/task.service";
 import TaskParticipantService from "../service/taskParticipant.service";
 
+const taskService = new TaskService(new TaskRepository(dataSource.getRepository(Task)));
+const taskParticipantService = new TaskParticipantService(
+	new TaskParticipantRepository(dataSource.getRepository(TaskParticipants))
+);
 const employeeService = new EmployeeService(
 	new EmployeeRepository(dataSource.getRepository(Employee)),
-	new TaskService(new TaskRepository(dataSource.getRepository(Task))),
-	new TaskParticipantService(new TaskParticipantRepository(dataSource.getRepository(TaskParticipants)))
+	taskService,
+	taskParticipantService
 );
 const employeeController = new EmployeeController(employeeService);
 const employeeRouter = employeeController.router;
 
-export default employeeRouter;
-export { employeeService };
+export { employeeRouter as default, employeeService, taskService, taskParticipantService };

@@ -15,9 +15,6 @@ class TaskParticipants extends AbstractEntity {
 	@Column()
 	contribution: number;
 
-	@OneToMany(() => Comment, (comment) => comment.taskParticipant)
-	comments: Comment[];
-
 	@Column()
 	employeeId: number;
 
