@@ -21,7 +21,9 @@ class Employee extends AbstractEntity {
 	@Column()
 	role: Role;
 
-	@OneToOne(() => EmployeeDetails, (employeeDetails: EmployeeDetails) => employeeDetails.employee)
+	@OneToOne(() => EmployeeDetails, (employeeDetails: EmployeeDetails) => employeeDetails.employee, {
+		cascade: true,
+	})
 	details: EmployeeDetails;
 
 	@OneToMany(() => Task, (task) => task.createdBy)

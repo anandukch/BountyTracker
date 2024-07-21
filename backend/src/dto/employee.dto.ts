@@ -35,5 +35,5 @@ export class EmployeeResposneDto {
 	public constructor(employee: Employee) {
 		Object.assign(this, employee);
 		delete this.password;
-	}
+	}	
 }

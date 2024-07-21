@@ -7,6 +7,7 @@ import { plainToInstance } from "class-transformer";
 import { CreateComementDto, UpdateCommentDto } from "../dto/comment.dto";
 import { validate } from "class-validator";
 import HttpException from "../exceptions/http.exceptions";
+import { CreateTaskDto } from "../dto/task.dto";
 
 class TaskController {
 	public router: Router;
@@ -68,7 +69,13 @@ class TaskController {
 			// const task = req.body;
 			//extract task form req.body and add req.user to task inthe creadedBy field
 			const task = req.body;
-			await this.taskService.createTask(task, req.user);
+			const taskDto = plainToInstance(CreateTaskDto, task);
+			const errors = await validate(taskDto);
+			if (errors.length) {
+				// TODO: send individual errors
+				throw new HttpException(400, "ValidationError", errors);
+			}
+			await this.taskService.createTask(taskDto, req.user);
 			res.status(200).json({
 				success: true,
 				message: "Tasks created successfully",
