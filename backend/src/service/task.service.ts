@@ -10,10 +10,9 @@ class TaskService {
 		return this.taskRepository.find({}, relations);
 	};
 
-	// getAllTasksWithRelations = async (relations: Array<string>): Promise<Task[]> => {
-	// 	return this.taskRepository.findWithRelations(relations);
-	// }
-
+	getTasks = async (filter: Partial<Task>, relations: Array<string>) => {
+		return this.taskRepository.find(filter, relations);
+	};
 	getTaskById = async (id: number) => {
 		return this.taskRepository.findOneBy({ id });
 	};
