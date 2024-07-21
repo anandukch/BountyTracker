@@ -91,7 +91,7 @@ class EmployeeService {
 	};
 
 	getTaskNotJoined = async (employeeId: number) => {
-		const tasks = await this.taskService.getAllTasks();
+		const tasks = await this.taskService.getAllTasks(["createdBy", "participants", "participants.employee"]);
 		const tasksNotJoined = tasks.filter((task) => {
 			return !task.participants.some((participant) => participant.employee.id === employeeId);
 		});
@@ -109,9 +109,9 @@ class EmployeeService {
 		if (!employee) {
 			throw new EntityNotFoundException(404, "Employee not found");
 		}
-		const taskParticipant = await this.taskParticipantService.getByFilter({
-			task,
-			employee,
+		const taskParticipant = await this.taskParticipantService.getTask({
+			taskId,
+			employeeId,
 		});
 		if (!taskParticipant) {
 			throw new EntityNotFoundException(404, "Employee not found in task");

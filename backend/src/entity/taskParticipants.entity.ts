@@ -17,6 +17,13 @@ class TaskParticipants extends AbstractEntity {
 
 	@OneToMany(() => Comment, (comment) => comment.taskParticipant)
 	comments: Comment[];
+
+
+	@Column()
+	employeeId: number;
+
+	@Column()
+	taskId: number;
 }
 
 export default TaskParticipants;

@@ -6,9 +6,13 @@ import TaskRepository from "../repository/task.repository";
 class TaskService {
 	constructor(private taskRepository: TaskRepository) {}
 
-	getAllTasks = async (): Promise<Task[]> => {
-		return this.taskRepository.find();
+	getAllTasks = async (relations?:Array<string>): Promise<Task[]> => {
+		return this.taskRepository.find(relations);
 	};
+
+	// getAllTasksWithRelations = async (relations: Array<string>): Promise<Task[]> => {
+	// 	return this.taskRepository.findWithRelations(relations);
+	// }
 
 	getTaskById = async (id: number) => {
 		return this.taskRepository.findOneBy({ id });

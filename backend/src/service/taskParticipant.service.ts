@@ -11,11 +11,11 @@ class TaskParticipantService {
 		return this.repository.find();
 	};
 
-	getById = async (id: number) => {
-		return this.repository.findOneBy({ id });
-	};
+	// getById = async (id: number) => {
+	// 	return this.repository.findOneBy({ id });
+	// };
 
-	getByFilter = async (filter: Partial<TaskParticipants>) => {
+	getTask = async (filter: Partial<TaskParticipants>) => {
 		return this.repository.findOneBy(filter);
 	};
 

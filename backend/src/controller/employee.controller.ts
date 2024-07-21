@@ -19,7 +19,7 @@ class EmployeeController {
 		this.router.post("/login", this.loginEmployee);
 		this.router.post("/", this.createEmployee);
 		this.router.post("/tasks/:id", authorize, this.joinTask);
-		this.router.put("/:employeeId/tasks/:taskId/contributions", authorize, this.joinTask);
+		this.router.put("/:employeeId/tasks/:taskId/contributions", authorize, this.giveContribution);
 	}
 
 	public giveContribution = async (req: RequestWithRole, res: Response, next: NextFunction) => {
