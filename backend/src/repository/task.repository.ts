@@ -5,8 +5,13 @@ class TaskRepository {
 	constructor(private repository: Repository<Task>) {}
 
 	find = async (): Promise<Task[]> => {
+		return this.repository.find({});
+	};
+
+	findWithRelations = async (relations: Array<string>): Promise<Task[]> => {
 		return this.repository.find({
-			relations: ["createdBy"],
+			// relations: ["createdBy", "participants", "participants.employee"],
+			relations: relations,
 		});
 	};
 
