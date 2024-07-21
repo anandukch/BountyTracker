@@ -7,7 +7,7 @@ class TaskService {
 	constructor(private taskRepository: TaskRepository) {}
 
 	getAllTasks = async (relations?:Array<string>): Promise<Task[]> => {
-		return this.taskRepository.find(relations);
+		return this.taskRepository.find({},relations);
 	};
 
 	// getAllTasksWithRelations = async (relations: Array<string>): Promise<Task[]> => {
@@ -35,6 +35,10 @@ class TaskService {
 
 	updateTask = async (id: number, task: Partial<Task>) => {
 		return this.taskRepository.update(id, task);
+	}
+
+	getTaskCreatedByUser = async (id:number) => {
+		return this.taskRepository.find({createdById:id});
 	}
 }
 

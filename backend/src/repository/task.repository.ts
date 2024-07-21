@@ -4,8 +4,9 @@ import Task from "../entity/task.entity";
 class TaskRepository {
 	constructor(private repository: Repository<Task>) {}
 
-	find = async (relation:Array<string>): Promise<Task[]> => {
+	find = async (filter?: Partial<Task>, relation?: Array<string>): Promise<Task[]> => {
 		return this.repository.find({
+			where: filter,
 			relations: relation,
 		});
 	};
