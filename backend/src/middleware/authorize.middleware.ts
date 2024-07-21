@@ -12,10 +12,11 @@ const authorize = async (req: RequestWithRole, res: Response, next: NextFunction
 			throw new HttpException(403, "Please login before continuing");
 		}
 		const payload = jsonwebtoken.verify(token, JWT_SECRET);
-		const employee =await employeeService.getEmployeeByEmail((payload as jwtPayload).email);
-		if(!employee){
+		const employee = await employeeService.getEmployeeByEmail((payload as jwtPayload).email);
+		if (!employee) {
 			throw new HttpException(403, "Please login before continuing");
 		}
+
 		req.user = employee;
 		req.name = (payload as jwtPayload).name;
 		req.email = (payload as jwtPayload).email;

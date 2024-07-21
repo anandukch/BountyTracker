@@ -75,7 +75,6 @@ class EmployeeController {
 	public getEmployeeAssignedTasks = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			const employeeAssignedTasks = await this.employeeService.getEmployeeTasksByID(req.user.id);
-
 			res.status(200).json({
 				success: true,
 				message: "Employee tasks fetched successfully",
