@@ -22,7 +22,7 @@ class Comment extends AbstractEntity {
 	@Column()
 	fileUrl: string;
 
-	@ManyToOne(() => Comment, (comment) => comment)
+	@ManyToOne(() => Comment, (comment) => comment, { nullable: true })
 	mentionComment: Comment;
 
 	@Column({ nullable: true })

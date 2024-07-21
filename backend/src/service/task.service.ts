@@ -14,7 +14,7 @@ class TaskService {
 		return this.taskRepository.findOneBy({ id });
 	};
 
-	createTask = async (task: CreateTaskDto,user:Employee) => {
+	createTask = async (task: CreateTaskDto, user: Employee) => {
 		let newTask = new Task();
 		newTask.title = task.title;
 		newTask.description = task.description;
@@ -31,7 +31,12 @@ class TaskService {
 
 	updateTask = async (id: number, task: Partial<Task>) => {
 		return this.taskRepository.update(id, task);
-	}
+	};
+
+	getTaskCommentsById	 = async (id: number) => {
+		const task = await this.getTaskById(id);
+		return task.comments;
+	};
 }
 
 export default TaskService;
