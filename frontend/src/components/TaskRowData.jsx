@@ -3,10 +3,10 @@ import TaskColumnData from "./TaskColumnData";
 const TaskDataRow = ({ taskRows = [] }) => {
   return (
     <div className="taskDataRow">
-      <TaskColumnData content={taskRows.task.title} />
-      <TaskColumnData content={taskRows.task.status} />
+      <TaskColumnData content={taskRows.title} />
+      <TaskColumnData content={taskRows.createdBy.name} />
       <TaskColumnData
-        content={new Date(taskRows.task.deadLine).toLocaleDateString("en-Gb", {
+        content={new Date(taskRows.deadLine).toLocaleDateString("en-Gb", {
           day: "numeric",
           month: "short",
           year: "numeric",
@@ -14,10 +14,10 @@ const TaskDataRow = ({ taskRows = [] }) => {
       />
       <TaskColumnData
         content={`
-          ${taskRows.task.currentParticipants} / ${taskRows.task.maxParticipants}`}
+          ${taskRows.currentParticipants} / ${taskRows.maxParticipants}`}
       />
-      <TaskColumnData content={taskRows.task.status} />
-      <TaskColumnData content={taskRows.contribution} />
+      <TaskColumnData content={taskRows.status} />
+      <TaskColumnData content={taskRows.totalBounty} />
     </div>
   );
 };

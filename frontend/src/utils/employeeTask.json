@@ -1,119 +1,228 @@
 {
   "data": [
     {
-      "id": 2,
-      "createdAt": "2024-07-20T13:59:36.511Z",
-      "updatedAt": "2024-07-21T01:13:13.588Z",
+      "id": 1,
+      "createdAt": "2024-07-20T11:39:50.456Z",
+      "updatedAt": "2024-07-20T11:39:50.456Z",
       "deletedAt": null,
-      "contribution": 25,
-      "employeeId": 1,
-      "taskId": 2,
-      "task": {
-        "id": 2,
-        "createdAt": "2024-07-20T10:16:40.010Z",
-        "updatedAt": "2024-07-20T10:16:40.010Z",
+      "title": "Implement Feature ABC",
+      "description": "Develop and integrate the new feature ABC into the application.",
+      "status": "Pending",
+      "maxParticipants": 3,
+      "currentParticipants": 0,
+      "totalBounty": 500,
+      "startDate": "2024-08-10T00:00:00.000Z",
+      "deadLine": "2024-08-31T23:59:59.000Z",
+      "createdBy": {
+        "id": 1,
+        "createdAt": "2024-07-20T09:40:32.683Z",
+        "updatedAt": "2024-07-20T09:40:32.683Z",
         "deletedAt": null,
-        "title": "Implement Feature XYZ",
-        "description": "Develop and integrate the new feature XYZ into the application.",
-        "status": "In Progress",
-        "maxParticipants": 5,
-        "currentParticipants": 1,
-        "totalBounty": 1000,
-        "startDate": "2024-08-15T23:59:59.000Z",
-        "deadLine": "2024-08-15T23:59:59.000Z"
-      }
+        "name": "John Doe",
+        "email": "johndoe@example.com",
+        "password": "$2a$10$g3LeIZlfGbhtYlnuSin9BuiePBWh.Oma1.R0NmgoLZAqF7AMEB9mC",
+        "role": 0
+      },
+      "participants": []
+    },
+    {
+      "id": 2,
+      "createdAt": "2024-07-21T08:20:15.123Z",
+      "updatedAt": "2024-07-21T08:20:15.123Z",
+      "deletedAt": null,
+      "title": "Refactor Authentication Module",
+      "description": "Improve the existing authentication module to enhance security and performance.",
+      "status": "In Progress",
+      "maxParticipants": 2,
+      "currentParticipants": 1,
+      "totalBounty": 800,
+      "startDate": "2024-08-05T00:00:00.000Z",
+      "deadLine": "2024-08-25T23:59:59.000Z",
+      "createdBy": {
+        "id": 2,
+        "createdAt": "2024-07-21T07:55:42.921Z",
+        "updatedAt": "2024-07-21T07:55:42.921Z",
+        "deletedAt": null,
+        "name": "Jane Smith",
+        "email": "janesmith@example.com",
+        "password": "$2a$10$g3LeIZlfGbhtYlnuSin9BuiePBWh.Oma1.R0NmgoLZAqF7AMEB9mC",
+        "role": 0
+      },
+      "participants": [
+        {
+          "id": 5,
+          "createdAt": "2024-07-21T08:21:33.456Z",
+          "updatedAt": "2024-07-21T08:21:33.456Z",
+          "deletedAt": null,
+          "name": "Alice Johnson",
+          "email": "alice@example.com",
+          "password": "$2a$10$g3LeIZlfGbhtYlnuSin9BuiePBWh.Oma1.R0NmgoLZAqF7AMEB9mC",
+          "role": 1
+        }
+      ]
     },
     {
       "id": 3,
-      "createdAt": "2024-07-21T08:30:20.123Z",
-      "updatedAt": "2024-07-21T10:45:35.789Z",
+      "createdAt": "2024-07-22T09:45:00.789Z",
+      "updatedAt": "2024-07-22T09:45:00.789Z",
       "deletedAt": null,
-      "contribution": 30,
-      "employeeId": 2,
-      "taskId": 3,
-      "task": {
+      "title": "Bug Fixing Sprint",
+      "description": "Address and resolve critical bugs reported in the last sprint.",
+      "status": "Open",
+      "maxParticipants": 5,
+      "currentParticipants": 3,
+      "totalBounty": 1200,
+      "startDate": "2024-08-01T00:00:00.000Z",
+      "deadLine": "2024-08-20T23:59:59.000Z",
+      "createdBy": {
         "id": 3,
-        "createdAt": "2024-07-21T08:15:10.567Z",
-        "updatedAt": "2024-07-21T08:15:10.567Z",
+        "createdAt": "2024-07-22T09:40:22.123Z",
+        "updatedAt": "2024-07-22T09:40:22.123Z",
         "deletedAt": null,
-        "title": "Refactor Authentication System",
-        "description": "Optimize and refactor the authentication system for security enhancements.",
-        "status": "In Progress",
-        "maxParticipants": 3,
-        "currentParticipants": 2,
-        "totalBounty": 1500,
-        "startDate": "2024-08-10T00:00:00.000Z",
-        "deadLine": "2024-08-25T23:59:59.000Z"
-      }
+        "name": "Michael Brown",
+        "email": "michaelbrown@example.com",
+        "password": "$2a$10$g3LeIZlfGbhtYlnuSin9BuiePBWh.Oma1.R0NmgoLZAqF7AMEB9mC",
+        "role": 0
+      },
+      "participants": [
+        {
+          "id": 6,
+          "createdAt": "2024-07-22T09:46:30.987Z",
+          "updatedAt": "2024-07-22T09:46:30.987Z",
+          "deletedAt": null,
+          "name": "Bob Williams",
+          "email": "bob@example.com",
+          "password": "$2a$10$g3LeIZlfGbhtYlnuSin9BuiePBWh.Oma1.R0NmgoLZAqF7AMEB9mC",
+          "role": 1
+        },
+        {
+          "id": 7,
+          "createdAt": "2024-07-22T09:47:45.321Z",
+          "updatedAt": "2024-07-22T09:47:45.321Z",
+          "deletedAt": null,
+          "name": "Eva Davis",
+          "email": "eva@example.com",
+          "password": "$2a$10$g3LeIZlfGbhtYlnuSin9BuiePBWh.Oma1.R0NmgoLZAqF7AMEB9mC",
+          "role": 1
+        },
+        {
+          "id": 8,
+          "createdAt": "2024-07-22T09:48:59.654Z",
+          "updatedAt": "2024-07-22T09:48:59.654Z",
+          "deletedAt": null,
+          "name": "Charlie Wilson",
+          "email": "charlie@example.com",
+          "password": "$2a$10$g3LeIZlfGbhtYlnuSin9BuiePBWh.Oma1.R0NmgoLZAqF7AMEB9mC",
+          "role": 1
+        }
+      ]
     },
     {
       "id": 4,
-      "createdAt": "2024-07-21T14:00:50.987Z",
-      "updatedAt": "2024-07-21T16:20:15.234Z",
+      "createdAt": "2024-07-23T14:30:10.222Z",
+      "updatedAt": "2024-07-23T14:30:10.222Z",
       "deletedAt": null,
-      "contribution": 20,
-      "employeeId": 3,
-      "taskId": 1,
-      "task": {
-        "id": 1,
-        "createdAt": "2024-07-19T15:20:30.987Z",
-        "updatedAt": "2024-07-20T09:10:45.234Z",
+      "title": "UI/UX Enhancement Project",
+      "description": "Revamp user interface and improve user experience across the application.",
+      "status": "Planning",
+      "maxParticipants": 10,
+      "currentParticipants": 0,
+      "totalBounty": 1500,
+      "startDate": "2024-08-01T00:00:00.000Z",
+      "deadLine": "2024-08-30T23:59:59.000Z",
+      "createdBy": {
+        "id": 4,
+        "createdAt": "2024-07-23T14:25:45.789Z",
+        "updatedAt": "2024-07-23T14:25:45.789Z",
         "deletedAt": null,
-        "title": "Bug Fixing",
-        "description": "Investigate and fix critical bugs reported in the application.",
-        "status": "Completed",
-        "maxParticipants": 2,
-        "currentParticipants": 2,
-        "totalBounty": 800,
-        "startDate": "2024-07-25T00:00:00.000Z",
-        "deadLine": "2024-08-05T23:59:59.000Z"
-      }
+        "name": "Emily Jones",
+        "email": "emilyjones@example.com",
+        "password": "$2a$10$g3LeIZlfGbhtYlnuSin9BuiePBWh.Oma1.R0NmgoLZAqF7AMEB9mC",
+        "role": 0
+      },
+      "participants": []
     },
     {
       "id": 5,
-      "createdAt": "2024-07-21T17:30:10.333Z",
-      "updatedAt": "2024-07-21T18:45:25.222Z",
+      "createdAt": "2024-07-24T11:10:05.567Z",
+      "updatedAt": "2024-07-24T11:10:05.567Z",
       "deletedAt": null,
-      "contribution": 15,
-      "employeeId": 4,
-      "taskId": 4,
-      "task": {
-        "id": 4,
-        "createdAt": "2024-07-21T14:00:00.000Z",
-        "updatedAt": "2024-07-21T14:00:00.000Z",
+      "title": "Database Optimization",
+      "description": "Optimize database queries and improve overall performance.",
+      "status": "Open",
+      "maxParticipants": 4,
+      "currentParticipants": 2,
+      "totalBounty": 900,
+      "startDate": "2024-08-03T00:00:00.000Z",
+      "deadLine": "2024-08-23T23:59:59.000Z",
+      "createdBy": {
+        "id": 5,
+        "createdAt": "2024-07-24T11:05:20.321Z",
+        "updatedAt": "2024-07-24T11:05:20.321Z",
         "deletedAt": null,
-        "title": "UI/UX Enhancement",
-        "description": "Improve user interface and user experience for better usability.",
-        "status": "In Progress",
-        "maxParticipants": 4,
-        "currentParticipants": 3,
-        "totalBounty": 1200,
-        "startDate": "2024-08-01T00:00:00.000Z",
-        "deadLine": "2024-08-20T23:59:59.000Z"
-      }
+        "name": "David Lee",
+        "email": "davidlee@example.com",
+        "password": "$2a$10$g3LeIZlfGbhtYlnuSin9BuiePBWh.Oma1.R0NmgoLZAqF7AMEB9mC",
+        "role": 0
+      },
+      "participants": [
+        {
+          "id": 9,
+          "createdAt": "2024-07-24T11:12:30.987Z",
+          "updatedAt": "2024-07-24T11:12:30.987Z",
+          "deletedAt": null,
+          "name": "Grace Moore",
+          "email": "grace@example.com",
+          "password": "$2a$10$g3LeIZlfGbhtYlnuSin9BuiePBWh.Oma1.R0NmgoLZAqF7AMEB9mC",
+          "role": 1
+        },
+        {
+          "id": 10,
+          "createdAt": "2024-07-24T11:13:45.654Z",
+          "updatedAt": "2024-07-24T11:13:45.654Z",
+          "deletedAt": null,
+          "name": "Frank Johnson",
+          "email": "frank@example.com",
+          "password": "$2a$10$g3LeIZlfGbhtYlnuSin9BuiePBWh.Oma1.R0NmgoLZAqF7AMEB9mC",
+          "role": 1
+        }
+      ]
     },
     {
       "id": 6,
-      "createdAt": "2024-07-22T09:00:20.444Z",
-      "updatedAt": "2024-07-22T10:30:35.987Z",
+      "createdAt": "2024-07-25T09:00:00.000Z",
+      "updatedAt": "2024-07-25T09:00:00.000Z",
       "deletedAt": null,
-      "contribution": 18,
-      "employeeId": 5,
-      "taskId": 5,
-      "task": {
-        "id": 5,
-        "createdAt": "2024-07-22T08:00:00.000Z",
-        "updatedAt": "2024-07-22T08:00:00.000Z",
+      "title": "Documentation Update",
+      "description": "Update and improve documentation for existing features and modules.",
+      "status": "Open",
+      "maxParticipants": 3,
+      "currentParticipants": 1,
+      "totalBounty": 600,
+      "startDate": "2024-08-05T00:00:00.000Z",
+      "deadLine": "2024-08-25T23:59:59.000Z",
+      "createdBy": {
+        "id": 6,
+        "createdAt": "2024-07-25T08:55:15.987Z",
+        "updatedAt": "2024-07-25T08:55:15.987Z",
         "deletedAt": null,
-        "title": "Performance Optimization",
-        "description": "Identify and implement optimizations to enhance application performance.",
-        "status": "Open",
-        "maxParticipants": 3,
-        "currentParticipants": 0,
-        "totalBounty": 1000,
-        "startDate": "2024-08-10T00:00:00.000Z",
-        "deadLine": "2024-08-30T23:59:59.000Z"
-      }
+        "name": "Sarah Brown",
+        "email": "sarahbrown@example.com",
+        "password": "$2a$10$g3LeIZlfGbhtYlnuSin9BuiePBWh.Oma1.R0NmgoLZAqF7AMEB9mC",
+        "role": 0
+      },
+      "participants": [
+        {
+          "id": 11,
+          "createdAt": "2024-07-25T09:01:30.321Z",
+          "updatedAt": "2024-07-25T09:01:30.321Z",
+          "deletedAt": null,
+          "name": "Oliver Wilson",
+          "email": "oliver@example.com",
+          "password": "$2a$10$g3LeIZlfGbhtYlnuSin9BuiePBWh.Oma1.R0NmgoLZAqF7AMEB9mC",
+          "role": 1
+        }
+      ]
     }
   ]
 }
