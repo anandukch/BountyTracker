@@ -1,7 +1,9 @@
 import { CreateTaskDto } from "../dto/task.dto";
 import Employee from "../entity/employee.entity";
 import Task from "../entity/task.entity";
+import HttpException from "../exceptions/http.exceptions";
 import TaskRepository from "../repository/task.repository";
+import { CommentType } from "../utils/commentType.enum";
 
 class TaskService {
 	constructor(private taskRepository: TaskRepository) {}
@@ -14,7 +16,11 @@ class TaskService {
 		return this.taskRepository.find(filter, relations);
 	};
 	getTaskById = async (id: number) => {
-		return this.taskRepository.findOneBy({ id });
+		const task = await this.taskRepository.findOneBy({ id });
+		if (!task) {
+			throw new HttpException(404, "Task not found");
+		}
+		return task;
 	};
 
 	createTask = async (task: CreateTaskDto, user: Employee) => {
@@ -42,7 +48,11 @@ class TaskService {
 
 	getTaskCommentsById = async (id: number) => {
 		const task = await this.getTaskById(id);
-		return task.comments;
+		const allComments = task.comments;
+		const normalComments = allComments.filter((comment) => comment.commentType === CommentType.Normal);
+		const reviewComments = allComments.filter((comment) => comment.commentType === CommentType.Review);
+
+		return { normalComments, reviewComments };
 	};
 }
 
