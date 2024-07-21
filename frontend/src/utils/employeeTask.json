@@ -1,0 +1,119 @@
+{
+  "data": [
+    {
+      "id": 2,
+      "createdAt": "2024-07-20T13:59:36.511Z",
+      "updatedAt": "2024-07-21T01:13:13.588Z",
+      "deletedAt": null,
+      "contribution": 25,
+      "employeeId": 1,
+      "taskId": 2,
+      "task": {
+        "id": 2,
+        "createdAt": "2024-07-20T10:16:40.010Z",
+        "updatedAt": "2024-07-20T10:16:40.010Z",
+        "deletedAt": null,
+        "title": "Implement Feature XYZ",
+        "description": "Develop and integrate the new feature XYZ into the application.",
+        "status": "In Progress",
+        "maxParticipants": 5,
+        "currentParticipants": 1,
+        "totalBounty": 1000,
+        "startDate": "2024-08-15T23:59:59.000Z",
+        "deadLine": "2024-08-15T23:59:59.000Z"
+      }
+    },
+    {
+      "id": 3,
+      "createdAt": "2024-07-21T08:30:20.123Z",
+      "updatedAt": "2024-07-21T10:45:35.789Z",
+      "deletedAt": null,
+      "contribution": 30,
+      "employeeId": 2,
+      "taskId": 3,
+      "task": {
+        "id": 3,
+        "createdAt": "2024-07-21T08:15:10.567Z",
+        "updatedAt": "2024-07-21T08:15:10.567Z",
+        "deletedAt": null,
+        "title": "Refactor Authentication System",
+        "description": "Optimize and refactor the authentication system for security enhancements.",
+        "status": "In Progress",
+        "maxParticipants": 3,
+        "currentParticipants": 2,
+        "totalBounty": 1500,
+        "startDate": "2024-08-10T00:00:00.000Z",
+        "deadLine": "2024-08-25T23:59:59.000Z"
+      }
+    },
+    {
+      "id": 4,
+      "createdAt": "2024-07-21T14:00:50.987Z",
+      "updatedAt": "2024-07-21T16:20:15.234Z",
+      "deletedAt": null,
+      "contribution": 20,
+      "employeeId": 3,
+      "taskId": 1,
+      "task": {
+        "id": 1,
+        "createdAt": "2024-07-19T15:20:30.987Z",
+        "updatedAt": "2024-07-20T09:10:45.234Z",
+        "deletedAt": null,
+        "title": "Bug Fixing",
+        "description": "Investigate and fix critical bugs reported in the application.",
+        "status": "Completed",
+        "maxParticipants": 2,
+        "currentParticipants": 2,
+        "totalBounty": 800,
+        "startDate": "2024-07-25T00:00:00.000Z",
+        "deadLine": "2024-08-05T23:59:59.000Z"
+      }
+    },
+    {
+      "id": 5,
+      "createdAt": "2024-07-21T17:30:10.333Z",
+      "updatedAt": "2024-07-21T18:45:25.222Z",
+      "deletedAt": null,
+      "contribution": 15,
+      "employeeId": 4,
+      "taskId": 4,
+      "task": {
+        "id": 4,
+        "createdAt": "2024-07-21T14:00:00.000Z",
+        "updatedAt": "2024-07-21T14:00:00.000Z",
+        "deletedAt": null,
+        "title": "UI/UX Enhancement",
+        "description": "Improve user interface and user experience for better usability.",
+        "status": "In Progress",
+        "maxParticipants": 4,
+        "currentParticipants": 3,
+        "totalBounty": 1200,
+        "startDate": "2024-08-01T00:00:00.000Z",
+        "deadLine": "2024-08-20T23:59:59.000Z"
+      }
+    },
+    {
+      "id": 6,
+      "createdAt": "2024-07-22T09:00:20.444Z",
+      "updatedAt": "2024-07-22T10:30:35.987Z",
+      "deletedAt": null,
+      "contribution": 18,
+      "employeeId": 5,
+      "taskId": 5,
+      "task": {
+        "id": 5,
+        "createdAt": "2024-07-22T08:00:00.000Z",
+        "updatedAt": "2024-07-22T08:00:00.000Z",
+        "deletedAt": null,
+        "title": "Performance Optimization",
+        "description": "Identify and implement optimizations to enhance application performance.",
+        "status": "Open",
+        "maxParticipants": 3,
+        "currentParticipants": 0,
+        "totalBounty": 1000,
+        "startDate": "2024-08-10T00:00:00.000Z",
+        "deadLine": "2024-08-30T23:59:59.000Z"
+      }
+    }
+  ]
+}
