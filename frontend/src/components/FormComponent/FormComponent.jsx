@@ -19,9 +19,8 @@ const FormComponent = ({ onChange, formFields }) => {
 						return (
 							<field.Component
 								key={field.id}
-								label={field.label}
+								label={field.name}
 								values={field.values}
-								name={field.name}
 								className="fields"
 								onSelect={(value) => handleChange({ [field.id]: value })}
 							/>
@@ -30,31 +29,34 @@ const FormComponent = ({ onChange, formFields }) => {
 						return (
 							<div className="fieldsTextArea">
 								<label>Description</label>
-								<textarea key={field.id} name={field.name} rows="5" cols="40" onChange={onChange} />
+								<textarea
+									key={field.id}
+									name={field.name}
+									rows="5"
+									cols="40"
+									onChange={(e) => handleChange({ [field.id]: e.target.value })}
+								/>
 							</div>
 						);
 					return (
 						<TextField
 							key={field.id}
-							label={field.label}
+							label={field.name}
 							type={field.type}
 							className="fields"
-							name={field.name}
-							onChange={onChange}
+							onChange={(value) => handleChange({ [field.id]: value })}
 						/>
 					);
 				})}
-				{/* {type ? (
+				{type ? (
 					<TextField
 						key="maxParticipants"
 						label="Max Participants"
 						type="number"
 						className="fields"
-						name="maxParticipants"
-						// onChange={(value) => handleChange({ ["maxParticipants"]: value })}
-						onChange={onChange}
+						onChange={(value) => handleChange({ ["maxParticipants"]: value })}
 					/>
-				) : null} */}
+				) : null}
 			</div>
 		</form>
 	);

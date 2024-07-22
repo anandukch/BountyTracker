@@ -13,7 +13,7 @@ const Login = () => {
 	useEffect(() => {
 		if (isSuccess) {
 			localStorage.setItem("token", data.token);
-			navigate("/user");
+			navigate("/employee");
 		}
 	}, [data, isSuccess, navigate]);
 
@@ -42,12 +42,12 @@ const Login = () => {
 					name="password"
 					onChange={passwordChangeHandler}
 				/>
-				<Button text="Login" className="" onClick={onButtonClick} />
+				<Button text="Login" isPrimary={true} onClick={onButtonClick} />
 			</form>
 
 			<span>
 				New to KoYns..?{" "}
-				<Link className="registerLink" to="register">
+				<Link className="registerLink" to="/register">
 					Register
 				</Link>
 			</span>
