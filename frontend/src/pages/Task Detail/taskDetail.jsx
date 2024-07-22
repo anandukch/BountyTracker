@@ -8,10 +8,11 @@ import CommentComponent from "../../components/CommentComponent/CommentComponent
 import TextField from "../../components/TextField/TextField";
 import Button from "../../components/Button/Button";
 import { useEffect, useState } from "react";
-import { useGetTaskByIdQuery, useGetTaskListQuery } from "../../api/taskApi";
+import { useGetTaskByIdQuery, useGetTaskListQuery, useLazyGetTaskByIdQuery } from "../../api/taskApi";
 import { formatDate } from "../../utils/date.utils";
 import { useGetEmployeeQuery } from "../../api/employeeApi";
 const TaskDetail = () => {
+	const [commentList, setCommentList] = useState([]);
 	const form_fields = [
 		{
 			id: "description",
@@ -25,19 +26,6 @@ const TaskDetail = () => {
 			value: "Node, react, java, c",
 		},
 	];
-	const comments = [
-		{
-			id: 1,
-			name: "sanoj",
-			comment: "hey need bug fix",
-		},
-		{
-			id: 2,
-			name: "sanoj",
-			comment: "hey need bug fix",
-		},
-	];
-
 	const particpants = [
 		{
 			name: "Sanoj",
@@ -46,8 +34,10 @@ const TaskDetail = () => {
 			name: "John",
 		},
 	];
-	const [commentType, setCommentType] = useState("comment");
+	const [commentType, setCommentType] = useState("Normal");
 	const [comment, setComment] = useState("");
+	const { data: taskDetail, isSuccess } = useGetTaskByIdQuery(2);
+
 	const handleSend = (e) => {
 		console.log(comment);
 	};
@@ -57,15 +47,13 @@ const TaskDetail = () => {
 	const handleCommentFilter = (filter) => {
 		setCommentType(filter);
 	};
-   
-   const {data : taskDetail ,isSuccess}=useGetTaskByIdQuery(2)
-   useEffect(()=>{
-      console.log(taskDetail)
+	useEffect(() => {
+		if (taskDetail?.data) {
+			setCommentList(taskDetail.data.comments);
+			console.log(commentList);
+		}
+	});
 
-   },[taskDetail])
-   
-   
-  
 	return (
 		<main className="taskDetail">
 			<div className="title">
@@ -73,7 +61,7 @@ const TaskDetail = () => {
 					<h3>Task : # {taskDetail?.data.title}</h3>
 				</span>
 				<span>
-					<h3>Due : {formatDate(taskDetail?.data.deadLine)}</h3> 
+					<h3>Due : {formatDate(taskDetail?.data.deadLine)}</h3>
 				</span>
 			</div>
 			<div className="details">
@@ -89,7 +77,7 @@ const TaskDetail = () => {
 					<div className="typeSection">
 						<div className="fields">
 							<label> Type</label>
-							<div className="type">{taskDetail?.data.maxParticipants>1?"Group" : "Individual"}</div>
+							<div className="type">{taskDetail?.data.maxParticipants > 1 ? "Group" : "Individual"}</div>
 						</div>
 						{true ? (
 							<div className="fields">
@@ -116,15 +104,15 @@ const TaskDetail = () => {
 							<div className="commentFilter">
 								<div
 									className="commentFlag"
-									onClick={() => handleCommentFilter("comment")}
-									style={commentType === "comment" ? { backgroundColor: "white" } : null}
+									onClick={() => handleCommentFilter("Normal")}
+									style={commentType === "Normal" ? { backgroundColor: "white" } : null}
 								>
 									Comment
 								</div>
 								<div
 									className="review"
-									onClick={() => handleCommentFilter("review")}
-									style={commentType === "review" ? { backgroundColor: "white" } : null}
+									onClick={() => handleCommentFilter("Review")}
+									style={commentType === "Review" ? { backgroundColor: "white" } : null}
 								>
 									Review
 								</div>
@@ -134,9 +122,13 @@ const TaskDetail = () => {
 
 					<div className="commentWrapper">
 						<div className="commentList">
-							{comments.map((record) => {
-								return <CommentComponent key={record.id} name={record.name} comment={record.comment} />;
-							})}
+							{commentList
+								.filter((record) => record.commentType === commentType)
+								.map((record) => {
+									return (
+										<CommentComponent key={record.id} name={record.name} comment={record.content} />
+									);
+								})}
 						</div>
 						<div className="addComment">
 							<img src={commentIcon} alt="Comment Icon" />
