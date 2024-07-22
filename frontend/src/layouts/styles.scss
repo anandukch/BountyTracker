@@ -1,0 +1,126 @@
+:root {
+	--persian-indigo: #27187eff;
+	--eggshell: #f1eeddff;
+	--primary-btn: #6f8ce0;
+	--ut-orange: #ff8600ff;
+	--hunter-green: #3f6634ff;
+}
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Nunito", sans-serif;
+	color: var(--textBlack);
+}
+.page {
+	display: flex;
+	flex-direction: column;
+	background-color: var(--bgGray);
+}
+.header {
+	height: 90px;
+	display: flex;
+	flex-direction: row;
+	position: fixed;
+	.logo {
+		width: 300px;
+		height: 90px;
+		background-color: #fafafa;
+		justify-content: center;
+		align-items: center;
+		display: flex;
+		flex-direction: row;
+		padding: 10px;
+		gap: 10px;
+		.logo-image {
+			height: 70%;
+			padding: 2px;
+			border-radius: 50%;
+			border: 1px solid #eaeaea;
+		}
+		.logo-text {
+			height: 60%;
+		}
+	}
+
+	h1 {
+		font-family: Arial, Helvetica, sans-serif;
+		width: calc(100vw - 300px);
+		text-align: center;
+		align-content: center;
+		font-weight: 600;
+	}
+
+	border-bottom: solid 1px var(--borderColor);
+}
+
+.imglogo {
+	background-color: var(--bgWhite);
+	position: relative;
+	width: 280px;
+}
+.HomeLayout {
+	position: fixed;
+	width: 300px;
+	height: calc(100vh - 90px);
+	left: 0;
+	top: 90px;
+	background-color: var(--bgWhite);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding-top: 25px;
+	.top {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+	}
+	.bottom {
+		margin-bottom: 20px;
+		.links {
+			cursor: pointer;
+			background-color: var(--ut-orange);
+		}
+	}
+	.links {
+		text-decoration: none;
+		margin-left: 20px;
+		padding-left: 10px;
+		border-radius: 40px 0 0 40px;
+		/* width: 290px; */
+		/* padding-bottom: 25px; */
+		height: 55px;
+		/* background-color: var(--ut-orange); */
+		display: flex;
+		align-items: center;
+		/* color: black; */
+		font-size: 14px;
+		font-weight: 700;
+
+		&.active {
+			background-color: #ff8600ff;
+		}
+	}
+	.icon {
+		background-color: var(--bgWhite);
+		border-radius: 100%;
+		width: 25x;
+		height: 25x;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 5px;
+		margin-right: 10px;
+	}
+	.imgicon {
+		width: 25px;
+		height: 25px;
+		background-color: var(--bgWhite);
+	}
+}
+.content {
+	margin-top: 90px;
+	width: calc(100vw - 300px);
+	margin-left: 300px;
+	height: calc(100vh - 90px);
+}

@@ -1,0 +1,186 @@
+.fullWrap {
+	display: flex;
+	flex-direction: column;
+	margin: 20px;
+	gap: 20px;
+
+	.userSection {
+		display: flex;
+		gap: 20px;
+		flex-direction: column;
+		padding-top: 30px;
+		padding-bottom: 30px;
+		padding-left: 10px;
+		background-color: #fffdfe;
+		border-radius: 10px;
+	}
+	.reviewName {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 10px;
+	}
+	.reviewName img {
+		height: 40px;
+	}
+	.reviewDesciption {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		padding-left: 50px;
+		width: fit-content;
+	}
+	.reviewDesciption p {
+		color: rgb(116, 116, 116);
+		padding-bottom: 5px;
+	}
+	.reviewTextDescription p {
+		color: rgb(116, 116, 116);
+	}
+	.reviewTextDescription {
+		padding-bottom: 10px;
+	}
+	.reviewFileDescription {
+		font-family: Arial, sans-serif;
+		margin: 20px;
+		border: 1px solid #ccc;
+		height: fit-content;
+		border-radius: 10px;
+		width: fit-content;
+	}
+	.previewTitle {
+		padding-top: 20px;
+		margin-top: 10px;
+		padding-left: 10px;
+		margin-left: 50px;
+		font-size: 18px;
+		margin-bottom: 10px;
+		padding-bottom: 20px;
+		padding-right: 10px;
+		margin-right: 50px;
+	}
+	.downloadLink {
+		display: inline-block;
+		padding: 10px 20px;
+		color: white;
+		background-color: grey;
+		text-decoration: none;
+		border-radius: 5px;
+		margin-left: 50px;
+		margin-right: 50px;
+		margin-bottom: 10px;
+	}
+	.downloadLink:hover {
+		background-color: darkgrey;
+	}
+
+	.leadSection {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		padding-top: 10px;
+		padding-left: 10px;
+	}
+	.bountyPoints {
+		display: flex;
+		flex-direction: row;
+		gap: 70px;
+		padding-left: 20px;
+		padding-bottom: 30px;
+	}
+	.textGroup {
+		display: flex;
+		flex-direction: row;
+		gap: 10px;
+	}
+	.awardBounty h3 {
+		color: goldenrod;
+	}
+	.textGroup h3:nth-child(2) {
+		color: goldenrod;
+	}
+	.awardSpecialBounty {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.awardBounty {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	#bountyPoints {
+		width: 100px;
+		height: 50px;
+		border-radius: 25px;
+		font-size: 20px;
+		text-align: center;
+		border: 2px solid #ccc;
+		padding: 5px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		outline: none;
+	}
+	#specialBountyPoints {
+		width: 100px;
+		height: 50px;
+		border-radius: 25px;
+		font-size: 20px;
+		text-align: center;
+		border: 2px solid #ccc;
+		padding: 5px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		outline: none;
+	}
+
+	.awardSpecialBounty h3 {
+		margin-bottom: 10px;
+	}
+	.awardBounty h3 {
+		margin-bottom: 10px;
+	}
+
+	.reviewButtons {
+		display: flex;
+		flex-direction: row;
+	}
+	textarea {
+		outline: none;
+	}
+
+	button {
+		height: 30px;
+		margin-right: 10px;
+		border-radius: 5px;
+		font-weight: 500;
+		font-size: 14px;
+		width: 100px;
+		cursor: pointer;
+	}
+	.approveButton .approve {
+		background-color: var(--navBlue);
+		border: var(--navBlue);
+		box-shadow: 0.5px 0.5px 1px var(--textGray);
+		color: var(--bgWhite);
+	}
+	.closeButton .close {
+		background-color: var(--bgWhite);
+		border: 1px solid var(--textGray);
+		box-shadow: 0.5px 0.5px 1px var(--textGray);
+		color: var(--textBlack);
+	}
+	.leadComment {
+		padding-bottom: 10px;
+	}
+	.leadComment textarea {
+		width: 100%;
+		height: 150px;
+		padding: 12px 20px;
+		box-sizing: border-box;
+		border: 2px solid #ccc;
+		border-radius: 4px;
+		background-color: #f8f8f8;
+		font-size: 16px;
+		resize: none;
+	}
+}

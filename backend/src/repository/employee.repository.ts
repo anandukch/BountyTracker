@@ -2,36 +2,34 @@ import { Repository } from "typeorm";
 import Employee from "../entity/employee.entity";
 
 class EmployeeRepository {
-    constructor(private repository: Repository<Employee>) {}
+	constructor(private repository: Repository<Employee>) {}
 
-    find = async (): Promise<Employee[]> => {
-        return this.repository.find({
-            relations: ["address", "department"],
-        });
-    };
+	find = async (): Promise<Employee[]> => {
+		return this.repository.find({});
+	};
 
-    findOneBy = async (filter: Partial<Employee>): Promise<Employee> => {
-        return this.repository.findOne({ where: filter, relations: ["address", "department"] });
-    };
+	findOneBy = async (filter: Partial<Employee>, relations?: Array<string>): Promise<Employee> => {
+		return this.repository.findOne({ where: filter, relations: relations });
+	};
 
-    create = async (data: Employee): Promise<Employee> => {
-        return this.repository.create(data);
-    };
-    update = async (id: number, employee: Partial<Employee>) => {
-        return this.repository.update({ id }, employee);
-    };
+	create = async (data: Employee): Promise<Employee> => {
+		return this.repository.create(data);
+	};
+	update = async (id: number, employee: Partial<Employee>) => {
+		return this.repository.update({ id }, employee);
+	};
 
-    save = async (employee: Employee): Promise<Employee> => {
-        return this.repository.save(employee);
-    };
+	save = async (employee: Employee): Promise<Employee> => {
+		return this.repository.save(employee);
+	};
 
-    delete = async (filter: Partial<Employee>): Promise<void> => {
-        await this.repository.delete(filter.id);
-    };
+	delete = async (filter: Partial<Employee>): Promise<void> => {
+		await this.repository.delete(filter.id);
+	};
 
-    softDelete = async (employee: Employee): Promise<void> => {
-        await this.repository.softRemove(employee);
-    };
+	softDelete = async (employee: Employee): Promise<void> => {
+		await this.repository.softRemove(employee);
+	};
 }
 
 export default EmployeeRepository;
