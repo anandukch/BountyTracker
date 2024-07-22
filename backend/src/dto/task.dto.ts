@@ -32,6 +32,11 @@ export class CreateTaskDto {
 	skills: string;
 }
 
+export class UpdateTaskDto {
+	@IsNotEmpty()
+	status:string;
+}
+
 export class ResponseTaskDto extends Task {
 	skillList: string[];
 	constructor(task: Task) {

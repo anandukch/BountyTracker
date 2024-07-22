@@ -1,4 +1,4 @@
-import { CreateTaskDto, ResponseTaskDto } from "../dto/task.dto";
+import { CreateTaskDto, ResponseTaskDto, UpdateTaskDto } from "../dto/task.dto";
 import Employee from "../entity/employee.entity";
 import Task from "../entity/task.entity";
 import HttpException from "../exceptions/http.exceptions";
@@ -40,8 +40,11 @@ class TaskService {
 		await this.taskRepository.save(newTask);
 	};
 
-	updateTask = async (id: number, task: Partial<Task>) => {
-		return this.taskRepository.update(id, task);
+	updateTask = async (id: number, task: UpdateTaskDto) => {
+		const existingTask = await this.taskRepository.findOneBy({ id });
+		console.log(existingTask);
+		existingTask.status = task.status;
+		await this.taskRepository.update(id,existingTask);
 	};
 
 	getTaskCreatedByUser = async (id: number) => {

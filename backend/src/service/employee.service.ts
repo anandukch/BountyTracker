@@ -34,7 +34,6 @@ class EmployeeService {
 			"participatingTasks",
 			"participatingTasks.task",
 			"participatingTasks.task.createdBy",
-			"participatingTasks.task.createdBy",
 		]);
 		if (!employee) {
 			throw new EntityNotFoundException(404, "Employee not found");
