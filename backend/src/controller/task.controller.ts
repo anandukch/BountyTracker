@@ -54,14 +54,29 @@ class TaskController {
 	public getTaskById = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			const { taskId } = req.params;
-			if(!taskId){
-				throw new HttpException(400,"Task not found")
+			if (!taskId) {
+				throw new HttpException(400, "Task not found");
 			}
-			const tasks = await this.taskService.getTaskById(parseInt(taskId));
+			const task = await this.taskService.getTaskById(parseInt(taskId));
 			res.status(200).json({
 				success: true,
 				message: "Tasks fetched successfully",
-				data: tasks,
+				data: {
+					...task,
+					createdBy: {
+						name: task.createdBy.name,
+						email: task.createdBy.email,
+						role: task.createdBy.role,
+					},
+					participants: task.participants.map((participant) => {
+						return {
+							name: participant.employee.name,
+							email: participant.employee.email,
+							contribution: participant.contribution,
+						};
+					})
+						
+				},
 			});
 		} catch (error) {
 			next(error);
@@ -71,13 +86,13 @@ class TaskController {
 	public createTask = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			console.log(req.body);
-			
+
 			const task = req.body;
 			const taskDto = plainToInstance(CreateTaskDto, task);
 			const errors = await validate(taskDto);
 			if (errors.length) {
-          		throw new ValidationException(400, "Validation Failed", errors);
-        	}
+				throw new ValidationException(400, "Validation Failed", errors);
+			}
 			await this.taskService.createTask(taskDto, req.user);
 			res.status(200).json({
 				success: true,
@@ -85,7 +100,7 @@ class TaskController {
 			});
 		} catch (error) {
 			console.log(error);
-			
+
 			next(error);
 		}
 	};
@@ -93,8 +108,8 @@ class TaskController {
 	public getAllTaskComments = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			const { taskId } = req.params;
-			if(!taskId){
-				throw new HttpException(400,"Task not found")
+			if (!taskId) {
+				throw new HttpException(400, "Task not found");
 			}
 			const allComments = await this.taskService.getTaskCommentsById(parseInt(taskId));
 
@@ -112,8 +127,8 @@ class TaskController {
 		try {
 			const { commentId } = req.params;
 
-			if(!commentId){
-				throw new HttpException(400,"Comment not found")
+			if (!commentId) {
+				throw new HttpException(400, "Comment not found");
 			}
 
 			const comment = await this.commentService.getCommentByCommentId(parseInt(commentId));
@@ -137,8 +152,8 @@ class TaskController {
 			const commentDto = plainToInstance(CreateComementDto, comment);
 			const errors = await validate(commentDto);
 			if (errors.length) {
-          		throw new ValidationException(400, "Validation Failed", errors);
-        	}
+				throw new ValidationException(400, "Validation Failed", errors);
+			}
 			console.log("here");
 			const response = await this.commentService.createComment(parseInt(taskId), employee, commentDto);
 
@@ -155,15 +170,15 @@ class TaskController {
 	public reviewComment = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			const { commentId } = req.params;
-			if(!commentId){
-				throw new HttpException(400,"Comment not found")
+			if (!commentId) {
+				throw new HttpException(400, "Comment not found");
 			}
 			const commentReview = req.body;
 			const commentReviewDto = plainToInstance(ReviewCommentDto, commentReview);
 			const errors = await validate(commentReviewDto);
 			if (errors.length) {
-          		throw new ValidationException(400, "Validation Failed", errors);
-        	}
+				throw new ValidationException(400, "Validation Failed", errors);
+			}
 			const response = await this.commentService.reviewComment(parseInt(commentId), commentReviewDto);
 			res.status(200).json({
 				success: true,
