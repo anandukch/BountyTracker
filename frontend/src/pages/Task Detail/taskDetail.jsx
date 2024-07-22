@@ -36,29 +36,33 @@ const TaskDetail = () => {
 	const [commentType, setCommentType] = useState("Normal");
 	const [comment, setComment] = useState("");
 	const { data: taskDetail } = useGetTaskByIdQuery(2);
-	// const {data: comments}=useGetCommentsByTaskIdQuery(2)
+	const { data: commentsData } = useGetCommentsByTaskIdQuery(2);
+
 	const [createComment, { data, isSuccess }] = useCreateCommentMutation();
 	const handleSend = (e) => {
-      const commentData={
-         id:2,
-         commentType:commentType,
-         content:comment
-      }
-      createComment(commentData)
-		console.log(comment);
+		const commentData = {
+			id: 2,
+			commentType: commentType,
+			content: comment,
+		};
+		createComment(commentData);
+		// console.log(comment);
 	};
 	const handleTextArea = (e) => {
 		setComment(e.target.value);
-      
 	};
 	const handleCommentFilter = (filter) => {
 		setCommentType(filter);
 	};
 	useEffect(() => {
 		if (taskDetail?.data) {
-			setCommentList(taskDetail.data.comments);
 			setParticipantList(taskDetail.data.participants);
 			// console.log(commentList);
+		}
+		if (commentsData?.data) {
+			if (commentType == "Normal") setCommentList(commentsData.data.normalComments);
+			else setCommentList(commentsData.data.reviewComments);
+         console.log(commentList);
 		}
 	});
 
@@ -134,7 +138,7 @@ const TaskDetail = () => {
 								.filter((record) => record.commentType === commentType)
 								.map((record) => {
 									return (
-										<CommentComponent key={record.id} name={record.name} comment={record.content} />
+										<CommentComponent key={record.id} name={record.employee.name} comment={record.content} />
 									);
 								})}
 						</div>
@@ -149,7 +153,7 @@ const TaskDetail = () => {
 							<span className="commentButtons">
 								<img src={attach} type="file" alt="Add attachment" />
 								{commentType === "Review" ? (
-									<Button className="reviewButton" text="Review" onClick={handleSend}/>
+									<Button className="reviewButton" text="Review" onClick={handleSend} />
 								) : (
 									<div className="sendButton">
 										<img src={send} alt="Send Comment" onClick={handleSend} />
