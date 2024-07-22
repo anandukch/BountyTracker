@@ -15,7 +15,7 @@ const dataSource = new DataSource({
 	extra: { max: 5, min: 2 },
 	synchronize: false,
 	// logging: NODE_ENV == "dev" ? false : true,
-	logging: true,
+	logging: false,
 	namingStrategy: new SnakeNamingStrategy(),
 	entities: NODE_ENV == "dev" ? ["src/entity/*.ts"] : ["dist/entity/*.js"],
 	migrations: ["dist/db/migrations/*.js"],

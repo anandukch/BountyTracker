@@ -16,7 +16,7 @@ const initialFormData = {
 };
 const CreateTask = () => {
 	const [formData, setFormData] = useState(initialFormData);
-	const [createTask, { data, isSuccess, isLoading }] = useCreateTaskMutation();
+	const [createTask, { data, isSuccess }] = useCreateTaskMutation();
 	const formFields = [
 		{
 			id: "name",

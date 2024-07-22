@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import "./styles.scss";
 import logo from "../../assets/KoYns-Logo.png";
 import commentIcon from "../../assets/commentIcon.svg";
@@ -43,20 +44,46 @@ const TaskDetail = () => {
 	};
 	const [commentType, setCommentType] = useState("Normal");
 	const [comment, setComment] = useState("");
-	const { data: taskDetail } = useGetTaskByIdQuery(2);
-	const { data: commentsData } = useGetCommentsByTaskIdQuery(2);
+	const { data: taskDetail } = useGetTaskByIdQuery(9);
+	const { data: commentsData } = useGetCommentsByTaskIdQuery(9);
 
 	const [createComment, { data }] = useCreateCommentMutation();
-	const [upload, { isSuccess }] = useUploadMutation();
-	const handleSend = (e) => {
+	// const [upload, { isSuccess }] = useUploadMutation();
+	const handleSend = async () => {
+		const formData = new FormData();
+		formData.append("file", file);
 		const commentData = {
-			id: 2,
+			id: 9,
 			commentType: commentType,
 			content: comment,
-         file:file
 		};
-		createComment(commentData);
-		// console.log(comment);
+		formData.append("data", JSON.stringify(commentData));
+		formData.append("id", 9);
+		formData.append("commentType", commentType);
+		formData.append("content", comment);
+		createComment(formData);
+
+		// try {
+		// 	const token = localStorage.getItem('token');
+
+		// 	const response = await fetch('http://localhost:3000/tasks/9/comments', {
+		// 		method: 'POST',
+		// 		headers: {
+		// 			'Authorization': `Bearer ${token}`
+		// 		},
+		// 		body: formData
+		// 	});
+		// 	console.log("response", response);
+
+		// 	if (!response.ok) {
+		// 		throw new Error(`HTTP error! status: ${response.status}`);
+		// 	}
+
+		// 	const result = await response.json();
+		// 	console.log('Success:', result);
+		// } catch (error) {
+		// 	console.error('Error:', error);
+		// }
 	};
 	const handleTextArea = (e) => {
 		setComment(e.target.value);
@@ -66,29 +93,17 @@ const TaskDetail = () => {
 	};
 	const handleUpload = (e) => {
 		uploadFile(e.target.files[0]);
-      console.log(e.target.files[0])
 	};
 	useEffect(() => {
 		if (taskDetail?.data) {
 			setParticipantList(taskDetail.data.participants);
-			// console.log(commentList);
 		}
 		if (commentsData?.data) {
 			if (commentType == "Normal") setCommentList(commentsData.data.normalComments);
 			else setCommentList(commentsData.data.reviewComments);
-			console.log(commentList);
 		}
-	});
-	useEffect(() => {
-		if (file) {
-			const formData = new FormData();
-			formData.append("Date:employeeName_File", file);
-			// upload(formData);
-			if (isSuccess) console.log("kittyy monee");
-		} else {
-			console.log("file kiteeela mone");
-		}
-	}, [file]);
+	}, [commentList, commentType, commentsData.data, taskDetail.data]);
+
 	return (
 		<main className="taskDetail">
 			<div className="title">
@@ -114,12 +129,11 @@ const TaskDetail = () => {
 							<label> Type</label>
 							<div className="type">{taskDetail?.data.maxParticipants > 1 ? "Group" : "Individual"}</div>
 						</div>
-						{true ? (
-							<div className="fields">
-								<label> Max Participants</label>
-								<div className="maxParticipants">{taskDetail?.data.maxParticipants}</div>
-							</div>
-						) : null}
+
+						<div className="fields">
+							<label> Max Participants</label>
+							<div className="maxParticipants">{taskDetail?.data.maxParticipants}</div>
+						</div>
 					</div>
 				</div>
 				<div className="detailSectionBounty">
