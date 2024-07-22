@@ -105,8 +105,7 @@ class EmployeeService {
 		newEmployeeDetails.phoneNo = employeeDto.phoneNo;
 		newEmployeeDetails.totalBounty = 0;
 		employee.details = newEmployeeDetails;
-		const response = await this.employeeRespository.save(employee);
-		return response;
+		return this.employeeRespository.save(employee);
 	};
 
 	joinTask = async (taskId: number, employee: Employee) => {

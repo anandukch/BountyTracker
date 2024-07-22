@@ -42,3 +42,33 @@
 		background-color: red;
 	}
 }
+
+.snackbar {
+	position: relative;
+	top: 0px;
+	right: 0px;
+	/* text-wrap: nowrap; */
+	/* left: 50%;
+    transform: translate(-50%, -100%); */
+	padding: 20px;
+	/* margin: 10px; */
+	border-radius: 20px;
+	color: #ffffffff;
+	/* background-color: #f44336;    */
+	font-weight: 600;
+	max-width: 500px;
+	transition: 0.5s;
+	transition-delay: 0.1s;
+	opacity: 0;
+	&.snackbar-active {
+		transform: translate(0, 50px);
+		opacity: 1;
+	}
+
+	&.snackbar-success {
+		background-color: #4caf50;
+	}
+	&.snackbar-error {
+		background-color: #f44336;
+	}
+}

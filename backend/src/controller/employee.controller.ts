@@ -126,8 +126,8 @@ class EmployeeController {
 			if (errors.length) {
 				throw new ValidationException(400, "Validation Failed", errors);
 			}
-			const createdEmployee = this.employeeService.createEmployee(employeeDto);
-
+			const createdEmployee = await this.employeeService.createEmployee(employeeDto);
+			delete createdEmployee.password;
 			res.status(201).send(createdEmployee);
 		} catch (error) {
 			next(error);
