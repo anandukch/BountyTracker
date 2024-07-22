@@ -8,6 +8,7 @@ import CommentComponent from "../../components/CommentComponent/CommentComponent
 import TextField from "../../components/TextField/TextField";
 import Button from "../../components/Button/Button";
 import { useEffect, useState } from "react";
+import { useGetTaskByIdQuery, useGetTaskListQuery } from "../../api/taskApi";
 const TaskDetail = () => {
 	const form_fields = [
 		{
@@ -54,6 +55,11 @@ const TaskDetail = () => {
 	const handleCommentFilter = (filter) => {
 		setCommentType(filter);
 	};
+
+   const {data,isSuccess}=useGetTaskByIdQuery(2)
+   useEffect(()=>{
+      console.log(data)
+   },[data])
 
 	return (
 		<main className="taskDetail">
