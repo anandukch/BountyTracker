@@ -1,4 +1,4 @@
 export enum Role {
-	LEAD = "LEAD",
-	REGULAR = "REGULAR",
+	LEAD = "Lead",
+	REGULAR = "Regular",
 }

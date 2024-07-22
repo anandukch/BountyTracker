@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
+import { Component, useEffect, useState } from "react";
 import Button from "../../components/Button/Button";
 import Select from "../../components/Select/Select";
 import FormComponent from "../../components/FormComponent/FormComponent";
 import "./styles.scss";
 import { useAddEmployeeMutation } from "../../api/employeeApi";
+import { useNavigate } from "react-router-dom";
 const initalState = {
 	name: "",
 	email: "",
 	birthday: "",
 	password: "",
-	phone: "",
+	phoneNo: "",
 	role: "",
 	address: "",
 	pincode: "",
@@ -17,6 +18,7 @@ const initalState = {
 const RegisterEmployee = () => {
 	const [formData, setFormData] = useState(initalState);
 	const [addEmployee, { data, isSuccess, error, isError }] = useAddEmployeeMutation();
+	const navigate = useNavigate();
 
 	const form_fields = [
 		{
@@ -44,15 +46,22 @@ const RegisterEmployee = () => {
 			name: "password",
 		},
 		{
-			id: "phone",
+			id: "gender",
+			label: "Gender",
+			Component: Select,
+			values: [{ option: "Male" }, { option: "Female" }, { option: "Others" }],
+			name: "gender",
+		},
+		{
+			id: "phoneNo",
 			label: "Phone",
 			type: "text",
-			name: "phone",
+			name: "phoneNo",
 		},
 		{
 			id: "role",
 			label: "Role",
-			values: [{ option: "UX" }, { option: "UI" }, { option: "HR" }, { option: "Developer" }],
+			values: [{ option: "Lead" }, { option: "Regular" }],
 			Component: Select,
 			name: "role",
 		},
@@ -61,12 +70,6 @@ const RegisterEmployee = () => {
 			label: "Address",
 			type: "text",
 			name: "address",
-		},
-		{
-			id: "pincode",
-			label: "Pincode",
-			type: "text",
-			name: "pincode",
 		},
 	];
 	const handleChange = (e) => {
@@ -87,7 +90,19 @@ const RegisterEmployee = () => {
 	const registerEmployeeHandler = () => {
 		// TODO: Implement register employee handler
 		addEmployee(formData);
+		console.log(formData);
 	};
+
+	useEffect(() => {
+		if (isError) {
+		}
+	}, [isError, error]);
+
+	useEffect(() => {
+		if (isSuccess) {
+			navigate("/login");
+		}
+	}, [isSuccess, navigate]);
 
 	return (
 		<main className="RegisterEmployee">
