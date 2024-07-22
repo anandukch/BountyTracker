@@ -26,6 +26,9 @@ class Task extends AbstractEntity {
 	@Column()
 	maxParticipants: number;
 
+	@Column()
+	skills: string;
+
 	@Column({
 		nullable: true,
 		default: 0,

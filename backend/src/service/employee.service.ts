@@ -26,7 +26,7 @@ class EmployeeService {
 		return this.employeeRespository.findOneBy({ email });
 	};
 	getEmployeeByID = async (employeeID: number): Promise<Employee> => {
-		return this.employeeRespository.findOneBy({ id: employeeID }, []);
+		return this.employeeRespository.findOneBy({ id: employeeID }, ['details']);
 	};
 
 	getEmployeeTasksByID = async (employeeID: number) => {
