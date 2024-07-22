@@ -1,25 +1,48 @@
 import "./styles.scss";
 import TextField from "../../components/TextField/TextField";
 import Button from "../../components/Button/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLoginMutation } from "../../api/loginApi";
 
 const Login = () => {
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [login, { isSuccess, data }] = useLoginMutation();
+	const navigate = useNavigate();
+	useEffect(() => {
+		if (isSuccess) {
+			localStorage.setItem("token", data.token);
+			navigate("/user");
+		}
+	}, [data, isSuccess, navigate]);
+
+	const passwordChangeHandler = (e) => {
+		setPassword(e.target.value);
+	};
+
+	const emailChangeHandler = (e) => {
+		setEmail(e.target.value);
+	};
+
+	const onButtonClick = (e) => {
+		e.preventDefault();
+		login({ email, password });
+	};
+
 	return (
 		<div className="login">
 			<h1>Login</h1>
 			<form action="/" method="post">
-				{/* <img src={} alt="Logo" className="logo" /> */}
+				<TextField label="Username" name="email" type="text" className="fields" onChange={emailChangeHandler} />
 				<TextField
-					label="Username"
-					//   value={userName}
-					//   ref={unameRef}
-					type="text"
+					label="Password"
+					type="password"
 					className="fields"
-					//   error={err}
-					//   onChange={setUserName}
+					name="password"
+					onChange={passwordChangeHandler}
 				/>
-				<TextField label="Password" type="password" className="fields" />
-				<Button type="button" text="Login" className="" />
+				<Button text="Login" className="" onClick={onButtonClick} />
 			</form>
 
 			<span>

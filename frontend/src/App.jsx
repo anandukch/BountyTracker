@@ -7,6 +7,8 @@ import Hero from "./components/Hero/Hero";
 import EmployeeDashboard from "./pages/Dashboard/employeeDashboard";
 import TaskDetail from "./pages/Task Detail/taskDetail";
 import EmployeeTierList from "./pages/EmployeeTierList/employeeTierList";
+import { Provider } from "react-redux";
+import store from "./store/store";
 
 const App = () => {
 	const router = createBrowserRouter([
@@ -43,10 +45,11 @@ const App = () => {
 	]);
 
 	return (
-		//    <Provider store={store}>
-		<main className="App">
-			<RouterProvider router={router} />
-		</main>
+		<Provider store={store}>
+			<main className="App">
+				<RouterProvider router={router} />
+			</main>
+		</Provider>
 	);
 };
 export default App;

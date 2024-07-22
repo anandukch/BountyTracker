@@ -1,7 +1,8 @@
+/* eslint-disable react/prop-types */
 import React from "react";
-const Button = ({ className, type, text }) => {
+const Button = ({ text, className, onClick, type }) => {
 	return (
-		<button className={className} type={type}>
+		<button className={className} onClick={onClick} type={type}>
 			{text}
 		</button>
 	);
