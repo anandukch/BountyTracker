@@ -12,8 +12,10 @@ import ReviewStatus from "../utils/reviewStatus.enum";
 class CommentService {
 	constructor(private commentRepository: CommentRepository) {}
 
-	getAllCommentsByTaskId = async (task: Task): Promise<Comment[]> => {
-		return this.commentRepository.findBy({ task });
+	getAllCommentsByTaskId = async (taskId: number): Promise<Comment[]> => {
+		const comments = await this.commentRepository.findBy({ task: { id: taskId } as any });
+		console.log(comments);
+		return comments;
 	};
 
 	getCommentByCommentId = async (id: number) => {
@@ -29,7 +31,12 @@ class CommentService {
 
 		const newComment = new Comment();
 		const { commentType, content, fileUrl, mentionCommentId } = commentDto;
-		const task = await taskService.getTaskById(taskId,["createdBy","comments", "participants", "participants.employee"]);
+		const task = await taskService.getTaskById(taskId, [
+			"createdBy",
+			"comments",
+			"participants",
+			"participants.employee",
+		]);
 		const mentionComment = mentionCommentId ? await this.getCommentByCommentId(mentionCommentId) : null;
 		newComment.task = task;
 		newComment.commentType = commentType;

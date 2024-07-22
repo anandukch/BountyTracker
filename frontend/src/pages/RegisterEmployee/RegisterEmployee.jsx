@@ -15,6 +15,7 @@ const initalState = {
 };
 const RegisterEmployee = () => {
 	const [formData, setFormData] = useState(initalState);
+
 	const form_fields = [
 		{
 			label: "Name",
@@ -71,8 +72,7 @@ const RegisterEmployee = () => {
 		// 	if (formData.type === "Individual") delete formData.maxParticipants;
 		// 	return { ...prevState, ...props };
 		// });
-
-		// console.log(e);
+		console.log(e.target.name);
 
 		setFormData((prevState) => {
 			return {
@@ -81,15 +81,17 @@ const RegisterEmployee = () => {
 			};
 		});
 	};
-	useEffect(() => {
-		console.log(formData);
-	}, [formData]);
+
+	const registerEmployeeHandler=()=>{
+		// TODO: Implement register employee handler
+	}
+
 	return (
 		<main className="RegisterEmployee">
 			<h1>Register</h1>
 			<FormComponent formFields={form_fields} onChange={handleChange} />
 			<div className="formButtons">
-				<Button text="Create" isPrimary={true} />
+				<Button text="Create" isPrimary={true} onClick={registerEmployeeHandler}/>
 				<Button text="Cancel" className="cancel" />
 			</div>
 		</main>
