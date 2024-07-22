@@ -44,17 +44,17 @@ const FormComponent = ({ onChange, formFields }) => {
 						/>
 					);
 				})}
-				{type ? (
+				{/* {type ? (
 					<TextField
 						key="maxParticipants"
 						label="Max Participants"
 						type="number"
 						className="fields"
-                  name = "maxParticipants"
+						name="maxParticipants"
 						// onChange={(value) => handleChange({ ["maxParticipants"]: value })}
-                  onChange={onChange}
+						onChange={onChange}
 					/>
-				) : null}
+				) : null} */}
 			</div>
 		</form>
 	);
