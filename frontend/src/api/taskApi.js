@@ -9,11 +9,9 @@ const taskApi = apiWithTag.injectEndpoints({
 			query: (id) => `/tasks/${id}`,
 		}),
 		createTask: builder.mutation({
-			query: (data) => "/tasks",
-			method: "POST",
-			body: data,
+			query: (data) => ({ url: "/tasks", method: "POST", body: data }),
 		}),
 	}),
 });
 
-export const { useGetTaskListQuery, useGetTaskByIdQuery,useCreateTaskMutation } = taskApi;
+export const { useGetTaskListQuery, useGetTaskByIdQuery, useCreateTaskMutation } = taskApi;
