@@ -20,9 +20,13 @@ class TaskParticipantService {
 	};
 
 	create = async (task: Task, employee: Employee) => {
+		console.log(task,employee);
+		
 		let newTaskParticipant = new TaskParticipants();
 		newTaskParticipant.task = task;
 		newTaskParticipant.employee = employee;
+		newTaskParticipant.employeeId = employee.id;
+		newTaskParticipant.taskId = task.id;
 		newTaskParticipant.contribution = 0;
 
 		await this.repository.save(newTaskParticipant);

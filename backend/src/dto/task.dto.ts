@@ -1,4 +1,5 @@
 import { IsDate, IsNotEmpty, isNumber, IsNumber, IsString } from "class-validator";
+import Task from "../entity/task.entity";
 
 export class CreateTaskDto {
 	@IsNotEmpty()
@@ -24,4 +25,18 @@ export class CreateTaskDto {
 	@IsNotEmpty()
 	@IsString()
 	deadLine: Date;
+
+	@IsNotEmpty()
+	@IsString()
+	skills: string;
+}
+
+export class ResponseTaskDto extends Task {
+	skillList: string[];
+	constructor(task: Task) {
+		super();
+		Object.assign(this, task);
+		this.skillList = task.skills.replace(" ", "").split(",");
+		delete this.skills;
+	}
 }
