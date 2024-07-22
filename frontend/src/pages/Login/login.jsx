@@ -48,8 +48,7 @@ const Login = () => {
 			<span>
 				New to KoYns..?{" "}
 				<Link className="registerLink" to="register">
-					{" "}
-					<span>Register</span>
+					Register
 				</Link>
 			</span>
 		</div>
