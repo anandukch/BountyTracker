@@ -1,4 +1,4 @@
-import { CreateTaskDto } from "../dto/task.dto";
+import { CreateTaskDto, ResponseTaskDto } from "../dto/task.dto";
 import Employee from "../entity/employee.entity";
 import Task from "../entity/task.entity";
 import HttpException from "../exceptions/http.exceptions";
@@ -17,23 +17,27 @@ class TaskService {
 	};
 	getTaskById = async (id: number) => {
 		const task = await this.taskRepository.findOneBy({ id });
+
+		const responseTask = new ResponseTaskDto(task);
 		if (!task) {
 			throw new HttpException(404, "Task not found");
 		}
-		return task;
+		return responseTask;
 	};
 
 	createTask = async (task: CreateTaskDto, user: Employee) => {
 		let newTask = new Task();
-		newTask.title = task.title;
-		newTask.description = task.description;
-		// newTask.status = task.status;
+		const { title, description, maxParticipants, totalBounty, startDate, deadLine, skills } = task;
+		newTask.title = title;
+		newTask.description = description;
+		// newTask.status = status;
 		newTask.createdBy = user;
-		newTask.maxParticipants = task.maxParticipants;
+		newTask.maxParticipants = maxParticipants;
 		newTask.currentParticipants = 0;
-		newTask.totalBounty = task.totalBounty;
-		newTask.startDate = task.startDate;
-		newTask.deadLine = task.deadLine;
+		newTask.totalBounty = totalBounty;
+		newTask.startDate = startDate;
+		newTask.deadLine = deadLine;
+		newTask.skills = skills;
 
 		await this.taskRepository.save(newTask);
 	};
