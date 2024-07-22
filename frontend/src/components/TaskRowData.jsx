@@ -4,17 +4,17 @@ import TaskColumnData from "./TaskColumnData";
 const TaskDataRow = ({ taskRows = [] }) => {
   return (
     <div className="taskDataRow">
-      <TaskColumnData content={taskRows.title} />
-      <TaskColumnData content={taskRows.createdBy.name} />
+      <TaskColumnData content={taskRows.task.title} />
+      <TaskColumnData content={taskRows.task.createdBy.name} />
       <TaskColumnData
-        content={formatDate(taskRows.deadLine)}
+        content={formatDate(taskRows.task.deadLine)}
       />
       <TaskColumnData
         content={`
-          ${taskRows.currentParticipants} / ${taskRows.maxParticipants}`}
+          ${taskRows.task.currentParticipants} / ${taskRows.task.maxParticipants}`}
       />
-      <TaskColumnData content={taskRows.status} />
-      <TaskColumnData content={taskRows.totalBounty} />
+      <TaskColumnData content={taskRows.task.status} />
+      <TaskColumnData content={taskRows.contribution} />
     </div>
   );
 };
