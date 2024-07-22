@@ -3,64 +3,93 @@ import Button from "../../components/Button/Button";
 import FormComponent from "../../components/FormComponent/FormComponent";
 import "./styles.scss";
 import Select from "../../components/Select/Select";
+import { useCreateTaskMutation } from "../../api/taskApi";
+
+const initialFormData = {
+	title: "",
+	description: "",
+	dueDate: "",
+	startDate: "",
+	skills: "",
+	bounty: "",
+	maxParticipants: "",
+};
 const CreateTask = () => {
-   const [formData, setFormData] = useState({});
-   const form_fields=[
-      {
-         id: "name",
-         name: "Task Name",
-         type: "text",
-      },
-      {
-         id: "bounty",
-         name: "Bounty",
-         type: "number",
-      },
-      {
-         id: "description",
-         name: "Description",
-         type: "text",
-         Component: "text-area",
-      },
-      {
-         id: "due date",
-         name: "Due Date",
-         type: "date",
-      },
-      {
-         id: "type",
-         name: "Type",
-         values: [{ option: "Individual" }, { option: "Group" }],
-         Component: Select,
-      },
-      {
-         id: "skills",
-         name: "Skills",
-         type: "text",
-      },
-   ];
-   const handleChange = (props) => {
-      setFormData((prevState) => {
-         if (formData.type === "Individual") delete formData.maxParticipants;
-         return { ...prevState, ...props };
-      });
-   };
-   useEffect(() => {
-      console.log(formData);
-   }, [formData]);
-   return (
-      <main className="createTask">
-         <div className="title">
-            <span>Add Task </span>
-            <div className="formButtons">
-               <Button text="Create" className="create" />
-               <Button text="Cancel" className="cancel" />
-               {/* <Link to="/employees" className="cancelLink"> */}
-               {/* </Link> */}
-            </div>
-         </div>
-         <FormComponent formFields = {form_fields} onChange={handleChange} />
-      </main>
-   );
+	const [formData, setFormData] = useState(initialFormData);
+	const [createTask, { data, isSuccess, isLoading }] = useCreateTaskMutation();
+	const formFields = [
+		{
+			id: "name",
+			label: "Task Name",
+			name: "title",
+			type: "text",
+		},
+		{
+			id: "bounty",
+			label: "Bounty",
+			name: "totalBounty",
+			type: "number",
+		},
+		{
+			id: "description",
+			label: "Description",
+			type: "text",
+			name: "description",
+			Component: "text-area",
+		},
+		{
+			id: "due date",
+			label: "Due Date",
+			type: "date",
+			name: "deadLine",
+		},
+
+		{
+			id: "Start Date",
+			label: "Start Date",
+			type: "date",
+			name: "startDate",
+		},
+		{
+			id: "skills",
+			label: "Skills",
+			type: "text",
+			name: "skills",
+		},
+		{
+			id: "maxParticipants",
+			label: "Max Participants",
+			type: "number",
+			name: "maxParticipants",
+		},
+	];
+	const handleChange = (e) => {
+		setFormData((prev) => ({
+			...prev,
+			[e.target.name]: e.target.value,
+		}));
+	};
+	const createTaskHandler = () => {
+		console.log(formData);
+		createTask({
+			...formData,
+			totalBounty: parseInt(formData.totalBounty),
+			maxParticipants: parseInt(formData.maxParticipants),
+		});
+	};
+	return (
+		<main className="createTask">
+			<div className="title">
+				<span>Add Task </span>
+				<div className="formButtons">
+					<Button text="Create" className="create" onClick={createTaskHandler} />
+					<Button text="Cancel" className="cancel" />
+					{/* <Link to="/employees" className="cancelLink"> */}
+					{/* </Link> */}
+				</div>
+			</div>
+			<FormComponent formFields={formFields} onChange={handleChange} />
+		</main>
+	);
 };
 export default CreateTask;

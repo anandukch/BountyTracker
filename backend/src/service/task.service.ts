@@ -16,7 +16,7 @@ class TaskService {
 		return this.taskRepository.find(filter, relations);
 	};
 	getTaskById = async (id: number) => {
-		return this.taskRepository.findOneBy({ id });
+		return this.taskRepository.findOneBy({ id }, ["createdBy", "participants", "participants.employee"]);
 	};
 
 	createTask = async (task: CreateTaskDto, user: Employee) => {
