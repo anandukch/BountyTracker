@@ -53,6 +53,9 @@ class TaskController {
 	public getTaskById = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			const { taskId } = req.params;
+			if(!taskId){
+				throw new HttpException(400,"Task not found")
+			}
 			const tasks = await this.taskService.getTaskById(parseInt(taskId));
 			res.status(200).json({
 				success: true,
@@ -66,8 +69,8 @@ class TaskController {
 
 	public createTask = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			// const task = req.body;
-			//extract task form req.body and add req.user to task inthe creadedBy field
+			console.log(req.body);
+			
 			const task = req.body;
 			const taskDto = plainToInstance(CreateTaskDto, task);
 			const errors = await validate(taskDto);
@@ -81,6 +84,8 @@ class TaskController {
 				message: "Tasks created successfully",
 			});
 		} catch (error) {
+			console.log(error);
+			
 			next(error);
 		}
 	};
@@ -88,6 +93,9 @@ class TaskController {
 	public getAllTaskComments = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			const { taskId } = req.params;
+			if(!taskId){
+				throw new HttpException(400,"Task not found")
+			}
 			const allComments = await this.taskService.getTaskCommentsById(parseInt(taskId));
 
 			res.status(200).json({
@@ -103,6 +111,10 @@ class TaskController {
 	public getCommentById = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			const { commentId } = req.params;
+
+			if(!commentId){
+				throw new HttpException(400,"Comment not found")
+			}
 
 			const comment = await this.commentService.getCommentByCommentId(parseInt(commentId));
 
@@ -144,6 +156,9 @@ class TaskController {
 	public reviewComment = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			const { commentId } = req.params;
+			if(!commentId){
+				throw new HttpException(400,"Comment not found")
+			}
 			const commentReview = req.body;
 			const commentReviewDto = plainToInstance(ReviewCommentDto, commentReview);
 			const errors = await validate(commentReviewDto);
