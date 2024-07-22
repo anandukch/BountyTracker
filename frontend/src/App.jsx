@@ -40,8 +40,7 @@ const App = () => {
 				{ path: "create", element: <CreateTask /> },
 				{ path: "taskDetail", element: <TaskDetail /> },
 				{ path: "employeeList", element: <EmployeeTierList /> },
-				{path: "review",element:<ReviewPage/>},
-				//  { path: "details/:id", element: <EmployeeDetailsPage /> },
+				{ path: "comment/:id", element: <ReviewPage /> },
 			],
 		},
 	]);
