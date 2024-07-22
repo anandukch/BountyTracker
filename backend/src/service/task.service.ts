@@ -16,7 +16,11 @@ class TaskService {
 		return this.taskRepository.find(filter, relations);
 	};
 	getTaskById = async (id: number) => {
-		return this.taskRepository.findOneBy({ id });
+		const task = await this.taskRepository.findOneBy({ id }, ["comments"]);
+		if (!task) {
+			throw new HttpException(404, "Task not found");
+		}
+		return task;
 	};
 
 	createTask = async (task: CreateTaskDto, user: Employee) => {
