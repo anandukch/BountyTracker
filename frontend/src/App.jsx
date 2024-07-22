@@ -9,6 +9,7 @@ import TaskDetail from "./pages/Task Detail/taskDetail";
 import EmployeeTierList from "./pages/EmployeeTierList/employeeTierList";
 import { Provider } from "react-redux";
 import store from "./store/store";
+import ReviewPage from "./pages/ReviewPage/reviewPage";
 
 const App = () => {
 	const router = createBrowserRouter([
@@ -39,6 +40,7 @@ const App = () => {
 				{ path: "create", element: <CreateTask /> },
 				{ path: "taskDetail", element: <TaskDetail /> },
 				{ path: "employeeList", element: <EmployeeTierList /> },
+				{path: "review",element:<ReviewPage/>},
 				//  { path: "details/:id", element: <EmployeeDetailsPage /> },
 			],
 		},
