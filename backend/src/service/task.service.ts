@@ -47,15 +47,6 @@ class TaskService {
 	getTaskCreatedByUser = async (id: number) => {
 		return this.taskRepository.find({ createdById: id });
 	};
-
-	getTaskCommentsById = async (id: number) => {
-		const task = await this.getTaskById(id, ["comments"]);
-		const allComments = task.comments;
-		const normalComments = allComments.filter((comment) => comment.commentType === CommentType.Normal);
-		const reviewComments = allComments.filter((comment) => comment.commentType === CommentType.Review);
-
-		return { normalComments, reviewComments };
-	};
 }
 
 export default TaskService;

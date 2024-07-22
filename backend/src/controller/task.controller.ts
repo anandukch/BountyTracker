@@ -57,7 +57,12 @@ class TaskController {
 			if (!taskId) {
 				throw new HttpException(400, "Task not found");
 			}
-			const task = await this.taskService.getTaskById(parseInt(taskId),["createdBy","comments", "participants", "participants.employee"]);
+			const task = await this.taskService.getTaskById(parseInt(taskId), [
+				"createdBy",
+				"comments",
+				"participants",
+				"participants.employee",
+			]);
 			res.status(200).json({
 				success: true,
 				message: "Tasks fetched successfully",
@@ -74,8 +79,7 @@ class TaskController {
 							email: participant.employee.email,
 							contribution: participant.contribution,
 						};
-					})
-						
+					}),
 				},
 			});
 		} catch (error) {
@@ -111,12 +115,18 @@ class TaskController {
 			if (!taskId) {
 				throw new HttpException(400, "Task not found");
 			}
-			const allComments = await this.taskService.getTaskCommentsById(parseInt(taskId));
+			const allComments = await this.commentService.getAllCommentsByTaskId(parseInt(taskId));
+
+			const normalComments = allComments.filter((comment) => comment.commentType === CommentType.Normal);
+			const reviewComments = allComments.filter((comment) => comment.commentType === CommentType.Review);
 
 			res.status(200).json({
 				success: true,
 				message: "Comments fetched succesfully",
-				data: allComments,
+				data: {
+					normalComments,
+					reviewComments,
+				},
 			});
 		} catch (error) {
 			next(error);

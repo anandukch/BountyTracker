@@ -5,12 +5,14 @@ class CommentRepository {
 	constructor(private repository: Repository<Comment>) {}
 
 	find = async (): Promise<Comment[]> => {
-		return this.repository.find({});
+		return this.repository.find({ relations: { employee: true } });
 	};
 
 	findBy = async (filter: Partial<Comment>): Promise<Comment[]> => {
+		console.log(filter);
 		return this.repository.find({
 			where: filter,
+			relations: { employee: true },
 		});
 	};
 
