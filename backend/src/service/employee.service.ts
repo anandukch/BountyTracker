@@ -43,6 +43,35 @@ class EmployeeService {
 		return employee.participatingTasks;
 	};
 
+	getProfile = async (employeeID: number) => {
+		const employee = await this.employeeRespository.findOneBy({ id: employeeID }, [
+			"details",
+			"participatingTasks",
+			"participatingTasks.task",
+		]);
+		if (!employee) {
+			throw new EntityNotFoundException(404, "Employee not found");
+		}
+
+		let completedTasks = 0;
+		let pendingTasks = 0;
+
+		employee.participatingTasks.forEach((task) => {
+			if (task.task.status === "completed") {
+				completedTasks++;
+			} else {
+				pendingTasks++;
+			}
+		});
+		employee.participatingTasks = undefined;
+		employee.password = undefined;
+		return {
+			...employee,
+			completedTasks,
+			pendingTasks,
+		};
+	};
+
 	loginEmployee = async (email: string, password: string): Promise<string> => {
 		const employee = await this.employeeRespository.findOneBy({ email });
 		if (!employee) {
