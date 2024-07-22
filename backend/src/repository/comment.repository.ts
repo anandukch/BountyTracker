@@ -12,7 +12,7 @@ class CommentRepository {
 		console.log(filter);
 		return this.repository.find({
 			where: filter,
-			relations: { employee: true },
+			relations: { employee: true, mentionComment: true },
 		});
 	};
 
