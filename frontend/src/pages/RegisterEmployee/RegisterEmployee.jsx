@@ -1,4 +1,4 @@
-import { Component, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../components/Button/Button";
 import Select from "../../components/Select/Select";
 import FormComponent from "../../components/FormComponent/FormComponent";
@@ -6,7 +6,7 @@ import "./styles.scss";
 import { useAddEmployeeMutation } from "../../api/employeeApi";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import toastReducer, { addToastMessage } from "../../store/toastReducer";
+import { addToastMessage } from "../../store/toastReducer";
 import { v4 } from "uuid";
 const initalState = {
 	name: "",
@@ -20,7 +20,7 @@ const initalState = {
 };
 const RegisterEmployee = () => {
 	const [formData, setFormData] = useState(initalState);
-	const [addEmployee, { data, isSuccess, error, isError }] = useAddEmployeeMutation();
+	const [addEmployee, { isSuccess, error, isError }] = useAddEmployeeMutation();
 	const navigate = useNavigate();
 
 	const form_fields = [
@@ -76,12 +76,6 @@ const RegisterEmployee = () => {
 		},
 	];
 	const handleChange = (e) => {
-		// setFormData((prevState) => {
-		// 	if (formData.type === "Individual") delete formData.maxParticipants;
-		// 	return { ...prevState, ...props };
-		// });
-		console.log(e.target.name);
-
 		setFormData((prevState) => {
 			return {
 				...prevState,
@@ -91,9 +85,7 @@ const RegisterEmployee = () => {
 	};
 
 	const registerEmployeeHandler = () => {
-		// TODO: Implement register employee handler
 		addEmployee(formData);
-		console.log(formData);
 	};
 
 	const cancelHandler = () => {

@@ -18,10 +18,8 @@ const EmployeeDashboard = () => {
 
 	useEffect(() => {
 		if (isSuccess) {
-			console.log(data);
 			const { data: employeeData } = data;
 			setEmployee(employeeData);
-			console.log(employeeData);
 			setEmployeeDetails([
 				{ header: "Role", content: employeeData.role },
 				{ header: "Email", content: employeeData.email },
@@ -32,8 +30,6 @@ const EmployeeDashboard = () => {
 			]);
 		}
 	}, [data, isSuccess]);
-
-	const taskList = file.data;
 
 	const [addClass, setAddClass] = useState(0);
 

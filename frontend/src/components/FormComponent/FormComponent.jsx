@@ -1,12 +1,11 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-key */
 import TextField from "../../components/TextField/TextField";
 import Select from "../../components/Select/Select";
-import { useState } from "react";
 
 const FormComponent = ({ onChange, formFields }) => {
 	// const [type, setType] = useState(false);
 
-	const form_fields = formFields;
 	// const handleChange = (props) => {
 	// 	if (props.type === "Group") setType(true);
 	// 	if (props.type === "Individual") setType(false);
@@ -15,7 +14,7 @@ const FormComponent = ({ onChange, formFields }) => {
 	return (
 		<form>
 			<div className="formComponent">
-				{form_fields.map((field) => {
+				{formFields.map((field) => {
 					if (field.Component == Select)
 						return (
 							<field.Component
@@ -33,11 +32,9 @@ const FormComponent = ({ onChange, formFields }) => {
 								<label>Description</label>
 								<textarea
 									key={field.id}
-									// name={field.name}
 									name="description"
 									rows="5"
 									cols="40"
-									// onChange={(e) => handleChange({ [field.id]: e.target.value })}
 									onChange={onChange}
 								/>
 							</div>
