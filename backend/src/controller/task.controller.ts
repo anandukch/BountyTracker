@@ -66,8 +66,8 @@ class TaskController {
 
 	public createTask = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			// const task = req.body;
-			//extract task form req.body and add req.user to task inthe creadedBy field
+			console.log(req.body);
+			
 			const task = req.body;
 			const taskDto = plainToInstance(CreateTaskDto, task);
 			const errors = await validate(taskDto);
@@ -81,6 +81,8 @@ class TaskController {
 				message: "Tasks created successfully",
 			});
 		} catch (error) {
+			console.log(error);
+			
 			next(error);
 		}
 	};

@@ -18,7 +18,7 @@ class EmployeeController {
 		this.router.get("/:id", this.getEmployeeByID);
 		this.router.post("/login", this.loginEmployee);
 		this.router.post("/", this.createEmployee);
-		this.router.post("/tasks/:id", authorize, this.joinTask);
+		this.router.post("/tasks/:id",authorize, this.joinTask);
 		this.router.put("/:employeeId/tasks/:taskId/contributions", authorize, this.giveContribution);
 	}
 
@@ -74,6 +74,8 @@ class EmployeeController {
 	};
 	public getEmployeeAssignedTasks = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
+			console.log("as");
+
 			const employeeAssignedTasks = await this.employeeService.getEmployeeTasksByID(req.user.id);
 			res.status(200).json({
 				success: true,
