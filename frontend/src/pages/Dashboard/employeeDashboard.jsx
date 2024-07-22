@@ -4,7 +4,7 @@ import "./style.scss";
 import profilImg from "../../assets/profile.png";
 import file from "../../utils/employeeTask";
 import TaskDataHeader from "../../components/TaskDataHeader";
-import { useGetProfileQuery } from "../../api/employeeApi";
+import { useGetEmployeeCurrentTasksQuery, useGetProfileQuery } from "../../api/employeeApi";
 import { useEffect, useState } from "react";
 import { Loader } from "../../components/Loader/Loader";
 import { formatDate } from "../../utils/date.utils";
@@ -14,6 +14,7 @@ const EmployeeDashboard = () => {
 	const [employee, setEmployee] = useState({});
 	const [employeeDetails, setEmployeeDetails] = useState([]);
 	const { data, isLoading, isSuccess } = useGetProfileQuery();
+	const { data: employeeTasks = [], isSuccess: isTaskFetched } = useGetEmployeeCurrentTasksQuery();
 
 	useEffect(() => {
 		if (isSuccess) {
@@ -36,14 +37,12 @@ const EmployeeDashboard = () => {
 
 	const [addClass, setAddClass] = useState(0);
 
-	const handlePending = (e) => {
+	const handlePending = () => {
 		setAddClass(0);
-		console.log(e.target);
 	};
 
-	const handleCompleted = (e) => {
+	const handleCompleted = () => {
 		setAddClass(1);
-		console.log(e.target);
 	};
 
 	const tasksHeader = {
@@ -103,9 +102,13 @@ const EmployeeDashboard = () => {
 							<TaskDataHeader taskRows={tasksHeader} />
 						</div>
 						<div className="taskDetailsWrapper">
-							{taskList.map((task) => {
-								return <TaskDataRow key={task.id} taskRows={task} />;
-							})}
+							{isTaskFetched &&
+								employeeTasks.data.map((task) => {
+									if (addClass === 0 && task.task.status == "In Progress")
+										return <TaskDataRow key={task.id} taskRows={task} />;
+									else if (addClass === 1 && task.task.status == "completed")
+										return <TaskDataRow key={task.id} taskRows={task} />;
+								})}
 						</div>
 					</div>
 				</div>
