@@ -8,6 +8,7 @@ import { validate } from "class-validator";
 import { CreateEmployeeDto } from "../dto/employee.dto";
 import getValidationErrorConstraints from "../utils/validationErrorConstraints";
 import authorize from "../middleware/authorize.middleware";
+import ValidationException from "../exceptions/validationException";
 class EmployeeController {
 	public router: Router;
 	constructor(private employeeService: EmployeeService) {
@@ -123,9 +124,9 @@ class EmployeeController {
 			const employeeDto = plainToInstance(CreateEmployeeDto, req.body);
 			const errors = await validate(employeeDto);
 			// const validationErrorConstraints = getValidationErrorConstraints(errors);
-			if (errors.length > 0) {
-				throw new HttpException(403, "Validation Error", errors);
-			}
+			if (errors.length) {
+          		throw new ValidationException(400, "Validation Failed", errors);
+        	}
 			const createdEmployee = this.employeeService.createEmployee(employeeDto);
 
 			res.status(201).send(createdEmployee);

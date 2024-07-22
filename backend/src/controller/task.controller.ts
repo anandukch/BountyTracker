@@ -8,6 +8,7 @@ import { CreateComementDto, ReviewCommentDto } from "../dto/comment.dto";
 import { validate } from "class-validator";
 import HttpException from "../exceptions/http.exceptions";
 import { CreateTaskDto } from "../dto/task.dto";
+import ValidationException from "../exceptions/validationException";
 
 class TaskController {
 	public router: Router;
@@ -75,9 +76,8 @@ class TaskController {
 			const taskDto = plainToInstance(CreateTaskDto, task);
 			const errors = await validate(taskDto);
 			if (errors.length) {
-				// TODO: send individual errors
-				throw new HttpException(400, "ValidationError", errors);
-			}
+          		throw new ValidationException(400, "Validation Failed", errors);
+        	}
 			await this.taskService.createTask(taskDto, req.user);
 			res.status(200).json({
 				success: true,
@@ -137,9 +137,8 @@ class TaskController {
 			const commentDto = plainToInstance(CreateComementDto, comment);
 			const errors = await validate(commentDto);
 			if (errors.length) {
-				// TODO: send error list
-				throw new HttpException(400, "Validation Error", errors);
-			}
+          		throw new ValidationException(400, "Validation Failed", errors);
+        	}
 			console.log("here");
 			const response = await this.commentService.createComment(parseInt(taskId), employee, commentDto);
 
@@ -163,9 +162,8 @@ class TaskController {
 			const commentReviewDto = plainToInstance(ReviewCommentDto, commentReview);
 			const errors = await validate(commentReviewDto);
 			if (errors.length) {
-				// TODO: send error list
-				throw new HttpException(400, "Validation Error", errors);
-			}
+          		throw new ValidationException(400, "Validation Failed", errors);
+        	}
 			const response = await this.commentService.reviewComment(parseInt(commentId), commentReviewDto);
 			res.status(200).json({
 				success: true,
