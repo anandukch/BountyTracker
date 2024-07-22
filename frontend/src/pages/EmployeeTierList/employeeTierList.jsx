@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import "../pages/employeeTierList.scss"
-import GridDataColumn from "../components/GridDataColumn";
-import GridColumn from "../components/GridColumn";
-import SearchIcon from "../assets/iconssearch.png";
-import IconFilter from "../assets/iconFilter.png";
+import "../../pages/EmployeeTierList/employeeTierList.scss"
+import GridDataColumn from "../../components/GridDataColumn";
+import GridColumn from "../../components/GridColumn";
+import SearchIcon from "../../assets/iconssearch.png";
+import IconFilter from "../../assets/iconFilter.png";
 // Dummy data
 const dummyData = [
     { id: 1, name: "John Doe",gender:"Male",birthday:"20-12-2002",phone:"930708788", bounty: 1200 },
