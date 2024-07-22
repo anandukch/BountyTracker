@@ -2,24 +2,36 @@ import Button from "../../components/Button/Button";
 import "../../pages/ReviewPage/reviewPage.scss";
 import profileImg from "../../assets/profile.png";
 import { useState, useEffect } from "react";
-import { useGetCommentByIdQuery } from "../../api/taskApi";
+import { useCreateCommentMutation, useGetCommentByIdQuery, useReviewCommentByIdMutation } from "../../api/taskApi";
 import { useParams } from "react-router-dom";
 // import comment from "../../utils/comment.util.json"
 
 const ReviewPage = () => {
 	const { id } = useParams();
 	console.log(id);
-	const { data: reviewComment, isSuccess } = useGetCommentByIdQuery(parseInt(id));
+	const { data: reviewComment = [], isSuccess: commentFetched } = useGetCommentByIdQuery(parseInt(id));
+	const [reviewReplyComment] = useCreateCommentMutation();
+	const [reviewReplyStatus] = useReviewCommentByIdMutation();
 
 	useEffect(() => {
 		console.log(reviewComment);
-	}, [isSuccess]);
+	}, [commentFetched]);
 
-	const comment = {
-		name: "MR ISAAC CHERIAN ",
-		content: "Dummy I have attached the docs for review",
-		fileUrl: "/ZipFile.zip",
+	const handleApprove = () => {
+		reviewReplyComment({
+			id: 6,
+			commentType: "Normal",
+			content: formData.comment,
+			mentionCommentId: parseInt(id),
+		});
+		reviewReplyStatus({
+			id: parseInt(id),
+			reviewStatus: "ACCEPTED",
+			reviewRewardBounty: Number(formData.bountyPoints) + Number(formData.specialBountyPoints),
+		});
 	};
+
+	const handleReject = () => {};
 
 	const [formData, setFormData] = useState({
 		bountyPoints: 0,
@@ -45,19 +57,24 @@ const ReviewPage = () => {
 			<div className="userSection">
 				<div className="reviewName">
 					<img src={profileImg} />
-					<h3>{comment.name}</h3>
+					<h3>{commentFetched ? reviewComment.data.employee.name : ""}</h3>
 				</div>
 				<div className="reviewDesciption">
 					<div className="reviewTextDescription">
 						<p>Desciption:</p>
-						{comment.content}
+						{commentFetched ? reviewComment.data.content : ""}
 					</div>
 					<p>File:</p>
 					<div className="reviewFileDescription">
 						<div className="previewTitle" id="file-name">
 							Download File
 						</div>
-						<a href={comment.fileUrl} download className="downloadLink" id="download-link">
+						<a
+							href={commentFetched ? reviewComment.data.fileUrl : ""}
+							download
+							className="downloadLink"
+							id="download-link"
+						>
 							Download ZIP
 						</a>
 					</div>
@@ -104,10 +121,10 @@ const ReviewPage = () => {
 				</div>
 				<div className="reviewButtons">
 					<div className="approveButton">
-						<Button text="Approve" className="approve" />
+						<Button text="Approve" className="approve" onClick={handleApprove} />
 					</div>
 					<div className="closeButton">
-						<Button text="Close" className="close" />
+						<Button text="Close" className="close" onClick={handleReject} />
 					</div>
 				</div>
 			</div>
