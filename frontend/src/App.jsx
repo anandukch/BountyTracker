@@ -6,7 +6,7 @@ import CreateUser from "./pages/CreateUser/createUser";
 import Hero from "./components/Hero/Hero";
 import EmployeeDashboard from "./pages/Dashboard/employeeDashboard";
 import TaskDetail from "./pages/Task Detail/taskDetail";
-import EmployeeTierList from "./pages/employeeTierList";
+import EmployeeTierList from "./pages/EmployeeTierList/employeeTierList";
 
 const App = () => {
 	const router = createBrowserRouter([
