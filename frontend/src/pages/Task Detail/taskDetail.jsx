@@ -8,11 +8,18 @@ import CommentComponent from "../../components/CommentComponent/CommentComponent
 import TextField from "../../components/TextField/TextField";
 import Button from "../../components/Button/Button";
 import { useEffect, useState } from "react";
-import { useGetTaskByIdQuery, useGetTaskListQuery, useLazyGetTaskByIdQuery } from "../../api/taskApi";
+import {
+	useCreateCommentMutation,
+	useGetCommentsByTaskIdQuery,
+	useGetTaskByIdQuery,
+	useGetTaskListQuery,
+	useLazyGetTaskByIdQuery,
+} from "../../api/taskApi";
 import { formatDate } from "../../utils/date.utils";
 import { useGetEmployeeQuery } from "../../api/employeeApi";
 const TaskDetail = () => {
 	const [commentList, setCommentList] = useState([]);
+	const [participantList, setParticipantList] = useState([]);
 	const form_fields = [
 		{
 			id: "description",
@@ -26,23 +33,23 @@ const TaskDetail = () => {
 			value: "Node, react, java, c",
 		},
 	];
-	const particpants = [
-		{
-			name: "Sanoj",
-		},
-		{
-			name: "John",
-		},
-	];
 	const [commentType, setCommentType] = useState("Normal");
 	const [comment, setComment] = useState("");
-	const { data: taskDetail, isSuccess } = useGetTaskByIdQuery(2);
-
+	const { data: taskDetail } = useGetTaskByIdQuery(2);
+	// const {data: comments}=useGetCommentsByTaskIdQuery(2)
+	const [createComment, { data, isSuccess }] = useCreateCommentMutation();
 	const handleSend = (e) => {
+      const commentData={
+         id:2,
+         commentType:commentType,
+         content:comment
+      }
+      createComment(commentData)
 		console.log(comment);
 	};
 	const handleTextArea = (e) => {
 		setComment(e.target.value);
+      
 	};
 	const handleCommentFilter = (filter) => {
 		setCommentType(filter);
@@ -50,7 +57,8 @@ const TaskDetail = () => {
 	useEffect(() => {
 		if (taskDetail?.data) {
 			setCommentList(taskDetail.data.comments);
-			console.log(commentList);
+			setParticipantList(taskDetail.data.participants);
+			// console.log(commentList);
 		}
 	});
 
@@ -140,8 +148,8 @@ const TaskDetail = () => {
 							/>
 							<span className="commentButtons">
 								<img src={attach} type="file" alt="Add attachment" />
-								{commentType === "review" ? (
-									<Button className="reviewButton" text="Review" />
+								{commentType === "Review" ? (
+									<Button className="reviewButton" text="Review" onClick={handleSend}/>
 								) : (
 									<div className="sendButton">
 										<img src={send} alt="Send Comment" onClick={handleSend} />
@@ -154,7 +162,7 @@ const TaskDetail = () => {
 				<div className="particpantsListSection">
 					<div className="particpantsListHeader">Particpants</div>
 					<div className="particpantsList">
-						{particpants.map((participant) => {
+						{participantList.map((participant) => {
 							return (
 								<div className="partcipants">
 									<img src={profile} alt="profile icon" />
