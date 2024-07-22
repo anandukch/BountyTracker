@@ -1,13 +1,13 @@
 import { useState } from "react";
 
-const Select = ({values,label,className,onSelect}) => {
-    const handleSelect = (e) => {
-        if (onSelect) onSelect(e.target.value, label);
-     };
+const Select = ({values,label,className,onChange}) => {
+   //  const handleSelect = (e) => {
+   //      if (onSelect) onSelect(e.target.value, label);
+   //   };
    return (
       <span className={className}>
          <label htmlFor={label}> {label} </label>
-         <select defaultValue ="default" onChange={handleSelect}>
+         <select defaultValue ="default" onChange={onChange}>
             <option value="default" disabled>
                {label}
             </option>

@@ -14,7 +14,6 @@ const EmployeeDashboard = () => {
 	const [employee, setEmployee] = useState({});
 	const [employeeDetails, setEmployeeDetails] = useState([]);
 	const { data, isLoading, isSuccess } = useGetProfileQuery();
-	var additionalStyles = "";
 
 	useEffect(() => {
 		if (isSuccess) {

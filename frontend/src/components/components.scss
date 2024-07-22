@@ -1,0 +1,44 @@
+.TextField {
+	display: flex;
+	flex-direction: column;
+
+	input {
+		padding: 15px 12px;
+		width: 350px;
+		border-radius: 7px;
+		border-style: solid;
+		border-width: 1px;
+		background-color: #fafafa;
+		/* font-size: large; */
+	}
+
+	input:focus {
+		outline: none;
+		border-color: var(--navBlue);
+		caret-color: var(--navBlue);
+	}
+	label {
+		color: var(--textBlack);
+		margin-bottom: 7px;
+		padding-left: 5px;
+	}
+}
+
+.formButton {
+	padding: 15px 12px;
+	width: 350px;
+	text-align: center;
+	border: none;
+	border-radius: 5px;
+	color: var(--bgWhite);
+	font-weight: 600;
+	cursor: pointer;
+
+	&.primary {
+		background-color: var(--primary-btn);
+	}
+
+	&.cancel {
+		background-color: red;
+	}
+}

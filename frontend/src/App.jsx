@@ -1,8 +1,8 @@
 import HomeLayout from "./layouts/HomeLayout";
 import { createBrowserRouter, redirect, RouterProvider } from "react-router-dom";
 import CreateTask from "./pages/CreateTask/createTask";
-import Login from "./pages/Login/login";
-import CreateUser from "./pages/CreateUser/createUser";
+import Login from "./pages/Login/Login";
+import RegisterEmployee from "./pages/RegisterEmployee/RegisterEmployee";
 import Hero from "./components/Hero/Hero";
 import EmployeeDashboard from "./pages/Dashboard/employeeDashboard";
 import TaskDetail from "./pages/Task Detail/taskDetail";
@@ -26,7 +26,7 @@ const App = () => {
 				},
 				{
 					path: "/register",
-					element: <CreateUser />,
+					element: <RegisterEmployee />,
 				},
 			],
 		},

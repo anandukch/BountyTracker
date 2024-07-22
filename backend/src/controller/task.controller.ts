@@ -57,7 +57,7 @@ class TaskController {
 			if (!taskId) {
 				throw new HttpException(400, "Task not found");
 			}
-			const task = await this.taskService.getTaskById(parseInt(taskId));
+			const task = await this.taskService.getTaskById(parseInt(taskId),["createdBy","comments", "participants", "participants.employee"]);
 			res.status(200).json({
 				success: true,
 				message: "Tasks fetched successfully",

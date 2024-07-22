@@ -15,8 +15,8 @@ class TaskService {
 	getTasks = async (filter: Partial<Task>, relations: Array<string>) => {
 		return this.taskRepository.find(filter, relations);
 	};
-	getTaskById = async (id: number) => {
-		const task = await this.taskRepository.findOneBy({ id }, ["createdBy","comments", "participants", "participants.employee"]);
+	getTaskById = async (id: number, relations?: Array<string>) => {
+		const task = await this.taskRepository.findOneBy({ id }, relations);
 		if (!task) {
 			throw new HttpException(404, "Task not found");
 		}
@@ -49,7 +49,7 @@ class TaskService {
 	};
 
 	getTaskCommentsById = async (id: number) => {
-		const task = await this.getTaskById(id);
+		const task = await this.getTaskById(id, ["comments"]);
 		const allComments = task.comments;
 		const normalComments = allComments.filter((comment) => comment.commentType === CommentType.Normal);
 		const reviewComments = allComments.filter((comment) => comment.commentType === CommentType.Review);
