@@ -7,20 +7,17 @@ import { useNavigate, useParams } from "react-router-dom";
 // import comment from "../../utils/comment.util.json"
 
 const ReviewPage = () => {
-	navigate = useNavigate();
+	const navigate = useNavigate();
 	const { id } = useParams();
 	console.log(id);
 	const { data: reviewComment = [], isSuccess: commentFetched } = useGetCommentByIdQuery(parseInt(id));
 	const [reviewReplyComment, { isSuccess: reviewCommentStatus }] = useCreateCommentMutation();
 	const [reviewReplyStatus, { isSuccess: reviewStatus }] = useReviewCommentByIdMutation();
 
-	useEffect(() => {
-		navigate(-1);
-	}, [reviewCommentStatus, reviewStatus]);
-
 	const handleApprove = () => {
 		reviewReplyComment({
-			id: 6,
+			//TODO:parse the task id and send it with the data
+			// id: 6,
 			commentType: "Normal",
 			content: formData.comment,
 			mentionCommentId: parseInt(id),
@@ -30,10 +27,12 @@ const ReviewPage = () => {
 			reviewStatus: "ACCEPTED",
 			reviewRewardBounty: Number(formData.bountyPoints) + Number(formData.specialBountyPoints),
 		});
+		if (reviewCommentStatus && reviewStatus) navigate(-1);
 	};
 	const handleReject = () => {
 		reviewReplyComment({
-			id: 6,
+			//TODO:parse the task id and send it with the data
+			// id: 6,
 			commentType: "Normal",
 			content: formData.comment,
 			mentionCommentId: parseInt(id),
@@ -42,6 +41,7 @@ const ReviewPage = () => {
 			id: parseInt(id),
 			reviewStatus: "REJECTED",
 		});
+		if (reviewCommentStatus && reviewStatus) navigate(-1);
 	};
 
 	const [formData, setFormData] = useState({
