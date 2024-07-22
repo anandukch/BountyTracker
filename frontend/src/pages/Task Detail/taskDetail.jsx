@@ -103,7 +103,7 @@ const TaskDetail = () => {
 					<h3>Reward</h3> <img src={logo} alt="KoYns logo" />
 					<div className="bountyPoints">{taskDetail?.data.totalBounty} KYNs</div>
 					<div className="assignedBy">
-						<h4>Assigned By : </h4>George
+						<h4>Assigned By : {taskDetail?.data.createdBy.name}</h4>
 					</div>
 				</div>
 			</div>
