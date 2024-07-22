@@ -8,10 +8,10 @@ import { useCreateTaskMutation } from "../../api/taskApi";
 const initialFormData = {
 	title: "",
 	description: "",
-	dueDate: "",
+	deadLine: "",
 	startDate: "",
 	skills: "",
-	bounty: "",
+	totalBounty: "",
 	maxParticipants: "",
 };
 const CreateTask = () => {
@@ -63,6 +63,7 @@ const CreateTask = () => {
 			name: "maxParticipants",
 		},
 	];
+
 	const handleChange = (e) => {
 		setFormData((prev) => ({
 			...prev,
@@ -70,13 +71,18 @@ const CreateTask = () => {
 		}));
 	};
 	const createTaskHandler = () => {
-		console.log(formData);
 		createTask({
 			...formData,
 			totalBounty: parseInt(formData.totalBounty),
 			maxParticipants: parseInt(formData.maxParticipants),
 		});
 	};
+
+	useEffect(() => {
+		if (isSuccess) {
+			console.log(data);
+		}
+	}, [isSuccess, data]);
 	return (
 		<main className="createTask">
 			<div className="title">
@@ -84,8 +90,6 @@ const CreateTask = () => {
 				<div className="formButtons">
 					<Button text="Create" className="create" onClick={createTaskHandler} />
 					<Button text="Cancel" className="cancel" />
-					{/* <Link to="/employees" className="cancelLink"> */}
-					{/* </Link> */}
 				</div>
 			</div>
 			<FormComponent formFields={formFields} onChange={handleChange} />

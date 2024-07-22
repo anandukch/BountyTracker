@@ -4,13 +4,14 @@ import Select from "../../components/Select/Select";
 import { useState } from "react";
 
 const FormComponent = ({ onChange, formFields }) => {
-	const [type, setType] = useState(false);
+	// const [type, setType] = useState(false);
+
 	const form_fields = formFields;
-	const handleChange = (props) => {
-		if (props.type === "Group") setType(true);
-		if (props.type === "Individual") setType(false);
-		onChange(props);
-	};
+	// const handleChange = (props) => {
+	// 	if (props.type === "Group") setType(true);
+	// 	if (props.type === "Individual") setType(false);
+	// 	onChange(props);
+	// };
 	return (
 		<form>
 			<div className="formComponent">
@@ -19,10 +20,11 @@ const FormComponent = ({ onChange, formFields }) => {
 						return (
 							<field.Component
 								key={field.id}
-								label={field.name}
+								label={field.label}
+								name={field.name}
 								values={field.values}
 								className="fields"
-								onSelect={(value) => handleChange({ [field.id]: value })}
+								onChange={onChange}
 							/>
 						);
 					else if (field.Component === "text-area")
@@ -31,32 +33,38 @@ const FormComponent = ({ onChange, formFields }) => {
 								<label>Description</label>
 								<textarea
 									key={field.id}
-									name={field.name}
+									// name={field.name}
+									name="description"
 									rows="5"
 									cols="40"
-									onChange={(e) => handleChange({ [field.id]: e.target.value })}
+									// onChange={(e) => handleChange({ [field.id]: e.target.value })}
+									onChange={onChange}
 								/>
 							</div>
 						);
 					return (
 						<TextField
 							key={field.id}
-							label={field.name}
+							label={field.label}
+							name={field.name}
 							type={field.type}
 							className="fields"
-							onChange={(value) => handleChange({ [field.id]: value })}
+							// onChange={(value) => handleChange({ [field.id]: value })}
+							onChange={onChange}
 						/>
 					);
 				})}
-				{type ? (
+				{/* {type ? (
 					<TextField
 						key="maxParticipants"
 						label="Max Participants"
+						name={field.name}
 						type="number"
 						className="fields"
-						onChange={(value) => handleChange({ ["maxParticipants"]: value })}
+						// onChange={(value) => handleChange({ ["maxParticipants"]: value })}
+						onChange={onChange}
 					/>
-				) : null}
+				) : null} */}
 			</div>
 		</form>
 	);

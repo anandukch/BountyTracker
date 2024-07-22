@@ -3,55 +3,82 @@ import Button from "../../components/Button/Button";
 import Select from "../../components/Select/Select";
 import FormComponent from "../../components/FormComponent/FormComponent";
 import "./styles.scss";
+const initalState = {
+	name: "",
+	email: "",
+	birthday: "",
+	password: "",
+	phone: "",
+	role: "",
+	address: "",
+	pincode: "",
+};
 const RegisterEmployee = () => {
-	const [formData, setFormData] = useState({});
+	const [formData, setFormData] = useState(initalState);
 	const form_fields = [
 		{
-			name: "Username",
+			label: "Name",
 			id: "name",
 			type: "text",
+			name: "name",
 		},
 		{
 			id: "email",
-			name: "Email",
+			label: "Email",
 			type: "email",
+			name: "email",
 		},
 		{
 			id: "birthday",
-			name: "Birthday",
+			label: "Birthday",
 			type: "date",
+			name: "birthday",
 		},
 		{
 			id: "password",
-			name: "Password",
+			label: "Password",
 			type: "password",
+			name: "password",
 		},
 		{
 			id: "phone",
-			name: "Phone",
-			type: "number",
+			label: "Phone",
+			type: "text",
+			name: "phone",
 		},
 		{
 			id: "role",
-			name: "Role",
+			label: "Role",
 			values: [{ option: "UX" }, { option: "UI" }, { option: "HR" }, { option: "Developer" }],
 			Component: Select,
+			name: "role",
 		},
 		{
 			id: "address",
-			name: "Address",
+			label: "Address",
 			type: "text",
+			name: "address",
 		},
 		{
 			id: "pincode",
-			name: "Pincode",
-			type: "number",
+			label: "Pincode",
+			type: "text",
+			name: "pincode",
 		},
 	];
-	const handleChange = (props) => {
+	const handleChange = (e) => {
+		// setFormData((prevState) => {
+		// 	if (formData.type === "Individual") delete formData.maxParticipants;
+		// 	return { ...prevState, ...props };
+		// });
+
+		// console.log(e);
+
 		setFormData((prevState) => {
-			if (formData.type === "Individual") delete formData.maxParticipants;
-			return { ...prevState, ...props };
+			return {
+				...prevState,
+				[e.target.name]: e.target.value,
+			};
 		});
 	};
 	useEffect(() => {
