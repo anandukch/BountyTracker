@@ -11,10 +11,10 @@ const taskApi = apiWithTag.injectEndpoints({
 		createTask: builder.mutation({
 			query: (data) => ({ url: "/tasks", method: "POST", body: data }),
 		}),
-        getCommentByTaskId:builder.query({
-            query:(id)=> `/tasks/${id/comments}`,
-        })
+        // getCommentsByTaskId:builder.query({
+        //     query:(id)=> `/tasks/${id}/comments`,
+        // })
 	}),
 });
 
-export const { useGetTaskListQuery, useGetTaskByIdQuery, useCreateTaskMutation } = taskApi;
+export const { useGetTaskListQuery, useGetTaskByIdQuery, useCreateTaskMutation ,useGetCommentsByTaskIdQuery} = taskApi;
