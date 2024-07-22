@@ -13,8 +13,13 @@ import ListButton from "../../components/Button/ListButton";
 const EmployeeDashboard = () => {
 	const [employee, setEmployee] = useState({});
 	const [employeeDetails, setEmployeeDetails] = useState([]);
+	const [employeeTasks, setEmployeeTasks] = useState([]);
 	const { data, isLoading, isSuccess } = useGetProfileQuery();
-	const { data: employeeTasks = [], isSuccess: isTaskFetched } = useGetEmployeeCurrentTasksQuery();
+	const {
+		data: employeeTasksData = [],
+		isSuccess: isTaskFetched,
+		isLoading: isTaskLoading,
+	} = useGetEmployeeCurrentTasksQuery();
 
 	useEffect(() => {
 		if (isSuccess) {
@@ -98,8 +103,10 @@ const EmployeeDashboard = () => {
 							<TaskDataHeader taskRows={tasksHeader} />
 						</div>
 						<div className="taskDetailsWrapper">
+							{/* {isTaskLoading && <Loader />} */}
 							{isTaskFetched &&
-								employeeTasks.data.map((task) => {
+								employeeTasksData.data.map((task) => {
+									// console.log(task);
 									if (addClass === 0 && task.task.status == "In Progress")
 										return <TaskDataRow key={task.id} taskRows={task} />;
 									else if (addClass === 1 && task.task.status == "completed")
