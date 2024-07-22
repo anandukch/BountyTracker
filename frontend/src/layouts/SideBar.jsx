@@ -20,7 +20,7 @@ const SideBar = () => {
          </div>
          <aside className="SideBar">
             <div className="top">
-               <Link className="links">
+               <Link className="links" to="/user">
                   <div className="details">
                      <div className="icon">
                         <img src={profile} alt="icon" className="imgicon" />
@@ -36,7 +36,7 @@ const SideBar = () => {
                      <label>Tasks</label>
                   </div>
                </Link>
-               <Link className="links">
+               <Link className="links" to="employeeList">
                   <div className="details">
                      <div className="icon">
                         <img src={employees} alt="icon" className="imgicon" />

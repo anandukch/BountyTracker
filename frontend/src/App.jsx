@@ -6,46 +6,49 @@ import CreateUser from "./pages/CreateUser/createUser";
 import Hero from "./components/Hero/Hero";
 import EmployeeDashboard from "./pages/Dashboard/employeeDashboard";
 import TaskDetail from "./pages/Task Detail/taskDetail";
+import EmployeeTierList from "./pages/employeeTierList";
 
 const App = () => {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Hero />,
-      children: [
-        {
-          index: true,
-          element: <Login />,
-        },
-        {
-          path: "/register",
-          element: <CreateUser />,
-        },
-      ],
-    },
+	const router = createBrowserRouter([
+		{
+			path: "/",
+			element: <Hero />,
+			children: [
+				{
+					index: true,
+					element: <Login />,
+				},
+				{
+					path: "/register",
+					element: <CreateUser />,
+				},
+			],
+		},
 
+		{
+			path: "/user",
+			element: <SideBar />,
+			children: [
+				{
+					index: true,
+					element: <EmployeeDashboard />,
+				},
+				{ path: "create", element: <CreateTask /> },
+				{ path: "taskDetail", element: <TaskDetail /> },
+				{
+					path: "employeeList",
+					element: <EmployeeTierList/>,
+				},
+				//  { path: "details/:id", element: <EmployeeDetailsPage /> },
+			],
+		},
+	]);
 
-      {
-         path: "/user",
-         element: <SideBar />,
-         children: [
-            {
-               index: true,
-               element: <EmployeeDashboard />,
-            },
-            { path: "create", element: <CreateTask /> },
-             { path: "taskDetail", element: <TaskDetail /> },
-            //  { path: "details/:id", element: <EmployeeDetailsPage /> },
-         ],
-      },
-
-   ]);
-
-  return (
-    //    <Provider store={store}>
-    <main className="App">
-      <RouterProvider router={router} />
-    </main>
-  );
+	return (
+		//    <Provider store={store}>
+		<main className="App">
+			<RouterProvider router={router} />
+		</main>
+	);
 };
 export default App;

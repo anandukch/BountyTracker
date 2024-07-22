@@ -1,251 +1,284 @@
 :root {
-   --navBlue: #0c53fb;
-   --bgWhite: #fffdfe;
-   --bgGray: #f2f5fa;
-   --textGray: #8c96a0;
-   --textBlack: #2a3644;
-   --borderColor: #e2e5eb;
-   --bgList: #f0f1f6;
+	--navBlue: #0c53fb;
+	--bgWhite: #fffdfe;
+	--bgGray: #f2f5fa;
+	--textGray: #8c96a0;
+	--textBlack: #2a3644;
+	--borderColor: #e2e5eb;
+	--bgList: #f0f1f6;
 }
 * {
-   margin: 0;
-   padding: 0;
-   box-sizing: border-box;
-   font-family: "Nunito", sans-serif;
-   color: var(--textBlack);
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Nunito", sans-serif;
+	color: var(--textBlack);
 }
 .taskDetail {
-   padding: 30px;
-   padding-top: 20px;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   row-gap: 20px;
-   width: 100%;
-   height: 100%;
-   .title {
-      width: 100%;
-      height: 60px;
-      background-color: var(--bgWhite);
-      align-items: center;
-      box-shadow: 2px 5px 8px -2px var(--bgGray);
-      padding-left: 30px;
-      padding-right: 20px;
-      display: flex;
-      justify-content: space-between;
-      span {
-         display: flex;
-         flex-direction: row;
-         gap: 5px;
-      }
-   }
-   .details {
-      display: flex;
-      flex-direction: row;
-      width: 100%;
-      height: 300px;
-      gap: 10px;
+	padding: 30px;
+	padding-top: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	row-gap: 20px;
+	width: 100%;
+	height: 100%;
+	.title {
+		width: 100%;
+		height: 60px;
+		background-color: var(--bgWhite);
+		align-items: center;
+		box-shadow: 2px 5px 8px -2px var(--bgGray);
+		padding-left: 30px;
+		padding-right: 20px;
+		display: flex;
+		justify-content: space-between;
+		span {
+			display: flex;
+			flex-direction: row;
+			gap: 5px;
+		}
+	}
+	.details {
+		display: flex;
+		flex-direction: row;
+		width: 100%;
+		height: 300px;
+		gap: 10px;
 
-      .detailSectionData {
-         height: 100%;
-         width: 70%;
-         background-color: var(--bgWhite);
-         display: grid;
-         grid-template-columns: 1fr;
-         row-gap: 20px;
-         padding: 20px 30px 20px 30px;
-      
-         .fields {
-            display: flex;
-            flex-direction: column;
+		.detailSectionData {
+			height: 100%;
+			width: 70%;
+			background-color: var(--bgWhite);
+			display: grid;
+			grid-template-columns: 1fr;
+			row-gap: 20px;
+			padding: 20px 30px 20px 30px;
 
-            label {
-               margin-bottom: 15px;
-               font-size: 18px;
-               color: var(--textGray);
-               font-weight: 800;
-            }
-            .description{
-               max-height:60px;
-               overflow-y: scroll;
-               padding: 5px;
-            }
-         }
-         .typeSection {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            .maxParticipants {
-               text-align: center;
-            }
-         }
-      }
-      .detailSectionBounty {
-         height: 100%;
-         width: 30%;
-         background-color: var(--bgWhite);
-         display: flex;
-         align-items: center;
-         justify-content: center;
-         flex-direction: column;
-         row-gap: 20px;
-         h3 {
-            color: var(--textBlack);
-         }
-         img {
-            height: 120px;
-            border: 1px solid #60391f;
-            border-radius: 50%;
-         }
-         .assignedBy {
-            display: flex;
-            flex-direction: row;
-            gap: 5px;
-         }
-      }
-   }
-   .bottomSection {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      gap: 10px;
-      height: 450px;
-      padding-bottom: 10px;
-      .commentSection {
-         width: 70%;
-         display: flex;
-         flex-direction: column;
-         row-gap: 10px;
-         background-color: var(--bgWhite);
-         padding: 10px;
-         .commentSectionHeader {
-            width: 100%;
-            height: 40px;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            text-align: center;
-            gap: 5px;
-            padding:0 15px 0 15px;
-            .nameHeader {
-               width: 20%;
-               text-align: center;
-               border-right: 1px solid var(--textBlack);
-               font-weight: 600;
-               font-size: 14px;
-            }
-            .commentHeader {
-               width: 80%;
-               text-align: center;
-               font-weight: 600;
-               font-size: 14px;
-            }
-         }
-         .commentWrapper {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-            .commentList {
-               max-height: 400px;
-               display: flex;
-               flex-direction: column;
-               row-gap: 10px;
-               background-color: var(--bgGray);
-               border-radius: 10px;
-               padding: 15px;
-            }
-            .addComment {
-               display: flex;
-               flex-direction: row;
-               justify-content: space-between;
-               align-items: center;
-               width: 100%;
-               height: 50px;
-               margin-right: 30%;
-               background-color: var(--bgWhite);
-               padding-left: 10px;
-               padding-right: 15px;
-               border: 1px solid var(--textGray);
-               img {
-                  height: 38px;
-               }
-               textarea {
-                  width: 80%;
-                  height: 46px;
-                  outline: none;
-                  border: none;
-                  padding: 15px 5px;
-                  resize: none;
-                  box-sizing: border-box;
-               }
-               .commentButtons {
-                  display: flex;
-                  flex-direction: row;
-                  align-items: center;
-                  gap: 15px;
-                  .sendButton {
-                     height: 33px;
-                     width: 33px;
-                     background-color: var(--bgGray);
-                     align-content: center;
-                     border-radius: 100%;
-                     box-shadow: 1px 1px 1px 1px var(--textGray);
-                     padding: 3px;
-                     img {
-                        height: 100%;
-                     }
-                  }
-                  .reviewButton {
-                     height: 33px;
-                     padding: 8px;
-                     border-radius: 8px;
-                     background-color: var(--bgGray);
-                     border: none;
-                     box-shadow: 1px 1px 1px 1px var(--textGray);
-                     font-size: 14px;
-                     font-weight: 800;
-                     color: var(--textBlack);
-                  }
-               }
-            }
-         }
-      }
-      .particpantsListSection {
-         width: 30%;
-         display: flex;
-         flex-direction: column;
-         row-gap: 5px;
-         .particpantsListHeader {
-            height: 50px;
-            background-color:var(--bgWhite);
-            text-align: center;
-            align-content: center;
-            font-size: 14px;
-            font-weight: 600;
-            padding: 18px;
-         }
-         .particpantsList {
-            display: flex;
-            flex-direction: column;
-            max-height: 400px;
-            width: 100%;
-            height: 100%;
-            .partcipants {
-               width: 100%;
-               height: 50px;
-               padding: 10px;
-               padding-left: 30px;
-               background-color: var(--bgWhite);
-               align-items: center;
-               display: flex;
-               flex-direction: row;
-               gap: 15px;
-               img {
-                  height: 28px;
-               }
-            }
-         }
-      }
-   }
+			.fields {
+				display: flex;
+				flex-direction: column;
+
+				label {
+					margin-bottom: 15px;
+					font-size: 18px;
+					color: var(--textGray);
+					font-weight: 800;
+				}
+				.description {
+					max-height: 60px;
+					overflow-y: scroll;
+					padding: 5px;
+				}
+			}
+			.typeSection {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				.maxParticipants {
+					text-align: center;
+				}
+			}
+		}
+		.detailSectionBounty {
+			height: 100%;
+			width: 30%;
+			background-color: var(--bgWhite);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			row-gap: 20px;
+			h3 {
+				color: var(--textBlack);
+			}
+			img {
+				height: 120px;
+				border: 1px solid #60391f;
+				border-radius: 50%;
+			}
+			.assignedBy {
+				display: flex;
+				flex-direction: row;
+				gap: 5px;
+			}
+		}
+	}
+	.bottomSection {
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		gap: 10px;
+		height: 450px;
+		padding-bottom: 10px;
+		.commentSection {
+			width: 70%;
+			display: flex;
+			flex-direction: column;
+			row-gap: 10px;
+			background-color: var(--bgWhite);
+			padding: 10px;
+			.commentSectionHeader {
+				width: 100%;
+				height: 40px;
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				text-align: center;
+				gap: 5px;
+				padding: 0 15px 0 15px;
+
+				.nameHeader {
+					width: 21%;
+					text-align: center;
+					border-right: 1px solid var(--textBlack);
+					font-weight: 600;
+					font-size: 14px;
+				}
+				.commentHeader {
+					width: 79%;
+					text-align: center;
+					font-weight: 600;
+					font-size: 14px;
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					justify-content: space-between;
+					padding-left: 15px;
+					.commentFilter {
+						display: flex;
+						flex-direction: row;
+						height: 40px;
+						padding: 0 10px 0 10px;
+						gap: 10px;
+						font-size: 12px;
+						font-weight: 600;
+						align-items: center;
+						background-color: var(--bgGray);
+                  border-radius: 8px;
+						.commentFlag {
+							height: 32px;
+							align-content: center;
+							// background-color: white;
+							padding: 0 5px 0 5px;
+							border-radius: 8px;
+						}
+                  .review {
+							height: 32px;
+							align-content: center;
+							// background-color: white;
+							padding: 0 5px 0 5px;
+							border-radius: 8px;
+						}
+					}
+				}
+			}
+			.commentWrapper {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				height: 100%;
+				.commentList {
+					max-height: 400px;
+					display: flex;
+					flex-direction: column;
+					row-gap: 10px;
+					background-color: var(--bgGray);
+					border-radius: 10px;
+					padding: 15px;
+               
+				}
+				.addComment {
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					align-items: center;
+					width: 100%;
+					height: 50px;
+					margin-right: 30%;
+					background-color: var(--bgWhite);
+					padding-left: 10px;
+					padding-right: 15px;
+					border: 1px solid var(--textGray);
+					img {
+						height: 38px;
+					}
+					textarea {
+						width: 80%;
+						height: 46px;
+						outline: none;
+						border: none;
+						padding: 15px 5px;
+						resize: none;
+						box-sizing: border-box;
+					}
+					.commentButtons {
+						display: flex;
+						flex-direction: row;
+						align-items: center;
+						gap: 15px;
+						.sendButton {
+							height: 33px;
+							width: 33px;
+							background-color: var(--bgGray);
+							align-content: center;
+							border-radius: 100%;
+							box-shadow: 1px 1px 1px 1px var(--textGray);
+							padding: 3px;
+							img {
+								height: 100%;
+							}
+						}
+						.reviewButton {
+							height: 33px;
+							padding: 8px;
+							border-radius: 8px;
+							background-color: var(--bgGray);
+							border: none;
+							box-shadow: 1px 1px 1px 1px var(--textGray);
+							font-size: 14px;
+							font-weight: 800;
+							color: var(--textBlack);
+						}
+					}
+				}
+			}
+		}
+		.particpantsListSection {
+			width: 30%;
+			display: flex;
+			flex-direction: column;
+			row-gap: 5px;
+			.particpantsListHeader {
+				height: 50px;
+				background-color: var(--bgWhite);
+				text-align: center;
+				align-content: center;
+				font-size: 14px;
+				font-weight: 600;
+				padding: 18px;
+			}
+			.particpantsList {
+				display: flex;
+				flex-direction: column;
+				max-height: 400px;
+				width: 100%;
+				height: 100%;
+				.partcipants {
+					width: 100%;
+					height: 50px;
+					padding: 10px;
+					padding-left: 30px;
+					background-color: var(--bgWhite);
+					align-items: center;
+					display: flex;
+					flex-direction: row;
+					gap: 15px;
+					img {
+						height: 28px;
+					}
+				}
+			}
+		}
+	}
 }
