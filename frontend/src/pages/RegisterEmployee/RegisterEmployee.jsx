@@ -6,7 +6,7 @@ import "./styles.scss";
 import { useAddEmployeeMutation } from "../../api/employeeApi";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import toastReducer, { addToastMessage } from "../../store/toastReducer";
+import { addToastMessage } from "../../store/toastReducer";
 import { v4 } from "uuid";
 const initalState = {
 	name: "",
@@ -51,7 +51,7 @@ const RegisterEmployee = () => {
 		{
 			id: "gender",
 			label: "Gender",
-			Component: Select,
+			type: "select",
 			values: [{ option: "Male" }, { option: "Female" }, { option: "Others" }],
 			name: "gender",
 		},
@@ -65,7 +65,7 @@ const RegisterEmployee = () => {
 			id: "role",
 			label: "Role",
 			values: [{ option: "Lead" }, { option: "Regular" }],
-			Component: Select,
+			type: "select",
 			name: "role",
 		},
 		{
@@ -104,13 +104,16 @@ const RegisterEmployee = () => {
 
 	useEffect(() => {
 		if (isError) {
-			dispatch(
-				addToastMessage({
-					id: v4(),
-					status: "error",
-					message: error.error,
-				}),
-			);
+			error?.data?.error?.map((errorMessage) => {
+				dispatch(
+					addToastMessage({
+						id: v4(),
+						status: "error",
+						message: errorMessage,
+					}),
+				);
+			});
+			console.log(error);
 		}
 	}, [isError, error, dispatch]);
 

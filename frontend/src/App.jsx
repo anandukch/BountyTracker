@@ -10,6 +10,7 @@ import EmployeeTierList from "./pages/EmployeeTierList/employeeTierList";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import ReviewPage from "./pages/ReviewPage/reviewPage";
+import "./App.scss";
 
 const App = () => {
 	const router = createBrowserRouter([

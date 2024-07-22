@@ -33,7 +33,9 @@ const Hero = () => {
 						<img src={text} alt="Logo Text" className="logo-text" />
 					</div>
 				</div>
-				<Outlet />
+				<div className="outlet">
+					<Outlet />
+				</div>
 			</div>
 		</>
 	);

@@ -6,7 +6,9 @@ import employees from "../assets/employees.svg";
 import logout from "../assets/logout.svg";
 import logo from "../assets/KoYns-Logo.png";
 import text from "../assets/KoYns-Text.png";
+import { useState } from "react";
 const HomeLayout = () => {
+	const [pageIndex, setPageIndex] = useState(0);
 	const navigate = useNavigate();
 	const handleLogout = () => {
 		localStorage.clear("token");
@@ -23,36 +25,44 @@ const HomeLayout = () => {
 			</div>
 			<aside className="HomeLayout">
 				<div className="top">
-					<Link className="links" to="/employee">
-						<div className="details">
-							<div className="icon">
-								<img src={profile} alt="icon" className="imgicon" />
-							</div>
-							<label> Profile</label>
+					<Link
+						className={`links ${pageIndex == 0 ? "active" : ""}`}
+						to="/employee"
+						onClick={() => setPageIndex(0)}
+					>
+						<div className="icon">
+							<img src={profile} alt="icon" className="imgicon" />
 						</div>
+						Profile
 					</Link>
-					<Link className="links" to="taskDetail">
-						<div className="details">
-							<div className="icon">
-								<img src={tasks} alt="icon" className="imgicon" />
-							</div>
-							<label>Tasks</label>
+					<Link
+						className={`links ${pageIndex == 1 ? "active" : ""}`}
+						to="taskDetail"
+						onClick={() => setPageIndex(1)}
+					>
+						<div className="icon">
+							<img src={tasks} alt="icon" className="imgicon" />
 						</div>
+						Tasks
 					</Link>
-					<Link className="links" to="employeeList">
-						<div className="details">
-							<div className="icon">
-								<img src={employees} alt="icon" className="imgicon" />
-							</div>
-							<label>Employees</label>
+					<Link
+						className={`links ${pageIndex == 2 ? "active" : ""}`}
+						to="employeeList"
+						onClick={() => setPageIndex(2)}
+					>
+						<div className="icon">
+							<img src={employees} alt="icon" className="imgicon" />
 						</div>
+						Employees
 					</Link>
 				</div>
-				<div className="details" onClick={handleLogout}>
-					<div className="icon">
-						<img src={logout} alt="icon" className="imgicon" />
+				<div className="bottom">
+					<div className="links" onClick={handleLogout}>
+						<div className="icon">
+							<img src={logout} alt="icon" className="imgicon" />
+						</div>
+						<label>Log-out</label>
 					</div>
-					<label>Log-out</label>
 				</div>
 			</aside>
 
