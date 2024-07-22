@@ -9,6 +9,8 @@ import TextField from "../../components/TextField/TextField";
 import Button from "../../components/Button/Button";
 import { useEffect, useState } from "react";
 import { useGetTaskByIdQuery, useGetTaskListQuery } from "../../api/taskApi";
+import { formatDate } from "../../utils/date.utils";
+import { useGetEmployeeQuery } from "../../api/employeeApi";
 const TaskDetail = () => {
 	const form_fields = [
 		{
@@ -55,20 +57,23 @@ const TaskDetail = () => {
 	const handleCommentFilter = (filter) => {
 		setCommentType(filter);
 	};
-
-   const {data,isSuccess}=useGetTaskByIdQuery(2)
+   
+   const {data : taskDetail ,isSuccess}=useGetTaskByIdQuery(2)
    useEffect(()=>{
-      console.log(data)
-   },[data])
+      console.log(taskDetail)
 
+   },[taskDetail])
+   
+   
+  
 	return (
 		<main className="taskDetail">
 			<div className="title">
 				<span>
-					<h3>Task :</h3> #name
+					<h3>Task : # {taskDetail?.data.title}</h3>
 				</span>
 				<span>
-					<h3>Due :</h3> #due date
+					<h3>Due : {formatDate(taskDetail?.data.deadLine)}</h3> 
 				</span>
 			</div>
 			<div className="details">
@@ -77,26 +82,26 @@ const TaskDetail = () => {
 						return (
 							<div className="fields">
 								<label> {fields.name}</label>
-								<div className={fields.id}>{fields.value}</div>
+								<div className={fields.id}>{taskDetail?.data[fields.id]}</div>
 							</div>
 						);
 					})}
 					<div className="typeSection">
 						<div className="fields">
 							<label> Type</label>
-							<div className="type">Individual</div>
+							<div className="type">{taskDetail?.data.maxParticipants>1?"Group" : "Individual"}</div>
 						</div>
 						{true ? (
 							<div className="fields">
 								<label> Max Participants</label>
-								<div className="maxParticipants">5</div>
+								<div className="maxParticipants">{taskDetail?.data.maxParticipants}</div>
 							</div>
 						) : null}
 					</div>
 				</div>
 				<div className="detailSectionBounty">
 					<h3>Reward</h3> <img src={logo} alt="KoYns logo" />
-					<div className="bountyPoints">200 KYns</div>
+					<div className="bountyPoints">{taskDetail?.data.totalBounty} KYNs</div>
 					<div className="assignedBy">
 						<h4>Assigned By : </h4>George
 					</div>

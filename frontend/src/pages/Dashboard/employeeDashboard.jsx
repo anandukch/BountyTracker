@@ -7,22 +7,26 @@ import TaskDataHeader from "../../components/TaskDataHeader";
 import { useGetProfileQuery } from "../../api/employeeApi";
 import { useEffect, useState } from "react";
 import { Loader } from "../../components/Loader/Loader";
+import { formatDate } from "../../utils/date.utils";
+import ListButton from "../../components/Button/ListButton";
 
 const EmployeeDashboard = () => {
 	const [employee, setEmployee] = useState({});
 	const [employeeDetails, setEmployeeDetails] = useState([]);
 	const { data, isLoading, isSuccess } = useGetProfileQuery();
+	var additionalStyles = "";
 
 	useEffect(() => {
 		if (isSuccess) {
-			const { data: employeeData} = data;
+			console.log(data);
+			const { data: employeeData } = data;
 			setEmployee(employeeData);
 			console.log(employeeData);
 			setEmployeeDetails([
 				{ header: "Role", content: employeeData.role },
 				{ header: "Email", content: employeeData.email },
 				{ header: "Tier", content: employeeData.tier || "N/A" },
-				{ header: "Birthday", content: employeeData.details.birthday },
+				{ header: "Birthday", content: formatDate(employeeData.details.birthday) },
 				{ header: "Gender", content: employeeData.details.gender },
 				{ header: "Phone", content: employeeData.details.phoneNo },
 			]);
@@ -30,6 +34,18 @@ const EmployeeDashboard = () => {
 	}, [data, isSuccess]);
 
 	const taskList = file.data;
+
+	const [addClass, setAddClass] = useState(0);
+
+	const handlePending = (e) => {
+		setAddClass(0);
+		console.log(e.target);
+	};
+
+	const handleCompleted = (e) => {
+		setAddClass(1);
+		console.log(e.target);
+	};
 
 	const tasksHeader = {
 		name: "Name",
@@ -42,7 +58,7 @@ const EmployeeDashboard = () => {
 
 	return (
 		<div className="employeeDashboardWrapper">
-			{isLoading && <Loader/>}
+			{isLoading && <Loader />}
 			<section className="employeeDashboard">
 				<div className="employeeDetailsWrapper">
 					<div className="employeeProfileWrapper">
@@ -51,11 +67,11 @@ const EmployeeDashboard = () => {
 							<h3 className="employeeNameText">{employee.name}</h3>
 							<div className="taskCountWrapper">
 								<div className="totalTasksProfile">
-									<h4>15</h4>
+									<h4>{employee.completedTasks + employee.pendingTasks || 0}</h4>
 									<p>Total</p>
 								</div>
 								<div className="pendingTasksProfile">
-									<h4>5</h4>
+									<h4>{employee.pendingTasks || 0}</h4>
 									<p>Pending</p>
 								</div>
 							</div>
@@ -72,24 +88,16 @@ const EmployeeDashboard = () => {
 				</div>
 				<div className="employeeTasksWrapper">
 					<div className="taskBarWrapper">
-						<button
-							type="button"
-							className="dashboardTaskPending"
-							onClick={() => {
-								console.log("Pending Tasks");
-							}}
-						>
-							Pending Tasks
-						</button>
-						<button
-							type="button"
-							className="dashboardTaskCompleted"
-							onClick={() => {
-								console.log("Completed Tasks");
-							}}
-						>
-							Completed Tasks
-						</button>
+						<ListButton
+							text={"Pending Task"}
+							buttonClass={`dashboardTaskPending${addClass === 0 ? " activeTab" : ""}`}
+							clickHandle={handlePending}
+						/>
+						<ListButton
+							text={"Completed Task"}
+							buttonClass={`dashboardTaskCompleted${addClass === 1 ? " activeTab" : ""}`}
+							clickHandle={handleCompleted}
+						/>
 					</div>
 					<div className="taskLogWrapper">
 						<div className="taskHeaderWrapper">

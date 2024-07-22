@@ -1,5 +1,6 @@
 import { IsDate, IsNotEmpty, isNumber, IsNumber, IsString } from "class-validator";
 import Task from "../entity/task.entity";
+import Employee from "../entity/employee.entity";
 
 export class CreateTaskDto {
 	@IsNotEmpty()
