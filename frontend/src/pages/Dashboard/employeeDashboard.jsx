@@ -2,7 +2,6 @@ import DetailBlock from "../../components/DetailBlock";
 import TaskDataRow from "../../components/TaskRowData";
 import "./style.scss";
 import profilImg from "../../assets/profile.png";
-import file from "../../utils/employeeTask";
 import TaskDataHeader from "../../components/TaskDataHeader";
 import { useGetEmployeeCurrentTasksQuery, useGetProfileQuery } from "../../api/employeeApi";
 import { useEffect, useState } from "react";
@@ -13,12 +12,10 @@ import ListButton from "../../components/Button/ListButton";
 const EmployeeDashboard = () => {
 	const [employee, setEmployee] = useState({});
 	const [employeeDetails, setEmployeeDetails] = useState([]);
-	const [employeeTasks, setEmployeeTasks] = useState([]);
 	const { data, isLoading, isSuccess } = useGetProfileQuery();
 	const {
 		data: employeeTasksData = [],
 		isSuccess: isTaskFetched,
-		isLoading: isTaskLoading,
 	} = useGetEmployeeCurrentTasksQuery();
 
 	useEffect(() => {

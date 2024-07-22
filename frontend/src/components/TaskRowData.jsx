@@ -3,7 +3,6 @@ import { formatDate } from "../utils/date.utils";
 import TaskColumnData from "./TaskColumnData";
 
 const TaskDataRow = ({ taskRows }) => {
-	console.log(taskRows);
 	let status = "In Progress";
 	if (taskRows.task.status == "completed") status = "Completed";
 	return (
