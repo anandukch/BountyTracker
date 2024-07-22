@@ -1,10 +1,10 @@
 import React from "react";
-const Button = (props) => {
-   return (
-      <button className={props.className}>
-         {props.text}
-      </button>
-   );
+const Button = ({ className, type, text }) => {
+	return (
+		<button className={className} type={type}>
+			{text}
+		</button>
+	);
 };
 
 export default Button;
