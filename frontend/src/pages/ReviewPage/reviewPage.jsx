@@ -3,19 +3,20 @@ import "../../pages/ReviewPage/reviewPage.scss";
 import profileImg from "../../assets/profile.png";
 import { useState, useEffect } from "react";
 import { useCreateCommentMutation, useGetCommentByIdQuery, useReviewCommentByIdMutation } from "../../api/taskApi";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 // import comment from "../../utils/comment.util.json"
 
 const ReviewPage = () => {
+	navigate = useNavigate();
 	const { id } = useParams();
 	console.log(id);
 	const { data: reviewComment = [], isSuccess: commentFetched } = useGetCommentByIdQuery(parseInt(id));
-	const [reviewReplyComment] = useCreateCommentMutation();
-	const [reviewReplyStatus] = useReviewCommentByIdMutation();
+	const [reviewReplyComment, { isSuccess: reviewCommentStatus }] = useCreateCommentMutation();
+	const [reviewReplyStatus, { isSuccess: reviewStatus }] = useReviewCommentByIdMutation();
 
 	useEffect(() => {
-		console.log(reviewComment);
-	}, [commentFetched]);
+		navigate(-1);
+	}, [reviewCommentStatus, reviewStatus]);
 
 	const handleApprove = () => {
 		reviewReplyComment({
@@ -30,8 +31,18 @@ const ReviewPage = () => {
 			reviewRewardBounty: Number(formData.bountyPoints) + Number(formData.specialBountyPoints),
 		});
 	};
-
-	const handleReject = () => {};
+	const handleReject = () => {
+		reviewReplyComment({
+			id: 6,
+			commentType: "Normal",
+			content: formData.comment,
+			mentionCommentId: parseInt(id),
+		});
+		reviewReplyStatus({
+			id: parseInt(id),
+			reviewStatus: "REJECTED",
+		});
+	};
 
 	const [formData, setFormData] = useState({
 		bountyPoints: 0,
