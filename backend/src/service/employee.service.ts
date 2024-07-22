@@ -111,7 +111,7 @@ class EmployeeService {
 	};
 
 	joinTask = async (taskId: number, employee: Employee) => {
-		const task = await this.taskService.getTaskById(taskId,["createdBy", "participants", "participants.employee"]);
+		const task = await this.taskService.getTaskById(taskId,[]);
 		if (!task) {
 			throw new EntityNotFoundException(404, "Task not found");
 		}
