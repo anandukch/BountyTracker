@@ -5,37 +5,31 @@ import profilImg from "../../assets/profile.png";
 import file from "../../utils/employeeTask";
 import TaskDataHeader from "../../components/TaskDataHeader";
 import { useGetProfileQuery } from "../../api/employeeApi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Loader } from "../../components/Loader/Loader";
 
 const EmployeeDashboard = () => {
-	const { data, isLoading } = useGetProfileQuery();
+	const [employee, setEmployee] = useState({});
+	const [employeeDetails, setEmployeeDetails] = useState([]);
+	const { data, isLoading, isSuccess } = useGetProfileQuery();
 
 	useEffect(() => {
-		console.log(data);
-	}, [data]);
-	const employee = {
-		name: "John Doe",
-		email: "johndoe@gmail.com",
-		role: "Fullstack Lead",
-		tier: "Gold",
-		details: {
-			totalBounty: "1400",
-			birthday: "24/11/2001",
-			gender: "Male",
-			phoneNo: "1234567890",
-		},
-	};
+		if (isSuccess) {
+			const { data: employeeData} = data;
+			setEmployee(employeeData);
+			console.log(employeeData);
+			setEmployeeDetails([
+				{ header: "Role", content: employeeData.role },
+				{ header: "Email", content: employeeData.email },
+				{ header: "Tier", content: employeeData.tier || "N/A" },
+				{ header: "Birthday", content: employeeData.details.birthday },
+				{ header: "Gender", content: employeeData.details.gender },
+				{ header: "Phone", content: employeeData.details.phoneNo },
+			]);
+		}
+	}, [data, isSuccess]);
 
 	const taskList = file.data;
-
-	const employeeDetails = [
-		{ header: "Role", content: employee.role },
-		{ header: "Email", content: employee.email },
-		{ header: "Tier", content: employee.tier },
-		{ header: "Birthday", content: employee.details.birthday },
-		{ header: "Gender", content: employee.details.gender },
-		{ header: "Phone", content: employee.details.phoneNo },
-	];
 
 	const tasksHeader = {
 		name: "Name",
@@ -48,6 +42,7 @@ const EmployeeDashboard = () => {
 
 	return (
 		<div className="employeeDashboardWrapper">
+			{isLoading && <Loader/>}
 			<section className="employeeDashboard">
 				<div className="employeeDetailsWrapper">
 					<div className="employeeProfileWrapper">
