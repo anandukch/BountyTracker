@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { clearError } from "../store/toastReducer";
+import { clearToastMessage } from "../../store/toastReducer";
 
 const Toast = ({ status, message, id }) => {
 	const [active, setActive] = useState(false);
@@ -10,7 +10,7 @@ const Toast = ({ status, message, id }) => {
 		setTimeout(() => {
 			setActive(false);
 			setTimeout(() => {
-				dispatch(clearError(id));
+				dispatch(clearToastMessage(id));
 			}, 500);
 
 			// return () => clearTimeout(deleteTimer);

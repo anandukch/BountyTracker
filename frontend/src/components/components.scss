@@ -43,7 +43,7 @@
 	}
 }
 
-.snackbar {
+.toast {
 	position: relative;
 	top: 0px;
 	right: 0px;
@@ -60,15 +60,15 @@
 	transition: 0.5s;
 	transition-delay: 0.1s;
 	opacity: 0;
-	&.snackbar-active {
+	&.toast-active {
 		transform: translate(0, 50px);
 		opacity: 1;
 	}
 
-	&.snackbar-success {
+	&.toast-success {
 		background-color: #4caf50;
 	}
-	&.snackbar-error {
+	&.toast-error {
 		background-color: #f44336;
 	}
 }

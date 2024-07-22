@@ -1,22 +1,20 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 
-const addError = createAction("ADD_ERROR");
-const clearError = createAction("CLEAR_ERROR");
+const addToastMessage = createAction("ADD_TOAST_MESSAGE");
+const clearToastMessage = createAction("CLEAR_TOAST_MESSAGE");
 
 const toastReducer = createReducer(
-    {
-        errors: [],
-    },
-    (builder) => {
-        builder.addCase(addError, (state, action) => {
-            state.errors.push(action.payload);
-        });
-        builder.addCase(clearError, (state, action) => {
-            state.errors = state.errors.filter(
-                (error) => error.id != action.payload
-            );
-        });
-    }
+	{
+		toastMessages: [],
+	},
+	(builder) => {
+		builder.addCase(addToastMessage, (state, action) => {
+			state.toastMessages.push(action.payload);
+		});
+		builder.addCase(clearToastMessage, (state, action) => {
+			state.toastMessages = state.toastMessages.filter((toastMessage) => toastMessage.id != action.payload);
+		});
+	},
 );
 
-export { toastReducer as default, addError, clearError };
+export { toastReducer as default, addToastMessage, clearToastMessage };

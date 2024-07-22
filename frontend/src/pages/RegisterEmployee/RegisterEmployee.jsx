@@ -5,6 +5,9 @@ import FormComponent from "../../components/FormComponent/FormComponent";
 import "./styles.scss";
 import { useAddEmployeeMutation } from "../../api/employeeApi";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import toastReducer, { addToastMessage } from "../../store/toastReducer";
+import { v4 } from "uuid";
 const initalState = {
 	name: "",
 	email: "",
@@ -93,10 +96,23 @@ const RegisterEmployee = () => {
 		console.log(formData);
 	};
 
+	const cancelHandler = () => {
+		navigate(-1);
+	};
+
+	const dispatch = useDispatch();
+
 	useEffect(() => {
 		if (isError) {
+			dispatch(
+				addToastMessage({
+					id: v4(),
+					status: "error",
+					message: error.error,
+				}),
+			);
 		}
-	}, [isError, error]);
+	}, [isError, error, dispatch]);
 
 	useEffect(() => {
 		if (isSuccess) {
@@ -107,10 +123,12 @@ const RegisterEmployee = () => {
 	return (
 		<main className="RegisterEmployee">
 			<h1>Register</h1>
-			<FormComponent formFields={form_fields} onChange={handleChange} />
-			<div className="formButtons">
-				<Button text="Create" isPrimary={true} onClick={registerEmployeeHandler} />
-				<Button text="Cancel" className="cancel" />
+			<div className="formWrapper">
+				<FormComponent formFields={form_fields} onChange={handleChange} />
+				<div className="formButtons">
+					<Button text="Create" isPrimary={true} onClick={registerEmployeeHandler} />
+					<Button text="Cancel" className="cancel" onClick={cancelHandler} />
+				</div>
 			</div>
 		</main>
 	);
