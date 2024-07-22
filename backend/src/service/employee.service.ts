@@ -113,6 +113,9 @@ class EmployeeService {
 		if (!task) {
 			throw new EntityNotFoundException(404, "Task not found");
 		}
+		if (task.maxParticipants === task.currentParticipants) {
+			throw new EntityNotFoundException(404, "Task is full");
+		}
 
 		task.currentParticipants += 1;
 		await this.taskService.updateTask(taskId, task);
