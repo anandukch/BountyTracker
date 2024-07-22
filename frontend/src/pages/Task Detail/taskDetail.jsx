@@ -2,7 +2,7 @@ import "./styles.scss";
 import logo from "../../assets/KoYns-Logo.png";
 import commentIcon from "../../assets/commentIcon.svg";
 import attach from "../../assets/attach.svg";
-import profile from "../../assets/profile-img.svg";
+import profile from "../../assets/profile.png";
 import send from "../../assets/send.svg";
 import CommentComponent from "../../components/CommentComponent/CommentComponent";
 import TextField from "../../components/TextField/TextField";
@@ -14,12 +14,14 @@ import {
 	useGetTaskByIdQuery,
 	useGetTaskListQuery,
 	useLazyGetTaskByIdQuery,
+	useUploadMutation,
 } from "../../api/taskApi";
 import { formatDate } from "../../utils/date.utils";
 import { useGetEmployeeQuery } from "../../api/employeeApi";
 const TaskDetail = () => {
 	const [commentList, setCommentList] = useState([]);
 	const [participantList, setParticipantList] = useState([]);
+	const [file, uploadFile] = useState();
 	const form_fields = [
 		{
 			id: "description",
@@ -33,17 +35,25 @@ const TaskDetail = () => {
 			value: "Node, react, java, c",
 		},
 	];
+
+	const style = {
+		backgroundColor: "white",
+		color: "#2c95ce",
+		boxShadow: "0.5px 0.5px 0.5px  0.5px #8c96a0",
+	};
 	const [commentType, setCommentType] = useState("Normal");
 	const [comment, setComment] = useState("");
 	const { data: taskDetail } = useGetTaskByIdQuery(2);
 	const { data: commentsData } = useGetCommentsByTaskIdQuery(2);
 
-	const [createComment, { data, isSuccess }] = useCreateCommentMutation();
+	const [createComment, { data }] = useCreateCommentMutation();
+	const [upload, { isSuccess }] = useUploadMutation();
 	const handleSend = (e) => {
 		const commentData = {
 			id: 2,
 			commentType: commentType,
 			content: comment,
+         file:file
 		};
 		createComment(commentData);
 		// console.log(comment);
@@ -54,6 +64,10 @@ const TaskDetail = () => {
 	const handleCommentFilter = (filter) => {
 		setCommentType(filter);
 	};
+	const handleUpload = (e) => {
+		uploadFile(e.target.files[0]);
+      console.log(e.target.files[0])
+	};
 	useEffect(() => {
 		if (taskDetail?.data) {
 			setParticipantList(taskDetail.data.participants);
@@ -62,10 +76,19 @@ const TaskDetail = () => {
 		if (commentsData?.data) {
 			if (commentType == "Normal") setCommentList(commentsData.data.normalComments);
 			else setCommentList(commentsData.data.reviewComments);
-         console.log(commentList);
+			console.log(commentList);
 		}
 	});
-
+	useEffect(() => {
+		if (file) {
+			const formData = new FormData();
+			formData.append("Date:employeeName_File", file);
+			// upload(formData);
+			if (isSuccess) console.log("kittyy monee");
+		} else {
+			console.log("file kiteeela mone");
+		}
+	}, [file]);
 	return (
 		<main className="taskDetail">
 			<div className="title">
@@ -117,14 +140,14 @@ const TaskDetail = () => {
 								<div
 									className="commentFlag"
 									onClick={() => handleCommentFilter("Normal")}
-									style={commentType === "Normal" ? { backgroundColor: "white" } : null}
+									style={commentType === "Normal" ? style : null}
 								>
 									Comment
 								</div>
 								<div
 									className="review"
 									onClick={() => handleCommentFilter("Review")}
-									style={commentType === "Review" ? { backgroundColor: "white" } : null}
+									style={commentType === "Review" ? style : null}
 								>
 									Review
 								</div>
@@ -138,7 +161,11 @@ const TaskDetail = () => {
 								.filter((record) => record.commentType === commentType)
 								.map((record) => {
 									return (
-										<CommentComponent key={record.id} name={record.employee.name} comment={record.content} />
+										<CommentComponent
+											key={record.id}
+											name={record.employee.name}
+											comment={record.content}
+										/>
 									);
 								})}
 						</div>
@@ -151,9 +178,15 @@ const TaskDetail = () => {
 								onChange={handleTextArea}
 							/>
 							<span className="commentButtons">
-								<img src={attach} type="file" alt="Add attachment" />
 								{commentType === "Review" ? (
-									<Button className="reviewButton" text="Review" onClick={handleSend} />
+									<>
+										<label htmlFor="file">
+											<img src={attach} alt="Add attachment" />
+										</label>
+										<input type="file" id="file" className="uploadFile" onChange={handleUpload} />
+
+										<Button className="reviewButton" text="Review" onClick={handleSend} />
+									</>
 								) : (
 									<div className="sendButton">
 										<img src={send} alt="Send Comment" onClick={handleSend} />

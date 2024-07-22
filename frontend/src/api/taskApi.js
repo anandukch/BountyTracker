@@ -19,6 +19,13 @@ const taskApi = apiWithTag.injectEndpoints({
 			query: ({ ...data }) => ({ url: `/tasks/${parseInt(data.id)}/comments`, method: "POST", body: data }),
 			invalidatesTags: ["COMMENTS"],
 		}),
+		upload: builder.mutation({
+			query: ({ formData }) => ({
+				url: `/file`,
+				method: "POST",
+				body: formData,
+			}),
+		}),
 	}),
 });
 
@@ -29,4 +36,5 @@ export const {
 	useCreateTaskMutation,
 	useGetCommentsByTaskIdQuery,
 	useCreateCommentMutation,
+	useUploadMutation,
 } = taskApi;
