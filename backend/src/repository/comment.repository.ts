@@ -21,6 +21,7 @@ class CommentRepository {
 			where: filter,
 			relations: {
 				mentionComment: true,
+				employee: true,
 			},
 		});
 	};

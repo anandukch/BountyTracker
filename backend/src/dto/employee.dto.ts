@@ -3,7 +3,7 @@ import "reflect-metadata";
 import { Role } from "../utils/role.enum";
 import Employee from "../entity/employee.entity";
 import { EmployeeDetailsDto } from "./employeeDetails.dto";
-import { IsEmail, IsEnum, IsNotEmpty, IsString, ValidateNested } from "class-validator";
+import { IsDateString, IsEmail, IsEnum, IsNotEmpty, IsNumber, IsString, ValidateNested } from "class-validator";
 
 export class CreateEmployeeDto {
 	@IsNotEmpty()
@@ -23,10 +23,21 @@ export class CreateEmployeeDto {
 	@IsEnum(Role)
 	role: Role;
 
+	// @IsNotEmpty()
+	// @ValidateNested({ each: true })
+	// @Type(() => EmployeeDetailsDto)
+	// details: EmployeeDetailsDto;
 	@IsNotEmpty()
-	@ValidateNested({ each: true })
-	@Type(() => EmployeeDetailsDto)
-	details: EmployeeDetailsDto;
+	@IsString()
+	gender: string;
+
+	@IsNotEmpty()
+	@IsDateString()
+	birthday: Date;
+
+	@IsNotEmpty()
+	@IsString()
+	phoneNo: string;
 }
 
 export class EmployeeResposneDto {
@@ -35,5 +46,5 @@ export class EmployeeResposneDto {
 	public constructor(employee: Employee) {
 		Object.assign(this, employee);
 		delete this.password;
-	}	
+	}
 }

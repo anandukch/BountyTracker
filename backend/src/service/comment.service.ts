@@ -1,3 +1,4 @@
+import path from "path";
 import { CreateComementDto, ReviewCommentDto } from "../dto/comment.dto";
 import Comment from "../entity/comment.entity";
 import Employee from "../entity/employee.entity";
@@ -23,10 +24,18 @@ class CommentService {
 		if (!comment) {
 			throw new HttpException(404, "Comment not found");
 		}
+
 		return comment;
 	};
 
-	createComment = async (taskId: number, employee: Employee, commentDto: CreateComementDto) => {
+	getCommentFile = async (commentId:number) => {
+		const comment = await this.getCommentByCommentId(commentId);
+		const fileName = comment.fileUrl;
+		const file = path.resolve(__dirname, `../../uploads/${fileName}`);
+		return file;
+	};
+
+	createComment = async (taskId: number, employee: Employee, commentDto: CreateComementDto, fileName: string) => {
 		//TODO:'Create comment business logic'
 
 		const newComment = new Comment();
@@ -41,7 +50,7 @@ class CommentService {
 		newComment.task = task;
 		newComment.commentType = commentType;
 		newComment.content = content;
-		newComment.fileUrl = fileUrl;
+		newComment.fileUrl = fileName;
 		newComment.mentionComment = mentionComment;
 		newComment.reviewStatus = commentType === CommentType.Review ? ReviewStatus.PENDING : null;
 		newComment.employee = employee;

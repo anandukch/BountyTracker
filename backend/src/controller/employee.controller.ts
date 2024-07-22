@@ -20,7 +20,7 @@ class EmployeeController {
 		this.router.get("/:id", this.getEmployeeByID);
 		this.router.post("/login", this.loginEmployee);
 		this.router.post("/", this.createEmployee);
-		this.router.post("/tasks/:id",authorize, this.joinTask);
+		this.router.post("/tasks/:id", authorize, this.joinTask);
 		this.router.put("/:employeeId/tasks/:taskId/contributions", authorize, this.giveContribution);
 	}
 
@@ -44,7 +44,6 @@ class EmployeeController {
 		}
 	};
 
-
 	public getEmployeeProfile = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			const employee = await this.employeeService.getProfile(req.user.id);
@@ -56,7 +55,7 @@ class EmployeeController {
 		} catch (error) {
 			next(error);
 		}
-	}
+	};
 
 	public getAllEmployees = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
@@ -125,10 +124,10 @@ class EmployeeController {
 			const errors = await validate(employeeDto);
 			// const validationErrorConstraints = getValidationErrorConstraints(errors);
 			if (errors.length) {
-          		throw new ValidationException(400, "Validation Failed", errors);
-        	}
-			const createdEmployee = this.employeeService.createEmployee(employeeDto);
-
+				throw new ValidationException(400, "Validation Failed", errors);
+			}
+			const createdEmployee = await this.employeeService.createEmployee(employeeDto);
+			delete createdEmployee.password;
 			res.status(201).send(createdEmployee);
 		} catch (error) {
 			next(error);

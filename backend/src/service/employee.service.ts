@@ -100,19 +100,21 @@ class EmployeeService {
 		employee.role = employeeDto.role;
 
 		const newEmployeeDetails = new EmployeeDetails();
-		newEmployeeDetails.gender = employeeDto.details.gender;
-		newEmployeeDetails.birthday = new Date(employeeDto.details.birthday);
-		newEmployeeDetails.phoneNo = employeeDto.details.phoneNo;
-		newEmployeeDetails.totalBounty = employeeDto.details.totalBounty;
+		newEmployeeDetails.gender = employeeDto.gender;
+		newEmployeeDetails.birthday = new Date(employeeDto.birthday);
+		newEmployeeDetails.phoneNo = employeeDto.phoneNo;
+		newEmployeeDetails.totalBounty = 0;
 		employee.details = newEmployeeDetails;
-		await this.employeeRespository.save(employee);
-		return employee;
+		return this.employeeRespository.save(employee);
 	};
 
 	joinTask = async (taskId: number, employee: Employee) => {
-		const task = await this.taskService.getTaskById(taskId,[]);
+		const task = await this.taskService.getTaskById(taskId, []);
 		if (!task) {
 			throw new EntityNotFoundException(404, "Task not found");
+		}
+		if (task.maxParticipants === task.currentParticipants) {
+			throw new EntityNotFoundException(404, "Task is full");
 		}
 
 		task.currentParticipants += 1;
@@ -132,7 +134,7 @@ class EmployeeService {
 	};
 
 	giveContribution = async (taskId: number, employeeId: number, contribution: number) => {
-		const task = await this.taskService.getTaskById(taskId,["createdBy", "participants", "participants.employee"]);
+		const task = await this.taskService.getTaskById(taskId, ["createdBy", "participants", "participants.employee"]);
 		if (!task) {
 			throw new EntityNotFoundException(404, "Task not found");
 		}

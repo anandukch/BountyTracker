@@ -13,7 +13,7 @@ export class CreateComementDto {
 	content: string;
 
 	@IsOptional()
-	@IsUrl()
+	@IsString()
 	fileUrl: string;
 
 	@IsOptional()
