@@ -13,6 +13,7 @@ class EmployeeController {
 	constructor(private employeeService: EmployeeService) {
 		this.router = Router();
 		this.router.get("/", authorize, this.getAllEmployees);
+		this.router.get("/profile", authorize, this.getEmployeeProfile);
 		this.router.get("/tasks", authorize, this.getEmployeeAssignedTasks);
 		this.router.get("/tasks/not-joined", authorize, this.getTasksNotJoinedByEmployee);
 		this.router.get("/:id", this.getEmployeeByID);
@@ -41,6 +42,20 @@ class EmployeeController {
 			next(error);
 		}
 	};
+
+
+	public getEmployeeProfile = async (req: RequestWithRole, res: Response, next: NextFunction) => {
+		try {
+			const employee = await this.employeeService.getEmployeeByID(req.user.id);
+			res.status(200).json({
+				success: true,
+				message: "Employee fetched successfully",
+				data: employee,
+			});
+		} catch (error) {
+			next(error);
+		}
+	}
 
 	public getAllEmployees = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
