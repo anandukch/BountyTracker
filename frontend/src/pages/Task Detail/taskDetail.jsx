@@ -37,7 +37,7 @@ const TaskDetail = () => {
 	const [commentType, setCommentType] = useState("Normal");
 	const [comment, setComment] = useState("");
 	const { data: taskDetail, isSuccess } = useGetTaskByIdQuery(2);
-
+   const {data: comments}=useG
 	const handleSend = (e) => {
 		console.log(comment);
 	};
