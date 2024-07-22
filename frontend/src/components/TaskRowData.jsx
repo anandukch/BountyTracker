@@ -1,3 +1,4 @@
+import { formatDate } from "../utils/date.utils";
 import TaskColumnData from "./TaskColumnData";
 
 const TaskDataRow = ({ taskRows = [] }) => {
@@ -6,11 +7,7 @@ const TaskDataRow = ({ taskRows = [] }) => {
       <TaskColumnData content={taskRows.title} />
       <TaskColumnData content={taskRows.createdBy.name} />
       <TaskColumnData
-        content={new Date(taskRows.deadLine).toLocaleDateString("en-Gb", {
-          day: "numeric",
-          month: "short",
-          year: "numeric",
-        })}
+        content={formatDate(taskRows.deadLine)}
       />
       <TaskColumnData
         content={`
