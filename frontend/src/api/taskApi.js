@@ -25,6 +25,13 @@ const taskApi = apiWithTag.injectEndpoints({
 		getCommentById: builder.query({
 			query: (id) => `/tasks/comments/${id}`,
 		}),
+		upload: builder.mutation({
+			query: ({ formData }) => ({
+				url: `/file`,
+				method: "POST",
+				body: formData,
+			}),
+		}),
 	}),
 });
 
@@ -35,6 +42,7 @@ export const {
 	useCreateTaskMutation,
 	useGetCommentsByTaskIdQuery,
 	useCreateCommentMutation,
+	useUploadMutation,
 	useReviewCommentByIdMutation,
 	useGetCommentByIdQuery,
 } = taskApi;

@@ -6,6 +6,7 @@
 	--textBlack: #2a3644;
 	--borderColor: #e2e5eb;
 	--bgList: #f0f1f6;
+	--statusTitle: #2c95ce;
 }
 * {
 	margin: 0;
@@ -149,23 +150,27 @@
 						display: flex;
 						flex-direction: row;
 						height: 40px;
-						padding: 0 10px 0 10px;
+						padding: 0 4px 0 4px;
 						gap: 5px;
-						font-size: 12px;
+						font-size: 13px;
 						font-weight: 600;
 						align-items: center;
 						background-color: var(--bgGray);
-						border-radius: 8px;
+						border-radius: 12px;
+						// box-shadow: 0.5px 0.5px 0.5px  0.5px var(--textGray);
+						cursor: pointer;
 						.commentFlag {
 							height: 32px;
 							align-content: center;
 							// background-color: white;
+							color: var(--textGray);
 							padding: 0 5px 0 5px;
 							border-radius: 8px;
 						}
 						.review {
 							height: 32px;
 							align-content: center;
+							color: var(--textGray);
 							// background-color: white;
 							padding: 0 5px 0 5px;
 							border-radius: 8px;
@@ -217,6 +222,13 @@
 						flex-direction: row;
 						align-items: center;
 						gap: 15px;
+						input[type="file"] {
+							display: none;
+							// background-image: url( "../../assets/attach.svg");
+						}
+						label {
+							background-image: url("../../assets/attach.svg");
+						}
 						.sendButton {
 							height: 33px;
 							width: 33px;
