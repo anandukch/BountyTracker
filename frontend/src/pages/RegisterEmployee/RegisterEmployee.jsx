@@ -3,6 +3,7 @@ import Button from "../../components/Button/Button";
 import Select from "../../components/Select/Select";
 import FormComponent from "../../components/FormComponent/FormComponent";
 import "./styles.scss";
+import { useAddEmployeeMutation } from "../../api/employeeApi";
 const initalState = {
 	name: "",
 	email: "",
@@ -15,6 +16,7 @@ const initalState = {
 };
 const RegisterEmployee = () => {
 	const [formData, setFormData] = useState(initalState);
+	const [addEmployee, { data, isSuccess, error, isError }] = useAddEmployeeMutation();
 
 	const form_fields = [
 		{
@@ -82,16 +84,17 @@ const RegisterEmployee = () => {
 		});
 	};
 
-	const registerEmployeeHandler=()=>{
+	const registerEmployeeHandler = () => {
 		// TODO: Implement register employee handler
-	}
+		addEmployee(formData);
+	};
 
 	return (
 		<main className="RegisterEmployee">
 			<h1>Register</h1>
 			<FormComponent formFields={form_fields} onChange={handleChange} />
 			<div className="formButtons">
-				<Button text="Create" isPrimary={true} onClick={registerEmployeeHandler}/>
+				<Button text="Create" isPrimary={true} onClick={registerEmployeeHandler} />
 				<Button text="Cancel" className="cancel" />
 			</div>
 		</main>
