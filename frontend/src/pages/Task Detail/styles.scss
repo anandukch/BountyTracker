@@ -155,7 +155,7 @@
 						font-weight: 600;
 						align-items: center;
 						background-color: var(--bgGray);
-                  border-radius: 8px;
+						border-radius: 8px;
 						.commentFlag {
 							height: 32px;
 							align-content: center;
@@ -163,7 +163,7 @@
 							padding: 0 5px 0 5px;
 							border-radius: 8px;
 						}
-                  .review {
+						.review {
 							height: 32px;
 							align-content: center;
 							// background-color: white;
@@ -179,14 +179,14 @@
 				justify-content: space-between;
 				height: 100%;
 				.commentList {
-					max-height: 400px;
+					max-height: 300px;
+					overflow-y: scroll;
 					display: flex;
 					flex-direction: column;
 					row-gap: 10px;
 					background-color: var(--bgGray);
 					border-radius: 10px;
 					padding: 15px;
-               
 				}
 				.addComment {
 					display: flex;
@@ -232,6 +232,7 @@
 						.reviewButton {
 							height: 33px;
 							padding: 8px;
+							width: 90px;
 							border-radius: 8px;
 							background-color: var(--bgGray);
 							border: none;
