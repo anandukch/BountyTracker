@@ -29,7 +29,7 @@ class CommentService {
 
 		const newComment = new Comment();
 		const { commentType, content, fileUrl, mentionCommentId } = commentDto;
-		const task = await taskService.getTaskById(taskId);
+		const task = await taskService.getTaskById(taskId,["createdBy","comments", "participants", "participants.employee"]);
 		const mentionComment = mentionCommentId ? await this.getCommentByCommentId(mentionCommentId) : null;
 		newComment.task = task;
 		newComment.commentType = commentType;
