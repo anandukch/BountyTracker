@@ -61,9 +61,11 @@ const TaskDetail = () => {
    const {data : taskDetail ,isSuccess}=useGetTaskByIdQuery(2)
    useEffect(()=>{
       console.log(taskDetail)
+
    },[taskDetail])
    
-   const {data : employeeDetail}=useGetEmployeeQuery(Number(taskDetail?.data.createdById))
+   
+  
 	return (
 		<main className="taskDetail">
 			<div className="title">
