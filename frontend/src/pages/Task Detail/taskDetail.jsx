@@ -6,19 +6,10 @@ import attach from "../../assets/attach.svg";
 import profile from "../../assets/profile.png";
 import send from "../../assets/send.svg";
 import CommentComponent from "../../components/CommentComponent/CommentComponent";
-import TextField from "../../components/TextField/TextField";
 import Button from "../../components/Button/Button";
 import { useEffect, useState } from "react";
-import {
-	useCreateCommentMutation,
-	useGetCommentsByTaskIdQuery,
-	useGetTaskByIdQuery,
-	useGetTaskListQuery,
-	useLazyGetTaskByIdQuery,
-	useUploadMutation,
-} from "../../api/taskApi";
+import { useCreateCommentMutation, useGetCommentsByTaskIdQuery, useGetTaskByIdQuery } from "../../api/taskApi";
 import { formatDate } from "../../utils/date.utils";
-import { useGetEmployeeQuery } from "../../api/employeeApi";
 const TaskDetail = () => {
 	const [commentList, setCommentList] = useState([]);
 	const [participantList, setParticipantList] = useState([]);
@@ -47,7 +38,7 @@ const TaskDetail = () => {
 	const { data: taskDetail } = useGetTaskByIdQuery(9);
 	const { data: commentsData } = useGetCommentsByTaskIdQuery(9);
 
-	const [createComment, { data }] = useCreateCommentMutation();
+	const [createComment] = useCreateCommentMutation();
 	// const [upload, { isSuccess }] = useUploadMutation();
 	const handleSend = async () => {
 		const formData = new FormData();

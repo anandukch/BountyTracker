@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Button from "../../components/Button/Button";
 import FormComponent from "../../components/FormComponent/FormComponent";
 import "./styles.scss";
-import Select from "../../components/Select/Select";
 import { useCreateTaskMutation } from "../../api/taskApi";
 
 const initialFormData = {

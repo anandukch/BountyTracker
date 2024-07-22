@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Button from "../../components/Button/Button";
-import Select from "../../components/Select/Select";
 import FormComponent from "../../components/FormComponent/FormComponent";
 import "./styles.scss";
 import { useAddEmployeeMutation } from "../../api/employeeApi";
@@ -105,7 +104,6 @@ const RegisterEmployee = () => {
 					}),
 				);
 			});
-			console.log(error);
 		}
 	}, [isError, error, dispatch]);
 
