@@ -184,6 +184,11 @@
           margin-right: 5px;
           border-radius: 10px;
         }
+
+        .dashboardTaskPending{
+          background-color: var(--bgWhite);
+          color: var(--navBlue);
+        }
       }
 
       .taskLogWrapper {
