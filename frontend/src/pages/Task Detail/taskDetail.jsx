@@ -8,14 +8,7 @@ import send from "../../assets/send.svg";
 import CommentComponent from "../../components/CommentComponent/CommentComponent";
 import Button from "../../components/Button/Button";
 import { useEffect, useRef, useState } from "react";
-import {
-	useCreateCommentMutation,
-	useGetCommentsByTaskIdQuery,
-	useGetTaskByIdQuery,
-	useGetTaskListQuery,
-	useLazyGetTaskByIdQuery,
-	useUploadMutation,
-} from "../../api/taskApi";
+import { useCreateCommentMutation, useGetCommentsByTaskIdQuery, useGetTaskByIdQuery } from "../../api/taskApi";
 import { formatDate } from "../../utils/date.utils";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -24,6 +17,7 @@ const TaskDetail = () => {
 	const [commentList, setCommentList] = useState([]);
 	const [participantList, setParticipantList] = useState([]);
 	const [file, uploadFile] = useState();
+	const inputRef = useRef();
 	const style = {
 		backgroundColor: "white",
 		color: "#2c95ce",
@@ -58,16 +52,16 @@ const TaskDetail = () => {
 	const handleSend = async () => {
 		const formData = new FormData();
 		formData.append("file", file);
-		const commentData = {
-			id: taskId,
-			commentType: commentType,
-			content: comment,
-		};
-		formData.append("data", JSON.stringify(commentData));
-		formData.append("id", taskId);
+		// const commentData = {
+		// 	id: 9,
+		// 	commentType: commentType,
+		// 	content: comment,
+		// };
+		// formData.append("data", JSON.stringify(commentData));
+		// formData.append("id", 9);
 		formData.append("commentType", commentType);
 		formData.append("content", comment);
-		createComment(formData);
+		createComment({taskId, formData});
 
 		// try {
 		// 	const token = localStorage.getItem('token');
