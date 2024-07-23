@@ -1,3 +1,4 @@
+import path from "path";
 import { CreateComementDto, ReviewCommentDto } from "../dto/comment.dto";
 import Comment from "../entity/comment.entity";
 import Employee from "../entity/employee.entity";
@@ -12,8 +13,9 @@ import ReviewStatus from "../utils/reviewStatus.enum";
 class CommentService {
 	constructor(private commentRepository: CommentRepository) {}
 
-	getAllCommentsByTaskId = async (task: Task): Promise<Comment[]> => {
-		return this.commentRepository.findBy({ task });
+	getAllCommentsByTaskId = async (taskId: number): Promise<Comment[]> => {
+		const comments = await this.commentRepository.findBy({ task: { id: taskId } as any });
+		return comments;
 	};
 
 	getCommentByCommentId = async (id: number) => {
@@ -21,20 +23,31 @@ class CommentService {
 		if (!comment) {
 			throw new HttpException(404, "Comment not found");
 		}
+
 		return comment;
 	};
 
-	createComment = async (taskId: number, employee: Employee, commentDto: CreateComementDto) => {
-		//TODO:'Create comment business logic'
+	getCommentFile = async (commentId: number) => {
+		const comment = await this.getCommentByCommentId(commentId);
+		const fileName = comment.fileUrl;
+		const file = path.resolve(__dirname, `../../uploads/${fileName}`);
+		return file;
+	};
 
+	createComment = async (taskId: number, employee: Employee, commentDto: CreateComementDto, fileName: string) => {
 		const newComment = new Comment();
 		const { commentType, content, fileUrl, mentionCommentId } = commentDto;
-		const task = await taskService.getTaskById(taskId);
+		const task = await taskService.getTaskById(taskId, [
+			"createdBy",
+			"comments",
+			"participants",
+			"participants.employee",
+		]);
 		const mentionComment = mentionCommentId ? await this.getCommentByCommentId(mentionCommentId) : null;
 		newComment.task = task;
 		newComment.commentType = commentType;
 		newComment.content = content;
-		newComment.fileUrl = fileUrl;
+		newComment.fileUrl = fileName;
 		newComment.mentionComment = mentionComment;
 		newComment.reviewStatus = commentType === CommentType.Review ? ReviewStatus.PENDING : null;
 		newComment.employee = employee;

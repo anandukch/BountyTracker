@@ -11,19 +11,13 @@ class TaskRepository {
 		});
 	};
 
-	findWithRelations = async (relations: Array<string>): Promise<Task[]> => {
-		return this.repository.find({
-			// relations: ["createdBy", "participants", "participants.employee"],
-			relations: relations,
-		});
-	};
-
-	findOneBy = async (filter: Partial<Task>): Promise<Task> => {
+	findOneBy = async (filter: Partial<Task>, relations?: Array<string>): Promise<Task> => {
 		return this.repository.findOne({
 			where: filter,
-			relations: {
-				comments: true,
-			},
+			relations: relations,
+			// relations: {
+			// 	comments: true,
+			// },
 		});
 	};
 

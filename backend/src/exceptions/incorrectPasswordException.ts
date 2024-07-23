@@ -1,8 +1,8 @@
-class IncorrectPasswordException extends Error {
-	public status: number;
-	constructor(status: number, message: string) {
-		super(message);
-		this.status = status;
+import HttpException from "./http.exceptions";
+
+class IncorrectPasswordException extends HttpException {
+	constructor(message: string) {
+		super(403, message);
 	}
 }
 export default IncorrectPasswordException;

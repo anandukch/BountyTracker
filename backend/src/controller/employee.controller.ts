@@ -8,11 +8,13 @@ import { validate } from "class-validator";
 import { CreateEmployeeDto } from "../dto/employee.dto";
 import getValidationErrorConstraints from "../utils/validationErrorConstraints";
 import authorize from "../middleware/authorize.middleware";
+import ValidationException from "../exceptions/validationException";
 class EmployeeController {
 	public router: Router;
 	constructor(private employeeService: EmployeeService) {
 		this.router = Router();
 		this.router.get("/", authorize, this.getAllEmployees);
+		this.router.get("/profile", authorize, this.getEmployeeProfile);
 		this.router.get("/tasks", authorize, this.getEmployeeAssignedTasks);
 		this.router.get("/tasks/not-joined", authorize, this.getTasksNotJoinedByEmployee);
 		this.router.get("/:id", this.getEmployeeByID);
@@ -36,6 +38,19 @@ class EmployeeController {
 			res.status(201).json({
 				success: true,
 				message: "Contribution added successfully",
+			});
+		} catch (error) {
+			next(error);
+		}
+	};
+
+	public getEmployeeProfile = async (req: RequestWithRole, res: Response, next: NextFunction) => {
+		try {
+			const employee = await this.employeeService.getProfile(req.user.id);
+			res.status(200).json({
+				success: true,
+				message: "Employee fetched successfully",
+				data: employee,
 			});
 		} catch (error) {
 			next(error);
@@ -74,6 +89,8 @@ class EmployeeController {
 	};
 	public getEmployeeAssignedTasks = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
+			console.log("as");
+
 			const employeeAssignedTasks = await this.employeeService.getEmployeeTasksByID(req.user.id);
 			res.status(200).json({
 				success: true,
@@ -106,11 +123,11 @@ class EmployeeController {
 			const employeeDto = plainToInstance(CreateEmployeeDto, req.body);
 			const errors = await validate(employeeDto);
 			// const validationErrorConstraints = getValidationErrorConstraints(errors);
-			if (errors.length > 0) {
-				throw new HttpException(403, "Validation Error", errors);
+			if (errors.length) {
+				throw new ValidationException(400, "Validation Failed", errors);
 			}
-			const createdEmployee = this.employeeService.createEmployee(employeeDto);
-
+			const createdEmployee = await this.employeeService.createEmployee(employeeDto);
+			delete createdEmployee.password;
 			res.status(201).send(createdEmployee);
 		} catch (error) {
 			next(error);

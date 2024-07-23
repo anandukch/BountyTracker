@@ -1,8 +1,8 @@
-class EntityNotFoundException extends Error {
-	public status: number;
-	constructor(status: number, message: string) {
-		super(message);
-		this.status = status;
+import HttpException from "./http.exceptions";
+
+class EntityNotFoundException extends HttpException {
+	constructor(message: string) {
+		super(404, message);
 	}
 }
 export default EntityNotFoundException;

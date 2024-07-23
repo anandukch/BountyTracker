@@ -26,7 +26,7 @@ class EmployeeService {
 		return this.employeeRespository.findOneBy({ email });
 	};
 	getEmployeeByID = async (employeeID: number): Promise<Employee> => {
-		return this.employeeRespository.findOneBy({ id: employeeID }, []);
+		return this.employeeRespository.findOneBy({ id: employeeID }, ["details"]);
 	};
 
 	getEmployeeTasksByID = async (employeeID: number) => {
@@ -34,23 +34,51 @@ class EmployeeService {
 			"participatingTasks",
 			"participatingTasks.task",
 			"participatingTasks.task.createdBy",
-			"participatingTasks.task.createdBy",
 		]);
 		if (!employee) {
-			throw new EntityNotFoundException(404, "Employee not found");
+			throw new EntityNotFoundException("Employee not found");
 		}
 
 		return employee.participatingTasks;
 	};
 
+	getProfile = async (employeeID: number) => {
+		const employee = await this.employeeRespository.findOneBy({ id: employeeID }, [
+			"details",
+			"participatingTasks",
+			"participatingTasks.task",
+		]);
+		if (!employee) {
+			throw new EntityNotFoundException("Employee not found");
+		}
+
+		let completedTasks = 0;
+		let pendingTasks = 0;
+
+		employee.participatingTasks.forEach((task) => {
+			if (task.task.status === "completed") {
+				completedTasks++;
+			} else {
+				pendingTasks++;
+			}
+		});
+		employee.participatingTasks = undefined;
+		employee.password = undefined;
+		return {
+			...employee,
+			completedTasks,
+			pendingTasks,
+		};
+	};
+
 	loginEmployee = async (email: string, password: string): Promise<string> => {
 		const employee = await this.employeeRespository.findOneBy({ email });
 		if (!employee) {
-			throw new EntityNotFoundException(404, "Email Not Found");
+			throw new EntityNotFoundException("Email Not Found");
 		}
 		const result = await bcrypt.compare(password, employee.password);
 		if (!result) {
-			throw new IncorrectPasswordException(404, "Password is Incorrect");
+			throw new IncorrectPasswordException("Password is Incorrect");
 		}
 		const payload: jwtPayload = {
 			name: employee.name,
@@ -72,23 +100,33 @@ class EmployeeService {
 		employee.role = employeeDto.role;
 
 		const newEmployeeDetails = new EmployeeDetails();
-		newEmployeeDetails.gender = employeeDto.details.gender;
-		newEmployeeDetails.birthday = new Date(employeeDto.details.birthday);
-		newEmployeeDetails.phoneNo = employeeDto.details.phoneNo;
-		newEmployeeDetails.totalBounty = employeeDto.details.totalBounty;
+		newEmployeeDetails.gender = employeeDto.gender;
+		newEmployeeDetails.birthday = new Date(employeeDto.birthday);
+		newEmployeeDetails.phoneNo = employeeDto.phoneNo;
+		newEmployeeDetails.totalBounty = 0;
 		employee.details = newEmployeeDetails;
-		await this.employeeRespository.save(employee);
-		return employee;
+		return this.employeeRespository.save(employee);
 	};
 
 	joinTask = async (taskId: number, employee: Employee) => {
-		const task = await this.taskService.getTaskById(taskId);
+		const task = await this.taskService.getTaskById(taskId, ["createdBy"]);
 		if (!task) {
-			throw new EntityNotFoundException(404, "Task not found");
+			throw new EntityNotFoundException("Task not found");
+		}
+		if (task.maxParticipants === task.currentParticipants) {
+			throw new EntityNotFoundException("Task is full");
+		}
+		if (task.createdBy.id === employee.id) {
+			throw new EntityNotFoundException("Cannot join task created by self");
+		}
+		const alreadyJoined = await this.taskParticipantService.checkAlreadyJoined(taskId, employee.id);
+		if (alreadyJoined) {
+			throw new EntityNotFoundException("Task already joined");
 		}
 
 		task.currentParticipants += 1;
-		await this.taskService.updateTask(taskId, task);
+		const updatedTask = await this.taskService.updateTask(taskId, task);
+		console.log(updatedTask);
 
 		const taskParticipant = await this.taskParticipantService.create(task, employee);
 
@@ -104,22 +142,22 @@ class EmployeeService {
 	};
 
 	giveContribution = async (taskId: number, employeeId: number, contribution: number) => {
-		const task = await this.taskService.getTaskById(taskId);
+		const task = await this.taskService.getTaskById(taskId, ["createdBy", "participants", "participants.employee"]);
 		if (!task) {
-			throw new EntityNotFoundException(404, "Task not found");
+			throw new EntityNotFoundException("Task not found");
 		}
 		const employee = await this.employeeRespository.findOneBy({
 			id: employeeId,
 		});
 		if (!employee) {
-			throw new EntityNotFoundException(404, "Employee not found");
+			throw new EntityNotFoundException("Employee not found");
 		}
 		const taskParticipant = await this.taskParticipantService.getTask({
 			taskId,
 			employeeId,
 		});
 		if (!taskParticipant) {
-			throw new EntityNotFoundException(404, "Employee not found in task");
+			throw new EntityNotFoundException("Employee not found in task");
 		}
 		taskParticipant.contribution = contribution;
 		await this.taskParticipantService.updateTaskParticipants(taskParticipant);
