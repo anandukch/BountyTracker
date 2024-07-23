@@ -64,7 +64,7 @@ const App = () => {
 			],
 		},
 		{
-			path: "tasks/",
+			path: "/tasks",
 			element: <HomeLayout />,
 			children: [
 				{ index: true, element: <TaskList /> },
