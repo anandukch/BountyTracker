@@ -31,10 +31,10 @@ const FetchMyListRow = ({ id, taskid, taskname, progress, startdate, duedate, ko
 				{taskStatus}
 			</div>
 
-			<div className="taskAssignedby" onClick={handledisplay}>
-				{progress}
+			<div className="taskPercentage" onClick={handledisplay}>
+				{((progress / koyns) * 100).toFixed(2)} %
 			</div>
-			
+
 			<div className="taskBounty" onClick={handledisplay}>
 				{koyns} Kyns
 				<div className="taskNotification" onClick={handledisplay}>{notificationCount}</div>	
