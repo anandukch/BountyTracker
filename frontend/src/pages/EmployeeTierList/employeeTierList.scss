@@ -1,27 +1,10 @@
 .fullWrap {
-	padding: 20px;
+	padding: 10px;
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
 
-	input[type="text"] {
-		border-radius: 20px;
-		padding-left: 35px;
-		width: 300px;
-		height: 35px;
-		background-color: white;
-		border: thick;
-	}
-	.searchBar {
-		position: relative;
-		display: flex;
-		align-items: center;
-	}
-	.searchBar img {
-		position: absolute;
-		padding-left: 5px;
-		height: 90%;
-	}
+ 
 
 	.searchSort {
 		display: flex;

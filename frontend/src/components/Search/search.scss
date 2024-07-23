@@ -33,9 +33,9 @@
 		transition: display 12s;
 		outline: none;
 		border: none;
-		width: 50px;
+	    
 		height: 40px;
-		background-color: white;
+		background-color: rgb(255, 255, 255);
 		font-size: larger;
 	}
 }
@@ -47,6 +47,7 @@
 
 .searchBar:hover .search-input {
 	display: inline-flex;
-	width: 50%;
+	width: 70%;
 	height: 40%;
+	padding-left: 14px;
 }
