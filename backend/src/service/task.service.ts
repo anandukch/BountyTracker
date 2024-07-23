@@ -53,8 +53,17 @@ class TaskService {
 		return this.taskRepository.update(id, task);
 	};
 
-	getTaskCreatedByUser = async (id: number) => {
-		return this.taskRepository.find({ createdById: id });
+	getTaskCreatedByUser = async (id: number, relations?: Array<string>) => {
+		const tasks = await this.taskRepository.find({ createdById: id }, relations);
+		const updatedTask = tasks.map((task) => {
+			let reviewCommentCount = 0;
+			task.comments.forEach((comment) => {
+				if (comment.reviewStatus == "PENDING") reviewCommentCount++;
+			});
+			delete task.comments;
+			return { ...task, reviewCommentCount };
+		});
+		return updatedTask;
 	};
 
 	completeTask = async (id: number) => {
