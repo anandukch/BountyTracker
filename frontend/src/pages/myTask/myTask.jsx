@@ -38,7 +38,7 @@ const MyTask = () => {
 		{ name: "Progress" },
 		{ name: "KoYns" },
 	];
-	const index = [7, 9];
+	const index = [2, 5];
 	const count = [3, 3, 3, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1];
 	const navigate = useNavigate();
 

@@ -113,7 +113,10 @@ const EmployeeDashboard = () => {
 									if (addClass === 0 && task.task.status !== "completed")
 										return <TaskDataRow key={task.id} taskRows={task} />;
 									else if (addClass === 1 && task.task.status == "completed")
+									{
+										
 										return <TaskDataRow key={task.id} taskRows={task} />;
+									}
 								})}
 						</div>
 					</div>
