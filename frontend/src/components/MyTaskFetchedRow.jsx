@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom";
+import { formatDate } from "../utils/date.utils";
+import { setStatus } from "../utils/status.util";
 
 const FetchMyListRow = ({
 	id,
@@ -30,10 +32,10 @@ const FetchMyListRow = ({
 			</div>
 
 			<div className="taskDuedate" onClick={handledisplay}>
-				{duedate}
+				{formatDate(duedate)}
 			</div>
 			<div className="taskStartdate" onClick={handledisplay}>
-				{startdate}
+				{formatDate(startdate)}
 			</div>
 
 			<div className="taskParticipants" onClick={handledisplay}>
@@ -41,7 +43,7 @@ const FetchMyListRow = ({
 			</div>
 
 			<div className="taskParticipants" onClick={handledisplay}>
-				{taskStatus}
+				{setStatus(startdate, duedate, taskStatus)}
 			</div>
 
 			<div className="taskPercentage" onClick={handledisplay}>

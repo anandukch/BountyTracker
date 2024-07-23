@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { formatDate } from "../utils/date.utils";
 
 const FetchListRow = ({ id, taskid, taskname, assignedby, startdate, duedate, koyns, participants }) => {
 	const navigate = useNavigate();
@@ -18,10 +19,10 @@ const FetchListRow = ({ id, taskid, taskname, assignedby, startdate, duedate, ko
 			</div>
 
 			<div className="taskDuedate" onClick={handledisplay}>
-				{duedate}
+				{formatDate(duedate)}
 			</div>
 			<div className="taskStartdate" onClick={handledisplay}>
-				{startdate}
+				{formatDate(startdate)}
 			</div>
 
 			<div className="taskParticipants" onClick={handledisplay}>

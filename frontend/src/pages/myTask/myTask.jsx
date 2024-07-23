@@ -19,13 +19,13 @@ const MyTask = () => {
 
 	useEffect(() => {
 		if (isSuccess) {
-			const formattedData = data.data.map((task) => ({
-				...task,
-				startDate: formatDate(task.startDate),
-				deadLine: formatDate(task.deadLine),
-			}));
-			console.log(data);
-			setList(formattedData);
+			// const formattedData = data.data.map((task) => ({
+			// 	...task,
+			// 	startDate: formatDate(task.startDate),
+			// 	deadLine: formatDate(task.deadLine),
+			// }));
+			// console.log(data);
+			// setList(formattedData);
 		}
 	}, [data, isSuccess]);
 
@@ -72,7 +72,7 @@ const MyTask = () => {
 					})}
 				</div>
 				<div className="listData">
-					{list.map((task) => {
+					{data?.data.map((task) => {
 						return (
 							<FetchMyListRow
 								key={task.id}
