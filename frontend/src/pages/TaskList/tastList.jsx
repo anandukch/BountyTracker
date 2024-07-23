@@ -10,6 +10,60 @@ import { Loader } from "../../components/Loader/Loader";
 import { formatDate } from "../../utils/date.utils";
 import FetchListRow from "../../components/MyTaskRow";
 
+// Dummy data
+const dummyData = [
+	{
+		id: 1,
+		taskid: 1,
+		taskname: "Employee List",
+		assignedby: "Manushi Chillet",
+		startdate: "15-12-2002",
+		duedate: "20-12-2002",
+		participants: "4/5",
+		koyns: 1200,
+	},
+	{
+		id: 2,
+		taskid: 2,
+		taskname: "Project Proposal",
+		assignedby: "Alex Smith",
+		startdate: "01-08-2024",
+		duedate: "10-08-2024",
+		participants: "3/3",
+		koyns: 800,
+	},
+	{
+		id: 3,
+		taskid: 3,
+		taskname: "Marketing Campaign",
+		assignedby: "Emma Johnson",
+		startdate: "01-09-2024",
+		duedate: "15-09-2024",
+		participants: "2/4",
+		koyns: 1500,
+	},
+	{
+		id: 4,
+		taskid: 4,
+		taskname: "Website Redesign",
+		assignedby: "John Doe",
+		startdate: "01-07-2024",
+		duedate: "05-07-2024",
+		participants: "5/5",
+		koyns: 1000,
+	},
+	{
+		id: 5,
+		taskid: 5,
+		taskname: "Budget Review",
+		assignedby: "Maria Garcia",
+		startdate: "10-08-2024",
+		duedate: "25-08-2024",
+		participants: "1/2",
+		koyns: 600,
+	},
+];
+
 const TaskList = () => {
 	const [list, setList] = useState([]);
 	const { data, isLoading, isSuccess } = useGetTaskListQuery();
@@ -35,7 +89,8 @@ const TaskList = () => {
 		{ name: "Participants" },
 		{ name: "KoYns" },
 	];
-
+const index=[2,4];
+const count=[0,3,0,1,0];
 	return (
 		<div className="fullWrap">
 			{isLoading && <Loader />}
@@ -75,7 +130,10 @@ const TaskList = () => {
 								startdate={employee.startDate}
 								duedate={employee.deadLine}
 								participants={`${employee.currentParticipants}/${employee.maxParticipants}`}
-								koyns={employee.totalBounty}
+								koyns={employee.koyns}
+								index={index}
+								count={count}
+								
 							/>
 						);
 					})}
