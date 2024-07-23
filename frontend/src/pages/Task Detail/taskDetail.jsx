@@ -17,7 +17,8 @@ import {
 	useUploadMutation,
 } from "../../api/taskApi";
 import { formatDate } from "../../utils/date.utils";
-import { useParams, useGetProfileQuery } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 const TaskDetail = () => {
 	const { taskId } = useParams();
 	const [commentList, setCommentList] = useState([]);
@@ -33,6 +34,9 @@ const TaskDetail = () => {
 	const [mentionId, setMentionId] = useState();
 	const { data: taskDetail, isSuccess: taskSuccess } = useGetTaskByIdQuery(taskId);
 	const { data: commentsData, isSuccess: commentSuccess } = useGetCommentsByTaskIdQuery(taskId);
+	const inputRef = useRef();
+
+	const loggedState = useSelector((state) => state.employee.loggedState);
 
 	const form_fields = [
 		{
@@ -55,12 +59,12 @@ const TaskDetail = () => {
 		const formData = new FormData();
 		formData.append("file", file);
 		const commentData = {
-			id: 9,
+			id: taskId,
 			commentType: commentType,
 			content: comment,
 		};
 		formData.append("data", JSON.stringify(commentData));
-		formData.append("id", 9);
+		formData.append("id", taskId);
 		formData.append("commentType", commentType);
 		formData.append("content", comment);
 		createComment(formData);
@@ -190,9 +194,11 @@ const TaskDetail = () => {
 											key={record.id}
 											name={record.employee.name}
 											comment={record.content}
-											currEmployee={currEmployee?.data.name}
+											currEmployee="Arun Doe"
 											type={record.commentType}
 											onClick={() => handleReply(record.id)}
+											loggedState={loggedState}
+											status={record.review_status}
 										/>
 									);
 								})}

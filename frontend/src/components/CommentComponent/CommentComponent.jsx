@@ -1,5 +1,5 @@
 import "./styles.scss";
-const CommentComponent = ({ name, comment, currEmployee, type, onClick }) => {
+const CommentComponent = ({ name, comment, currEmployee, type, onClick,loggedState,status }) => {
 	console.log(type);
 	const flag = (currEmployee == name)&&(type==="blah") ? true : false;
 	const styleComment = {
@@ -13,11 +13,13 @@ const CommentComponent = ({ name, comment, currEmployee, type, onClick }) => {
 			{!flag ? <div className="name">{name}</div> : null}
 			<div className="comment" style={flag ? styleComment : null}>
 				{comment}
-				{!flag ? (
+				{!flag && loggedState ==="Regular"? (
 					<div className="replyButton" onClick={onClick}>
 						Reply
 					</div>
-				) : null}
+				) : <div className="replyButton" onClick={onClick}>
+				{status}
+			</div>}
 			</div>
 		</div>
 	);
