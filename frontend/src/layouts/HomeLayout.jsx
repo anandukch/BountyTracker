@@ -51,7 +51,7 @@ const HomeLayout = () => {
 			id: 3,
 			title: "My Tasks",
 			icon: myTask,
-			to: "myTasks",
+			to: "/myTasks",
 		},
 	];
 

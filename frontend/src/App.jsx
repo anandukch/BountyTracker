@@ -12,7 +12,10 @@ import store from "./store/store";
 import ReviewPage from "./pages/ReviewPage/reviewPage";
 import "./App.scss";
 import TaskList from "./pages/TaskList/tastList.jsx";
-
+import { useEffect } from "react";
+import { addLoggedState } from "./store/employeeReducer.js";
+import { useGetProfileQuery } from "./api/employeeApi.js";
+import MyTask from "./pages/myTask/myTask.jsx";
 
 const App = () => {
 	
@@ -52,7 +55,6 @@ const App = () => {
 				// { path: "employeeList", element: <EmployeeTierList /> },
 				{ path: "comment/:id", element: <ReviewPage /> },
 				{ path: "taskDetails", element: <TaskDetail /> },
-				
 			],
 		},
 		{
@@ -60,8 +62,17 @@ const App = () => {
 			element: <HomeLayout />,
 			children: [
 				{ index: true, element: <TaskList /> },
-				{path: ":taskId", element: <TaskDetail />},
+				{ path: ":taskId", element: <TaskDetail /> },
 				{ path: "create", element: <CreateTask /> },
+			],
+		},
+		{
+			path: "/myTasks",
+			element: <HomeLayout />,
+			children: [
+				{ index: true, element: <MyTask /> },
+				// { path: ":taskId", element: <TaskDetail /> },
+				// { path: "create", element: <CreateTask /> },
 			],
 		},
 	]);

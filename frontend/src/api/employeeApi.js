@@ -28,6 +28,10 @@ export const employeeApi = apiWithTag.injectEndpoints({
 		getEmployeeCurrentTasks: builder.query({
 			query: () => "/employees/tasks",
 		}),
+
+		getEmployeeCreatedTasks: builder.query({
+			query: () => "/tasks/created",
+		}),
 	}),
 });
 
@@ -37,4 +41,5 @@ export const {
 	useAddEmployeeMutation,
 	useGetEmployeeQuery,
 	useGetEmployeeCurrentTasksQuery,
+	useGetEmployeeCreatedTasksQuery,
 } = employeeApi;

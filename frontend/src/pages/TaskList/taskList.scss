@@ -56,9 +56,9 @@ select {
 	gap: 10px;
 
 	// box-shadow: 0px 1px 1px #C5C4C4;
-	.listHeader {
+	.listHeaderTask {
 		display: grid;
-		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+		grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
 		align-content: center;
 
 		height: 80px;
@@ -88,9 +88,9 @@ select {
 			font-weight: 300;
 		}
 	}
-	.listDataSet {
+	.listDataSetTask {
 		display: grid;
-		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+		grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
 		align-items: center;
 		padding: 5px;
 		padding-left: 3%;
