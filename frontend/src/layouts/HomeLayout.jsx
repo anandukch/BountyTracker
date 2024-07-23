@@ -1,4 +1,4 @@
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import "./styles.scss";
 import profile from "../assets/profile-img.svg";
 import tasks from "../assets/tasks.svg";
@@ -14,6 +14,7 @@ import myTask from "../assets/myTask.svg";
 
 const HomeLayout = () => {
 	const [pageIndex, setPageIndex] = useState(0);
+	const location = useLocation();
 	const navigate = useNavigate();
 	const handleLogout = () => {
 		localStorage.clear("token");
@@ -24,9 +25,15 @@ const HomeLayout = () => {
 
 	useEffect(() => {
 		if (isSuccess) {
-			dispatch(addLoggedState({ role: employeeData.data.role, username: employeeData.data.name, id: employeeData.data.id }));
+			dispatch(
+				addLoggedState({
+					role: employeeData.data.role,
+					username: employeeData.data.name,
+					id: employeeData.data.id,
+				}),
+			);
 		}
-	}, [employeeData]);
+	}, [employeeData, isSuccess, dispatch]);
 
 	const sideBar = [
 		{
@@ -80,7 +87,7 @@ const HomeLayout = () => {
 					{sideBar.map((item, index) => (
 						<Link
 							key={item.id}
-							className={`links ${pageIndex == index ? "active" : ""}`}
+							className={`links ${location.pathname.search(item.to) >= 0 ? "active" : ""}`}
 							to={item.to}
 							onClick={() => setPageIndex(index)}
 						>
