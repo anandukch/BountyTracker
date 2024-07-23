@@ -40,12 +40,12 @@ const App = () => {
 			children: [
 				{ index: true, element: <EmployeeDashboard /> },
 				{ path: "create", element: <CreateTask /> },
-				{ path: "taskDetails/:taskId", element: <TaskDetail /> },
-				{ path: "employeeList", element: <EmployeeTierList /> },
+				// { path: "taskDetails/:taskId", element: <TaskDetail /> },
+				{ path: "tasklist", element: <TaskList /> },
 				{ path: "comment/:id", element: <ReviewPage /> },
 			],
 		},
-		{ path: "tasklist/", element: <HomeLayout />, children: [{ index: true, element: <TaskList /> }] },
+		// { path: "tasklist/", element: <HomeLayout />, children: [{ index: true, element: <TaskList /> }] },
 	]);
 
 	return (
