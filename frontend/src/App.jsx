@@ -11,6 +11,7 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 import ReviewPage from "./pages/ReviewPage/reviewPage";
 import "./App.scss";
+import TaskList from "./pages/TaskList/tastList.jsx";
 
 const App = () => {
 	const router = createBrowserRouter([
@@ -44,6 +45,7 @@ const App = () => {
 				{ path: "comment/:id", element: <ReviewPage /> },
 			],
 		},
+		{ path: "tasklist/", element: <HomeLayout />, children: [{ index: true, element: <TaskList /> }] },
 	]);
 
 	return (

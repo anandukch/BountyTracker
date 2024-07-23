@@ -3,8 +3,9 @@ import React, { useState, useEffect } from "react";
 import "../../pages/EmployeeTierList/employeeTierList.scss";
 import GridDataColumn from "../../components/GridDataColumn";
 import GridColumn from "../../components/GridColumn";
-import SearchIcon from "../../assets/iconssearch.png";
+import SearchIcon from "../../assets/iconsearch.svg";
 import IconFilter from "../../assets/iconFilter.png";
+import Search from "../../components/Search/Search";
 // Dummy data
 const dummyData = [
 	{ id: 1, name: "John Doe", gender: "Male", birthday: "20-12-2002", phone: "930708788", bounty: 1200 },
@@ -43,10 +44,7 @@ const EmployeeTierList = () => {
 			<div className="wrapHeading">
 				<h1>Employee List</h1>
 				<div className="searchSort">
-					<div className="searchBar">
-						<img src={SearchIcon} alt="search"></img>
-						<input type="text" placeholder="    Search here" />
-					</div>
+					<Search/>
 					<div className="sort">
 						<label></label>
 						<img src={IconFilter} alt="filter"></img>
