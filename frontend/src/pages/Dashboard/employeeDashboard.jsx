@@ -2,7 +2,6 @@ import DetailBlock from "../../components/DetailBlock";
 import TaskDataRow from "../../components/TaskRowData";
 import "./style.scss";
 import profilImg from "../../assets/profile.png";
-import file from "../../utils/employeeTask";
 import TaskDataHeader from "../../components/TaskDataHeader";
 import { useGetEmployeeCurrentTasksQuery, useGetProfileQuery } from "../../api/employeeApi";
 import { useEffect, useState } from "react";
@@ -14,14 +13,12 @@ const EmployeeDashboard = () => {
 	const [employee, setEmployee] = useState({});
 	const [employeeDetails, setEmployeeDetails] = useState([]);
 	const { data, isLoading, isSuccess } = useGetProfileQuery();
-	const { data: employeeTasks = [], isSuccess: isTaskFetched } = useGetEmployeeCurrentTasksQuery();
+	const { data: employeeTasksData = [], isSuccess: isTaskFetched } = useGetEmployeeCurrentTasksQuery();
 
 	useEffect(() => {
 		if (isSuccess) {
-			console.log(data);
 			const { data: employeeData } = data;
 			setEmployee(employeeData);
-			console.log(employeeData);
 			setEmployeeDetails([
 				{ header: "Role", content: employeeData.role },
 				{ header: "Email", content: employeeData.email },
@@ -32,8 +29,6 @@ const EmployeeDashboard = () => {
 			]);
 		}
 	}, [data, isSuccess]);
-
-	const taskList = file.data;
 
 	const [addClass, setAddClass] = useState(0);
 
@@ -102,9 +97,11 @@ const EmployeeDashboard = () => {
 							<TaskDataHeader taskRows={tasksHeader} />
 						</div>
 						<div className="taskDetailsWrapper">
+							{/* {isTaskLoading && <Loader />} */}
 							{isTaskFetched &&
-								employeeTasks.data.map((task) => {
-									if (addClass === 0 && task.task.status == "In Progress")
+								employeeTasksData.data.map((task) => {
+									console.log(task);
+									if (addClass === 0 && task.task.status !== "completed")
 										return <TaskDataRow key={task.id} taskRows={task} />;
 									else if (addClass === 1 && task.task.status == "completed")
 										return <TaskDataRow key={task.id} taskRows={task} />;

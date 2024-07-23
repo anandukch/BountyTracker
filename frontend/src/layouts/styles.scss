@@ -1,11 +1,9 @@
 :root {
-	--navBlue: #0c53fb;
-	--bgWhite: #fffdfe;
-	--bgGray: #f2f5fa;
-	--textGray: #8c96a0;
-	--textBlack: #2a3644;
-	--borderColor: #e2e5eb;
-	--koynsText: #dec08e;
+	--persian-indigo: #27187eff;
+	--eggshell: #f1eeddff;
+	--primary-btn: #6f8ce0;
+	--ut-orange: #ff8600ff;
+	--hunter-green: #3f6634ff;
 }
 * {
 	margin: 0;
@@ -38,7 +36,7 @@
 			height: 70%;
 			padding: 2px;
 			border-radius: 50%;
-			border: 1px solid #60391f;
+			border: 1px solid #eaeaea;
 		}
 		.logo-text {
 			height: 60%;
@@ -72,23 +70,35 @@
 	flex-direction: column;
 	justify-content: space-between;
 	padding-top: 25px;
+	.top {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+	}
+	.bottom {
+		margin-bottom: 20px;
+		.links {
+			cursor: pointer;
+			background-color: var(--ut-orange);
+		}
+	}
 	.links {
 		text-decoration: none;
-		background-color: var(--bgWhite);
-	}
-	.details {
-		width: 290px;
-		padding-bottom: 25px;
+		margin-left: 20px;
+		padding-left: 10px;
+		border-radius: 40px 0 0 40px;
+		/* width: 290px; */
+		/* padding-bottom: 25px; */
 		height: 55px;
-		background-color: var(--bgWhite);
+		/* background-color: var(--ut-orange); */
 		display: flex;
 		align-items: center;
-		padding-left: 10px;
-		color: black;
+		/* color: black; */
 		font-size: 14px;
-		// font-weight: 500;
-		label {
-			background-color: var(--bgWhite);
+		font-weight: 700;
+
+		&.active {
+			background-color: #ff8600ff;
 		}
 	}
 	.icon {

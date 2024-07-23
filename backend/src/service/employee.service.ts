@@ -36,7 +36,7 @@ class EmployeeService {
 			"participatingTasks.task.createdBy",
 		]);
 		if (!employee) {
-			throw new EntityNotFoundException(404, "Employee not found");
+			throw new EntityNotFoundException("Employee not found");
 		}
 
 		return employee.participatingTasks;
@@ -49,7 +49,7 @@ class EmployeeService {
 			"participatingTasks.task",
 		]);
 		if (!employee) {
-			throw new EntityNotFoundException(404, "Employee not found");
+			throw new EntityNotFoundException("Employee not found");
 		}
 
 		let completedTasks = 0;
@@ -74,11 +74,11 @@ class EmployeeService {
 	loginEmployee = async (email: string, password: string): Promise<string> => {
 		const employee = await this.employeeRespository.findOneBy({ email });
 		if (!employee) {
-			throw new EntityNotFoundException(404, "Email Not Found");
+			throw new EntityNotFoundException("Email Not Found");
 		}
 		const result = await bcrypt.compare(password, employee.password);
 		if (!result) {
-			throw new IncorrectPasswordException(404, "Password is Incorrect");
+			throw new IncorrectPasswordException("Password is Incorrect");
 		}
 		const payload: jwtPayload = {
 			name: employee.name,
@@ -109,16 +109,24 @@ class EmployeeService {
 	};
 
 	joinTask = async (taskId: number, employee: Employee) => {
-		const task = await this.taskService.getTaskById(taskId, []);
+		const task = await this.taskService.getTaskById(taskId, ["createdBy"]);
 		if (!task) {
-			throw new EntityNotFoundException(404, "Task not found");
+			throw new EntityNotFoundException("Task not found");
 		}
 		if (task.maxParticipants === task.currentParticipants) {
-			throw new EntityNotFoundException(404, "Task is full");
+			throw new EntityNotFoundException("Task is full");
+		}
+		if (task.createdBy.id === employee.id) {
+			throw new EntityNotFoundException("Cannot join task created by self");
+		}
+		const alreadyJoined = await this.taskParticipantService.checkAlreadyJoined(taskId, employee.id);
+		if (alreadyJoined) {
+			throw new EntityNotFoundException("Task already joined");
 		}
 
 		task.currentParticipants += 1;
-		await this.taskService.updateTask(taskId, task);
+		const updatedTask = await this.taskService.updateTask(taskId, task);
+		console.log(updatedTask);
 
 		const taskParticipant = await this.taskParticipantService.create(task, employee);
 
@@ -136,20 +144,20 @@ class EmployeeService {
 	giveContribution = async (taskId: number, employeeId: number, contribution: number) => {
 		const task = await this.taskService.getTaskById(taskId, ["createdBy", "participants", "participants.employee"]);
 		if (!task) {
-			throw new EntityNotFoundException(404, "Task not found");
+			throw new EntityNotFoundException("Task not found");
 		}
 		const employee = await this.employeeRespository.findOneBy({
 			id: employeeId,
 		});
 		if (!employee) {
-			throw new EntityNotFoundException(404, "Employee not found");
+			throw new EntityNotFoundException("Employee not found");
 		}
 		const taskParticipant = await this.taskParticipantService.getTask({
 			taskId,
 			employeeId,
 		});
 		if (!taskParticipant) {
-			throw new EntityNotFoundException(404, "Employee not found in task");
+			throw new EntityNotFoundException("Employee not found in task");
 		}
 		taskParticipant.contribution = contribution;
 		await this.taskParticipantService.updateTaskParticipants(taskParticipant);

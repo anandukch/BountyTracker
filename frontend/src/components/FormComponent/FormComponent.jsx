@@ -1,60 +1,56 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-key */
 import TextField from "../../components/TextField/TextField";
 import Select from "../../components/Select/Select";
-import { useState } from "react";
 
 const FormComponent = ({ onChange, formFields }) => {
 	// const [type, setType] = useState(false);
 
-	const form_fields = formFields;
 	// const handleChange = (props) => {
 	// 	if (props.type === "Group") setType(true);
 	// 	if (props.type === "Individual") setType(false);
 	// 	onChange(props);
 	// };
 	return (
-		<form>
-			<div className="formComponent">
-				{form_fields.map((field) => {
-					if (field.Component == Select)
-						return (
-							<field.Component
-								key={field.id}
-								label={field.label}
-								name={field.name}
-								values={field.values}
-								className="fields"
-								onChange={onChange}
-							/>
-						);
-					else if (field.Component === "text-area")
-						return (
-							<div className="fieldsTextArea">
-								<label>Description</label>
-								<textarea
-									key={field.id}
-									// name={field.name}
-									name="description"
-									rows="5"
-									cols="40"
-									// onChange={(e) => handleChange({ [field.id]: e.target.value })}
-									onChange={onChange}
-								/>
-							</div>
-						);
+		<form className="formComponent">
+			{formFields.map((field) => {
+				if (field.type == "select")
 					return (
-						<TextField
+						<Select
 							key={field.id}
 							label={field.label}
 							name={field.name}
-							type={field.type}
+							values={field.values}
 							className="fields"
-							// onChange={(value) => handleChange({ [field.id]: value })}
 							onChange={onChange}
 						/>
 					);
-				})}
-				{/* {type ? (
+				else if (field.Component === "text-area")
+					return (
+						<div className="fieldsTextArea">
+							<label>Description</label>
+							<textarea
+								key={field.id}
+								name="description"
+								rows="5"
+								cols="40"
+								onChange={onChange}
+							/>
+						</div>
+					);
+				return (
+					<TextField
+						key={field.id}
+						label={field.label}
+						name={field.name}
+						type={field.type}
+						className="fields"
+						// onChange={(value) => handleChange({ [field.id]: value })}
+						onChange={onChange}
+					/>
+				);
+			})}
+			{/* {type ? (
 					<TextField
 						key="maxParticipants"
 						label="Max Participants"
@@ -65,7 +61,6 @@ const FormComponent = ({ onChange, formFields }) => {
 						onChange={onChange}
 					/>
 				) : null} */}
-			</div>
 		</form>
 	);
 };

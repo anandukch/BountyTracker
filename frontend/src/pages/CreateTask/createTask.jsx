@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Button from "../../components/Button/Button";
 import FormComponent from "../../components/FormComponent/FormComponent";
 import "./styles.scss";
-import Select from "../../components/Select/Select";
 import { useCreateTaskMutation } from "../../api/taskApi";
 
 const initialFormData = {
@@ -16,7 +15,7 @@ const initialFormData = {
 };
 const CreateTask = () => {
 	const [formData, setFormData] = useState(initialFormData);
-	const [createTask, { data, isSuccess, isLoading }] = useCreateTaskMutation();
+	const [createTask, { data, isSuccess }] = useCreateTaskMutation();
 	const formFields = [
 		{
 			id: "name",

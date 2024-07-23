@@ -26,6 +26,7 @@
 		align-items: center;
 		justify-content: center;
 		width: 50vw;
+		border-radius: 10px;
 
 		.wrapper-hero {
 			display: flex;
@@ -49,5 +50,12 @@
 				height: 60px;
 			}
 		}
+	}
+
+	.outlet {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 50vw;
 	}
 }

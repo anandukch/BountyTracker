@@ -5,7 +5,7 @@ const Select = ({ values, label, name, className, onChange }) => {
 	//      if (onSelect) onSelect(e.target.value, label);
 	//   };
 	return (
-		<span className={className}>
+		<span className={`${className} SelectField`}>
 			<label htmlFor={label}> {label} </label>
 			<select defaultValue="default" onChange={onChange} name={name}>
 				<option value="default" disabled>

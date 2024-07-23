@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import "./styles.scss";
 import logo from "../../assets/KoYns-Logo.png";
 import commentIcon from "../../assets/commentIcon.svg";
@@ -5,7 +6,6 @@ import attach from "../../assets/attach.svg";
 import profile from "../../assets/profile.png";
 import send from "../../assets/send.svg";
 import CommentComponent from "../../components/CommentComponent/CommentComponent";
-import TextField from "../../components/TextField/TextField";
 import Button from "../../components/Button/Button";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -17,25 +17,12 @@ import {
 	useUploadMutation,
 } from "../../api/taskApi";
 import { formatDate } from "../../utils/date.utils";
-import { useGetEmployeeQuery, useGetProfileQuery } from "../../api/employeeApi";
+import { useParams, useGetProfileQuery } from "react-router-dom";
 const TaskDetail = () => {
+	const { taskId } = useParams();
 	const [commentList, setCommentList] = useState([]);
 	const [participantList, setParticipantList] = useState([]);
 	const [file, uploadFile] = useState();
-	const form_fields = [
-		{
-			id: "description",
-			name: "Description",
-			value: "create a bounty tracker system with rewwards and bounty points for tasks completed",
-		},
-
-		{
-			id: "skills",
-			name: "Skills",
-			value: "Node, react, java, c",
-		},
-	];
-	const { data: currEmployee } = useGetProfileQuery();
 	const style = {
 		backgroundColor: "white",
 		color: "#2c95ce",
@@ -44,27 +31,61 @@ const TaskDetail = () => {
 	const [commentType, setCommentType] = useState("Normal");
 	const [comment, setComment] = useState("");
 	const [mentionId, setMentionId] = useState();
-	const { data: taskDetail } = useGetTaskByIdQuery(2);
-	const { data: commentsData } = useGetCommentsByTaskIdQuery(2);
+	const { data: taskDetail, isSuccess: taskSuccess } = useGetTaskByIdQuery(taskId);
+	const { data: commentsData, isSuccess: commentSuccess } = useGetCommentsByTaskIdQuery(taskId);
 
-	const [createComment, { data }] = useCreateCommentMutation();
-	const inputRef = useRef();
+	const form_fields = [
+		{
+			id: "description",
+			name: "Description",
+			// value: "create a bounty tracker system with rewwards and bounty points for tasks completed",
+			value: taskDetail?.description,
+		},
 
+		{
+			id: "skills",
+			name: "Skills",
+			// value: "Node, react, java, c",
+			value: taskDetail?.skillList,
+		},
+	];
+	const [createComment] = useCreateCommentMutation();
 	// const [upload, { isSuccess }] = useUploadMutation();
-	const handleSend = (e) => {
-		console.log("file", file);
+	const handleSend = async () => {
 		const formData = new FormData();
 		formData.append("file", file);
-
 		const commentData = {
-			id: 2,
+			id: 9,
 			commentType: commentType,
 			content: comment,
-			mentionCommentId: mentionId,
-			file: formData,
 		};
-		console.log(commentData);
-		createComment(commentData).unwrap();
+		formData.append("data", JSON.stringify(commentData));
+		formData.append("id", 9);
+		formData.append("commentType", commentType);
+		formData.append("content", comment);
+		createComment(formData);
+
+		// try {
+		// 	const token = localStorage.getItem('token');
+
+		// 	const response = await fetch('http://localhost:3000/tasks/9/comments', {
+		// 		method: 'POST',
+		// 		headers: {
+		// 			'Authorization': `Bearer ${token}`
+		// 		},
+		// 		body: formData
+		// 	});
+		// 	console.log("response", response);
+
+		// 	if (!response.ok) {
+		// 		throw new Error(`HTTP error! status: ${response.status}`);
+		// 	}
+
+		// 	const result = await response.json();
+		// 	console.log('Success:', result);
+		// } catch (error) {
+		// 	console.error('Error:', error);
+		// }
 	};
 
 	const handleTextArea = (e) => {
@@ -80,17 +101,19 @@ const TaskDetail = () => {
 		inputRef.current.focus();
 		setMentionId(id);
 	};
+
 	useEffect(() => {
-		if (taskDetail?.data) {
-			setParticipantList(taskDetail.data.participants);
-			// console.log(commentList);
+		if (taskSuccess) {
+			setParticipantList(taskDetail?.data.participants);
 		}
-		if (commentsData?.data) {
-			if (commentType == "Normal") setCommentList(commentsData.data.normalComments);
-			else setCommentList(commentsData.data.reviewComments);
-			// console.log(commentList);
+	}, [taskSuccess, taskDetail]);
+
+	useEffect(() => {
+		if (commentSuccess) {
+			if (commentType == "Normal") setCommentList(commentsData?.data?.normalComments);
+			else setCommentList(commentsData?.data?.reviewComments);
 		}
-	});
+	}, [commentsData, commentType, commentSuccess]);
 
 	return (
 		<main className="taskDetail">
@@ -117,12 +140,11 @@ const TaskDetail = () => {
 							<label> Type</label>
 							<div className="type">{taskDetail?.data.maxParticipants > 1 ? "Group" : "Individual"}</div>
 						</div>
-						{true ? (
-							<div className="fields">
-								<label> Max Participants</label>
-								<div className="maxParticipants">{taskDetail?.data.maxParticipants}</div>
-							</div>
-						) : null}
+
+						<div className="fields">
+							<label> Max Participants</label>
+							<div className="maxParticipants">{taskDetail?.data.maxParticipants}</div>
+						</div>
 					</div>
 				</div>
 				<div className="detailSectionBounty">

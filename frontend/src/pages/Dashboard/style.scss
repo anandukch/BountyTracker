@@ -139,6 +139,7 @@
 			border-radius: 10px;
 
 			.taskDataRow {
+				text-decoration: none;
 				display: grid;
 				grid-template-rows: 1fr;
 				grid-template-columns: 1fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr;

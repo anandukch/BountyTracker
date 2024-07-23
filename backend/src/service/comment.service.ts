@@ -35,8 +35,6 @@ class CommentService {
 	};
 
 	createComment = async (taskId: number, employee: Employee, commentDto: CreateComementDto, fileName: string) => {
-		//TODO:'Create comment business logic'
-
 		const newComment = new Comment();
 		const { commentType, content, fileUrl, mentionCommentId } = commentDto;
 		const task = await taskService.getTaskById(taskId, [

@@ -20,7 +20,6 @@ const taskApi = apiWithTag.injectEndpoints({
 				url: `/tasks/${parseInt(data.id)}/comments`,
 				method: "POST",
 				body: data,
-				formData: true,
 			}),
 			invalidatesTags: ["COMMENTS"],
 		}),
@@ -30,6 +29,7 @@ const taskApi = apiWithTag.injectEndpoints({
 		getCommentById: builder.query({
 			query: (id) => `/tasks/comments/${id}`,
 		}),
+		
 		upload: builder.mutation({
 			query: ({ formData }) => ({
 				url: `/file`,

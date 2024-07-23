@@ -10,6 +10,7 @@ import EmployeeTierList from "./pages/EmployeeTierList/employeeTierList";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import ReviewPage from "./pages/ReviewPage/reviewPage";
+import "./App.scss";
 
 const App = () => {
 	const router = createBrowserRouter([
@@ -38,7 +39,7 @@ const App = () => {
 			children: [
 				{ index: true, element: <EmployeeDashboard /> },
 				{ path: "create", element: <CreateTask /> },
-				{ path: "taskDetail", element: <TaskDetail /> },
+				{ path: "taskDetails/:taskId", element: <TaskDetail /> },
 				{ path: "employeeList", element: <EmployeeTierList /> },
 				{ path: "comment/:id", element: <ReviewPage /> },
 			],

@@ -25,7 +25,7 @@ class TaskController {
 		this.router.get("/comments/:commentId/file", this.getCommentFile);
 		this.router.post("/:taskId/comments", fileUploadMiddleware.single("file"), this.createComment);
 		this.router.patch("/comments/:commentId", this.reviewComment);
-		this.router.patch("/:taskId" ,this.updateTask);
+		this.router.patch("/:taskId", this.updateTask);
 	}
 
 	public getAllTasks = async (req: RequestWithRole, res: Response, next: NextFunction) => {
@@ -173,12 +173,12 @@ class TaskController {
 			console.log("filename",fileName);
 			
 
-			const response = await this.commentService.createComment(parseInt(taskId), employee, commentDto, fileName);
+			await this.commentService.createComment(parseInt(taskId), employee, commentDto, fileName);
 
 			res.status(201).json({
 				success: true,
 				message: "Comment created succesfully",
-				response,
+				// response,
 			});
 		} catch (error) {
 			next(error);
@@ -209,40 +209,36 @@ class TaskController {
 	};
 
 	public updateTask = async (req: RequestWithRole, res: Response, next: NextFunction) => {
-		try{
-			const {taskId} = req.params
-			console.log(taskId)
-			if(!taskId){
-				throw new HttpException(400,"Task not found")
+		try {
+			const { taskId } = req.params;
+			console.log(taskId);
+			if (!taskId) {
+				throw new HttpException(400, "Task not found");
 			}
 			const updatedTask = req.body;
-			const updatedTaskDto = plainToInstance(UpdateTaskDto,updatedTask);
+			const updatedTaskDto = plainToInstance(UpdateTaskDto, updatedTask);
 			const errors = await validate(updatedTaskDto);
 			if (errors.length) {
-          		throw new ValidationException(400, "Validation Failed", errors);
-        	}
-			const response = await this.taskService.updateTask(parseInt(taskId),updatedTaskDto)
+				throw new ValidationException(400, "Validation Failed", errors);
+			}
+			const response = await this.taskService.updateTask(parseInt(taskId), updatedTaskDto);
 			res.status(200).json({
 				success: true,
 				message: "Task updated succesfully",
 				data: response,
 			});
-
-		}catch (error) {
+		} catch (error) {
 			next(error);
 		}
-	}
-
+	};
 
 	public getCommentFile = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			const {commentId}  = req.params;
+			const { commentId } = req.params;
 			const file = await this.commentService.getCommentFile(parseInt(commentId));
 			res.sendFile(file);
-		} catch (error) {
-			
-		}
-	}
+		} catch (error) {}
+	};
 }
 
 
