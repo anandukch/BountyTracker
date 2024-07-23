@@ -1,6 +1,5 @@
 export const setStatus = (startDate, deadLine, status) => {
-	if (status == "In progress" || status == "In review") return status;
-	else if (status == "completed") return "Completed";
+	if (status == "In progress" || status == "In review" || status == "Completed") return status;
 	const currentDate = new Date();
 	const date = currentDate.toISOString();
 	if (date < startDate) status = "Yet to start";

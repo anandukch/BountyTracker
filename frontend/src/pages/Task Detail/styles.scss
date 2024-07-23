@@ -72,7 +72,21 @@
 		span {
 			display: flex;
 			flex-direction: row;
-			gap: 5px;
+			// gap: 10px;
+			justify-content: center;
+			align-items: center;
+		}
+		.taskCompleteButton {
+			padding: 10px 12px;
+			width: 200px;
+			text-align: center;
+			border: none;
+			border-radius: 5px;
+			background-color: var(--primary-btn);
+			font-weight: 600;
+			cursor: pointer;
+			color: var(--bgWhite);
+			margin-left: 20px;
 		}
 	}
 	.details {
