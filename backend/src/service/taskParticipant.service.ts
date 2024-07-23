@@ -36,8 +36,9 @@ class TaskParticipantService {
 		return this.repository.save(data);
 	};
 
-	checkAlreadyJoined = async (taskId: number, employeeId: number): Promise<TaskParticipants> => {
-		return this.repository.findOneBy({ taskId, employeeId });
+	checkAlreadyJoined = async (taskId: number, employeeId: number): Promise<boolean> => {
+		const joinedTaskParticipant = await this.repository.findOneBy({ taskId, employeeId });
+		return joinedTaskParticipant !== undefined;
 	};
 }
 

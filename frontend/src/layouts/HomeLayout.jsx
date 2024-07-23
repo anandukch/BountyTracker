@@ -14,6 +14,7 @@ const HomeLayout = () => {
 		localStorage.clear("token");
 		navigate("/login");
 	};
+	
 	return (
 		<div className="page">
 			<div className="header">
