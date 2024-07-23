@@ -109,12 +109,15 @@ class EmployeeService {
 	};
 
 	joinTask = async (taskId: number, employee: Employee) => {
-		const task = await this.taskService.getTaskById(taskId, []);
+		const task = await this.taskService.getTaskById(taskId, ["createdBy"]);
 		if (!task) {
 			throw new EntityNotFoundException(404, "Task not found");
 		}
 		if (task.maxParticipants === task.currentParticipants) {
 			throw new EntityNotFoundException(404, "Task is full");
+		}
+		if (task.createdBy.id === employee.id) {
+			throw new EntityNotFoundException(404, "Cannot join task created by self");
 		}
 		const alreadyJoined = await this.taskParticipantService.checkAlreadyJoined(taskId, employee.id);
 		if (alreadyJoined != undefined) {
