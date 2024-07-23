@@ -8,21 +8,15 @@ import send from "../../assets/send.svg";
 import CommentComponent from "../../components/CommentComponent/CommentComponent";
 import Button from "../../components/Button/Button";
 import { useEffect, useRef, useState } from "react";
-import {
-	useCreateCommentMutation,
-	useGetCommentsByTaskIdQuery,
-	useGetTaskByIdQuery,
-	useGetTaskListQuery,
-	useLazyGetTaskByIdQuery,
-	useUploadMutation,
-} from "../../api/taskApi";
+import { useCreateCommentMutation, useGetCommentsByTaskIdQuery, useGetTaskByIdQuery } from "../../api/taskApi";
 import { formatDate } from "../../utils/date.utils";
-import { useParams, useGetProfileQuery } from "react-router-dom";
+import { useParams } from "react-router-dom";
 const TaskDetail = () => {
 	const { taskId } = useParams();
 	const [commentList, setCommentList] = useState([]);
 	const [participantList, setParticipantList] = useState([]);
 	const [file, uploadFile] = useState();
+	const inputRef = useRef();
 	const style = {
 		backgroundColor: "white",
 		color: "#2c95ce",
@@ -190,7 +184,7 @@ const TaskDetail = () => {
 											key={record.id}
 											name={record.employee.name}
 											comment={record.content}
-											currEmployee={currEmployee?.data.name}
+											currEmployee={"bla"}
 											type={record.commentType}
 											onClick={() => handleReply(record.id)}
 										/>
