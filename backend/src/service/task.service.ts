@@ -32,6 +32,7 @@ class TaskService {
 		newTask.createdBy = user;
 		newTask.maxParticipants = maxParticipants;
 		newTask.currentParticipants = 0;
+		newTask.currentContribution = 0;
 		newTask.totalBounty = totalBounty;
 		newTask.startDate = startDate;
 		newTask.deadLine = deadLine;
