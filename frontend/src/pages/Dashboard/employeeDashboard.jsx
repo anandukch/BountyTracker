@@ -104,7 +104,6 @@ const EmployeeDashboard = () => {
 							{/* {isTaskLoading && <Loader />} */}
 							{isTaskFetched &&
 								employeeTasksData.data.map((task) => {
-									console.log(task);
 									if (addClass === 0 && task.task.status !== "completed")
 										return <TaskDataRow key={task.id} taskRows={task} />;
 									else if (addClass === 1 && task.task.status == "completed")

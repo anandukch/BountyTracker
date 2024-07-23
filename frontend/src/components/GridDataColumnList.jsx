@@ -5,7 +5,7 @@ const GridDataColumnList = ({ taskid, taskname, assignedby, startdate, duedate, 
 const navigate = useNavigate();
 const handledisplay=()=>
     {
-      navigate(`/employee/taskDetails/${taskid}`);
+      navigate(`/tasks/${taskid}`);
     }
 	return (
 		<div className="listDataSet">

@@ -35,17 +35,31 @@ const App = () => {
 		},
 
 		{
-			path: "/employee",
+			path: "/profile",
+			element: <HomeLayout />,
+			children: [{ index: true, element: <EmployeeDashboard /> }],
+		},
+
+		{
+			path: "/employees",
 			element: <HomeLayout />,
 			children: [
-				{ index: true, element: <EmployeeDashboard /> },
-				{ path: "create", element: <CreateTask /> },
-				{ path: "taskList", element: <TaskList /> },
-				{ path: "employeeList", element: <EmployeeTierList /> },
+				{ index: true, element: <EmployeeTierList /> },
+
+				// { path: "taskList", element: <TaskList /> },
+				// { path: "employeeList", element: <EmployeeTierList /> },
 				{ path: "comment/:id", element: <ReviewPage /> },
 			],
 		},
-		{ path: "tasklist/", element: <HomeLayout />, children: [{ index: true, element: <TaskList /> }] },
+		{
+			path: "tasks/",
+			element: <HomeLayout />,
+			children: [
+				{ index: true, element: <TaskList /> },
+				{path: ":taskId", element: <TaskDetail />},
+				{ path: "create", element: <CreateTask /> },
+			],
+		},
 	]);
 
 	return (

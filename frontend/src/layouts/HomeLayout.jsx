@@ -14,7 +14,28 @@ const HomeLayout = () => {
 		localStorage.clear("token");
 		navigate("/login");
 	};
-	
+
+	const sideBar = [
+		{
+			id: 0,
+			title: "Profile",
+			icon: profile,
+			to: "/profile",
+		},
+		{
+			id: 1,
+			title: "Tasks",
+			icon: tasks,
+			to: "/tasks",
+		},
+		{
+			id: 2,
+			title: "Employees",
+			icon: employees,
+			to: "/employees",
+		},
+	];
+
 	return (
 		<div className="page">
 			<div className="header">
@@ -26,7 +47,7 @@ const HomeLayout = () => {
 			</div>
 			<aside className="HomeLayout">
 				<div className="top">
-					<Link
+					{/* <Link
 						className={`links ${pageIndex == 0 ? "active" : ""}`}
 						to="/employee"
 						onClick={() => setPageIndex(0)}
@@ -35,8 +56,22 @@ const HomeLayout = () => {
 							<img src={profile} alt="icon" className="imgicon" />
 						</div>
 						Profile
-					</Link>
-					<Link
+					</Link> */}
+
+					{sideBar.map((item, index) => (
+						<Link
+							key={item.id}
+							className={`links ${pageIndex == index ? "active" : ""}`}
+							to={item.to}
+							onClick={() => setPageIndex(index)}
+						>
+							<div className="icon">
+								<img src={item.icon} alt="icon" className="imgicon" />
+							</div>
+							{item.title}
+						</Link>
+					))}
+					{/* <Link
 						className={`links ${pageIndex == 1 ? "active" : ""}`}
 						to="tasklist"
 						onClick={() => setPageIndex(1)}
@@ -55,7 +90,7 @@ const HomeLayout = () => {
 							<img src={employees} alt="icon" className="imgicon" />
 						</div>
 						Employees
-					</Link>
+					</Link> */}
 				</div>
 				<div className="bottom">
 					<div className="links" onClick={handleLogout}>
