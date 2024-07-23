@@ -19,7 +19,7 @@ const taskApi = apiWithTag.injectEndpoints({
 			query: (data) => {
 				console.log("create Comment");
 				return {
-					url: `/tasks/${parseInt("9")}/comments`,
+					url: `/tasks/${parseInt(data.)}/comments`,
 					method: "POST",
 					body: data.formData,
 				};

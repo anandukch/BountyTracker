@@ -28,8 +28,6 @@ const TaskDetail = () => {
 	const [mentionId, setMentionId] = useState();
 	const { data: taskDetail, isSuccess: taskSuccess } = useGetTaskByIdQuery(taskId);
 	const { data: commentsData, isSuccess: commentSuccess } = useGetCommentsByTaskIdQuery(taskId);
-	const inputRef = useRef();
-
 	const loggedState = useSelector((state) => state.employee.loggedState);
 
 	const form_fields = [
@@ -61,7 +59,7 @@ const TaskDetail = () => {
 		// formData.append("id", 9);
 		formData.append("commentType", commentType);
 		formData.append("content", comment);
-		createComment({taskId, formData});
+		createComment({ taskId, formData });
 
 		// try {
 		// 	const token = localStorage.getItem('token');
