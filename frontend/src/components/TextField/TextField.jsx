@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 // import { useEffect, useState } from "react";
 
 import React from "react";
