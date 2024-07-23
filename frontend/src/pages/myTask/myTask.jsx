@@ -32,7 +32,7 @@ const MyTask = () => {
 		{ name: "Task Name" },
 		{ name: "Start Date" },
 		{ name: "Deadline" },
-		{ name: "Participants" },
+		{ name: "Joined" },
 		{ name: "Status" },
 		{ name: "Progress" },
 		{ name: "KoYns" },
@@ -75,7 +75,7 @@ const MyTask = () => {
 								key={employee.id}
 								taskid={employee.id}
 								taskname={employee.title}
-								progress={employee.totalBounty}
+								progress={employee.currentContribution}
 								startdate={employee.startDate}
 								duedate={employee.deadLine}
 								taskStatus={employee.status}
