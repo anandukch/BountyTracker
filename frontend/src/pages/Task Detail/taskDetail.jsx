@@ -16,11 +16,12 @@ import {
 	useLazyGetTaskByIdQuery,
 } from "../../api/taskApi";
 import { formatDate } from "../../utils/date.utils";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addJoinedStatus } from "../../store/employeeReducer";
 import CustomModal from "../../components/Modal/CustomModal";
 import ListButton from "../../components/Button/ListButton";
+import CommentComponent from "../../components/CommentComponent/CommentComponent";
 const TaskDetail = () => {
 	const [commentList, setCommentList] = useState([]);
 	const [participantList, setParticipantList] = useState([]);
@@ -42,6 +43,8 @@ const TaskDetail = () => {
 	const [completeTaskRequest] = useCompleteTaskMutation();
 
 	const loggedState = useSelector((state) => state.employee);
+
+	const navigate = useNavigate();
 
 	const form_fields = [
 		{
