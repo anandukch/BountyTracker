@@ -8,31 +8,48 @@ import send from "../../assets/send.svg";
 import CommentComponent from "../../components/CommentComponent/CommentComponent";
 import Button from "../../components/Button/Button";
 import { useEffect, useRef, useState } from "react";
-import { useCreateCommentMutation, useGetCommentsByTaskIdQuery, useGetTaskByIdQuery, useJoinTaskMutation } from "../../api/taskApi";
+import {
+	useCreateCommentMutation,
+	useGetCommentsByTaskIdQuery,
+	useGetTaskByIdQuery,
+	useJoinTaskMutation,
+} from "../../api/taskApi";
 import { formatDate } from "../../utils/date.utils";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addJoinedStatus } from "../../store/employeeReducer";
+
 const TaskDetail = () => {
+	//-----------constants--------
 	const { taskId } = useParams();
 	const [commentList, setCommentList] = useState([]);
 	const [participantList, setParticipantList] = useState([]);
-	const [joined, setJoined] = useState(false);
 	const [file, uploadFile] = useState();
+	const [replyText, setReplyText] = useState("");
+	const [joined, setJoined] = useState(false);
 	const inputRef = useRef();
 	const style = {
 		backgroundColor: "white",
 		color: "#2c95ce",
 		boxShadow: "0.5px 0.5px 0.5px  0.5px #8c96a0",
 	};
-	const [commentType, setCommentType] = useState("Normal");
+
 	const [comment, setComment] = useState("");
 	const [mentionId, setMentionId] = useState();
+
+	//------------queries--------
 	const { data: taskDetail, isSuccess: taskSuccess } = useGetTaskByIdQuery(taskId);
 	const { data: commentsData, isSuccess: commentSuccess } = useGetCommentsByTaskIdQuery(taskId);
-	const [join,{isSuccess:joinSuccess}]=useJoinTaskMutation()
+	const [join, { isSuccess: joinSuccess }] = useJoinTaskMutation();
+	const [createComment] = useCreateCommentMutation();
+
+	// ----------stateVar----------
 	const loggedState = useSelector((state) => state.employee);
 	const dispatch = useDispatch();
+	//----
+	const token = localStorage.getItem("token");
+	const arrayToken = token.split(".");
+	const tokenPayload = JSON.parse(atob(arrayToken[1]));
 
 	const form_fields = [
 		{
@@ -49,58 +66,64 @@ const TaskDetail = () => {
 			value: taskDetail?.skillList,
 		},
 	];
-	const [createComment] = useCreateCommentMutation();
-	// const [upload, { isSuccess }] = useUploadMutation();
 	const handleSend = async () => {
 		const formData = new FormData();
-		formData.append("file", file);
-		// const commentData = {
-		// 	id: 9,
-		// 	commentType: commentType,
-		// 	content: comment,
-		// };
-		// formData.append("data", JSON.stringify(commentData));
-		// formData.append("id", 9);
-		formData.append("commentType", commentType);
-		formData.append("content", comment);
-		createComment({ taskId, formData });
+		const commentData = {
+			id: taskId,
+			content: comment,
+			commentType: "Normal",
+			mentionCommentId: mentionId,
+		};
+		createComment(commentData);
+		inputRef.current.value = "";
+		setReplyText("");
 	};
+
 	const handleTextArea = (e) => {
 		setComment(e.target.value);
 	};
+
 	const handleUpload = (e) => {
 		uploadFile(e.target.files[0]);
 	};
+
 	const handleReply = (id) => {
 		inputRef.current.focus();
+		const mentionComment = commentList.normalComments.filter((record) => record.id === id);
+		// console.log(mentionComment);
+		const replyText = `replied : (${mentionComment[0].employee.name}) [${mentionComment[0].content}]: \n`;
+		inputRef.current.value = replyText;
+		setReplyText(replyText);
 		setMentionId(id);
 	};
-	const handleJoin=()=>{
-		join(taskId)
-	}
+
+	const handleJoin = () => {
+		join(taskId);
+	};
+
+	//--------useEffects--------
 	useEffect(() => {
 		if (taskSuccess) {
-			setParticipantList(taskDetail.data.participants);
-			participantList.forEach((participant) => {
-				// console.log("participant");
+			taskDetail.data.participants.forEach((participant) => {
+				if (participant.name === tokenPayload.name) {
+					// dispatch(addJoinedStatus({ id: taskId, status: "joined" }));
+					setJoined(true);
+					console.log("joined");
+				}
 			});
 		}
-	}, [taskSuccess, taskDetail]);
-	useEffect(() => {
-		participantList.forEach((participant) => {
-			if (participant.name === loggedState.username) {
-				dispatch(addJoinedStatus({ id: taskId, status: "joined" }));
-				setJoined(true);
-				// console.log("joined")
-			}
-		});
-	}, [participantList]);
+	}, [taskSuccess, taskDetail, joined]);
 	useEffect(() => {
 		if (commentSuccess) {
 			setCommentList(commentsData.data);
 		}
-	}, [commentsData, commentType, commentSuccess]);
-
+	}, [commentsData, commentSuccess]);
+	useEffect(() => {
+		if (joinSuccess) {
+			dispatch(addJoinedStatus({ id: taskId, status: "joined" }));
+			setJoined(true);
+		}
+	}, [joinSuccess]);
 	return (
 		<main className="taskDetail">
 			<div className="title">
@@ -143,7 +166,7 @@ const TaskDetail = () => {
 				<div className="particpantsListSection">
 					<div className="particpantsListHeader">Particpants</div>
 					<div className="particpantsList">
-						{participantList.map((participant) => {
+						{taskDetail?.data.participants.map((participant) => {
 							return (
 								<div className="partcipants">
 									<img src={profile} alt="profile icon" />
@@ -158,41 +181,22 @@ const TaskDetail = () => {
 				<div className="bottomSection">
 					<div className="commentSection">
 						<div className="commentSectionHeader">
-							{/* <div className="nameHeader">Name</div> */}
-							{/* <div className="commentHeader"> */}
 							<span>Comments</span>
-							{/* <div className="commentFilter">
-									<div
-										className="commentFlag"
-										onClick={() => handleCommentFilter("Normal")}
-										style={commentType === "Normal" ? style : null}
-									>
-										Comment
-									</div>
-									<div
-										className="review"
-										onClick={() => handleCommentFilter("Review")}
-										style={commentType === "Review" ? style : null}
-									>
-										Review
-									</div>
-								</div> */}
-							{/* </div> */}
 						</div>
 
 						<div className="commentWrapper">
 							<div className="commentList">
-								{commentList.normalComments.map((record) => {
+								{commentList?.normalComments?.map((record) => {
 									return (
 										<CommentComponent
 											key={record.id}
 											name={record.employee.name}
 											comment={record.content}
-											currEmployee="Arun Doe"
 											type="Normal"
 											onClick={() => handleReply(record.id)}
 											loggedState={loggedState}
 											status={record.review_status}
+											reply={record.mentionCommentId}
 										/>
 									);
 								})}
@@ -207,25 +211,9 @@ const TaskDetail = () => {
 									onChange={handleTextArea}
 								/>
 								<span className="commentButtons">
-									{commentType === "Review" ? (
-										<>
-											<label htmlFor="file">
-												<img src={attach} alt="Add attachment" />
-											</label>
-											<input
-												type="file"
-												id="file"
-												className="uploadFile"
-												onChange={handleUpload}
-											/>
-
-											<Button className="reviewButton" text="Review" onClick={handleSend} />
-										</>
-									) : (
-										<div className="sendButton">
-											<img src={send} alt="Send Comment" onClick={handleSend} />
-										</div>
-									)}
+									<div className="sendButton">
+										<img src={send} alt="Send Comment" onClick={handleSend} />
+									</div>
 								</span>
 							</div>
 						</div>
@@ -233,20 +221,20 @@ const TaskDetail = () => {
 					<div className="reviewSection">
 						<div className="reviewSectionHeader">
 							<span>Review</span>
+							<Button text="Add Review" className="reviewButton" />
 						</div>
 						<div className="reviewWrapper">
 							<div className="reviewList">
-								{commentList.reviewComments.map((record) => {
+								{commentList?.reviewComments?.map((record) => {
 									return (
 										<CommentComponent
 											key={record.id}
 											name={record.employee.name}
 											comment={record.content}
-											currEmployee={loggedState.username}
 											type="Review"
 											onClick={() => handleReply(record.id)}
 											loggedState={loggedState}
-											status={record.review_status}
+											status={record.reviewStatus}
 										/>
 									);
 								})}
@@ -255,7 +243,9 @@ const TaskDetail = () => {
 					</div>
 				</div>
 			) : (
-				<div className="Join Button" onClick={handleJoin}>Join</div>
+				<div className="Join Button" onClick={handleJoin}>
+					Join
+				</div>
 			)}
 		</main>
 	);

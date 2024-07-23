@@ -8,21 +8,20 @@
 	--bgList: #f0f1f6;
 }
 .commentRecord {
-	display: flex;
-	flex-direction: row;
-	gap: 5px;
+	display: grid;
+	flex-direction: column;
 	// box-shadow: 0.5px 0.5px 1px var(--textGray);
 	.name {
 		text-align: center;
 		align-content: center;
-		// border-right: 1px solid var(--textGray);
-		width: 100px;
+		width: max-content;
 		font-size: 13px;
-		background-color: white;
-		height: 40px;
-		padding: 10px;
-		border-radius: 10px;
+		color: var(--textBlack);
+		// background-color: white;
+		// max-height: 40px;
 		overflow: hidden;
+		padding: 8px;
+		border-radius: 10px;
 	}
 	.comment {
 		text-align: left;
@@ -34,9 +33,24 @@
 		background-color: white;
 		height: 40px;
 		padding: 15px;
-		border-radius: 0 15px 15px 15px;
+		border-radius: 10px;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
+	}
+	.replyButton {
+		align-content: center;
+		padding: 4px 10px 4px 10px;
+		font-size: 12px;
+		color: var(--textGray);
+		cursor: pointer;
+	}
+	.reviewStatus {
+		background-color: rgb(207, 220, 255);
+		height: 25px;
+		font-size: 12px;
+		padding: 0 10px 0 10px;
+		align-content: center;
+		border-radius: 8px;
 	}
 }

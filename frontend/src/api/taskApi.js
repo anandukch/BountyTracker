@@ -7,6 +7,7 @@ const taskApi = apiWithTag.injectEndpoints({
 		}),
 		getTaskById: builder.query({
 			query: (id) => `/tasks/${id}`,
+			invalidatesTags: ["EMPLOYEE"],
 		}),
 		createTask: builder.mutation({
 			query: (data) => ({ url: "/tasks", method: "POST", body: data }),
@@ -17,11 +18,11 @@ const taskApi = apiWithTag.injectEndpoints({
 		}),
 		createComment: builder.mutation({
 			query: (data) => {
-				console.log("create Comment");
+				console.log(data);
 				return {
-					url: `/tasks/${parseInt(data.taskId)}/comments`,
+					url: `/tasks/${parseInt(data.id)}/comments`,
 					method: "POST",
-					body: data.formData,
+					body: data,
 				};
 			},
 			invalidatesTags: ["COMMENTS"],
@@ -38,6 +39,7 @@ const taskApi = apiWithTag.injectEndpoints({
 				url: `/employees/tasks/${id}`,
 				method: "POST",
 			}),
+			invalidatesTags: ["EMPLOYEE"],
 		}),
 	}),
 });

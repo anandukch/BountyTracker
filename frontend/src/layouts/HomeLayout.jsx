@@ -1,6 +1,7 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import "./styles.scss";
 import profile from "../assets/profile-img.svg";
+import profileHead from "../assets/profile.png";
 import tasks from "../assets/tasks.svg";
 import employees from "../assets/employees.svg";
 import logout from "../assets/logout.svg";
@@ -21,10 +22,22 @@ const HomeLayout = () => {
 	};
 	const { data: employeeData, isLoading, isSuccess } = useGetProfileQuery();
 	const dispatch = useDispatch();
-
+	const token = localStorage.getItem("token");
+	const arrayToken = token.split(".");
+	const tokenPayload = JSON.parse(atob(arrayToken[1]));
 	useEffect(() => {
 		if (isSuccess) {
-			dispatch(addLoggedState({ role: employeeData.data.role, username: employeeData.data.name, id: employeeData.data.id }));
+			// console.log(tokenPayload);
+			const token = localStorage.getItem("token");
+			const arrayToken = token.split(".");
+			const tokenPayload = JSON.parse(atob(arrayToken[1]));
+			dispatch(
+				addLoggedState({
+					role: tokenPayload.role,
+					username: tokenPayload.name,
+					id: employeeData.data.id,
+				}),
+			);
 		}
 	}, [employeeData]);
 
@@ -62,7 +75,7 @@ const HomeLayout = () => {
 					<img src={logo} alt="icon" className="logo-image" />
 					<img src={text} alt="icon" className="logo-text" />
 				</div>
-				<h1>Bounty Tracker System</h1>
+				<h2><img src={profileHead} alt="Profile Icon" />{tokenPayload.name}</h2>
 			</div>
 			<aside className="HomeLayout">
 				<div className="top">

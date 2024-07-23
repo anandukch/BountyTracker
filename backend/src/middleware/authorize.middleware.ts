@@ -20,7 +20,7 @@ const authorize = async (req: RequestWithRole, res: Response, next: NextFunction
 		req.user = employee;
 		req.name = (payload as jwtPayload).name;
 		req.email = (payload as jwtPayload).email;
-		req.role = (payload as jwtPayload).role;
+		req.role= (payload as jwtPayload).role;
 		return next();
 	} catch (error) {
 		return next(error);
