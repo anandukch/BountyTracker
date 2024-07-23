@@ -10,6 +10,9 @@ export function compareDates(date1: Date, date2: Date): number {
 	const month2 = d2.getUTCMonth();
 	const day2 = d2.getUTCDate();
 
+	// console.log(year1, month1, day1, year2, month2, day2);
+	
+
 	if (year1 > year2) return 1;
 	if (year1 < year2) return -1;
 	if (month1 > month2) return 1;

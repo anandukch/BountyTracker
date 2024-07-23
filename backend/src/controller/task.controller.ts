@@ -11,6 +11,8 @@ import { CreateTaskDto, UpdateTaskDto } from "../dto/task.dto";
 import ValidationException from "../exceptions/validationException";
 import fileUploadMiddleware from "../middleware/fileUploadMiddleware";
 import validationMiddleware from "../middleware/validate.middleware";
+import { compareDates } from "../utils/date.utils";
+import { TaskStatusEnum } from "../utils/taskStatus.enum";
 
 class TaskController {
 	public router: Router;
@@ -45,10 +47,24 @@ class TaskController {
 	public getTaskCreatedByUser = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			const tasks = await this.taskService.getTaskCreatedByUser(req.user.id);
+
+			const data = tasks.map((task, i) => {
+				let startDate = task.startDate;
+				let deadLine = task.deadLine;
+				let today = new Date();
+
+				if (compareDates(today, startDate) >= 0 && compareDates(today, deadLine) <= 0) {
+					task.status = TaskStatusEnum.IN_PROGRESS;
+				} else if (compareDates(today, deadLine) > 0 && task.status !== TaskStatusEnum.COMPLETED) {
+					task.status = TaskStatusEnum.IN_REVIEW;
+				}
+
+				return task;
+			});
 			res.status(200).json({
 				success: true,
 				message: "Tasks fetched successfully",
-				data: tasks,
+				data: data,
 			});
 		} catch (error) {
 			next(error);
@@ -105,7 +121,6 @@ class TaskController {
 		}
 	};
 
-	
 	// Comments
 
 	public getAllTaskComments = async (req: RequestWithRole, res: Response, next: NextFunction) => {
