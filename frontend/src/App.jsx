@@ -12,14 +12,11 @@ import store from "./store/store";
 import ReviewPage from "./pages/ReviewPage/reviewPage";
 import "./App.scss";
 import TaskList from "./pages/TaskList/tastList.jsx";
-<<<<<<< HEAD
 import Progressbar from "./components/ProgressBar/ProgressBar.jsx";
-=======
 import { useEffect } from "react";
 import { addLoggedState } from "./store/employeeReducer.js";
 import { useGetProfileQuery } from "./api/employeeApi.js";
 import MyTask from "./pages/myTask/myTask.jsx";
->>>>>>> b2cd1bd6813006c9f2c2bf5afbe5f1d5b223120c
 
 const App = () => {
 	const router = createBrowserRouter([
@@ -78,16 +75,8 @@ const App = () => {
 				// { path: "create", element: <CreateTask /> },
 			],
 		},
-// <<<<<<< HEAD
-// <<<<<<< HEAD
-		{ path: "tasklist/", element: <HomeLayout />, children: [{ index: true, element: <TaskList /> }] },
-		{ path: "bar/", element: <HomeLayout />, children: [{ index: true, element: <Progressbar/> }] },
-// =======
-// >>>>>>> b2cd1bd6813006c9f2c2bf5afbe5f1d5b223120c
-// =======
 		{ path: "tasklist/", element: <HomeLayout />, children: [{ index: true, element: <TaskList /> }] },
 		{ path: "bar/", element: <HomeLayout />, children: [{ index: true, element: <Progressbar /> }] },
-// >>>>>>> 257a347c47c84cd59ecc5ee7bcb2d9fe1729593f
 	]);
 
 	return (
