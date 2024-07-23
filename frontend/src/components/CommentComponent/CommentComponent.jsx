@@ -1,6 +1,6 @@
 import "./styles.scss";
 const CommentComponent = ({ name, comment, currEmployee, type, onClick,loggedState,status }) => {
-	console.log(type);
+	// console.log(loggedState);
 	const flag = (currEmployee == name)&&(type==="blah") ? true : false;
 	const styleComment = {
 		justifyContent: "right",

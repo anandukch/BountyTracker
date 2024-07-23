@@ -7,13 +7,23 @@ import Hero from "./components/Hero/Hero";
 import EmployeeDashboard from "./pages/Dashboard/employeeDashboard";
 import TaskDetail from "./pages/Task Detail/taskDetail";
 import EmployeeTierList from "./pages/EmployeeTierList/employeeTierList";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import store from "./store/store";
 import ReviewPage from "./pages/ReviewPage/reviewPage";
 import "./App.scss";
 import TaskList from "./pages/TaskList/tastList.jsx";
+import { useEffect } from "react";
+import { addLoggedState } from "./store/employeeReducer.js";
+import { useGetProfileQuery } from "./api/employeeApi.js";
 
 const App = () => {
+	// const { data: employeeData, isLoading, isSuccess } = useGetProfileQuery();
+	// const dispatch = useDispatch();
+
+	// useEffect(() => {
+	// 	dispatch(addLoggedState({ role: employeeData.role, username: employeeData.name, id: employeeData.id }));
+	// },[employeeData]);
+
 	const router = createBrowserRouter([
 		{
 			path: "/",

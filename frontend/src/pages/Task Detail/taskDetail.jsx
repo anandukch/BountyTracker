@@ -11,11 +11,13 @@ import { useEffect, useRef, useState } from "react";
 import { useCreateCommentMutation, useGetCommentsByTaskIdQuery, useGetTaskByIdQuery } from "../../api/taskApi";
 import { formatDate } from "../../utils/date.utils";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addJoinedStatus } from "../../store/employeeReducer";
 const TaskDetail = () => {
 	const { taskId } = useParams();
 	const [commentList, setCommentList] = useState([]);
 	const [participantList, setParticipantList] = useState([]);
+	const [joined, setJoined] = useState(false);
 	const [file, uploadFile] = useState();
 	const inputRef = useRef();
 	const style = {
@@ -28,8 +30,8 @@ const TaskDetail = () => {
 	const [mentionId, setMentionId] = useState();
 	const { data: taskDetail, isSuccess: taskSuccess } = useGetTaskByIdQuery(taskId);
 	const { data: commentsData, isSuccess: commentSuccess } = useGetCommentsByTaskIdQuery(taskId);
-	const loggedState = useSelector((state) => state.employee.loggedState);
-
+	const loggedState = useSelector((state) => state.employee);
+	const dispatch = useDispatch();
 	const form_fields = [
 		{
 			id: "description",
@@ -61,29 +63,7 @@ const TaskDetail = () => {
 		formData.append("content", comment);
 		createComment({ taskId, formData });
 
-		// try {
-		// 	const token = localStorage.getItem('token');
-
-		// 	const response = await fetch('http://localhost:3000/tasks/9/comments', {
-		// 		method: 'POST',
-		// 		headers: {
-		// 			'Authorization': `Bearer ${token}`
-		// 		},
-		// 		body: formData
-		// 	});
-		// 	console.log("response", response);
-
-		// 	if (!response.ok) {
-		// 		throw new Error(`HTTP error! status: ${response.status}`);
-		// 	}
-
-		// 	const result = await response.json();
-		// 	console.log('Success:', result);
-		// } catch (error) {
-		// 	console.error('Error:', error);
-		// }
 	};
-
 	const handleTextArea = (e) => {
 		setComment(e.target.value);
 	};
@@ -100,10 +80,23 @@ const TaskDetail = () => {
 
 	useEffect(() => {
 		if (taskSuccess) {
-			setParticipantList(taskDetail?.data.participants);
+			setParticipantList(taskDetail.data.participants);
+			participantList.forEach((participant) => {
+				console.log("participant");
+			});
 		}
 	}, [taskSuccess, taskDetail]);
-
+	useEffect(() => {
+		participantList.forEach((participant) => {
+			// console.log(loggedState)
+			console.log(loggedState);
+			if (participant.name === loggedState.username) {
+				dispatch(addJoinedStatus({ id: taskId, status: "joined" }));
+				setJoined(true);
+				// console.log("joined")
+			}
+		});
+	}, [participantList]);
 	useEffect(() => {
 		if (commentSuccess) {
 			if (commentType == "Normal") setCommentList(commentsData?.data?.normalComments);
@@ -152,77 +145,87 @@ const TaskDetail = () => {
 				</div>
 			</div>
 			<div className="bottomSection">
-				<div className="commentSection">
-					<div className="commentSectionHeader">
-						<div className="nameHeader">Name</div>
-						<div className="commentHeader">
-							<span>Comments</span>
-							<div className="commentFilter">
-								<div
-									className="commentFlag"
-									onClick={() => handleCommentFilter("Normal")}
-									style={commentType === "Normal" ? style : null}
-								>
-									Comment
-								</div>
-								<div
-									className="review"
-									onClick={() => handleCommentFilter("Review")}
-									style={commentType === "Review" ? style : null}
-								>
-									Review
+				{joined ? (
+					<div className="commentSection">
+						<div className="commentSectionHeader">
+							<div className="nameHeader">Name</div>
+							<div className="commentHeader">
+								<span>Comments</span>
+								<div className="commentFilter">
+									<div
+										className="commentFlag"
+										onClick={() => handleCommentFilter("Normal")}
+										style={commentType === "Normal" ? style : null}
+									>
+										Comment
+									</div>
+									<div
+										className="review"
+										onClick={() => handleCommentFilter("Review")}
+										style={commentType === "Review" ? style : null}
+									>
+										Review
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
 
-					<div className="commentWrapper">
-						<div className="commentList">
-							{commentList
-								.filter((record) => record.commentType === commentType)
-								.map((record) => {
-									return (
-										<CommentComponent
-											key={record.id}
-											name={record.employee.name}
-											comment={record.content}
-											currEmployee="Arun Doe"
-											type={record.commentType}
-											onClick={() => handleReply(record.id)}
-											loggedState={loggedState}
-											status={record.review_status}
-										/>
-									);
-								})}
-						</div>
-						<div className="addComment">
-							<img src={commentIcon} alt="Comment Icon" />
-							<textarea
-								ref={inputRef}
-								className="commentBox"
-								placeholder="//add comments"
-								rows="1"
-								onChange={handleTextArea}
-							/>
-							<span className="commentButtons">
-								{commentType === "Review" ? (
-									<>
-										<label htmlFor="file">
-											<img src={attach} alt="Add attachment" />
-										</label>
-										<input type="file" id="file" className="uploadFile" onChange={handleUpload} />
+						<div className="commentWrapper">
+							<div className="commentList">
+								{commentList
+									.filter((record) => record.commentType === commentType)
+									.map((record) => {
+										return (
+											<CommentComponent
+												key={record.id}
+												name={record.employee.name}
+												comment={record.content}
+												currEmployee="Arun Doe"
+												type={record.commentType}
+												onClick={() => handleReply(record.id)}
+												loggedState={loggedState}
+												status={record.review_status}
+											/>
+										);
+									})}
+							</div>
+							<div className="addComment">
+								<img src={commentIcon} alt="Comment Icon" />
+								<textarea
+									ref={inputRef}
+									className="commentBox"
+									placeholder="//add comments"
+									rows="1"
+									onChange={handleTextArea}
+								/>
+								<span className="commentButtons">
+									{commentType === "Review" ? (
+										<>
+											<label htmlFor="file">
+												<img src={attach} alt="Add attachment" />
+											</label>
+											<input
+												type="file"
+												id="file"
+												className="uploadFile"
+												onChange={handleUpload}
+											/>
 
-										<Button className="reviewButton" text="Review" onClick={handleSend} />
-									</>
-								) : (
-									<div className="sendButton">
-										<img src={send} alt="Send Comment" onClick={handleSend} />
-									</div>
-								)}
-							</span>
+											<Button className="reviewButton" text="Review" onClick={handleSend} />
+										</>
+									) : (
+										<div className="sendButton">
+											<img src={send} alt="Send Comment" onClick={handleSend} />
+										</div>
+									)}
+								</span>
+							</div>
 						</div>
 					</div>
-				</div>
+				) : (
+					<div className="Join Button">Join</div>
+				)}
+
 				<div className="particpantsListSection">
 					<div className="particpantsListHeader">Particpants</div>
 					<div className="particpantsList">

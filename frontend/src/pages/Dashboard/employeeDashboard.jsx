@@ -16,7 +16,7 @@ const EmployeeDashboard = () => {
 	const [employeeDetails, setEmployeeDetails] = useState([]);
 	const { data, isLoading, isSuccess } = useGetProfileQuery();
 	const { data: employeeTasksData = [], isSuccess: isTaskFetched } = useGetEmployeeCurrentTasksQuery();
-	const dispatch=useDispatch()
+	
 
 	useEffect(() => {
 		if (isSuccess) {
@@ -30,7 +30,7 @@ const EmployeeDashboard = () => {
 				{ header: "Gender", content: employeeData.details.gender },
 				{ header: "Phone", content: employeeData.details.phoneNo },
 			]);
-			dispatch(addLoggedState({role:employeeData.role,name:employeeData.name}))
+			// console.log({role:employeeData.role,username:employeeData.name,id:employeeData.id})
 		}
 	}, [data, isSuccess]);
 
