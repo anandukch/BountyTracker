@@ -6,6 +6,7 @@ import employees from "../assets/employees.svg";
 import logout from "../assets/logout.svg";
 import logo from "../assets/KoYns-Logo.png";
 import text from "../assets/KoYns-Text.png";
+import myTask from "../assets/myTask.svg";
 import { useState } from "react";
 const HomeLayout = () => {
 	const [pageIndex, setPageIndex] = useState(0);
@@ -33,6 +34,12 @@ const HomeLayout = () => {
 			title: "Employees",
 			icon: employees,
 			to: "/employees",
+		},
+		{
+			id: 3,
+			title: "My Tasks",
+			icon: myTask,
+			to: "myTasks",
 		},
 	];
 
