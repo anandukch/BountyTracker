@@ -37,8 +37,8 @@ const MyTask = () => {
 		{ name: "Progress" },
 		{ name: "KoYns" },
 	];
-	const index=[2,4];
-	const count=[0,3,0,1,0];
+	const index = [7, 9];
+	const count = [3, 3, 3, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1];
 
 	return (
 		<div className="fullWrap">
