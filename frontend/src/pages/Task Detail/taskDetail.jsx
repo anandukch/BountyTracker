@@ -48,16 +48,16 @@ const TaskDetail = () => {
 	const handleSend = async () => {
 		const formData = new FormData();
 		formData.append("file", file);
-		const commentData = {
-			id: 9,
-			commentType: commentType,
-			content: comment,
-		};
-		formData.append("data", JSON.stringify(commentData));
-		formData.append("id", 9);
+		// const commentData = {
+		// 	id: 9,
+		// 	commentType: commentType,
+		// 	content: comment,
+		// };
+		// formData.append("data", JSON.stringify(commentData));
+		// formData.append("id", 9);
 		formData.append("commentType", commentType);
 		formData.append("content", comment);
-		createComment(formData);
+		createComment(taskId,formData);
 
 		// try {
 		// 	const token = localStorage.getItem('token');
