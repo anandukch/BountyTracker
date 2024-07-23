@@ -10,23 +10,34 @@
 .commentRecord {
 	display: flex;
 	flex-direction: row;
-	background-color: white;
-	height: 40px;
-	padding: 10px;
-	border-radius: 7px;
-	box-shadow: 0.5px 0.5px 1px var(--textGray);
+
+	gap: 5px;
+	// box-shadow: 0.5px 0.5px 1px var(--textGray);
 	.name {
 		text-align: center;
 		align-content: center;
-		border-right: 1px solid var(--textGray);
-		width: 20%;
+		// border-right: 1px solid var(--textGray);
+		width: 100px;
 		font-size: 13px;
+		background-color: white;
+		height: 40px;
+		padding: 10px;
+		border-radius: 10px;
+		overflow: hidden;
 	}
 	.comment {
 		text-align: left;
-		align-content: center;
-		width: auto;
+		align-items: center;
+		width: 100%;
 		font-size: 13px;
 		padding-left: 15px;
+		padding-right: 15px;
+		background-color: white;
+		height: 40px;
+		padding: 15px;
+		border-radius: 0 15px 15px 15px;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
 	}
 }

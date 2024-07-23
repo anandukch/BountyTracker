@@ -170,6 +170,8 @@ class TaskController {
 			}
 
 			const fileName = req.file ? req.file.filename : null;
+			console.log("filename",fileName);
+			
 
 			const response = await this.commentService.createComment(parseInt(taskId), employee, commentDto, fileName);
 
@@ -242,5 +244,6 @@ class TaskController {
 		}
 	}
 }
+
 
 export default TaskController;

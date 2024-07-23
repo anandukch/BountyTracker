@@ -7,7 +7,7 @@ import send from "../../assets/send.svg";
 import CommentComponent from "../../components/CommentComponent/CommentComponent";
 import TextField from "../../components/TextField/TextField";
 import Button from "../../components/Button/Button";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
 	useCreateCommentMutation,
 	useGetCommentsByTaskIdQuery,
@@ -17,7 +17,7 @@ import {
 	useUploadMutation,
 } from "../../api/taskApi";
 import { formatDate } from "../../utils/date.utils";
-import { useGetEmployeeQuery } from "../../api/employeeApi";
+import { useGetEmployeeQuery, useGetProfileQuery } from "../../api/employeeApi";
 const TaskDetail = () => {
 	const [commentList, setCommentList] = useState([]);
 	const [participantList, setParticipantList] = useState([]);
@@ -35,7 +35,7 @@ const TaskDetail = () => {
 			value: "Node, react, java, c",
 		},
 	];
-
+	const { data: currEmployee } = useGetProfileQuery();
 	const style = {
 		backgroundColor: "white",
 		color: "#2c95ce",
@@ -43,21 +43,30 @@ const TaskDetail = () => {
 	};
 	const [commentType, setCommentType] = useState("Normal");
 	const [comment, setComment] = useState("");
+	const [mentionId, setMentionId] = useState();
 	const { data: taskDetail } = useGetTaskByIdQuery(2);
 	const { data: commentsData } = useGetCommentsByTaskIdQuery(2);
 
 	const [createComment, { data }] = useCreateCommentMutation();
-	const [upload, { isSuccess }] = useUploadMutation();
+	const inputRef = useRef();
+
+	// const [upload, { isSuccess }] = useUploadMutation();
 	const handleSend = (e) => {
+		console.log("file", file);
+		const formData = new FormData();
+		formData.append("file", file);
+
 		const commentData = {
 			id: 2,
 			commentType: commentType,
 			content: comment,
-         file:file
+			mentionCommentId: mentionId,
+			file: formData,
 		};
-		createComment(commentData);
-		// console.log(comment);
+		console.log(commentData);
+		createComment(commentData).unwrap();
 	};
+
 	const handleTextArea = (e) => {
 		setComment(e.target.value);
 	};
@@ -66,7 +75,10 @@ const TaskDetail = () => {
 	};
 	const handleUpload = (e) => {
 		uploadFile(e.target.files[0]);
-      console.log(e.target.files[0])
+	};
+	const handleReply = (id) => {
+		inputRef.current.focus();
+		setMentionId(id);
 	};
 	useEffect(() => {
 		if (taskDetail?.data) {
@@ -76,19 +88,10 @@ const TaskDetail = () => {
 		if (commentsData?.data) {
 			if (commentType == "Normal") setCommentList(commentsData.data.normalComments);
 			else setCommentList(commentsData.data.reviewComments);
-			console.log(commentList);
+			// console.log(commentList);
 		}
 	});
-	useEffect(() => {
-		if (file) {
-			const formData = new FormData();
-			formData.append("Date:employeeName_File", file);
-			// upload(formData);
-			if (isSuccess) console.log("kittyy monee");
-		} else {
-			console.log("file kiteeela mone");
-		}
-	}, [file]);
+
 	return (
 		<main className="taskDetail">
 			<div className="title">
@@ -165,6 +168,9 @@ const TaskDetail = () => {
 											key={record.id}
 											name={record.employee.name}
 											comment={record.content}
+											currEmployee={currEmployee?.data.name}
+											type={record.commentType}
+											onClick={() => handleReply(record.id)}
 										/>
 									);
 								})}
@@ -172,6 +178,7 @@ const TaskDetail = () => {
 						<div className="addComment">
 							<img src={commentIcon} alt="Comment Icon" />
 							<textarea
+								ref={inputRef}
 								className="commentBox"
 								placeholder="//add comments"
 								rows="1"

@@ -130,14 +130,13 @@
 				padding: 0 15px 0 15px;
 
 				.nameHeader {
-					width: 21%;
+					width: 105px;
 					text-align: center;
-					border-right: 1px solid var(--textBlack);
 					font-weight: 600;
 					font-size: 14px;
 				}
 				.commentHeader {
-					width: 79%;
+					width: 100%;
 					text-align: center;
 					font-weight: 600;
 					font-size: 14px;
@@ -191,7 +190,7 @@
 					row-gap: 10px;
 					background-color: var(--bgGray);
 					border-radius: 10px;
-					padding: 15px;
+					padding: 20px;
 				}
 				.addComment {
 					display: flex;

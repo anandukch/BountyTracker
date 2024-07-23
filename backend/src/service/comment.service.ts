@@ -15,7 +15,6 @@ class CommentService {
 
 	getAllCommentsByTaskId = async (taskId: number): Promise<Comment[]> => {
 		const comments = await this.commentRepository.findBy({ task: { id: taskId } as any });
-		console.log(comments);
 		return comments;
 	};
 
@@ -28,7 +27,7 @@ class CommentService {
 		return comment;
 	};
 
-	getCommentFile = async (commentId:number) => {
+	getCommentFile = async (commentId: number) => {
 		const comment = await this.getCommentByCommentId(commentId);
 		const fileName = comment.fileUrl;
 		const file = path.resolve(__dirname, `../../uploads/${fileName}`);
