@@ -8,12 +8,15 @@ import { useEffect, useState } from "react";
 import { Loader } from "../../components/Loader/Loader";
 import { formatDate } from "../../utils/date.utils";
 import ListButton from "../../components/Button/ListButton";
+import { useDispatch } from "react-redux";
+import { addLoggedState } from "../../store/employeeReducer";
 
 const EmployeeDashboard = () => {
 	const [employee, setEmployee] = useState({});
 	const [employeeDetails, setEmployeeDetails] = useState([]);
 	const { data, isLoading, isSuccess } = useGetProfileQuery();
 	const { data: employeeTasksData = [], isSuccess: isTaskFetched } = useGetEmployeeCurrentTasksQuery();
+	const dispatch=useDispatch()
 
 	useEffect(() => {
 		if (isSuccess) {
@@ -27,6 +30,7 @@ const EmployeeDashboard = () => {
 				{ header: "Gender", content: employeeData.details.gender },
 				{ header: "Phone", content: employeeData.details.phoneNo },
 			]);
+			dispatch(addLoggedState({role:employeeData.role,name:employeeData.name}))
 		}
 	}, [data, isSuccess]);
 

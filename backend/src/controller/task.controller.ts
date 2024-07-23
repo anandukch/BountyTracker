@@ -161,6 +161,7 @@ class TaskController {
 	public createComment = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			const { taskId } = req.params;
+
 			const employee = req.user;
 			const comment = req.body;
 			const commentDto = plainToInstance(CreateComementDto, comment);
@@ -170,8 +171,7 @@ class TaskController {
 			}
 
 			const fileName = req.file ? req.file.filename : null;
-			console.log("filename",fileName);
-			
+			console.log("filename", fileName);
 
 			await this.commentService.createComment(parseInt(taskId), employee, commentDto, fileName);
 
@@ -240,6 +240,5 @@ class TaskController {
 		} catch (error) {}
 	};
 }
-
 
 export default TaskController;
