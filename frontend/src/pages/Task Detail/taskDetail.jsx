@@ -85,7 +85,9 @@ const TaskDetail = () => {
 			const participants = taskDetail.data.participants;
 			setParticipantList(participants);
 			participants.forEach((participant) => {
-				if (participant.name === loggedState.username) {
+				console.log(loggedState);
+				console.log(taskDetail.data);
+				if (participant.id === loggedState.id) {
 					// dispatch(addJoinedStatus({ id: taskId, status: "joined" }));
 					setJoined(true);
 				}

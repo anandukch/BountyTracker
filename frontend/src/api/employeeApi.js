@@ -32,10 +32,12 @@ export const employeeApi = apiWithEmployeeTag.injectEndpoints({
 
 		getEmployeeCurrentTasks: builder.query({
 			query: () => "/employees/tasks",
+			providesTags: ["EMPLOYEE"],
 		}),
 
 		getEmployeeCreatedTasks: builder.query({
 			query: () => "/tasks/created",
+			providesTags: ["EMPLOYEE"],
 		}),
 
 		login: builder.mutation({

@@ -96,6 +96,7 @@ class TaskController {
 					},
 					participants: task.participants.map((participant) => {
 						return {
+							id: participant.employee.id,
 							name: participant.employee.name,
 							email: participant.employee.email,
 							contribution: participant.contribution,
