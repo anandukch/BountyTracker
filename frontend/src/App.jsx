@@ -12,6 +12,7 @@ import store from "./store/store";
 import ReviewPage from "./pages/ReviewPage/reviewPage";
 import "./App.scss";
 import TaskList from "./pages/TaskList/tastList.jsx";
+import Progressbar from "./components/ProgressBar/ProgressBar.jsx";
 
 const App = () => {
 	const router = createBrowserRouter([
@@ -46,6 +47,7 @@ const App = () => {
 			],
 		},
 		{ path: "tasklist/", element: <HomeLayout />, children: [{ index: true, element: <TaskList /> }] },
+		{ path: "bar/", element: <HomeLayout />, children: [{ index: true, element: <Progressbar/> }] },
 	]);
 
 	return (
