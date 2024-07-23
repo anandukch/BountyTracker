@@ -15,6 +15,7 @@ import Button from "../../components/Button/Button";
 const MyTask = () => {
 	const [list, setList] = useState([]);
 	const { data, isLoading, isSuccess } = useGetEmployeeCreatedTasksQuery();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (isSuccess) {

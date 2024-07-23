@@ -7,10 +7,11 @@ import logout from "../assets/logout.svg";
 import logo from "../assets/KoYns-Logo.png";
 import text from "../assets/KoYns-Text.png";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addLoggedState } from "../store/employeeReducer";
 import { useGetProfileQuery } from "../api/employeeApi";
 import myTask from "../assets/myTask.svg";
+import Toast from "../components/Toast/customToast";
 
 const HomeLayout = () => {
 	const [pageIndex, setPageIndex] = useState(0);
@@ -22,6 +23,8 @@ const HomeLayout = () => {
 	};
 	const { data: employeeData, isLoading, isSuccess } = useGetProfileQuery();
 	const dispatch = useDispatch();
+
+	const toastMessages = useSelector((state) => state.toasts.toastMessages);
 
 	useEffect(() => {
 		if (isSuccess) {
@@ -63,17 +66,31 @@ const HomeLayout = () => {
 	];
 
 	return (
-		<div className="page">
-			<div className="header">
-				<div className="logo">
-					<img src={logo} alt="icon" className="logo-image" />
-					<img src={text} alt="icon" className="logo-text" />
-				</div>
-				<h1>Bounty Tracker System</h1>
+		<>
+			<div className="toastContainer">
+				{toastMessages && toastMessages.length
+					? toastMessages.map((toastMessage) => (
+							<Toast
+								key={toastMessage.id}
+								id={toastMessage.id}
+								// active={toastMessage.active}
+								message={toastMessage.message}
+								status={toastMessage.status}
+							/>
+						))
+					: ""}
 			</div>
-			<aside className="HomeLayout">
-				<div className="top">
-					{/* <Link
+			<div className="page">
+				<div className="header">
+					<div className="logo">
+						<img src={logo} alt="icon" className="logo-image" />
+						<img src={text} alt="icon" className="logo-text" />
+					</div>
+					<h1>Bounty Tracker System</h1>
+				</div>
+				<aside className="HomeLayout">
+					<div className="top">
+						{/* <Link
 						className={`links ${pageIndex == 0 ? "active" : ""}`}
 						to="/employee"
 						onClick={() => setPageIndex(0)}
@@ -84,20 +101,20 @@ const HomeLayout = () => {
 						Profile
 					</Link> */}
 
-					{sideBar.map((item, index) => (
-						<Link
-							key={item.id}
-							className={`links ${location.pathname.search(item.to) >= 0 ? "active" : ""}`}
-							to={item.to}
-							onClick={() => setPageIndex(index)}
-						>
-							<div className="icon">
-								<img src={item.icon} alt="icon" className="imgicon" />
-							</div>
-							{item.title}
-						</Link>
-					))}
-					{/* <Link
+						{sideBar.map((item, index) => (
+							<Link
+								key={item.id}
+								className={`links ${location.pathname.search(item.to) >= 0 ? "active" : ""}`}
+								to={item.to}
+								onClick={() => setPageIndex(index)}
+							>
+								<div className="icon">
+									<img src={item.icon} alt="icon" className="imgicon" />
+								</div>
+								{item.title}
+							</Link>
+						))}
+						{/* <Link
 						className={`links ${pageIndex == 1 ? "active" : ""}`}
 						to="tasklist"
 						onClick={() => setPageIndex(1)}
@@ -117,21 +134,22 @@ const HomeLayout = () => {
 						</div>
 						Employees
 					</Link> */}
-				</div>
-				<div className="bottom">
-					<div className="links" onClick={handleLogout}>
-						<div className="icon">
-							<img src={logout} alt="icon" className="imgicon" />
-						</div>
-						<label>Log-out</label>
 					</div>
-				</div>
-			</aside>
+					<div className="bottom">
+						<div className="links" onClick={handleLogout}>
+							<div className="icon">
+								<img src={logout} alt="icon" className="imgicon" />
+							</div>
+							<label>Log-out</label>
+						</div>
+					</div>
+				</aside>
 
-			<div className="content">
-				<Outlet />
+				<div className="content">
+					<Outlet />
+				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 
