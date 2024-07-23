@@ -1,4 +1,4 @@
-const GridDataColumn = ({name,id,bounty,birthday,gender,phone}) =>{
+const GridDataColumn = ({name,id,bounty,birthday,gender,role}) =>{
     let tier;
     if (bounty>300){
         tier="Diamond"
@@ -24,7 +24,7 @@ const GridDataColumn = ({name,id,bounty,birthday,gender,phone}) =>{
                 {birthday}
             </div>
             <div className="employeePhone">
-                {phone}
+                {role}
             </div>
             <div className="employeeBounty">
                 {bounty} Kyns
