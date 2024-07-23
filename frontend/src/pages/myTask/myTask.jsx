@@ -37,6 +37,8 @@ const MyTask = () => {
 		{ name: "Progress" },
 		{ name: "KoYns" },
 	];
+	const index=[2,4];
+	const count=[0,3,0,1,0];
 
 	return (
 		<div className="fullWrap">
@@ -79,6 +81,8 @@ const MyTask = () => {
 								taskStatus={employee.status}
 								participants={`${employee.currentParticipants}/${employee.maxParticipants}`}
 								koyns={employee.totalBounty}
+								index={index}
+								count={count}
 							/>
 						);
 					})}

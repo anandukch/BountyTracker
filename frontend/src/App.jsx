@@ -12,6 +12,7 @@ import store from "./store/store";
 import ReviewPage from "./pages/ReviewPage/reviewPage";
 import "./App.scss";
 import TaskList from "./pages/TaskList/tastList.jsx";
+import Progressbar from "./components/ProgressBar/ProgressBar.jsx";
 import { useEffect } from "react";
 import { addLoggedState } from "./store/employeeReducer.js";
 import { useGetProfileQuery } from "./api/employeeApi.js";
@@ -74,6 +75,8 @@ const App = () => {
 				// { path: "create", element: <CreateTask /> },
 			],
 		},
+		{ path: "tasklist/", element: <HomeLayout />, children: [{ index: true, element: <TaskList /> }] },
+		{ path: "bar/", element: <HomeLayout />, children: [{ index: true, element: <Progressbar /> }] },
 	]);
 
 	return (
