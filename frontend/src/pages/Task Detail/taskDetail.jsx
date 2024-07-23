@@ -20,54 +20,43 @@ import { useDispatch, useSelector } from "react-redux";
 import { addJoinedStatus } from "../../store/employeeReducer";
 import CustomModal from "../../components/Modal/CustomModal";
 const TaskDetail = () => {
-	const { taskId } = useParams();
 	const [commentList, setCommentList] = useState([]);
 	const [participantList, setParticipantList] = useState([]);
 	const [joined, setJoined] = useState(false);
 	const [file, uploadFile] = useState();
 	const [showContributionModal, setShowContributionModal] = useState(false);
-	const inputRef = useRef();
-	const style = {
-		backgroundColor: "white",
-		color: "#2c95ce",
-		boxShadow: "0.5px 0.5px 0.5px  0.5px #8c96a0",
-	};
 	const [commentType, setCommentType] = useState("Normal");
 	const [comment, setComment] = useState("");
 	const [mentionId, setMentionId] = useState();
+
+	const { taskId } = useParams();
+	const inputRef = useRef();
+	const dispatch = useDispatch();
+
 	const { data: taskDetail, isSuccess: taskSuccess } = useGetTaskByIdQuery(taskId);
 	const { data: commentsData, isSuccess: commentSuccess } = useGetCommentsByTaskIdQuery(taskId);
 	const [join, { isSuccess: joinSuccess }] = useJoinTaskMutation();
+	const [createComment] = useCreateCommentMutation();
+
 	const loggedState = useSelector((state) => state.employee);
-	const dispatch = useDispatch();
 
 	const form_fields = [
 		{
 			id: "description",
 			name: "Description",
-			// value: "create a bounty tracker system with rewwards and bounty points for tasks completed",
 			value: taskDetail?.description,
 		},
 
 		{
 			id: "skills",
 			name: "Skills",
-			// value: "Node, react, java, c",
 			value: taskDetail?.skillList,
 		},
 	];
-	const [createComment] = useCreateCommentMutation();
-	// const [upload, { isSuccess }] = useUploadMutation();
+
 	const handleSend = async () => {
 		const formData = new FormData();
 		formData.append("file", file);
-		// const commentData = {
-		// 	id: 9,
-		// 	commentType: commentType,
-		// 	content: comment,
-		// };
-		// formData.append("data", JSON.stringify(commentData));
-		// formData.append("id", 9);
 		formData.append("commentType", commentType);
 		formData.append("content", comment);
 		createComment({ taskId, formData });
@@ -93,22 +82,16 @@ const TaskDetail = () => {
 
 	useEffect(() => {
 		if (taskSuccess) {
-			setParticipantList(taskDetail.data.participants);
-			participantList.forEach((participant) => {
-				// console.log("participant");
+			const participants = taskDetail.data.participants;
+			setParticipantList(participants);
+			participants.forEach((participant) => {
+				if (participant.name === loggedState.username) {
+					// dispatch(addJoinedStatus({ id: taskId, status: "joined" }));
+					setJoined(true);
+				}
 			});
 		}
-	}, [taskSuccess, taskDetail]);
-
-	useEffect(() => {
-		participantList.forEach((participant) => {
-			if (participant.name === loggedState.username) {
-				dispatch(addJoinedStatus({ id: taskId, status: "joined" }));
-				setJoined(true);
-				// console.log("joined")
-			}
-		});
-	}, [participantList]);
+	}, [taskSuccess, taskDetail, dispatch, taskId, loggedState]);
 
 	useEffect(() => {
 		if (commentSuccess) {
@@ -179,7 +162,7 @@ const TaskDetail = () => {
 					<div className="particpantsList">
 						{participantList.map((participant) => {
 							return (
-								<div className="partcipants">
+								<div className="partcipants" key={participant.id}>
 									<img src={profile} alt="profile icon" />
 									{participant.name}
 								</div>
@@ -216,7 +199,7 @@ const TaskDetail = () => {
 
 						<div className="commentWrapper">
 							<div className="commentList">
-								{commentList.normalComments.map((record) => {
+								{commentList?.normalComments?.map((record) => {
 									return (
 										<CommentComponent
 											key={record.id}
@@ -239,6 +222,7 @@ const TaskDetail = () => {
 									placeholder="//add comments"
 									rows="1"
 									onChange={handleTextArea}
+									value={comment}
 								/>
 								<span className="commentButtons">
 									{commentType === "Review" ? (
@@ -270,7 +254,7 @@ const TaskDetail = () => {
 						</div>
 						<div className="reviewWrapper">
 							<div className="reviewList">
-								{commentList.reviewComments.map((record) => {
+								{commentList?.reviewComments?.map((record) => {
 									return (
 										<CommentComponent
 											key={record.id}

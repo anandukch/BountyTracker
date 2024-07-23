@@ -1,6 +1,8 @@
-import apiWithTag from "./baseApi";
+// import apiWithTag from "./baseApi";
 
-export const employeeApi = apiWithTag.injectEndpoints({
+import { apiWithEmployeeTag } from "./baseApi";
+
+export const employeeApi = apiWithEmployeeTag.injectEndpoints({
 	endpoints: (builder) => ({
 		getEmployeeList: builder.query({
 			query: () => "/employees",
@@ -23,6 +25,8 @@ export const employeeApi = apiWithTag.injectEndpoints({
 
 		getProfile: builder.query({
 			query: () => "/employees/profile",
+			// providesTags: ["EMPLOYEE"],
+			invalidatesTags: ["EMPLOYEE"],
 		}),
 
 		getEmployeeCurrentTasks: builder.query({
@@ -31,6 +35,15 @@ export const employeeApi = apiWithTag.injectEndpoints({
 
 		getEmployeeCreatedTasks: builder.query({
 			query: () => "/tasks/created",
+		}),
+
+		login: builder.mutation({
+			query: (data) => ({
+				url: "/employees/login",
+				method: "POST",
+				body: data,
+			}),
+			invalidatesTags: ["EMPLOYEE_LIST", "EMPLOYEE"],
 		}),
 	}),
 });
@@ -42,4 +55,5 @@ export const {
 	useGetEmployeeQuery,
 	useGetEmployeeCurrentTasksQuery,
 	useGetEmployeeCreatedTasksQuery,
+	useLoginMutation,
 } = employeeApi;

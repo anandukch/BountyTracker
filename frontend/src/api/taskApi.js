@@ -1,6 +1,6 @@
-import apiWithTag from "./baseApi";
+import { apiWithTaskTags } from "./baseApi";
 
-const taskApi = apiWithTag.injectEndpoints({
+const taskApi = apiWithTaskTags.injectEndpoints({
 	endpoints: (builder) => ({
 		getTaskList: builder.query({
 			query: () => "/tasks",
@@ -13,7 +13,7 @@ const taskApi = apiWithTag.injectEndpoints({
 		}),
 		getCommentsByTaskId: builder.query({
 			query: (id) => `/tasks/${id}/comments`,
-			providesTags: ["COMMENTS"],
+			providesTags: ["COMMENTS", "REVIEW"],
 		}),
 		createComment: builder.mutation({
 			query: (data) => {
@@ -28,7 +28,9 @@ const taskApi = apiWithTag.injectEndpoints({
 		}),
 		reviewCommentById: builder.mutation({
 			query: ({ ...data }) => ({ url: `tasks/comments/${parseInt(data.id)}`, method: "PATCH", body: data }),
+			invalidatesTags: ["REVIEW"],
 		}),
+
 		getCommentById: builder.query({
 			query: (id) => `/tasks/comments/${id}`,
 		}),
@@ -38,6 +40,7 @@ const taskApi = apiWithTag.injectEndpoints({
 				url: `/employees/tasks/${id}`,
 				method: "POST",
 			}),
+			invalidatesTags: ["COMMENTS", "REVIEW"],
 		}),
 	}),
 });
