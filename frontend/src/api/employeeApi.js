@@ -20,13 +20,14 @@ export const employeeApi = apiWithEmployeeTag.injectEndpoints({
 		getEmployee: builder.query({
 			query: (id) => `/employees/${id}`,
 			// invalidatesTags: ["EMPLOYEE_LIST"],
+			// invalidatesTags: ["EMPLOYEE"],
 			providesTags: ["EMPLOYEE"],
 		}),
 
 		getProfile: builder.query({
 			query: () => "/employees/profile",
-			// providesTags: ["EMPLOYEE"],
-			invalidatesTags: ["EMPLOYEE"],
+			providesTags: ["EMPLOYEE"],
+			// invalidatesTags: ["EMPLOYEE"],
 		}),
 
 		getEmployeeCurrentTasks: builder.query({
