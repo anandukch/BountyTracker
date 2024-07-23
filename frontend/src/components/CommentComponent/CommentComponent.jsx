@@ -1,27 +1,27 @@
 import "./styles.scss";
-const CommentComponent = ({ name, comment, currEmployee, type, onClick,loggedState,status }) => {
-	// console.log(loggedState);
-	const flag = (currEmployee == name)&&(type==="Normal") ? true : false;
-	const styleComment = {
-		justifyContent: "right",
-		width: "auto",
-		borderRadius: "18px 0 18px 18px",
-	};
 
+const CommentComponent1 = ({ comment, handleReplyClick, currentEmployeeId }) => {
+	const isOwnComment = comment.employee.id === currentEmployeeId;
+	// console.log(comment);
 	return (
-		<div className="commentRecord" style={flag? {justifyContent:"right"}:null}>
-			{!flag ? <div className="name">{name}</div> : null}
-			<div className="comment" style={flag ? styleComment : null}>
-				{comment}
-				{!flag && loggedState ==="Regular"? (
-					<div className="replyButton" onClick={onClick}>
-						Reply
-					</div>
-				) : <div className="replyButton" onClick={onClick}>
-				{status}
-			</div>}
+		<>
+			<div className={`commentWrapper ${isOwnComment ? "ownComment" : ""}`}>
+				<div className="commentBody">
+					{!isOwnComment && <span className="commentUsername">{comment.employee.name}</span>}
+					{comment.mentionComment && (
+						<span className="mentionComment">
+							<span className="mentionedEmployee">{comment.mentionComment.employee.name}</span>
+							<span className="mentionedCommentContent">{comment.mentionComment.content}</span>
+						</span>
+					)}
+					<span className="commentContent">{comment.content}</span>
+				</div>
+				<span className="replyLink" onClick={() => handleReplyClick(comment.id)}>
+					Reply
+				</span>
 			</div>
-		</div>
+		</>
 	);
 };
-export default CommentComponent;
+
+export default CommentComponent1;

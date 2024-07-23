@@ -17,6 +17,7 @@ class CommentService {
 		const comments = await this.commentRepository.find({ task: { id: taskId } as any }, [
 			"employee",
 			"mentionComment",
+			"mentionComment.employee",
 		]);
 		return comments;
 	};
@@ -67,7 +68,7 @@ class CommentService {
 		//TODO:'Update comment business logic'
 		const comment = await this.getCommentByCommentId(id);
 		console.log(comment);
-		
+
 		if (comment.commentType != CommentType.Review) {
 			throw new HttpException(400, "Only review comments can be reviewed");
 		}

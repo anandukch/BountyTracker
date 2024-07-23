@@ -20,6 +20,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addJoinedStatus } from "../../store/employeeReducer";
 import CustomModal from "../../components/Modal/CustomModal";
+import CommentComponent1 from "../../components/CommentComponent/CommentComponent";
 const TaskDetail = () => {
 	const [commentList, setCommentList] = useState([]);
 	const [participantList, setParticipantList] = useState([]);
@@ -60,6 +61,7 @@ const TaskDetail = () => {
 		formData.append("file", file);
 		formData.append("commentType", commentType);
 		formData.append("content", comment);
+		if (mentionId) formData.append("mentionCommentId", mentionId);
 		createComment({ taskId, formData });
 		setComment("");
 	};
@@ -207,25 +209,41 @@ const TaskDetail = () => {
 							{/* </div> */}
 						</div>
 
-						<div className="commentWrapper">
+						<div className="commentSectionWrapper">
 							<div className="commentList">
-								{commentList?.normalComments?.map((record) => {
-									return (
+								{commentList?.normalComments?.map(
+									(comment) => (
+										<CommentComponent1
+											comment={comment}
+											handleReplyClick={handleReply}
+											currentEmployeeId={loggedState.id}
+										/>
+									),
+
+									/* return (
 										<CommentComponent
 											key={record.id}
 											name={record.employee.name}
 											comment={record.content}
-											currEmployee="Arun Doe"
+											currEmployee="Test3"
 											type="Normal"
 											onClick={() => handleReply(record.id)}
 											loggedState={loggedState}
 											status={record.review_status}
 										/>
-									);
-								})}
+									); */
+								)}
 							</div>
 							<div className="addComment">
 								<img src={commentIcon} alt="Comment Icon" />
+								{mentionId && (
+									<div className="mentionShowWrapper">
+										<span className="mentionShow">{`Replying to ${mentionId}`}</span>
+										<span className="removeMention" onClick={() => setMentionId(undefined)}>
+											x
+										</span>
+									</div>
+								)}
 								<textarea
 									ref={inputRef}
 									className="commentBox"
@@ -235,25 +253,9 @@ const TaskDetail = () => {
 									value={comment}
 								/>
 								<span className="commentButtons">
-									{commentType === "Review" ? (
-										<>
-											<label htmlFor="file">
-												<img src={attach} alt="Add attachment" />
-											</label>
-											<input
-												type="file"
-												id="file"
-												className="uploadFile"
-												onChange={handleUpload}
-											/>
-
-											<Button className="reviewButton" text="Review" onClick={handleSend} />
-										</>
-									) : (
-										<div className="sendButton">
-											<img src={send} alt="Send Comment" onClick={handleSend} />
-										</div>
-									)}
+									<div className="sendButton">
+										<img src={send} alt="Send Comment" onClick={handleSend} />
+									</div>
 								</span>
 							</div>
 						</div>
@@ -272,7 +274,6 @@ const TaskDetail = () => {
 											comment={record.content}
 											currEmployee={loggedState.username}
 											type="Review"
-											onClick={() => handleReply(record.id)}
 											loggedState={loggedState}
 											status={record.review_status}
 										/>
