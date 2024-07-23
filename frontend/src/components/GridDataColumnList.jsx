@@ -1,21 +1,24 @@
 /* eslint-disable react/prop-types */
-import uparrow from "../assets/up-arrow.png";
+import { useNavigate } from "react-router-dom";
+
 const GridDataColumnList = ({ taskid, taskname, assignedby, startdate, duedate, koyns, participants }) => {
+const navigate = useNavigate();
+const handledisplay=()=>
+    {
+      navigate(`/employee/taskDetails/${taskid}`);
+    }
 	return (
 		<div className="listDataSet">
-			{/* <div className="employeeId">
-                {id}
-            </div> */}
-			<div className="taskId">{taskid}</div>
-			<div className="taskName">{taskname}</div>
-			<div className="taskAssignedby">{assignedby}</div>
+			<div className="taskId" onClick={handledisplay}>{taskid}</div>
+			<div className="taskName" onClick={handledisplay}>{taskname}</div>
+			<div className="taskAssignedby" onClick={handledisplay}>{assignedby}</div>
 
-			<div className="taskDuedate">{duedate}</div>
-			<div className="taskStartdate">{startdate}</div>
+			<div className="taskDuedate" onClick={handledisplay}>{duedate}</div>
+			<div className="taskStartdate" onClick={handledisplay}>{startdate}</div>
 
-			<div className="taskParticipants">{participants}</div>
+			<div className="taskParticipants" onClick={handledisplay}>{participants}</div>
 
-			<div className="taskBounty">
+			<div className="taskBounty" onClick={handledisplay}>
 				{koyns} Kyns 
 			</div>
 		</div>

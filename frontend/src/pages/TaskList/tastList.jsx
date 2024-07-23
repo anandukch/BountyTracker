@@ -3,7 +3,9 @@ import "../TaskList/taskList.scss";
 import GridDataColumn from "../../components/GridDataColumnList";
 import GridColumn from "../../components/GridColumn";
 import Search from "../../components/Search/Search";
- 
+import { useNavigate } from "react-router-dom";
+import GridDataColumnList from "../../components/GridDataColumnList";
+
 // Dummy data
 const dummyData = [
 	{
@@ -11,7 +13,7 @@ const dummyData = [
 		taskid: "1",
 		taskname: "Employee List",
 		assignedby: "Manushi Chillet",
-		startdate: "15-12-2002",  
+		startdate: "15-12-2002",
 		duedate: "20-12-2002",
 		participants: "4/5",
 		koyns: 1200,
@@ -21,7 +23,7 @@ const dummyData = [
 		taskid: "2",
 		taskname: "Project Proposal",
 		assignedby: "Alex Smith",
-		startdate: "01-08-2024",  
+		startdate: "01-08-2024",
 		duedate: "10-08-2024",
 		participants: "3/3",
 		koyns: 800,
@@ -31,7 +33,7 @@ const dummyData = [
 		taskid: "3",
 		taskname: "Marketing Campaign",
 		assignedby: "Emma Johnson",
-		startdate: "01-09-2024",  
+		startdate: "01-09-2024",
 		duedate: "15-09-2024",
 		participants: "2/4",
 		koyns: 1500,
@@ -41,7 +43,7 @@ const dummyData = [
 		taskid: "4",
 		taskname: "Website Redesign",
 		assignedby: "John Doe",
-		startdate: "01-07-2024",  
+		startdate: "01-07-2024",
 		duedate: "05-07-2024",
 		participants: "5/5",
 		koyns: 1000,
@@ -51,7 +53,7 @@ const dummyData = [
 		taskid: "5",
 		taskname: "Budget Review",
 		assignedby: "Maria Garcia",
-		startdate: "10-08-2024",  
+		startdate: "10-08-2024",
 		duedate: "25-08-2024",
 		participants: "1/2",
 		koyns: 600,
@@ -100,10 +102,7 @@ const taskList = () => {
 				<h1>Task List</h1>
 				<br></br>
 				<div className="searchSort">
-					{/* <img src={SearchIcon} alt="search"></img>
-						<input type="text" placeholder="    Search here" /> */}
 					<Search />
-
 					<div className="sort">
 						<label htmlFor="sortBy"></label>
 
@@ -120,14 +119,14 @@ const taskList = () => {
 			</div>
 			<div className="listWrapper">
 				<div className="listHeader">
-					{ columns.map((column) => {
+					{columns.map((column) => {
 						return <GridColumn key={column.name} name={column.name} />;
 					})}
 				</div>
 				<div className="listData">
 					{list.map((employee) => {
 						return (
-							<GridDataColumn
+							<GridDataColumnList
 								key={employee.taskid}
 								taskid={employee.taskid}
 								taskname={employee.taskname}
@@ -147,3 +146,5 @@ const taskList = () => {
 };
 
 export default taskList;
+
+ 

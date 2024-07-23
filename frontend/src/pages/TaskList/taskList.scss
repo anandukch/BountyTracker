@@ -29,7 +29,7 @@
 }
 select {
 	border-radius: 20px;
-	background-color: #f2f5fa;
+	background-color: white;
 	border: thick;
 	height: 35px;
 	appearance: none;
@@ -98,16 +98,22 @@ select {
 		}
 	}
 	
+	.listData {
+		padding-top: 20px;
+		padding-bottom: 20px;
+		border-radius: 10px;
+		height: auto;
+	}
+	
 	
 }
 
  
-
-.listData {
-	padding-top: 20px;
-	padding-bottom: 20px;
-	border-radius: 10px;
-	height: auto;
+.searchSort {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
 }
 
 
