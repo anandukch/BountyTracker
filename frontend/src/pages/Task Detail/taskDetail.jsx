@@ -57,7 +57,7 @@ const TaskDetail = () => {
 		// formData.append("id", 9);
 		formData.append("commentType", commentType);
 		formData.append("content", comment);
-		createComment(taskId,formData);
+		createComment({taskId, formData});
 
 		// try {
 		// 	const token = localStorage.getItem('token');

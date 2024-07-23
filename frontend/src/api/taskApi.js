@@ -16,11 +16,12 @@ const taskApi = apiWithTag.injectEndpoints({
 			query: (id) => `/tasks/${id}/comments`,
 		}),
 		createComment: builder.mutation({
-			query: (taskId, data) => {
+			query: (data) => {
+				console.log("create Comment");
 				return {
-					url: `/tasks/${parseInt(taskId)}/comments`,
+					url: `/tasks/${parseInt("9")}/comments`,
 					method: "POST",
-					body: data,
+					body: data.formData,
 				};
 			},
 			invalidatesTags: ["COMMENTS"],
