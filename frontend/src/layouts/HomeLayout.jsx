@@ -37,7 +37,7 @@ const HomeLayout = () => {
 					</Link>
 					<Link
 						className={`links ${pageIndex == 1 ? "active" : ""}`}
-						to="taskDetail/2"
+						to="taskDetails/2"
 						onClick={() => setPageIndex(1)}
 					>
 						<div className="icon">

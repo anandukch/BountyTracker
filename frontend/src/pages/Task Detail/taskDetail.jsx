@@ -92,16 +92,16 @@ const TaskDetail = () => {
 
 	useEffect(() => {
 		if (taskSuccess) {
-			setParticipantList(taskDetail.data.participants);
+			setParticipantList(taskDetail?.data.participants);
 		}
-	}, [taskSuccess, taskDetail.data]);
+	}, [taskSuccess, taskDetail]);
 
 	useEffect(() => {
 		if (commentSuccess) {
-			if (commentType == "Normal") setCommentList(commentsData.data.normalComments);
-			else setCommentList(commentsData.data.reviewComments);
+			if (commentType == "Normal") setCommentList(commentsData?.data?.normalComments);
+			else setCommentList(commentsData?.data?.reviewComments);
 		}
-	}, [commentsData.data, commentType, commentSuccess]);
+	}, [commentsData, commentType, commentSuccess]);
 
 	return (
 		<main className="taskDetail">
