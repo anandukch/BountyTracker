@@ -10,6 +10,7 @@ import { formatDate } from "../../utils/date.utils";
 import FetchListRow from "../../components/MyTaskRow";
 import FetchMyListRow from "../../components/MyTaskFetchedRow";
 import { useGetEmployeeCreatedTasksQuery } from "../../api/employeeApi";
+import Button from "../../components/Button/Button";
 
 const MyTask = () => {
 	const [list, setList] = useState([]);
@@ -39,27 +40,31 @@ const MyTask = () => {
 	];
 	const index = [7, 9];
 	const count = [3, 3, 3, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1];
+	const navigate = useNavigate();
 
 	return (
-		<div className="fullWrap">
+		<div className="MyTask">
 			{isLoading && <Loader />}
 			<div className="wrapHeading">
 				<h1>My Task List</h1>
 				<br></br>
 				<div className="searchSort">
 					<Search />
-					<div className="sort">
-						<label htmlFor="sortBy"></label>
+					<span className="toolbarRight">
+						{/* <div className="sort">
+							<label htmlFor="sortBy"></label>
 
-						<select id="tier" name="tier">
-							<option value="" disabled>
-								Filter
-							</option>
-							<option value="bountyHigh"> ▼</option>
+							<select id="tier" name="tier">
+								<option value="" disabled>
+									Filter
+								</option>
+								<option value="bountyHigh">▼</option>
 
-							<option value="bountyLow">▲</option>
-						</select>
-					</div>
+								<option value="bountyLow">▲</option>
+							</select>
+						</div> */}
+						<Button text="Add Task" isPrimary={true} onClick={() => navigate("create")} />
+					</span>
 				</div>
 			</div>
 			<div className="listWrapper">

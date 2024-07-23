@@ -16,7 +16,7 @@
 		Tahoma,
 		sans-serif;
 }
-.fullWrap {
+.MyTask {
 	padding: 20px;
 	display: flex;
 	flex-direction: column;
@@ -159,6 +159,13 @@ select {
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
+
+	.toolbarRight {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 10px;
+	}
 }
 
 .taskId,
