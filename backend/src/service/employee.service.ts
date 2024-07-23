@@ -56,7 +56,7 @@ class EmployeeService {
 		let pendingTasks = 0;
 
 		employee.participatingTasks.forEach((task) => {
-			if (task.task.status === "completed") {
+			if (task.task.status === "Completed") {
 				completedTasks++;
 			} else {
 				pendingTasks++;
