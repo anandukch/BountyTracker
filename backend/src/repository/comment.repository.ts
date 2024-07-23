@@ -4,26 +4,17 @@ import Comment from "../entity/comment.entity";
 class CommentRepository {
 	constructor(private repository: Repository<Comment>) {}
 
-	find = async (): Promise<Comment[]> => {
-		return this.repository.find({ relations: { employee: true } });
-	};
-
-	findBy = async (filter: Partial<Comment>): Promise<Comment[]> => {
-		console.log(filter);
+	find = async (filter?: Partial<Comment>, relations?: Array<string>): Promise<Comment[]> => {
 		return this.repository.find({
 			where: filter,
-			relations: { employee: true, mentionComment: true },
+			relations: relations,
 		});
 	};
 
-	findOneBy = async (filter: Partial<Comment>): Promise<Comment> => {
+	findOneBy = async (filter: Partial<Comment>, relations?: Array<string>): Promise<Comment> => {
 		return this.repository.findOne({
 			where: filter,
-			relations: {
-				mentionComment: true,
-				employee: true,
-				task: true,
-			},
+			relations,
 		});
 	};
 
