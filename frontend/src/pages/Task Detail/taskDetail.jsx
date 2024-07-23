@@ -7,16 +7,17 @@ import profile from "../../assets/profile.png";
 import send from "../../assets/send.svg";
 import CommentComponent from "../../components/CommentComponent/CommentComponent";
 import Button from "../../components/Button/Button";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCreateCommentMutation, useGetCommentsByTaskIdQuery, useGetTaskByIdQuery } from "../../api/taskApi";
 import { formatDate } from "../../utils/date.utils";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 const TaskDetail = () => {
 	const { taskId } = useParams();
 	const [commentList, setCommentList] = useState([]);
 	const [participantList, setParticipantList] = useState([]);
 	const [file, uploadFile] = useState();
-
+	const inputRef = useRef();
 	const style = {
 		backgroundColor: "white",
 		color: "#2c95ce",
@@ -24,8 +25,10 @@ const TaskDetail = () => {
 	};
 	const [commentType, setCommentType] = useState("Normal");
 	const [comment, setComment] = useState("");
+	const [mentionId, setMentionId] = useState();
 	const { data: taskDetail, isSuccess: taskSuccess } = useGetTaskByIdQuery(taskId);
 	const { data: commentsData, isSuccess: commentSuccess } = useGetCommentsByTaskIdQuery(taskId);
+	const loggedState = useSelector((state) => state.employee.loggedState);
 
 	const form_fields = [
 		{
@@ -47,16 +50,16 @@ const TaskDetail = () => {
 	const handleSend = async () => {
 		const formData = new FormData();
 		formData.append("file", file);
-		const commentData = {
-			id: 9,
-			commentType: commentType,
-			content: comment,
-		};
-		formData.append("data", JSON.stringify(commentData));
-		formData.append("id", 9);
+		// const commentData = {
+		// 	id: 9,
+		// 	commentType: commentType,
+		// 	content: comment,
+		// };
+		// formData.append("data", JSON.stringify(commentData));
+		// formData.append("id", 9);
 		formData.append("commentType", commentType);
 		formData.append("content", comment);
-		createComment(formData);
+		createComment({ taskId, formData });
 
 		// try {
 		// 	const token = localStorage.getItem('token');
@@ -80,6 +83,7 @@ const TaskDetail = () => {
 		// 	console.error('Error:', error);
 		// }
 	};
+
 	const handleTextArea = (e) => {
 		setComment(e.target.value);
 	};
@@ -88,6 +92,10 @@ const TaskDetail = () => {
 	};
 	const handleUpload = (e) => {
 		uploadFile(e.target.files[0]);
+	};
+	const handleReply = (id) => {
+		inputRef.current.focus();
+		setMentionId(id);
 	};
 
 	useEffect(() => {
@@ -178,6 +186,11 @@ const TaskDetail = () => {
 											key={record.id}
 											name={record.employee.name}
 											comment={record.content}
+											currEmployee="Arun Doe"
+											type={record.commentType}
+											onClick={() => handleReply(record.id)}
+											loggedState={loggedState}
+											status={record.review_status}
 										/>
 									);
 								})}
@@ -185,6 +198,7 @@ const TaskDetail = () => {
 						<div className="addComment">
 							<img src={commentIcon} alt="Comment Icon" />
 							<textarea
+								ref={inputRef}
 								className="commentBox"
 								placeholder="//add comments"
 								rows="1"

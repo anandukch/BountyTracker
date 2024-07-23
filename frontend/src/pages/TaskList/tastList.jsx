@@ -60,24 +60,13 @@ const dummyData = [
 	},
 ];
 
-const taskList = () => {
+const TaskList = () => {
 	const [list, setList] = useState([]);
 
 	useEffect(() => {
 		const formattedData = dummyData.map((employee) => ({
 			...employee,
 			duedate: new Date(employee.duedate).toLocaleDateString("en-GB", {
-				day: "numeric",
-				month: "short",
-				year: "numeric",
-			}),
-		}));
-		setList(dummyData);
-	}, []);
-	useEffect(() => {
-		const formattedData2 = dummyData.map((employee) => ({
-			...employee,
-			startdate: new Date(employee.startdate).toLocaleDateString("en-GB", {
 				day: "numeric",
 				month: "short",
 				year: "numeric",
@@ -107,7 +96,7 @@ const taskList = () => {
 						<label htmlFor="sortBy"></label>
 
 						<select id="tier" name="tier">
-							<option value="" disabled value>
+							<option value="" disabled>
 								Filter
 							</option>
 							<option value="bountyHigh"> ▼</option>
@@ -119,6 +108,7 @@ const taskList = () => {
 			</div>
 			<div className="listWrapper">
 				<div className="listHeader">
+					
 					{columns.map((column) => {
 						return <GridColumn key={column.name} name={column.name} />;
 					})}
@@ -145,6 +135,4 @@ const taskList = () => {
 	);
 };
 
-export default taskList;
-
- 
+export default TaskList;
