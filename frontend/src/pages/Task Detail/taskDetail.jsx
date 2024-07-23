@@ -25,7 +25,7 @@ const TaskDetail = () => {
 	const [participantList, setParticipantList] = useState([]);
 	const [joined, setJoined] = useState(false);
 	const [file, uploadFile] = useState();
-	const [showContributionModal, setShowContributionModal] = useState(true);
+	const [showContributionModal, setShowContributionModal] = useState(false);
 	const inputRef = useRef();
 	const style = {
 		backgroundColor: "white",
