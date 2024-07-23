@@ -13,6 +13,7 @@ import {
 	useGetCommentsByTaskIdQuery,
 	useGetTaskByIdQuery,
 	useJoinTaskMutation,
+	useLazyGetTaskByIdQuery,
 } from "../../api/taskApi";
 import { formatDate } from "../../utils/date.utils";
 import { useParams } from "react-router-dom";
@@ -33,7 +34,7 @@ const TaskDetail = () => {
 	const inputRef = useRef();
 	const dispatch = useDispatch();
 
-	const { data: taskDetail, isSuccess: taskSuccess } = useGetTaskByIdQuery(taskId);
+	const [getTaskById, { data: taskDetail, isSuccess: taskSuccess }] = useLazyGetTaskByIdQuery();
 	const { data: commentsData, isSuccess: commentSuccess } = useGetCommentsByTaskIdQuery(taskId);
 	const [join, { isSuccess: joinSuccess }] = useJoinTaskMutation();
 	const [createComment] = useCreateCommentMutation();
@@ -82,18 +83,25 @@ const TaskDetail = () => {
 
 	useEffect(() => {
 		if (taskSuccess) {
+			console.log("effect 1");
 			const participants = taskDetail.data.participants;
 			setParticipantList(participants);
 			participants.forEach((participant) => {
-				console.log(loggedState);
-				console.log(taskDetail.data);
 				if (participant.id === loggedState.id) {
 					// dispatch(addJoinedStatus({ id: taskId, status: "joined" }));
 					setJoined(true);
 				}
 			});
 		}
-	}, [taskSuccess, taskDetail, dispatch, taskId, loggedState]);
+	}, [taskSuccess, loggedState.status, taskDetail, loggedState.id]);
+
+	useEffect(() => {
+		getTaskById(taskId);
+		if (joinSuccess) {
+			console.log("effect 2");
+			dispatch(addJoinedStatus({ status: "joined" }));
+		}
+	}, [joinSuccess, dispatch, getTaskById, taskId]);
 
 	useEffect(() => {
 		if (commentSuccess) {

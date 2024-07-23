@@ -1,8 +1,6 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
-import { employeeList } from "../utils/employees";
-
 const addLoggedState = createAction("ADD_LOGGED_STATE");
-const addJoinedStatus=createAction("ADD_JOINED_STATUS")
+const addJoinedStatus = createAction("ADD_JOINED_STATUS");
 const employeeReducer = createReducer({ role: "Regular", username: "", id: "", joinedTask: {} }, (builder) => {
 	builder.addCase(addLoggedState, (state, action) => {
 		state.role = action.payload.role;
@@ -14,4 +12,4 @@ const employeeReducer = createReducer({ role: "Regular", username: "", id: "", j
 	});
 });
 
-export { employeeReducer as default, addLoggedState ,addJoinedStatus};
+export { employeeReducer as default, addLoggedState, addJoinedStatus };
