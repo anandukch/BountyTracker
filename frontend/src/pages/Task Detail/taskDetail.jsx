@@ -5,7 +5,6 @@ import commentIcon from "../../assets/commentIcon.svg";
 import attach from "../../assets/attach.svg";
 import profile from "../../assets/profile.png";
 import send from "../../assets/send.svg";
-import CommentComponent from "../../components/CommentComponent/CommentComponent";
 import Button from "../../components/Button/Button";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -20,15 +19,15 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addJoinedStatus } from "../../store/employeeReducer";
 import CustomModal from "../../components/Modal/CustomModal";
-import CommentComponent1 from "../../components/CommentComponent/CommentComponent";
+import CommentComponent from "../../components/CommentComponent/CommentComponent";
 const TaskDetail = () => {
 	const [commentList, setCommentList] = useState([]);
 	const [participantList, setParticipantList] = useState([]);
 	const [joined, setJoined] = useState(false);
 	const [file, uploadFile] = useState();
 	const [showContributionModal, setShowContributionModal] = useState(false);
-	const [commentType, setCommentType] = useState("Normal");
 	const [comment, setComment] = useState("");
+	const [contribution, setContribution] = useState("");
 	const [mentionId, setMentionId] = useState();
 
 	const { taskId } = useParams();
@@ -58,8 +57,7 @@ const TaskDetail = () => {
 
 	const handleSend = async () => {
 		const formData = new FormData();
-		formData.append("file", file);
-		formData.append("commentType", commentType);
+		formData.append("commentType", "Normal");
 		formData.append("content", comment);
 		if (mentionId) formData.append("mentionCommentId", mentionId);
 		createComment({ taskId, formData });
@@ -80,7 +78,12 @@ const TaskDetail = () => {
 	};
 
 	const handleSubmitReview = () => {
-		setCommentType("Review");
+		const formData = new FormData();
+		formData.append("file", file);
+		formData.append("commentType", "Review");
+		formData.append("content", contribution);
+		createComment({ taskId, formData });
+		setContribution("");
 	};
 
 	useEffect(() => {
@@ -109,7 +112,7 @@ const TaskDetail = () => {
 		if (commentSuccess) {
 			setCommentList(commentsData.data);
 		}
-	}, [commentsData, commentType, commentSuccess]);
+	}, [commentsData, commentSuccess]);
 
 	return (
 		<main className="taskDetail">
@@ -117,10 +120,19 @@ const TaskDetail = () => {
 				<CustomModal
 					title="Add Contribution"
 					submitText="Contribute"
-					handleCancel={() => setShowContributionModal(false)}
+					handleCancel={() => {
+						setShowContributionModal(false);
+						setContribution("");
+					}}
+					handleSubmit={handleSubmitReview}
 					// handleSubmit={}
 				>
-					<textarea className="contributionTextArea" placeholder="Enter contribution details..."></textarea>
+					<textarea
+						className="contributionTextArea"
+						placeholder="Enter contribution details..."
+						value={contribution}
+						onChange={(e) => setContribution(e.target.value)}
+					></textarea>
 					<div className="contributionFileUpload">
 						{file ? file.name : "Choose a file to upload..."}
 						<div className="contributionFileUploadButton">
@@ -213,7 +225,7 @@ const TaskDetail = () => {
 							<div className="commentList">
 								{commentList?.normalComments?.map(
 									(comment) => (
-										<CommentComponent1
+										<CommentComponent
 											comment={comment}
 											handleReplyClick={handleReply}
 											currentEmployeeId={loggedState.id}
@@ -262,22 +274,19 @@ const TaskDetail = () => {
 					</div>
 					<div className="reviewSection">
 						<div className="reviewSectionHeader">
-							<span>Review</span>
+							<span>Contributions</span>
+							<Button
+								type="button"
+								className="addContributionButton"
+								text="Add Contributions"
+								isPrimary={true}
+								onClick={() => setShowContributionModal(true)}
+							/>
 						</div>
 						<div className="reviewWrapper">
 							<div className="reviewList">
-								{commentList?.reviewComments?.map((record) => {
-									return (
-										<CommentComponent
-											key={record.id}
-											name={record.employee.name}
-											comment={record.content}
-											currEmployee={loggedState.username}
-											type="Review"
-											loggedState={loggedState}
-											status={record.review_status}
-										/>
-									);
+								{commentList?.reviewComments?.map((contribution) => {
+									return <CommentComponent key={contribution.id} comment={contribution} />;
 								})}
 							</div>
 						</div>
