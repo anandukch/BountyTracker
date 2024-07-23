@@ -1,0 +1,34 @@
+.CustomModalBackground {
+	position: fixed;
+	inset: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #00000080;
+	z-index: 3;
+	.CustomModal {
+		height: 400px;
+		width: 600px;
+		background-color: white;
+		border-radius: 10px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-between;
+
+		header {
+			padding: 30px;
+			font-size: 24px;
+			font-weight: 700;
+		}
+
+		.modalButtons {
+			padding: 20px;
+			gap: 20px;
+			display: flex;
+			justify-content: space-around;
+			width: 400px;
+			/* padding: 20px; */
+		}
+	}
+}
