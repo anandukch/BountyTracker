@@ -9,6 +9,10 @@ import { CreateEmployeeDto } from "../dto/employee.dto";
 import getValidationErrorConstraints from "../utils/validationErrorConstraints";
 import authorize from "../middleware/authorize.middleware";
 import ValidationException from "../exceptions/validationException";
+import { compareDates } from "../utils/date.utils";
+import { TaskStatusEnum } from "../utils/taskStatus.enum";
+import validationMiddleware from "../middleware/validate.middleware";
+import { CreateComementDto } from "../dto/comment.dto";
 class EmployeeController {
 	public router: Router;
 	constructor(private employeeService: EmployeeService) {
@@ -19,7 +23,7 @@ class EmployeeController {
 		this.router.get("/tasks/not-joined", authorize, this.getTasksNotJoinedByEmployee);
 		this.router.get("/:id", this.getEmployeeByID);
 		this.router.post("/login", this.loginEmployee);
-		this.router.post("/", this.createEmployee);
+		this.router.post("/", validationMiddleware(CreateComementDto), this.createEmployee);
 		this.router.post("/tasks/:id", authorize, this.joinTask);
 		this.router.put("/:employeeId/tasks/:taskId/contributions", authorize, this.giveContribution);
 	}
@@ -89,13 +93,23 @@ class EmployeeController {
 	};
 	public getEmployeeAssignedTasks = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			console.log("as");
+			const participatingTasks = await this.employeeService.getEmployeeTasksByID(req.user.id);
+			participatingTasks.map((participatingTask) => {
+				delete participatingTask.task.createdBy.password;
+				let startDate = participatingTask.task.startDate;
+				let deadLine = participatingTask.task.deadLine;
+				let today = new Date();
+				if (compareDates(today, startDate) === 0 && compareDates(today, deadLine) === -1) {
+					participatingTask.task.status = TaskStatusEnum.IN_PROGRESS;
+				} else if (compareDates(today, deadLine) === 1) {
+					participatingTask.task.status = TaskStatusEnum.IN_REVIEW;
+				}
+			});
 
-			const employeeAssignedTasks = await this.employeeService.getEmployeeTasksByID(req.user.id);
 			res.status(200).json({
 				success: true,
 				message: "Employee tasks fetched successfully",
-				data: employeeAssignedTasks,
+				data: participatingTasks,
 			});
 		} catch (error) {
 			next(error);
@@ -120,13 +134,8 @@ class EmployeeController {
 			// if (req.role > Role.LEAD) {
 			//     throw new HttpException(403, "Access Denied");
 			// }
-			const employeeDto = plainToInstance(CreateEmployeeDto, req.body);
-			const errors = await validate(employeeDto);
-			// const validationErrorConstraints = getValidationErrorConstraints(errors);
-			if (errors.length) {
-				throw new ValidationException(400, "Validation Failed", errors);
-			}
-			const createdEmployee = await this.employeeService.createEmployee(employeeDto);
+
+			const createdEmployee = await this.employeeService.createEmployee(req.body as CreateEmployeeDto);
 			delete createdEmployee.password;
 			res.status(201).send(createdEmployee);
 		} catch (error) {

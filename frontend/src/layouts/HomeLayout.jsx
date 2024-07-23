@@ -6,7 +6,12 @@ import employees from "../assets/employees.svg";
 import logout from "../assets/logout.svg";
 import logo from "../assets/KoYns-Logo.png";
 import text from "../assets/KoYns-Text.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { addLoggedState } from "../store/employeeReducer";
+import { useGetProfileQuery } from "../api/employeeApi";
+import myTask from "../assets/myTask.svg";
+
 const HomeLayout = () => {
 	const [pageIndex, setPageIndex] = useState(0);
 	const navigate = useNavigate();
@@ -14,7 +19,42 @@ const HomeLayout = () => {
 		localStorage.clear("token");
 		navigate("/login");
 	};
-	
+	const { data: employeeData, isLoading, isSuccess } = useGetProfileQuery();
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if (isSuccess) {
+			dispatch(addLoggedState({ role: employeeData.data.role, username: employeeData.data.name, id: employeeData.data.id }));
+		}
+	}, [employeeData]);
+
+	const sideBar = [
+		{
+			id: 0,
+			title: "Profile",
+			icon: profile,
+			to: "/profile",
+		},
+		{
+			id: 1,
+			title: "Tasks",
+			icon: tasks,
+			to: "/tasks",
+		},
+		{
+			id: 2,
+			title: "Employees",
+			icon: employees,
+			to: "/employees",
+		},
+		{
+			id: 3,
+			title: "My Tasks",
+			icon: myTask,
+			to: "/myTasks",
+		},
+	];
+
 	return (
 		<div className="page">
 			<div className="header">
@@ -26,7 +66,7 @@ const HomeLayout = () => {
 			</div>
 			<aside className="HomeLayout">
 				<div className="top">
-					<Link
+					{/* <Link
 						className={`links ${pageIndex == 0 ? "active" : ""}`}
 						to="/employee"
 						onClick={() => setPageIndex(0)}
@@ -35,8 +75,22 @@ const HomeLayout = () => {
 							<img src={profile} alt="icon" className="imgicon" />
 						</div>
 						Profile
-					</Link>
-					<Link
+					</Link> */}
+
+					{sideBar.map((item, index) => (
+						<Link
+							key={item.id}
+							className={`links ${pageIndex == index ? "active" : ""}`}
+							to={item.to}
+							onClick={() => setPageIndex(index)}
+						>
+							<div className="icon">
+								<img src={item.icon} alt="icon" className="imgicon" />
+							</div>
+							{item.title}
+						</Link>
+					))}
+					{/* <Link
 						className={`links ${pageIndex == 1 ? "active" : ""}`}
 						to="tasklist"
 						onClick={() => setPageIndex(1)}
@@ -55,7 +109,7 @@ const HomeLayout = () => {
 							<img src={employees} alt="icon" className="imgicon" />
 						</div>
 						Employees
-					</Link>
+					</Link> */}
 				</div>
 				<div className="bottom">
 					<div className="links" onClick={handleLogout}>

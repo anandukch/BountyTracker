@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
-import "../TaskList/taskList.scss";
+import "./style.scss";
 import GridDataColumn from "../../components/GridDataColumnList";
 import GridColumn from "../../components/GridColumn";
 import Search from "../../components/Search/Search";
 import { useNavigate } from "react-router-dom";
 import GridDataColumnList from "../../components/GridDataColumnList";
-import { useGetTaskListQuery } from "../../api/taskApi";
 import { Loader } from "../../components/Loader/Loader";
 import { formatDate } from "../../utils/date.utils";
 import FetchListRow from "../../components/MyTaskRow";
+import FetchMyListRow from "../../components/MyTaskFetchedRow";
+import { useGetEmployeeCreatedTasksQuery } from "../../api/employeeApi";
 
-const TaskList = () => {
+const MyTask = () => {
 	const [list, setList] = useState([]);
-	const { data, isLoading, isSuccess } = useGetTaskListQuery();
+	const { data, isLoading, isSuccess } = useGetEmployeeCreatedTasksQuery();
 
 	useEffect(() => {
 		if (isSuccess) {
@@ -21,7 +22,7 @@ const TaskList = () => {
 				startDate: formatDate(task.startDate),
 				deadLine: formatDate(task.deadLine),
 			}));
-			console.log(formattedData);
+			console.log(data);
 			setList(formattedData);
 		}
 	}, [data, isSuccess]);
@@ -29,10 +30,11 @@ const TaskList = () => {
 	const columns = [
 		// { name: "Task Id" },
 		{ name: "Task Name" },
-		{ name: "Assigned By" },
 		{ name: "Start Date" },
 		{ name: "Deadline" },
 		{ name: "Participants" },
+		{ name: "Status" },
+		{ name: "Progress" },
 		{ name: "KoYns" },
 	];
 
@@ -40,7 +42,7 @@ const TaskList = () => {
 		<div className="fullWrap">
 			{isLoading && <Loader />}
 			<div className="wrapHeading">
-				<h1>Task List</h1>
+				<h1>My Task List</h1>
 				<br></br>
 				<div className="searchSort">
 					<Search />
@@ -59,7 +61,7 @@ const TaskList = () => {
 				</div>
 			</div>
 			<div className="listWrapper">
-				<div className="listHeaderTask">
+				<div className="listHeaderMyTask">
 					{columns.map((column) => {
 						return <GridColumn key={column.name} name={column.name} />;
 					})}
@@ -67,13 +69,14 @@ const TaskList = () => {
 				<div className="listData">
 					{list.map((employee) => {
 						return (
-							<FetchListRow
+							<FetchMyListRow
 								key={employee.id}
 								taskid={employee.id}
 								taskname={employee.title}
-								assignedby={employee.createdBy.name}
+								progress={employee.totalBounty}
 								startdate={employee.startDate}
 								duedate={employee.deadLine}
+								taskStatus={employee.status}
 								participants={`${employee.currentParticipants}/${employee.maxParticipants}`}
 								koyns={employee.totalBounty}
 							/>
@@ -85,4 +88,4 @@ const TaskList = () => {
 	);
 };
 
-export default TaskList;
+export default MyTask;

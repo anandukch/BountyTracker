@@ -10,6 +10,7 @@ import HttpException from "../exceptions/http.exceptions";
 import { CreateTaskDto, UpdateTaskDto } from "../dto/task.dto";
 import ValidationException from "../exceptions/validationException";
 import fileUploadMiddleware from "../middleware/fileUploadMiddleware";
+import validationMiddleware from "../middleware/validate.middleware";
 
 class TaskController {
 	public router: Router;
@@ -17,7 +18,7 @@ class TaskController {
 		this.router = Router();
 		this.router.get("/", this.getAllTasks);
 		this.router.get("/created", this.getTaskCreatedByUser);
-		this.router.post("/", this.createTask);
+		this.router.post("/", validationMiddleware(CreateTaskDto), this.createTask);
 		this.router.get("/:taskId", this.getTaskById);
 		// this.router.use("/:taskId/comments", commentRouter);
 		this.router.get("/:taskId/comments", this.getAllTaskComments);
@@ -92,15 +93,7 @@ class TaskController {
 
 	public createTask = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			console.log(req.body);
-
-			const task = req.body;
-			const taskDto = plainToInstance(CreateTaskDto, task);
-			const errors = await validate(taskDto);
-			if (errors.length) {
-				throw new ValidationException(400, "Validation Failed", errors);
-			}
-			await this.taskService.createTask(taskDto, req.user);
+			await this.taskService.createTask(req.body as CreateTaskDto, req.user);
 			res.status(200).json({
 				success: true,
 				message: "Tasks created successfully",
@@ -112,6 +105,7 @@ class TaskController {
 		}
 	};
 
+	
 	// Comments
 
 	public getAllTaskComments = async (req: RequestWithRole, res: Response, next: NextFunction) => {

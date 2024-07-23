@@ -119,7 +119,9 @@ class EmployeeService {
 		if (task.createdBy.id === employee.id) {
 			throw new EntityNotFoundException("Cannot join task created by self");
 		}
+
 		const alreadyJoined = await this.taskParticipantService.checkAlreadyJoined(taskId, employee.id);
+
 		if (alreadyJoined) {
 			throw new EntityNotFoundException("Task already joined");
 		}
@@ -159,7 +161,7 @@ class EmployeeService {
 		if (!taskParticipant) {
 			throw new EntityNotFoundException("Employee not found in task");
 		}
-		taskParticipant.contribution = contribution;
+		taskParticipant.contribution += contribution;
 		await this.taskParticipantService.updateTaskParticipants(taskParticipant);
 		return taskParticipant;
 	};

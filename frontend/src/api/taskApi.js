@@ -7,13 +7,13 @@ const taskApi = apiWithTag.injectEndpoints({
 		}),
 		getTaskById: builder.query({
 			query: (id) => `/tasks/${id}`,
-			providesTags: ["COMMENTS"],
 		}),
 		createTask: builder.mutation({
 			query: (data) => ({ url: "/tasks", method: "POST", body: data }),
 		}),
 		getCommentsByTaskId: builder.query({
 			query: (id) => `/tasks/${id}/comments`,
+			providesTags: ["COMMENTS"],
 		}),
 		createComment: builder.mutation({
 			query: (data) => {
@@ -33,11 +33,10 @@ const taskApi = apiWithTag.injectEndpoints({
 			query: (id) => `/tasks/comments/${id}`,
 		}),
 
-		upload: builder.mutation({
-			query: ({ formData }) => ({
-				url: `/file`,
+		joinTask: builder.mutation({
+			query: (id) => ({
+				url: `/employees/tasks/${id}`,
 				method: "POST",
-				body: formData,
 			}),
 		}),
 	}),
@@ -50,7 +49,7 @@ export const {
 	useCreateTaskMutation,
 	useGetCommentsByTaskIdQuery,
 	useCreateCommentMutation,
-	useUploadMutation,
 	useReviewCommentByIdMutation,
 	useGetCommentByIdQuery,
+	useJoinTaskMutation,
 } = taskApi;

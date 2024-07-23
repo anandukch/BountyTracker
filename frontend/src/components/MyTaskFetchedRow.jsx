@@ -1,21 +1,17 @@
-/* eslint-disable react/prop-types */
 import { useNavigate } from "react-router-dom";
 
-const GridDataColumnList = ({ id, taskid, taskname, assignedby, startdate, duedate, koyns, participants }) => {
+const FetchMyListRow = ({ id, taskid, taskname, progress, startdate, duedate, koyns, participants, taskStatus }) => {
 	const navigate = useNavigate();
 	const handledisplay = () => {
 		navigate(`/tasks/${taskid}`);
 	};
 	return (
-		<div className="listDataSet">
+		<div className="listDataMyTask">
 			{/* <div className="taskId" onClick={handledisplay}>
 				{taskid}
 			</div> */}
 			<div className="taskName" onClick={handledisplay}>
 				{taskname}
-			</div>
-			<div className="taskAssignedby" onClick={handledisplay}>
-				{assignedby}
 			</div>
 
 			<div className="taskDuedate" onClick={handledisplay}>
@@ -29,10 +25,18 @@ const GridDataColumnList = ({ id, taskid, taskname, assignedby, startdate, dueda
 				{participants}
 			</div>
 
+			<div className="taskParticipants" onClick={handledisplay}>
+				{taskStatus}
+			</div>
+
+			<div className="taskAssignedby" onClick={handledisplay}>
+				{progress}
+			</div>
+			
 			<div className="taskBounty" onClick={handledisplay}>
 				{koyns} Kyns
 			</div>
 		</div>
 	);
 };
-export default GridDataColumnList;
+export default FetchMyListRow;

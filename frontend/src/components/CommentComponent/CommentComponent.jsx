@@ -1,11 +1,11 @@
 import "./styles.scss";
 const CommentComponent = ({ name, comment, currEmployee, type, onClick,loggedState,status }) => {
-	console.log(type);
-	const flag = (currEmployee == name)&&(type==="blah") ? true : false;
+	// console.log(loggedState);
+	const flag = (currEmployee == name)&&(type==="Normal") ? true : false;
 	const styleComment = {
 		justifyContent: "right",
-		width: "50%",
-		borderRadius: "15px 0 15px 15px",
+		width: "auto",
+		borderRadius: "18px 0 18px 18px",
 	};
 
 	return (

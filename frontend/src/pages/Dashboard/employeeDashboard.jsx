@@ -16,8 +16,7 @@ const EmployeeDashboard = () => {
 	const [employeeDetails, setEmployeeDetails] = useState([]);
 	const { data, isLoading, isSuccess } = useGetProfileQuery();
 	const { data: employeeTasksData = [], isSuccess: isTaskFetched } = useGetEmployeeCurrentTasksQuery();
-	const dispatch=useDispatch()
-
+	const dispatch = useDispatch();
 	useEffect(() => {
 		if (isSuccess) {
 			const { data: employeeData } = data;
@@ -30,7 +29,7 @@ const EmployeeDashboard = () => {
 				{ header: "Gender", content: employeeData.details.gender },
 				{ header: "Phone", content: employeeData.details.phoneNo },
 			]);
-			dispatch(addLoggedState({role:employeeData.role,name:employeeData.name}))
+			dispatch(addLoggedState({ role: employeeData.role, name: employeeData.name }));
 		}
 	}, [data, isSuccess]);
 
@@ -44,6 +43,10 @@ const EmployeeDashboard = () => {
 		setAddClass(1);
 	};
 
+	const handleAssigned = () => {
+		setAddClass(2);
+	};
+
 	const tasksHeader = {
 		name: "Name",
 		assignedBy: "Assigned By",
@@ -52,6 +55,9 @@ const EmployeeDashboard = () => {
 		status: "Status",
 		bounty: "Bounty",
 	};
+	useEffect(() => {
+		console.log(employee);
+	}, [employee]);
 
 	return (
 		<div className="employeeDashboardWrapper">
@@ -73,7 +79,7 @@ const EmployeeDashboard = () => {
 								</div>
 							</div>
 							<p className="totalBounty">
-								KoYns : <span className="bountyValue">850</span> KYN
+								KoYns : <span className="bountyValue">{employee?.details?.totalBounty || 0}</span> KYN
 							</p>
 						</div>
 					</div>
@@ -104,7 +110,6 @@ const EmployeeDashboard = () => {
 							{/* {isTaskLoading && <Loader />} */}
 							{isTaskFetched &&
 								employeeTasksData.data.map((task) => {
-									console.log(task);
 									if (addClass === 0 && task.task.status !== "completed")
 										return <TaskDataRow key={task.id} taskRows={task} />;
 									else if (addClass === 1 && task.task.status == "completed")

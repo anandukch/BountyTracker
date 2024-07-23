@@ -5,7 +5,7 @@ import Employee from "../entity/employee.entity";
 import Task from "../entity/task.entity";
 import HttpException from "../exceptions/http.exceptions";
 import CommentRepository from "../repository/comment.repository";
-import { taskParticipantService } from "../routes/employee.routes";
+import { employeeService, taskParticipantService } from "../routes/employee.routes";
 import { taskService } from "../routes/task.routes";
 import { CommentType } from "../utils/commentType.enum";
 import ReviewStatus from "../utils/reviewStatus.enum";
@@ -14,12 +14,19 @@ class CommentService {
 	constructor(private commentRepository: CommentRepository) {}
 
 	getAllCommentsByTaskId = async (taskId: number): Promise<Comment[]> => {
-		const comments = await this.commentRepository.findBy({ task: { id: taskId } as any });
+		const comments = await this.commentRepository.find({ task: { id: taskId } as any }, [
+			"employee",
+			"mentionComment",
+		]);
 		return comments;
 	};
 
 	getCommentByCommentId = async (id: number) => {
-		const comment = await this.commentRepository.findOneBy({ id });
+		const comment = await this.commentRepository.findOneBy(
+			{ id },
+
+			["mentionComment", "employee", "task"]
+		);
 		if (!comment) {
 			throw new HttpException(404, "Comment not found");
 		}
@@ -69,7 +76,13 @@ class CommentService {
 				throw new HttpException(400, "Bounty percentage should be awarded for approved reviews");
 			}
 			comment.reviewRewardedBounty = reviewRewardBounty;
+			const updatedPoints = comment.task.currentContribution
+				? comment.task.currentContribution + reviewRewardBounty
+				: reviewRewardBounty;
+			await taskService.updateTask(comment.task.id, { currentContribution: updatedPoints });
+			await employeeService.giveContribution(comment.task.id, comment.employee.id, reviewRewardBounty);
 		}
+
 		return this.commentRepository.update(id, comment);
 	};
 }
