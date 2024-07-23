@@ -38,9 +38,6 @@ const MyTask = () => {
 		{ name: "Progress" },
 		{ name: "KoYns" },
 	];
-	const index = [2, 5];
-	const count = [3, 3, 3, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1];
-	const navigate = useNavigate();
 
 	return (
 		<div className="MyTask">
@@ -74,20 +71,19 @@ const MyTask = () => {
 					})}
 				</div>
 				<div className="listData">
-					{list.map((employee) => {
+					{list.map((task) => {
 						return (
 							<FetchMyListRow
-								key={employee.id}
-								taskid={employee.id}
-								taskname={employee.title}
-								progress={employee.currentContribution}
-								startdate={employee.startDate}
-								duedate={employee.deadLine}
-								taskStatus={employee.status}
-								participants={`${employee.currentParticipants}/${employee.maxParticipants}`}
-								koyns={employee.totalBounty}
-								index={index}
-								count={count}
+								key={task.id}
+								taskid={task.id}
+								taskname={task.title}
+								progress={task.currentContribution}
+								startdate={task.startDate}
+								duedate={task.deadLine}
+								taskStatus={task.status}
+								participants={`${task.currentParticipants}/${task.maxParticipants}`}
+								koyns={task.totalBounty}
+								reviewPendingCount={task.reviewCommentCount}
 							/>
 						);
 					})}

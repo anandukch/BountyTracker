@@ -10,15 +10,16 @@ const FetchMyListRow = ({
 	koyns,
 	participants,
 	taskStatus,
-	index,
-	count,
+	reviewPendingCount,
 }) => {
 	const navigate = useNavigate();
 	const handledisplay = () => {
 		navigate(`/tasks/${taskid}`);
 	};
-	const rowClass = index.includes(taskid) ? "listDataMyTaskNotification" : "listDataMyTask";
-	const notificationCount = index.includes(taskid) ? count[taskid - 1] : null;
+	console.log(reviewPendingCount);
+	// const notificationCount = reviewPendingCount == 0 ? null : reviewPendingCount;
+	const rowClass = reviewPendingCount > 0 ? "listDataMyTaskNotification" : "listDataMyTask";
+	console.log(rowClass);
 	return (
 		<div className={rowClass}>
 			{/* <div className="taskId" onClick={handledisplay}>
@@ -50,7 +51,7 @@ const FetchMyListRow = ({
 			<div className="taskBounty" onClick={handledisplay}>
 				<span>{koyns} Kyns</span>
 				<div className="taskNotification" onClick={handledisplay}>
-					{notificationCount}
+					{reviewPendingCount == 0 ? null : reviewPendingCount}
 				</div>
 			</div>
 		</div>

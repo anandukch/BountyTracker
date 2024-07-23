@@ -16,12 +16,7 @@ const TaskList = () => {
 
 	useEffect(() => {
 		if (isSuccess) {
-			const formattedData = data.data.map((task) => ({
-				...task,
-				startDate: formatDate(task.startDate),
-				deadLine: formatDate(task.deadLine),
-			}));
-			console.log(formattedData);
+			const formattedData = data.data.filter((task) => task.status == "Yet to start");
 			setList(formattedData);
 		}
 	}, [data, isSuccess]);
@@ -65,20 +60,21 @@ const TaskList = () => {
 					})}
 				</div>
 				<div className="listData">
-					{list.map((employee) => {
-						return (
-							<FetchListRow
-								key={employee.id}
-								taskid={employee.id}
-								taskname={employee.title}
-								assignedby={employee.createdBy.name}
-								startdate={employee.startDate}
-								duedate={employee.deadLine}
-								participants={`${employee.currentParticipants}/${employee.maxParticipants}`}
-								koyns={employee.totalBounty}
-							/>
-						);
-					})}
+					{isSuccess &&
+						list.map((employee) => {
+							return (
+								<FetchListRow
+									key={employee.id}
+									taskid={employee.id}
+									taskname={employee.title}
+									assignedby={employee.createdBy.name}
+									startdate={employee.startDate}
+									duedate={employee.deadLine}
+									participants={`${employee.currentParticipants}/${employee.maxParticipants}`}
+									koyns={employee.totalBounty}
+								/>
+							);
+						})}
 				</div>
 			</div>
 		</div>
