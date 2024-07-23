@@ -116,9 +116,14 @@ class EmployeeService {
 		if (task.maxParticipants === task.currentParticipants) {
 			throw new EntityNotFoundException(404, "Task is full");
 		}
+		const alreadyJoined = await this.taskParticipantService.checkAlreadyJoined(taskId, employee.id);
+		if (alreadyJoined != undefined) {
+			throw new EntityNotFoundException(404, "Task already joined");
+		}
 
 		task.currentParticipants += 1;
-		await this.taskService.updateTask(taskId, task);
+		const updatedTask = await this.taskService.updateTask(taskId, task);
+		console.log(updatedTask);
 
 		const taskParticipant = await this.taskParticipantService.create(task, employee);
 

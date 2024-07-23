@@ -20,8 +20,8 @@ class TaskParticipantService {
 	};
 
 	create = async (task: Task, employee: Employee) => {
-		console.log(task,employee);
-		
+		console.log(task, employee);
+
 		let newTaskParticipant = new TaskParticipants();
 		newTaskParticipant.task = task;
 		newTaskParticipant.employee = employee;
@@ -34,6 +34,10 @@ class TaskParticipantService {
 
 	updateTaskParticipants = async (data: TaskParticipants) => {
 		return this.repository.save(data);
+	};
+
+	checkAlreadyJoined = async (taskId: number, employeeId: number): Promise<TaskParticipants> => {
+		return this.repository.findOneBy({ taskId, employeeId });
 	};
 }
 

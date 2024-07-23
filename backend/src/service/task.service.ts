@@ -40,11 +40,12 @@ class TaskService {
 		await this.taskRepository.save(newTask);
 	};
 
-	updateTask = async (id: number, task: UpdateTaskDto) => {
-		const existingTask = await this.taskRepository.findOneBy({ id });
-		console.log(existingTask);
-		existingTask.status = task.status;
-		await this.taskRepository.update(id,existingTask);
+	updateTask = async (id: number, task: Partial<Task>) => {
+		// const existingTask = await this.taskRepository.findOneBy({ id });
+		// console.log(existingTask);
+		// existingTask.status = task.status;
+		// existingTask.currentParticipants = task.currentParticipants;
+		return this.taskRepository.update(id, task);
 	};
 
 	getTaskCreatedByUser = async (id: number) => {
