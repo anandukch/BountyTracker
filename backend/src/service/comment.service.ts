@@ -14,12 +14,19 @@ class CommentService {
 	constructor(private commentRepository: CommentRepository) {}
 
 	getAllCommentsByTaskId = async (taskId: number): Promise<Comment[]> => {
-		const comments = await this.commentRepository.findBy({ task: { id: taskId } as any });
+		const comments = await this.commentRepository.find({ task: { id: taskId } as any }, [
+			"employee",
+			"mentionComment",
+		]);
 		return comments;
 	};
 
 	getCommentByCommentId = async (id: number) => {
-		const comment = await this.commentRepository.findOneBy({ id });
+		const comment = await this.commentRepository.findOneBy(
+			{ id },
+
+			["mentionComment", "employee", "task"]
+		);
 		if (!comment) {
 			throw new HttpException(404, "Comment not found");
 		}

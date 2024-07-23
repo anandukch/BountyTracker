@@ -8,6 +8,7 @@ import GridDataColumnList from "../../components/GridDataColumnList";
 import { useGetTaskListQuery } from "../../api/taskApi";
 import { Loader } from "../../components/Loader/Loader";
 import { formatDate } from "../../utils/date.utils";
+import FetchListRow from "../../components/MyTaskRow";
 
 const TaskList = () => {
 	const [list, setList] = useState([]);
@@ -20,7 +21,7 @@ const TaskList = () => {
 				startDate: formatDate(task.startDate),
 				deadLine: formatDate(task.deadLine),
 			}));
-			console.log(data);
+			console.log(formattedData);
 			setList(formattedData);
 		}
 	}, [data, isSuccess]);
@@ -58,7 +59,7 @@ const TaskList = () => {
 				</div>
 			</div>
 			<div className="listWrapper">
-				<div className="listHeader">
+				<div className="listHeaderTask">
 					{columns.map((column) => {
 						return <GridColumn key={column.name} name={column.name} />;
 					})}
@@ -66,16 +67,15 @@ const TaskList = () => {
 				<div className="listData">
 					{list.map((employee) => {
 						return (
-							<GridDataColumnList
+							<FetchListRow
 								key={employee.id}
 								taskid={employee.id}
 								taskname={employee.title}
 								assignedby={employee.createdBy.name}
 								startdate={employee.startDate}
 								duedate={employee.deadLine}
-								// id={employee.id}
 								participants={`${employee.currentParticipants}/${employee.maxParticipants}`}
-								koyns={employee.koyns}
+								koyns={employee.totalBounty}
 							/>
 						);
 					})}

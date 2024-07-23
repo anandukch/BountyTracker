@@ -15,15 +15,10 @@ import TaskList from "./pages/TaskList/tastList.jsx";
 import { useEffect } from "react";
 import { addLoggedState } from "./store/employeeReducer.js";
 import { useGetProfileQuery } from "./api/employeeApi.js";
+import MyTask from "./pages/myTask/myTask.jsx";
 
 const App = () => {
-	// const { data: employeeData, isLoading, isSuccess } = useGetProfileQuery();
-	// const dispatch = useDispatch();
-
-	// useEffect(() => {
-	// 	dispatch(addLoggedState({ role: employeeData.role, username: employeeData.name, id: employeeData.id }));
-	// },[employeeData]);
-
+	
 	const router = createBrowserRouter([
 		{
 			path: "/",
@@ -60,7 +55,6 @@ const App = () => {
 				// { path: "employeeList", element: <EmployeeTierList /> },
 				{ path: "comment/:id", element: <ReviewPage /> },
 				{ path: "taskDetails", element: <TaskDetail /> },
-				
 			],
 		},
 		{
@@ -68,8 +62,17 @@ const App = () => {
 			element: <HomeLayout />,
 			children: [
 				{ index: true, element: <TaskList /> },
-				{path: ":taskId", element: <TaskDetail />},
+				{ path: ":taskId", element: <TaskDetail /> },
 				{ path: "create", element: <CreateTask /> },
+			],
+		},
+		{
+			path: "/myTasks",
+			element: <HomeLayout />,
+			children: [
+				{ index: true, element: <MyTask /> },
+				// { path: ":taskId", element: <TaskDetail /> },
+				// { path: "create", element: <CreateTask /> },
 			],
 		},
 	]);

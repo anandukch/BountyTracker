@@ -6,8 +6,12 @@ import employees from "../assets/employees.svg";
 import logout from "../assets/logout.svg";
 import logo from "../assets/KoYns-Logo.png";
 import text from "../assets/KoYns-Text.png";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { addLoggedState } from "../store/employeeReducer";
+import { useGetProfileQuery } from "../api/employeeApi";
 import myTask from "../assets/myTask.svg";
-import { useState } from "react";
+
 const HomeLayout = () => {
 	const [pageIndex, setPageIndex] = useState(0);
 	const navigate = useNavigate();
@@ -15,6 +19,14 @@ const HomeLayout = () => {
 		localStorage.clear("token");
 		navigate("/login");
 	};
+	const { data: employeeData, isLoading, isSuccess } = useGetProfileQuery();
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if (isSuccess) {
+			dispatch(addLoggedState({ role: employeeData.data.role, username: employeeData.data.name, id: employeeData.data.id }));
+		}
+	}, [employeeData]);
 
 	const sideBar = [
 		{
@@ -39,7 +51,7 @@ const HomeLayout = () => {
 			id: 3,
 			title: "My Tasks",
 			icon: myTask,
-			to: "myTasks",
+			to: "/myTasks",
 		},
 	];
 
