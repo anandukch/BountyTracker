@@ -195,8 +195,14 @@ const TaskDetail = () => {
 					</div>
 				</div>
 			</div>
-			{joined ? (
-				<div className="bottomSection">
+			{/* {joined ? ( */}
+			<div className="bottomSectionWrapper">
+				{!joined && (
+					<div className="joinButtonWrapper">
+						<Button text="Join Task" isPrimary={true} onClick={handleJoin} />
+					</div>
+				)}
+				<div className={`bottomSection ${!joined ? "beforeJoining" : ""}`}>
 					<div className="commentSection">
 						<div className="commentSectionHeader">
 							{/* <div className="nameHeader">Name</div> */}
@@ -292,11 +298,12 @@ const TaskDetail = () => {
 						</div>
 					</div>
 				</div>
-			) : (
+			</div>
+			{/* ) : (
 				<div className="Join Button" onClick={handleJoin}>
 					Join
 				</div>
-			)}
+			)} */}
 		</main>
 	);
 };

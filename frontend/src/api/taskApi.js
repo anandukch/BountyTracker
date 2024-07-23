@@ -4,12 +4,15 @@ const taskApi = apiWithTaskTags.injectEndpoints({
 	endpoints: (builder) => ({
 		getTaskList: builder.query({
 			query: () => "/tasks",
+			providesTags: ["TASK_LIST"],
 		}),
 		getTaskById: builder.query({
 			query: (id) => `/tasks/${id}`,
+			providesTags: ["TASK"],
 		}),
 		createTask: builder.mutation({
 			query: (data) => ({ url: "/tasks", method: "POST", body: data }),
+			invalidatesTags: ["TASK", "TASK_LIST"],
 		}),
 		getCommentsByTaskId: builder.query({
 			query: (id) => `/tasks/${id}/comments`,
@@ -33,6 +36,7 @@ const taskApi = apiWithTaskTags.injectEndpoints({
 
 		getCommentById: builder.query({
 			query: (id) => `/tasks/comments/${id}`,
+			providesTags: ["COMMENTS"],
 		}),
 
 		joinTask: builder.mutation({
