@@ -13,10 +13,7 @@ const EmployeeDashboard = () => {
 	const [employee, setEmployee] = useState({});
 	const [employeeDetails, setEmployeeDetails] = useState([]);
 	const { data, isLoading, isSuccess } = useGetProfileQuery();
-	const {
-		data: employeeTasksData = [],
-		isSuccess: isTaskFetched,
-	} = useGetEmployeeCurrentTasksQuery();
+	const { data: employeeTasksData = [], isSuccess: isTaskFetched } = useGetEmployeeCurrentTasksQuery();
 
 	useEffect(() => {
 		if (isSuccess) {
@@ -103,8 +100,8 @@ const EmployeeDashboard = () => {
 							{/* {isTaskLoading && <Loader />} */}
 							{isTaskFetched &&
 								employeeTasksData.data.map((task) => {
-									// console.log(task);
-									if (addClass === 0 && task.task.status == "In Progress")
+									console.log(task);
+									if (addClass === 0 && task.task.status !== "completed")
 										return <TaskDataRow key={task.id} taskRows={task} />;
 									else if (addClass === 1 && task.task.status == "completed")
 										return <TaskDataRow key={task.id} taskRows={task} />;

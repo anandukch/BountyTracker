@@ -10,23 +10,12 @@ import Button from "../../components/Button/Button";
 import { useEffect, useState } from "react";
 import { useCreateCommentMutation, useGetCommentsByTaskIdQuery, useGetTaskByIdQuery } from "../../api/taskApi";
 import { formatDate } from "../../utils/date.utils";
+import { useParams } from "react-router-dom";
 const TaskDetail = () => {
+	const { taskId } = useParams();
 	const [commentList, setCommentList] = useState([]);
 	const [participantList, setParticipantList] = useState([]);
 	const [file, uploadFile] = useState();
-	const form_fields = [
-		{
-			id: "description",
-			name: "Description",
-			value: "create a bounty tracker system with rewwards and bounty points for tasks completed",
-		},
-
-		{
-			id: "skills",
-			name: "Skills",
-			value: "Node, react, java, c",
-		},
-	];
 
 	const style = {
 		backgroundColor: "white",
@@ -35,9 +24,24 @@ const TaskDetail = () => {
 	};
 	const [commentType, setCommentType] = useState("Normal");
 	const [comment, setComment] = useState("");
-	const { data: taskDetail } = useGetTaskByIdQuery(9);
-	const { data: commentsData } = useGetCommentsByTaskIdQuery(9);
+	const { data: taskDetail, isSuccess: taskSuccess } = useGetTaskByIdQuery(taskId);
+	const { data: commentsData, isSuccess: commentSuccess } = useGetCommentsByTaskIdQuery(taskId);
 
+	const form_fields = [
+		{
+			id: "description",
+			name: "Description",
+			// value: "create a bounty tracker system with rewwards and bounty points for tasks completed",
+			value: taskDetail?.description,
+		},
+
+		{
+			id: "skills",
+			name: "Skills",
+			// value: "Node, react, java, c",
+			value: taskDetail?.skillList,
+		},
+	];
 	const [createComment] = useCreateCommentMutation();
 	// const [upload, { isSuccess }] = useUploadMutation();
 	const handleSend = async () => {
@@ -85,15 +89,19 @@ const TaskDetail = () => {
 	const handleUpload = (e) => {
 		uploadFile(e.target.files[0]);
 	};
+
 	useEffect(() => {
-		if (taskDetail?.data) {
+		if (taskSuccess) {
 			setParticipantList(taskDetail.data.participants);
 		}
-		if (commentsData?.data) {
+	}, [taskSuccess, taskDetail.data]);
+
+	useEffect(() => {
+		if (commentSuccess) {
 			if (commentType == "Normal") setCommentList(commentsData.data.normalComments);
 			else setCommentList(commentsData.data.reviewComments);
 		}
-	}, [commentList, commentType, commentsData.data, taskDetail.data]);
+	}, [commentsData.data, commentType, commentSuccess]);
 
 	return (
 		<main className="taskDetail">
