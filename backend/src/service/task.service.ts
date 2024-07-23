@@ -4,6 +4,7 @@ import Task from "../entity/task.entity";
 import HttpException from "../exceptions/http.exceptions";
 import TaskRepository from "../repository/task.repository";
 import { CommentType } from "../utils/commentType.enum";
+import { TaskStatusEnum } from "../utils/taskStatus.enum";
 
 class TaskService {
 	constructor(private taskRepository: TaskRepository) {}
@@ -28,7 +29,7 @@ class TaskService {
 		const { title, description, maxParticipants, totalBounty, startDate, deadLine, skills } = task;
 		newTask.title = title;
 		newTask.description = description;
-		// newTask.status = status;
+		newTask.status = TaskStatusEnum.YET_TO_START;
 		newTask.createdBy = user;
 		newTask.maxParticipants = maxParticipants;
 		newTask.currentParticipants = 0;

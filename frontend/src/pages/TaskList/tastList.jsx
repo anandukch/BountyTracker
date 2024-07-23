@@ -5,78 +5,28 @@ import GridColumn from "../../components/GridColumn";
 import Search from "../../components/Search/Search";
 import { useNavigate } from "react-router-dom";
 import GridDataColumnList from "../../components/GridDataColumnList";
-
-// Dummy data
-const dummyData = [
-	{
-		id: 1,
-		taskid: "1",
-		taskname: "Employee List",
-		assignedby: "Manushi Chillet",
-		startdate: "15-12-2002",
-		duedate: "20-12-2002",
-		participants: "4/5",
-		koyns: 1200,
-	},
-	{
-		id: 2,
-		taskid: "2",
-		taskname: "Project Proposal",
-		assignedby: "Alex Smith",
-		startdate: "01-08-2024",
-		duedate: "10-08-2024",
-		participants: "3/3",
-		koyns: 800,
-	},
-	{
-		id: 3,
-		taskid: "3",
-		taskname: "Marketing Campaign",
-		assignedby: "Emma Johnson",
-		startdate: "01-09-2024",
-		duedate: "15-09-2024",
-		participants: "2/4",
-		koyns: 1500,
-	},
-	{
-		id: 4,
-		taskid: "4",
-		taskname: "Website Redesign",
-		assignedby: "John Doe",
-		startdate: "01-07-2024",
-		duedate: "05-07-2024",
-		participants: "5/5",
-		koyns: 1000,
-	},
-	{
-		id: 5,
-		taskid: "5",
-		taskname: "Budget Review",
-		assignedby: "Maria Garcia",
-		startdate: "10-08-2024",
-		duedate: "25-08-2024",
-		participants: "1/2",
-		koyns: 600,
-	},
-];
+import { useGetTaskListQuery } from "../../api/taskApi";
+import { Loader } from "../../components/Loader/Loader";
+import { formatDate } from "../../utils/date.utils";
 
 const TaskList = () => {
 	const [list, setList] = useState([]);
+	const { data, isLoading, isSuccess } = useGetTaskListQuery();
 
 	useEffect(() => {
-		const formattedData = dummyData.map((employee) => ({
-			...employee,
-			duedate: new Date(employee.duedate).toLocaleDateString("en-GB", {
-				day: "numeric",
-				month: "short",
-				year: "numeric",
-			}),
-		}));
-		setList(dummyData);
-	}, []);
+		if (isSuccess) {
+			const formattedData = data.data.map((task) => ({
+				...task,
+				startDate: formatDate(task.startDate),
+				deadLine: formatDate(task.deadLine),
+			}));
+			console.log(data);
+			setList(formattedData);
+		}
+	}, [data, isSuccess]);
 
 	const columns = [
-		{ name: "Task Id" },
+		// { name: "Task Id" },
 		{ name: "Task Name" },
 		{ name: "Assigned By" },
 		{ name: "Start Date" },
@@ -87,6 +37,7 @@ const TaskList = () => {
 
 	return (
 		<div className="fullWrap">
+			{isLoading && <Loader />}
 			<div className="wrapHeading">
 				<h1>Task List</h1>
 				<br></br>
@@ -108,7 +59,6 @@ const TaskList = () => {
 			</div>
 			<div className="listWrapper">
 				<div className="listHeader">
-					
 					{columns.map((column) => {
 						return <GridColumn key={column.name} name={column.name} />;
 					})}
@@ -117,14 +67,14 @@ const TaskList = () => {
 					{list.map((employee) => {
 						return (
 							<GridDataColumnList
-								key={employee.taskid}
-								taskid={employee.taskid}
-								taskname={employee.taskname}
-								assignedby={employee.assignedby}
-								startdate={employee.startdate}
-								duedate={employee.duedate}
+								key={employee.id}
+								taskid={employee.id}
+								taskname={employee.title}
+								assignedby={employee.createdBy.name}
+								startdate={employee.startDate}
+								duedate={employee.deadLine}
 								// id={employee.id}
-								participants={employee.participants}
+								participants={`${employee.currentParticipants}/${employee.maxParticipants}`}
 								koyns={employee.koyns}
 							/>
 						);

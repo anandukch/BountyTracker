@@ -9,6 +9,8 @@ import { CreateEmployeeDto } from "../dto/employee.dto";
 import getValidationErrorConstraints from "../utils/validationErrorConstraints";
 import authorize from "../middleware/authorize.middleware";
 import ValidationException from "../exceptions/validationException";
+import { compareDates } from "../utils/date.utils";
+import { TaskStatusEnum } from "../utils/taskStatus.enum";
 class EmployeeController {
 	public router: Router;
 	constructor(private employeeService: EmployeeService) {
@@ -89,13 +91,23 @@ class EmployeeController {
 	};
 	public getEmployeeAssignedTasks = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			console.log("as");
+			const participatingTasks = await this.employeeService.getEmployeeTasksByID(req.user.id);
+			participatingTasks.map((participatingTask) => {
+				delete participatingTask.task.createdBy.password;
+				let startDate = participatingTask.task.startDate;
+				let deadLine = participatingTask.task.deadLine;
+				let today = new Date();
+				if (compareDates(today, startDate) === 0 && compareDates(today, deadLine) === -1) {
+					participatingTask.task.status = TaskStatusEnum.IN_PROGRESS;
+				} else if (compareDates(today, deadLine) === 1) {
+					participatingTask.task.status = TaskStatusEnum.IN_REVIEW;
+				}
+			});
 
-			const employeeAssignedTasks = await this.employeeService.getEmployeeTasksByID(req.user.id);
 			res.status(200).json({
 				success: true,
 				message: "Employee tasks fetched successfully",
-				data: employeeAssignedTasks,
+				data: participatingTasks,
 			});
 		} catch (error) {
 			next(error);
