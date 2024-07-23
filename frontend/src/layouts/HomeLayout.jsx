@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux";
 import { addLoggedState } from "../store/employeeReducer";
 import { useGetProfileQuery } from "../api/employeeApi";
 import myTask from "../assets/myTask.svg";
-import { useState } from "react";
+
 const HomeLayout = () => {
 	const [pageIndex, setPageIndex] = useState(0);
 	const navigate = useNavigate();
