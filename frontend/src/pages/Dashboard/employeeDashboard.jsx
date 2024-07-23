@@ -43,6 +43,10 @@ const EmployeeDashboard = () => {
 	const handleCompleted = () => {
 		setAddClass(1);
 	};
+	
+	const handleAssigned=() =>{
+		setAddClass(2);
+	} 
 
 	const tasksHeader = {
 		name: "Name",
@@ -94,6 +98,11 @@ const EmployeeDashboard = () => {
 							text={"Completed Task"}
 							buttonClass={`dashboardTaskCompleted${addClass === 1 ? " activeTab" : ""}`}
 							clickHandle={handleCompleted}
+						/>
+						<ListButton
+							text={"Assigned Task"}
+							buttonClass={`dashboardTaskAssigned${addClass === 2 ? " activeTab" : ""}`}
+							clickHandle={handleAssigned}
 						/>
 					</div>
 					<div className="taskLogWrapper">

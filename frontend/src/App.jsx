@@ -49,6 +49,8 @@ const App = () => {
 				// { path: "taskList", element: <TaskList /> },
 				// { path: "employeeList", element: <EmployeeTierList /> },
 				{ path: "comment/:id", element: <ReviewPage /> },
+				{ path: "taskDetails", element: <TaskDetail /> },
+				
 			],
 		},
 		{
