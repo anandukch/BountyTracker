@@ -148,12 +148,16 @@ class EmployeeService {
 		if (!task) {
 			throw new EntityNotFoundException("Task not found");
 		}
+		console.log(employeeId);
+
 		const employee = await this.employeeRespository.findOneBy({
 			id: employeeId,
 		});
+
 		if (!employee) {
 			throw new EntityNotFoundException("Employee not found");
 		}
+
 		const taskParticipant = await this.taskParticipantService.getTask({
 			taskId,
 			employeeId,
@@ -164,6 +168,16 @@ class EmployeeService {
 		taskParticipant.contribution += contribution;
 		await this.taskParticipantService.updateTaskParticipants(taskParticipant);
 		return taskParticipant;
+	};
+
+	updateBounty = async (employeeId: number, bounty: number) => {
+		const employee = await this.employeeRespository.findOneBy({ id: employeeId }, ["details"]);
+		if (!employee) {
+			throw new EntityNotFoundException("Employee not found");
+		}
+		employee.details.totalBounty += bounty;
+		await this.employeeRespository.save(employee);
+		return employee;
 	};
 }
 

@@ -6,6 +6,7 @@ import CommentRepository from "../repository/comment.repository";
 import TaskRepository from "../repository/task.repository";
 import CommentService from "../service/comment.service";
 import TaskService from "../service/task.service";
+import { employeeService } from "./employee.routes";
 
 const taskService = new TaskService(new TaskRepository(dataSource.getRepository(Task)));
 const commentService = new CommentService(new CommentRepository(dataSource.getRepository(Comment)));
