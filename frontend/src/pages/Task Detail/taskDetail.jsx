@@ -8,17 +8,24 @@ import send from "../../assets/send.svg";
 import CommentComponent from "../../components/CommentComponent/CommentComponent";
 import Button from "../../components/Button/Button";
 import { useEffect, useRef, useState } from "react";
-import { useCreateCommentMutation, useGetCommentsByTaskIdQuery, useGetTaskByIdQuery, useJoinTaskMutation } from "../../api/taskApi";
+import {
+	useCreateCommentMutation,
+	useGetCommentsByTaskIdQuery,
+	useGetTaskByIdQuery,
+	useJoinTaskMutation,
+} from "../../api/taskApi";
 import { formatDate } from "../../utils/date.utils";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addJoinedStatus } from "../../store/employeeReducer";
+import CustomModal from "../../components/Modal/CustomModal";
 const TaskDetail = () => {
 	const { taskId } = useParams();
 	const [commentList, setCommentList] = useState([]);
 	const [participantList, setParticipantList] = useState([]);
 	const [joined, setJoined] = useState(false);
 	const [file, uploadFile] = useState();
+	const [showContributionModal, setShowContributionModal] = useState(false);
 	const inputRef = useRef();
 	const style = {
 		backgroundColor: "white",
@@ -30,7 +37,7 @@ const TaskDetail = () => {
 	const [mentionId, setMentionId] = useState();
 	const { data: taskDetail, isSuccess: taskSuccess } = useGetTaskByIdQuery(taskId);
 	const { data: commentsData, isSuccess: commentSuccess } = useGetCommentsByTaskIdQuery(taskId);
-	const [join,{isSuccess:joinSuccess}]=useJoinTaskMutation()
+	const [join, { isSuccess: joinSuccess }] = useJoinTaskMutation();
 	const loggedState = useSelector((state) => state.employee);
 	const dispatch = useDispatch();
 
@@ -75,9 +82,14 @@ const TaskDetail = () => {
 		inputRef.current.focus();
 		setMentionId(id);
 	};
-	const handleJoin=()=>{
-		join(taskId)
-	}
+	const handleJoin = () => {
+		join(taskId);
+	};
+
+	const handleSubmitReview = () => {
+		setCommentType("Review");
+	};
+
 	useEffect(() => {
 		if (taskSuccess) {
 			setParticipantList(taskDetail.data.participants);
@@ -86,6 +98,7 @@ const TaskDetail = () => {
 			});
 		}
 	}, [taskSuccess, taskDetail]);
+
 	useEffect(() => {
 		participantList.forEach((participant) => {
 			if (participant.name === loggedState.username) {
@@ -95,6 +108,7 @@ const TaskDetail = () => {
 			}
 		});
 	}, [participantList]);
+
 	useEffect(() => {
 		if (commentSuccess) {
 			setCommentList(commentsData.data);
@@ -103,6 +117,25 @@ const TaskDetail = () => {
 
 	return (
 		<main className="taskDetail">
+			{showContributionModal && (
+				<CustomModal
+					title="Add Contribution"
+					submitText="Contribute"
+					handleCancel={() => setShowContributionModal(false)}
+					// handleSubmit={}
+				>
+					<textarea className="contributionTextArea" placeholder="Enter contribution details..."></textarea>
+					<div className="contributionFileUpload">
+						{file ? file.name : "Choose a file to upload..."}
+						<div className="contributionFileUploadButton">
+							<label htmlFor="file" className="uploadFileLabel">
+								<input type="file" id="file" className="uploadFile" onChange={handleUpload} />
+								<img src={attach} alt="Add attachment" />
+							</label>
+						</div>
+					</div>
+				</CustomModal>
+			)}
 			<div className="title">
 				<span>
 					<h3>Task : # {taskDetail?.data.title}</h3>
@@ -255,7 +288,9 @@ const TaskDetail = () => {
 					</div>
 				</div>
 			) : (
-				<div className="Join Button" onClick={handleJoin}>Join</div>
+				<div className="Join Button" onClick={handleJoin}>
+					Join
+				</div>
 			)}
 		</main>
 	);

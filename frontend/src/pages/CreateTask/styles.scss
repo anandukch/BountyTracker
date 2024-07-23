@@ -62,7 +62,7 @@
 		grid-template-columns: repeat(3, 1fr);
 		column-gap: 30px;
 		row-gap: 30px;
-      height: 100%;
+		height: 100%;
 		.fieldsTextArea {
 			grid-column: 3/3;
 			grid-row: 1/3;
@@ -79,7 +79,7 @@
 				font-size: small;
 				border: 1px solid var(--borderColor);
 				outline: none;
-            resize: none;
+				resize: none;
 			}
 		}
 		.fields {

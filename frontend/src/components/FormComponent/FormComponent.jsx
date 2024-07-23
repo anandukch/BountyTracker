@@ -29,13 +29,7 @@ const FormComponent = ({ onChange, formFields }) => {
 					return (
 						<div className="fieldsTextArea">
 							<label>Description</label>
-							<textarea
-								key={field.id}
-								name="description"
-								rows="5"
-								cols="40"
-								onChange={onChange}
-							/>
+							<textarea key={field.id} name="description" rows="5" cols="40" onChange={onChange} />
 						</div>
 					);
 				return (

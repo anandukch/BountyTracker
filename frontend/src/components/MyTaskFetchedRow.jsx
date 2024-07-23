@@ -1,12 +1,14 @@
 import { useNavigate } from "react-router-dom";
 
-const FetchMyListRow = ({ id, taskid, taskname, progress, startdate, duedate, koyns, participants, taskStatus }) => {
+const FetchMyListRow = ({ id, taskid, taskname, progress, startdate, duedate, koyns, participants, taskStatus,index,count }) => {
 	const navigate = useNavigate();
 	const handledisplay = () => {
 		navigate(`/tasks/${taskid}`);
 	};
+	const rowClass = index.includes(taskid) ? "listDataMyTaskNotification" : "listDataMyTask";
+	const notificationCount = index.includes(taskid) ? count[taskid-1] : null;
 	return (
-		<div className="listDataMyTask">
+		<div className={rowClass}>
 			{/* <div className="taskId" onClick={handledisplay}>
 				{taskid}
 			</div> */}
@@ -29,12 +31,13 @@ const FetchMyListRow = ({ id, taskid, taskname, progress, startdate, duedate, ko
 				{taskStatus}
 			</div>
 
-			<div className="taskAssignedby" onClick={handledisplay}>
-				{progress}
+			<div className="taskPercentage" onClick={handledisplay}>
+				{((progress / koyns) * 100).toFixed(2)} %
 			</div>
-			
+
 			<div className="taskBounty" onClick={handledisplay}>
 				{koyns} Kyns
+				<div className="taskNotification" onClick={handledisplay}>{notificationCount}</div>	
 			</div>
 		</div>
 	);

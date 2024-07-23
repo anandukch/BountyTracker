@@ -24,6 +24,41 @@
 	row-gap: 20px;
 	width: 100%;
 	height: 100%;
+
+	.contributionTextArea {
+		width: 70%;
+		height: 30%;
+		resize: none;
+		padding: 20px;
+	}
+	.contributionFileUpload {
+		height: 40px;
+		width: 70%;
+		padding: 10px;
+		font-size: 14px;
+		border: 1px solid black;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		.contributionFileUploadButton {
+			/* width: 20px; */
+			/* height: 40px; */
+			width: 40px;
+			.uploadFileLabel {
+				cursor: pointer;
+				input {
+					display: none;
+				}
+
+				img {
+					object-fit: contain;
+					width: 90%;
+				}
+			}
+		}
+	}
+
 	.title {
 		width: 100%;
 		height: 60px;
