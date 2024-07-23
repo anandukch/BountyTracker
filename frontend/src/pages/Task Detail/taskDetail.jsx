@@ -8,6 +8,7 @@ import send from "../../assets/send.svg";
 import Button from "../../components/Button/Button";
 import { useEffect, useRef, useState } from "react";
 import {
+	useCompleteTaskMutation,
 	useCreateCommentMutation,
 	useGetCommentsByTaskIdQuery,
 	useGetTaskByIdQuery,
@@ -19,7 +20,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addJoinedStatus } from "../../store/employeeReducer";
 import CustomModal from "../../components/Modal/CustomModal";
-import CommentComponent from "../../components/CommentComponent/CommentComponent";
+import ListButton from "../../components/Button/ListButton";
 const TaskDetail = () => {
 	const [commentList, setCommentList] = useState([]);
 	const [participantList, setParticipantList] = useState([]);
@@ -38,6 +39,7 @@ const TaskDetail = () => {
 	const { data: commentsData, isSuccess: commentSuccess } = useGetCommentsByTaskIdQuery(taskId);
 	const [join, { isSuccess: joinSuccess }] = useJoinTaskMutation();
 	const [createComment] = useCreateCommentMutation();
+	const [completeTaskRequest] = useCompleteTaskMutation();
 
 	const loggedState = useSelector((state) => state.employee);
 
@@ -78,12 +80,11 @@ const TaskDetail = () => {
 	};
 
 	const handleSubmitReview = () => {
-		const formData = new FormData();
-		formData.append("file", file);
-		formData.append("commentType", "Review");
-		formData.append("content", contribution);
-		createComment({ taskId, formData });
-		setContribution("");
+		setCommentType("Review");
+	};
+
+	const completeTask = () => {
+		completeTaskRequest(Number(taskId));
 	};
 
 	useEffect(() => {
@@ -150,6 +151,7 @@ const TaskDetail = () => {
 				</span>
 				<span>
 					<h3>Due : {formatDate(taskDetail?.data.deadLine)}</h3>
+					<ListButton text="Complete Task" buttonClass="taskCompleteButton" clickHandle={completeTask} />
 				</span>
 			</div>
 			<div className="details">

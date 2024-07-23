@@ -42,6 +42,13 @@ const taskApi = apiWithTaskTags.injectEndpoints({
 			}),
 			invalidatesTags: ["COMMENTS", "REVIEW"],
 		}),
+
+		completeTask: builder.mutation({
+			query: (id) => ({
+				url: `tasks/complete/${id}`,
+				method: "PATCH",
+			}),
+		}),
 	}),
 });
 
@@ -55,4 +62,5 @@ export const {
 	useReviewCommentByIdMutation,
 	useGetCommentByIdQuery,
 	useJoinTaskMutation,
+	useCompleteTaskMutation,
 } = taskApi;

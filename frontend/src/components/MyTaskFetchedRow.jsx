@@ -18,10 +18,7 @@ const FetchMyListRow = ({
 	const handledisplay = () => {
 		navigate(`/tasks/${taskid}`);
 	};
-	console.log(reviewPendingCount);
-	// const notificationCount = reviewPendingCount == 0 ? null : reviewPendingCount;
 	const rowClass = reviewPendingCount > 0 ? "listDataMyTaskNotification" : "listDataMyTask";
-	console.log(rowClass);
 	return (
 		<div className={rowClass}>
 			{/* <div className="taskId" onClick={handledisplay}>
