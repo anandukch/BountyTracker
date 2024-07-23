@@ -22,6 +22,7 @@ class CommentRepository {
 			relations: {
 				mentionComment: true,
 				employee: true,
+				task: true,
 			},
 		});
 	};

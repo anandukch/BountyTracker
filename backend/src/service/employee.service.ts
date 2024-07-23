@@ -159,7 +159,7 @@ class EmployeeService {
 		if (!taskParticipant) {
 			throw new EntityNotFoundException("Employee not found in task");
 		}
-		taskParticipant.contribution = contribution;
+		taskParticipant.contribution += contribution;
 		await this.taskParticipantService.updateTaskParticipants(taskParticipant);
 		return taskParticipant;
 	};
