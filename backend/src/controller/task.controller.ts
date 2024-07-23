@@ -29,6 +29,7 @@ class TaskController {
 		this.router.post("/:taskId/comments", fileUploadMiddleware.single("file"), this.createComment);
 		this.router.patch("/comments/:commentId", this.reviewComment);
 		this.router.patch("/:taskId", this.updateTask);
+		this.router.patch("/complete/:taskId", this.completeTask);
 	}
 
 	public getAllTasks = async (req: RequestWithRole, res: Response, next: NextFunction) => {
@@ -117,6 +118,23 @@ class TaskController {
 		} catch (error) {
 			console.log(error);
 
+			next(error);
+		}
+	};
+
+	public completeTask = async (req: RequestWithRole, res: Response, next: NextFunction) => {
+		try {
+			const { taskId } = req.params;
+			if (!taskId) {
+				throw new HttpException(400, "Task not found");
+			}
+			const response = await this.taskService.completeTask(parseInt(taskId));
+			res.status(200).json({
+				success: true,
+				message: "Task completed succesfully",
+				data: response,
+			});
+		} catch (error) {
 			next(error);
 		}
 	};

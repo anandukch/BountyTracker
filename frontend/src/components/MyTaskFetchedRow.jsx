@@ -1,12 +1,24 @@
 import { useNavigate } from "react-router-dom";
 
-const FetchMyListRow = ({ id, taskid, taskname, progress, startdate, duedate, koyns, participants, taskStatus,index,count }) => {
+const FetchMyListRow = ({
+	id,
+	taskid,
+	taskname,
+	progress,
+	startdate,
+	duedate,
+	koyns,
+	participants,
+	taskStatus,
+	index,
+	count,
+}) => {
 	const navigate = useNavigate();
 	const handledisplay = () => {
 		navigate(`/tasks/${taskid}`);
 	};
 	const rowClass = index.includes(taskid) ? "listDataMyTaskNotification" : "listDataMyTask";
-	const notificationCount = index.includes(taskid) ? count[taskid-1] : null;
+	const notificationCount = index.includes(taskid) ? count[taskid - 1] : null;
 	return (
 		<div className={rowClass}>
 			{/* <div className="taskId" onClick={handledisplay}>
@@ -36,8 +48,10 @@ const FetchMyListRow = ({ id, taskid, taskname, progress, startdate, duedate, ko
 			</div>
 
 			<div className="taskBounty" onClick={handledisplay}>
-				{koyns} Kyns
-				<div className="taskNotification" onClick={handledisplay}>{notificationCount}</div>	
+				<span>{koyns} Kyns</span>
+				<div className="taskNotification" onClick={handledisplay}>
+					{notificationCount}
+				</div>
 			</div>
 		</div>
 	);

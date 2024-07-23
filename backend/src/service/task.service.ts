@@ -4,6 +4,7 @@ import Task from "../entity/task.entity";
 import HttpException from "../exceptions/http.exceptions";
 import TaskRepository from "../repository/task.repository";
 import { CommentType } from "../utils/commentType.enum";
+import ReviewStatus from "../utils/reviewStatus.enum";
 import { TaskStatusEnum } from "../utils/taskStatus.enum";
 
 class TaskService {
@@ -52,6 +53,27 @@ class TaskService {
 
 	getTaskCreatedByUser = async (id: number) => {
 		return this.taskRepository.find({ createdById: id });
+	};
+
+	completeTask = async (id: number) => {
+		const task = await this.taskRepository.findOneBy({ id }, [
+			"comments",
+			"participants",
+			"participants.employee",
+			"participants.employee.details",
+		]);
+		if (!task) {
+			throw new HttpException(404, "Task not found");
+		}
+		const comments = task.comments.filter((comment) => comment.reviewStatus === ReviewStatus.PENDING);
+		if (comments.length > 0) {
+			throw new HttpException(400, "Cannot complete task with pending comments");
+		}
+		task.participants.forEach((participant) => {
+			participant.employee.details.totalBounty += participant.contribution;
+		});
+		task.status = TaskStatusEnum.COMPLETED;
+		await this.taskRepository.save(task);
 	};
 }
 
