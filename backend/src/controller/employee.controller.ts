@@ -23,7 +23,7 @@ class EmployeeController {
 		this.router.get("/tasks/not-joined", authorize, this.getTasksNotJoinedByEmployee);
 		this.router.get("/:id", this.getEmployeeByID);
 		this.router.post("/login", this.loginEmployee);
-		this.router.post("/", validationMiddleware(CreateComementDto), this.createEmployee);
+		this.router.post("/", validationMiddleware(CreateEmployeeDto), this.createEmployee);
 		this.router.post("/tasks/:id", authorize, this.joinTask);
 		this.router.put("/:employeeId/tasks/:taskId/contributions", authorize, this.giveContribution);
 	}
