@@ -63,7 +63,7 @@ class EmployeeController {
 
 	public getAllEmployees = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			const employees = await this.employeeService.getAllEmployees();
+			const employees = await this.employeeService.getAllEmployees(["details"]);
 			res.status(200).json({
 				success: true,
 				message: "Employees fetched successfully",

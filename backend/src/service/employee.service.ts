@@ -18,8 +18,8 @@ class EmployeeService {
 		private taskParticipantService: TaskParticipantService
 	) {}
 
-	getAllEmployees = async (): Promise<Employee[]> => {
-		return this.employeeRespository.find();
+	getAllEmployees = async (relations?: Array<string>): Promise<Employee[]> => {
+		return this.employeeRespository.find({}, relations);
 	};
 
 	getEmployeeByEmail = async (email: string): Promise<Employee> => {
