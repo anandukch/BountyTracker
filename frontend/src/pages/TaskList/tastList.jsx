@@ -89,8 +89,7 @@ const TaskList = () => {
 		{ name: "Participants" },
 		{ name: "KoYns" },
 	];
-const index=[2,4];
-const count=[0,3,0,1,0];
+
 	return (
 		<div className="fullWrap">
 			{isLoading && <Loader />}
@@ -131,8 +130,7 @@ const count=[0,3,0,1,0];
 								duedate={employee.deadLine}
 								participants={`${employee.currentParticipants}/${employee.maxParticipants}`}
 								koyns={employee.koyns}
-								index={index}
-								count={count}
+								
 								
 							/>
 						);
