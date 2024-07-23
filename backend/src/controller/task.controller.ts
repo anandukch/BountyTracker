@@ -92,8 +92,6 @@ class TaskController {
 
 	public createTask = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			console.log(req.body);
-
 			const task = req.body;
 			const taskDto = plainToInstance(CreateTaskDto, task);
 			const errors = await validate(taskDto);
