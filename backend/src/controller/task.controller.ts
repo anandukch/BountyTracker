@@ -48,7 +48,7 @@ class TaskController {
 							id: participant.employee.id,
 							name: participant.employee.name,
 							email: participant.employee.email,
-							contribution: participant.employee.comments,
+							contributions: participant.employee.comments,
 						};
 					}),
 				},
