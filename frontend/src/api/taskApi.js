@@ -22,9 +22,9 @@ const taskApi = apiWithTaskTags.injectEndpoints({
 			query: (data) => {
 				console.log(data);
 				return {
-					url: `/tasks/${parseInt(data.id)}/comments`,
+					url: `/tasks/${parseInt(data.taskId)}/comments`,
 					method: "POST",
-					body: data,
+					body: data.formData,
 				};
 			},
 			invalidatesTags: ["COMMENTS"],
