@@ -1,0 +1,47 @@
+.ContributionCommentWrapper {
+	align-self: center;
+	width: 80%;
+	margin: 0 10px;
+	.ContributionCommentComponent {
+		padding: 10px;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		background-color: rgb(98, 182, 238);
+		border-radius: 5px;
+		/* height: 40px; */
+		div {
+			color: white;
+			/* font-size: 16px; */
+		}
+
+		.contributionCommentHead {
+			font-weight: 700;
+		}
+
+		.contributionCommentBody {
+			display: flex;
+			/* justify-content: space-between; */
+			gap: 20px;
+			align-items: center;
+		}
+
+		.contributionCommentContent {
+			/* font-style: italic; */
+			/* font-size: 18px; */
+			text-wrap: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+		}
+
+		.attachmentButton {
+			height: 30px;
+		}
+	}
+	.replyLink {
+		color: #0c53fb;
+		font-size: 12px;
+		padding: 0 5px;
+		cursor: pointer;
+	}
+}

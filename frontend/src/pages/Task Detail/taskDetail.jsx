@@ -22,6 +22,7 @@ import { addJoinedStatus } from "../../store/employeeReducer";
 import CustomModal from "../../components/Modal/CustomModal";
 import ListButton from "../../components/Button/ListButton";
 import CommentComponent from "../../components/CommentComponent/CommentComponent";
+import ContributionCommentComponent from "../../components/ContributionCommentComponent/ContributionCommentComponent";
 const TaskDetail = () => {
 	const [commentList, setCommentList] = useState([]);
 	const [participantList, setParticipantList] = useState([]);
@@ -70,8 +71,7 @@ const TaskDetail = () => {
 
 	const handleSend = async () => {
 		const formData = new FormData();
-		if(file)
-			formData.append("file",file)
+		if (file) formData.append("file", file);
 		formData.append("commentType", commentType);
 		formData.append("content", comment);
 		if (mentionId) formData.append("mentionCommentId", mentionId);
@@ -249,14 +249,19 @@ const TaskDetail = () => {
 							<div className="commentSectionWrapper">
 								<div className="commentListWrapper">
 									<div className="commentList">
-										{commentList?.normalComments?.map((comment) => (
-											<CommentComponent
-												comment={comment}
-												handleReplyClick={handleReply}
-												currentEmployeeId={loggedState.id}
-											/>
-										))}
-									</div>{" "}
+										{commentList?.map((comment) => {
+											console.log(comment);
+											return comment.commentType === "Normal" ? (
+												<CommentComponent
+													comment={comment}
+													handleReplyClick={handleReply}
+													currentEmployeeId={loggedState.id}
+												/>
+											) : (
+												<ContributionCommentComponent comment={comment} />
+											);
+										})}
+									</div>
 								</div>
 								<div className="addComment">
 									<img src={commentIcon} alt="Comment Icon" />
