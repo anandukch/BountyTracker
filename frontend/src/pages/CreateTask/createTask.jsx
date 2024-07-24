@@ -44,12 +44,6 @@ const CreateTask = () => {
 		},
 
 		{
-			id: "Start Date",
-			label: "Start Date",
-			type: "date",
-			name: "startDate",
-		},
-		{
 			id: "due date",
 			label: "Due Date",
 			type: "date",

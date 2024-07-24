@@ -32,6 +32,7 @@ const TaskDetail = () => {
 	const [commentType, setCommentType] = useState("Normal");
 	const [contribution, setContribution] = useState("");
 	const [mentionId, setMentionId] = useState();
+	const [isCreator, setIsCreator] = useState(false);
 
 	//------------queries--------
 	// const { data: taskDetail, isSuccess: taskSuccess } = useGetTaskByIdQuery(taskId);
@@ -42,7 +43,9 @@ const TaskDetail = () => {
 	const dispatch = useDispatch();
 
 	const [getTaskById, { data: taskDetail, isSuccess: taskSuccess }] = useLazyGetTaskByIdQuery();
-	const { data: commentsData, isSuccess: commentSuccess } = useGetCommentsByTaskIdQuery(taskId);
+	const { data: commentsData, isSuccess: commentSuccess } = useGetCommentsByTaskIdQuery(taskId, {
+		// pollingInterval: 5000,
+	});
 	const [join, { isSuccess: joinSuccess }] = useJoinTaskMutation();
 	const [createComment] = useCreateCommentMutation();
 	const [completeTaskRequest] = useCompleteTaskMutation();
@@ -70,6 +73,7 @@ const TaskDetail = () => {
 
 	const handleSend = async () => {
 		const formData = new FormData();
+		if (file) formData.append("file", file);
 		if (file) formData.append("file", file);
 		formData.append("commentType", commentType);
 		formData.append("content", comment);
@@ -117,8 +121,10 @@ const TaskDetail = () => {
 			console.log("effect 1");
 			const participants = taskDetail.data.participants;
 			setParticipantList(participants);
-			if (taskDetail?.data.createdBy.email === tokenPayload.email) setIsCreator(true);
-			else {
+			if (taskDetail?.data.createdBy.email === tokenPayload.email) {
+				setJoined(true);
+				setIsCreator(true);
+			} else {
 				participants.forEach((participant) => {
 					if (participant.email === tokenPayload.email) {
 						// dispatch(addJoinedStatus({ id: taskId, status: "joined" }));
@@ -182,7 +188,7 @@ const TaskDetail = () => {
 				<span>
 					<h3>Due : {formatDate(taskDetail?.data.deadLine)}</h3>
 					{formatDate(new Date()) < formatDate(taskDetail?.data.deadLine) && (
-						<Button text="Complete Task" isPrimary={true} onClick={completeTask} />
+						isCreator) && (<Button text="Complete Task" isPrimary={true} onClick={completeTask} />
 					)}
 				</span>
 			</div>

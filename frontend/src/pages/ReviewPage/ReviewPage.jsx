@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./ReviewPage.styles.scss";
 import ParticipantContribution from "../../components/ParticipantContribution/ParticipantContribution";
-import { useGetTaskContributionsQuery } from "../../api/taskApi";
+import { useGetTaskContributionsQuery, useLazyDownloadFileQuery } from "../../api/taskApi";
 import { useParams } from "react-router-dom";
 import CustomModal from "../../components/Modal/CustomModal";
+import { saveAs } from "file-saver";
 
 const ReviewPage = () => {
 	const [participantList, setParticipantList] = useState([]);
@@ -29,6 +30,10 @@ const ReviewPage = () => {
 		setShowContributionModal(contributionData);
 	};
 
+	const downloadFileHandler = (id) => {
+		window.open(`http://localhost:3000/tasks/comments/${id}/file`);
+	};
+
 	return (
 		<div className="ReviewPage">
 			{showContributionModal && (
@@ -39,7 +44,13 @@ const ReviewPage = () => {
 				>
 					<span>{showContributionModal.content}</span>
 					<span>
-						Attachment: {showContributionModal.fileUrl ? showContributionModal.fileUrl : "No Attachment"}
+						{/* Attachment: {showContributionModal.fileUrl ? showContributionModal.fileUrl : "No Attachment"} */}
+						Attachment:{" "}
+						{showContributionModal.fileUrl ? (
+							<button onClick={() => downloadFileHandler(showContributionModal.id)}>Download</button>
+						) : (
+							"No Attachment"
+						)}
 					</span>
 				</CustomModal>
 			)}

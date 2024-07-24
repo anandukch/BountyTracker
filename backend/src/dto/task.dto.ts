@@ -21,10 +21,6 @@ export class CreateTaskDto {
 
 	@IsNotEmpty()
 	@IsString()
-	startDate: Date;
-
-	@IsNotEmpty()
-	@IsString()
 	deadLine: Date;
 
 	@IsNotEmpty()
@@ -34,7 +30,7 @@ export class CreateTaskDto {
 
 export class UpdateTaskDto {
 	@IsNotEmpty()
-	status:string;
+	status: string;
 }
 
 export class ResponseTaskDto extends Task {

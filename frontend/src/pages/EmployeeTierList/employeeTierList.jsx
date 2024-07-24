@@ -70,6 +70,7 @@ const EmployeeTierList = () => {
 								bounty={employee.details.totalBounty}
 								birthday={employee.birthday}
 								role={employee.role}
+								tier={employee.currentTier}
 							/>
 						);
 					})}

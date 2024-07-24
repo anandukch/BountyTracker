@@ -13,24 +13,24 @@ import fileUploadMiddleware from "../middleware/fileUploadMiddleware";
 import validationMiddleware from "../middleware/validate.middleware";
 import { compareDates } from "../utils/date.utils";
 import { TaskStatusEnum } from "../utils/taskStatus.enum";
+import authorize from "../middleware/authorize.middleware";
 
 class TaskController {
 	public router: Router;
 	constructor(private taskService: TaskService, private commentService: CommentService) {
 		this.router = Router();
-		this.router.get("/", this.getAllTasks);
-		this.router.get("/created", this.getTaskCreatedByUser);
-		this.router.post("/", validationMiddleware(CreateTaskDto), this.createTask);
-		this.router.get("/:taskId", this.getTaskById);
-		// this.router.use("/:taskId/comments", commentRouter);
-		this.router.get("/:taskId/comments", this.getAllTaskComments);
-		this.router.get("/comments/:commentId", this.getCommentById);
+		this.router.get("/", authorize(), this.getAllTasks);
+		this.router.get("/created", authorize(), this.getTaskCreatedByUser);
+		this.router.post("/", authorize(), validationMiddleware(CreateTaskDto), this.createTask);
+		this.router.get("/:taskId", authorize(), this.getTaskById);
+		this.router.get("/:taskId/comments", authorize(), this.getAllTaskComments);
+		this.router.get("/comments/:commentId", authorize(), this.getCommentById);
 		this.router.get("/comments/:commentId/file", this.getCommentFile);
-		this.router.post("/:taskId/comments", fileUploadMiddleware.single("file"), this.createComment);
-		this.router.patch("/comments/:commentId", this.reviewComment);
-		this.router.patch("/:taskId", this.updateTask);
-		this.router.patch("/complete/:taskId", this.completeTask);
-		this.router.get("/:id/contributions", this.getTaskContributions);
+		this.router.post("/:taskId/comments", authorize(), fileUploadMiddleware.single("file"), this.createComment);
+		this.router.patch("/comments/:commentId", authorize(), this.reviewComment);
+		this.router.patch("/:taskId", authorize(), this.updateTask);
+		this.router.patch("/complete/:taskId", authorize(), this.completeTask);
+		this.router.get("/:id/contributions", authorize(), this.getTaskContributions);
 	}
 
 	public getTaskContributions = async (req: RequestWithRole, res: Response, next: NextFunction) => {
@@ -81,14 +81,14 @@ class TaskController {
 			console.log(tasks);
 
 			const data = tasks.map((task, i) => {
-				let startDate = task.startDate;
 				let deadLine = task.deadLine;
 				let today = new Date();
-
-				if (compareDates(today, startDate) >= 0 && compareDates(today, deadLine) <= 0) {
-					task.status = TaskStatusEnum.IN_PROGRESS;
-				} else if (compareDates(today, deadLine) > 0 && task.status !== TaskStatusEnum.COMPLETED) {
-					task.status = TaskStatusEnum.IN_REVIEW;
+				if (task.status !== TaskStatusEnum.COMPLETED) {
+					if (compareDates(today, deadLine) > 0) {
+						task.status = TaskStatusEnum.IN_REVIEW;
+					} else {
+						task.status = TaskStatusEnum.IN_PROGRESS;
+					}
 				}
 
 				return task;
@@ -181,16 +181,13 @@ class TaskController {
 			}
 			const allComments = await this.commentService.getAllCommentsByTaskId(parseInt(taskId), req.user.id);
 
-			const normalComments = allComments.filter((comment) => comment.commentType === CommentType.Normal);
-			const reviewComments = allComments.filter((comment) => comment.commentType === CommentType.Review);
+			// const normalComments = allComments.filter((comment) => comment.commentType === CommentType.Normal);
+			// const reviewComments = allComments.filter((comment) => comment.commentType === CommentType.Review);
 
 			res.status(200).json({
 				success: true,
 				message: "Comments fetched succesfully",
-				data: {
-					normalComments,
-					reviewComments,
-				},
+				data: allComments,
 			});
 		} catch (error) {
 			next(error);
@@ -298,7 +295,6 @@ class TaskController {
 			res.sendFile(file);
 		} catch (error) {}
 	};
-
 }
 
 export default TaskController;

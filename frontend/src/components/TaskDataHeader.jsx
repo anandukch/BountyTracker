@@ -1,4 +1,6 @@
 import TaskColumnData from "./TaskColumnData";
+import"../pages/Dashboard/style.scss";
+
 
 const TaskDataHeader = ({ taskRows = [] }) => {
   return (

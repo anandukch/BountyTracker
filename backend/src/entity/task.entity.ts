@@ -42,9 +42,6 @@ class Task extends AbstractEntity {
 	currentContribution: number;
 
 	@Column()
-	startDate: Date;
-
-	@Column()
 	deadLine: Date;
 
 	@OneToMany(() => TaskParticipants, (taskParticipants) => taskParticipants.task)

@@ -31,9 +31,9 @@ class TaskService {
 
 	createTask = async (task: CreateTaskDto, user: Employee) => {
 		let newTask = new Task();
-		const { title, description, maxParticipants, totalBounty, startDate, deadLine, skills } = task;
-		if (startDate > deadLine) {
-			throw new HttpException(400, "start date should be after due date");
+		const { title, description, maxParticipants, totalBounty, deadLine, skills } = task;
+		if (new Date() > deadLine) {
+			throw new HttpException(400, "due date cannot be before current date");
 		}
 		newTask.title = title;
 		newTask.description = description;
@@ -43,7 +43,6 @@ class TaskService {
 		newTask.currentParticipants = 0;
 		newTask.currentContribution = 0;
 		newTask.totalBounty = totalBounty;
-		newTask.startDate = startDate;
 		newTask.deadLine = deadLine;
 		newTask.skills = skills;
 		await this.taskRepository.save(newTask);

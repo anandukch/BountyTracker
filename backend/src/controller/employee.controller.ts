@@ -105,7 +105,6 @@ class EmployeeController {
 
 			const data = participatingTasks.map((participatingTask) => {
 				delete participatingTask.task.createdBy.password;
-				let startDate = participatingTask.task.startDate;
 				let deadLine = participatingTask.task.deadLine;
 				let today = new Date();
 

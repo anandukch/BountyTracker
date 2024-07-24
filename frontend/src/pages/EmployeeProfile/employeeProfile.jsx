@@ -135,17 +135,17 @@ const EmployeeProfile = () => {
 									/> */}
 							<PieChart
 								animate
-								animationDuration={500}
+								animationDuration={1000}
 								segmentsShift={1}
 								paddingAngle={0}
 								animationEasing="ease-out"
-								label={({ dataEntry }) => dataEntry.value}
+								// label={({ dataEntry }) => dataEntry.value}
 								// lineWidth={50}
 								
 
 								data={[
-									{ title: "One", value: employee.pendingTasks, color: "#E38627" },
-									{ title: "Two", value: employee.completedTasks, color: "#C13C37" },
+									{ title: "One", value: employee.pendingTasks, color: "#C13C37" },
+									{ title: "Two", value: employee.completedTasks, color: "#6bb456" },
 									// { title: "Three", value: 20, color: "#6A2135" },
 								]}
 							/>
