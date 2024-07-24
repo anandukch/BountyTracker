@@ -72,6 +72,22 @@ const ReviewPage = () => {
 		setShowContributionModal(contributionData);
 	};
 
+	const handleSplitEvenly = () => {
+		const splitBounty = parseInt(taskDetails.totalBounty / participantList.length);
+		let remainingBounty = taskDetails.totalBounty % participantList.length;
+		const updatedValues = [];
+		for (let i = 0; i < participantList.length; i++) {
+			updatedValues.push(splitBounty + (remainingBounty-- > 0));
+		}
+		setParticipantList((prev) => {
+			const newList = [...prev].map((participant, index) => {
+				participant.rewardedBounty = updatedValues[index];
+				return participant;
+			});
+			return newList;
+		});
+	};
+
 	const downloadFileHandler = (id) => {
 		window.open(`http://localhost:3000/tasks/comments/${id}/file`);
 	};
@@ -115,7 +131,9 @@ const ReviewPage = () => {
 				</section>
 				<div className="contributionHeading">
 					<div>Participant Contributions</div>
-					<div className="split">Split Equally</div>
+					<div className="split" onClick={handleSplitEvenly}>
+						Split Equally
+					</div>
 
 					<div>Bounty</div>
 				</div>
