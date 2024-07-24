@@ -3,46 +3,32 @@ import TaskDataRow from "../../components/TaskRowData";
 import "./style.scss";
 import profilImg from "../../assets/profile.png";
 import TaskDataHeader from "../../components/TaskDataHeader";
-import {
-	// useGetEmployeeCreatedTasksQuery,
-	// useGetEmployeeCurrentTasksQuery,
-	// useGetProfileQuery,
-	useLazyGetEmployeeCreatedTasksQuery,
-	useLazyGetEmployeeCurrentTasksQuery,
-} from "../../api/employeeApi";
+import { useLazyGetEmployeeCreatedTasksQuery, useLazyGetEmployeeCurrentTasksQuery } from "../../api/employeeApi";
 import { useEffect, useState } from "react";
 import { Loader } from "../../components/Loader/Loader";
-import { formatDate } from "../../utils/date.utils";
 import ListButton from "../../components/Button/ListButton";
-import { useDispatch } from "react-redux";
-import { addLoggedState } from "../../store/employeeReducer";
+import { useDispatch, useSelector } from "react-redux";
 import GridColumn from "../../components/GridColumn";
-import Search from "../../components/Search/Search";
 import Button from "../../components/Button/Button";
 import { useGetTaskListQuery, useLazyGetTaskListQuery } from "../../api/taskApi";
 import { useNavigate } from "react-router-dom";
-import getTokenPayload from "../../utils/getPayload";
 
 const EmployeeDashboard = () => {
+	const state = useSelector((state) => state.employee.employee);
+	console.log(state);
 	const [list, setList] = useState([]);
-	const [employeeTasks, { isSuccess: isCurrentTaskFetched, isFetching: loading1 }] =
-		useLazyGetEmployeeCurrentTasksQuery();
-	const [employeeCreatedTask, { isSuccess: isCreatedTaskFetched, isFetching: loading2, isFetching }] =
-		useLazyGetEmployeeCreatedTasksQuery();
-	const { data: employeeAllTaskData = [], isSuccess: isAllTaskFetched, isLoading: loading3 } = useGetTaskListQuery();
+	const [employeeTasks, { isFetching: loading1 }] = useLazyGetEmployeeCurrentTasksQuery();
+	const [employeeCreatedTask, { isFetching: loading2 }] = useLazyGetEmployeeCreatedTasksQuery();
+	const { data: employeeAllTaskData = [], isSuccess: isAllTaskFetched } = useGetTaskListQuery();
 	const [employeeAllTask, { isSuccess: isAllTaskFetchedLazy, isFetching: loading4 }] = useLazyGetTaskListQuery();
 
 	const [addClass, setAddClass] = useState(0);
 
 	const navigate = useNavigate();
 
-	const user = getTokenPayload();
-
 	useEffect(() => {
 		if (isAllTaskFetched) {
 			setList(employeeAllTaskData.data);
-			console.log("hi");
-			console.log(employeeAllTaskData.data);
 		}
 	}, [employeeAllTaskData.data, isAllTaskFetched]);
 
@@ -88,7 +74,7 @@ const EmployeeDashboard = () => {
 				<div className="searchSort">
 					<h1>Task List</h1>
 
-					{user.role === "Lead" && (
+					{state.role === "Lead" && (
 						<div className="createTask">
 							<Button
 								text="CreateTask"
@@ -123,13 +109,15 @@ const EmployeeDashboard = () => {
 							/>
 						</div>
 
-						<div className="taskBarWrap0">
-							<ListButton
-								text={"Created tasks"}
-								buttonClass={`dashboardTaskAll${addClass === 3 ? " activeTab" : ""}`}
-								clickHandle={handleCreatedTasks}
-							/>
-						</div>
+						{state.role == "Lead" && (
+							<div className="taskBarWrap0">
+								<ListButton
+									text={"Created tasks"}
+									buttonClass={`dashboardTaskAll${addClass === 3 ? " activeTab" : ""}`}
+									clickHandle={handleCreatedTasks}
+								/>
+							</div>
+						)}
 						{/* <div className="search">
 							<Search />
 						</div> */}

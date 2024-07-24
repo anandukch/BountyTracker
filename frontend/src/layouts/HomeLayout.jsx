@@ -7,7 +7,7 @@ import employees from "../assets/employees.svg";
 import logout from "../assets/logout.svg";
 import logo from "../assets/KoYns-Logo.png";
 import text from "../assets/KoYns-Text.png";
-import requests from "../assets/requests.svg"
+import requests from "../assets/requests.svg";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addLoggedState } from "../store/employeeReducer";
@@ -19,64 +19,52 @@ const HomeLayout = () => {
 	const [pageIndex, setPageIndex] = useState(0);
 	const location = useLocation();
 	const navigate = useNavigate();
+
+	const state = useSelector((state) => state.employee.employee);
+
 	const handleLogout = () => {
 		localStorage.clear("token");
 		navigate("/login");
 	};
-	const { data: employeeData, isLoading, isSuccess } = useGetProfileQuery();
+	const { data: employeeData, isError, isSuccess } = useGetProfileQuery();
 	const dispatch = useDispatch();
 
 	const toastMessages = useSelector((state) => state.toasts.toastMessages);
-	const token = localStorage.getItem("token");
-	const arrayToken = token.split(".");
-	const tokenPayload = JSON.parse(atob(arrayToken[1]));
+
 	useEffect(() => {
 		if (isSuccess) {
-			// console.log(tokenPayload);
-			const token = localStorage.getItem("token");
-			const arrayToken = token.split(".");
-			const tokenPayload = JSON.parse(atob(arrayToken[1]));
-			dispatch(
-				addLoggedState({
-					role: tokenPayload.role,
-					username: tokenPayload.name,
-					id: employeeData.data.id,
-				}),
-			);
+			dispatch(addLoggedState(employeeData.data));
 		}
-	}, [employeeData, isSuccess, dispatch]);
+
+		if (isError) {
+			localStorage.clear("token");
+			navigate("/login");
+		}
+	}, [employeeData, isSuccess, dispatch, isError, navigate]);
 
 	const sideBar = [
-		// {
-		// 	id: 0,
-		// 	title: "Profile",
-		// 	icon: profile,
-		// 	to: "/profile",
-		// },
 		{
 			id: 0,
 			title: "Tasks",
 			icon: tasks,
 			to: "/tasks",
+			render: true,
 		},
 		{
 			id: 1,
 			title: "Employees",
 			icon: employees,
 			to: "/employees",
+			render: true,
 		},
-		// {
-		// 	id: 3,
-		// 	title: "My Tasks",
-		// 	icon: myTask,
-		// 	to: "/myTasks",
-		// },
+
 		{
-			id:2,
+			id: 2,
 			title: "Requests",
 			icon: requests,
-			to: "/requests"
-		}
+			to: "/requests",
+			render: state.role == "HR",
+		},
 	];
 
 	return (
@@ -108,56 +96,27 @@ const HomeLayout = () => {
 							}}
 						>
 							<img src={profileHead} alt="Profile Icon" />
-							{tokenPayload.name}
+							{state.name}
 						</span>
 					</h2>
 				</div>
 				<aside className="HomeLayout">
 					<div className="top">
-						{/* <Link
-						className={`links ${pageIndex == 0 ? "active" : ""}`}
-						to="/employee"
-						onClick={() => setPageIndex(0)}
-					>
-						<div className="icon">
-							<img src={profile} alt="icon" className="imgicon" />
-						</div>
-						Profile
-					</Link> */}
-
-						{sideBar.map((item, index) => (
-							<Link
-								key={item.id}
-								className={`links ${location.pathname.search(item.to) >= 0 ? "active" : ""}`}
-								to={item.to}
-								onClick={() => setPageIndex(index)}
-							>
-								<div className="icon">
-									<img src={item.icon} alt="icon" className="imgicon" />
-								</div>
-								{item.title}
-							</Link>
-						))}
-						{/* <Link
-						className={`links ${pageIndex == 1 ? "active" : ""}`}
-						to="tasklist"
-						onClick={() => setPageIndex(1)}
-					>
-						<div className="icon">
-							<img src={tasks} alt="icon" className="imgicon" />
-						</div>
-						Tasks
-					</Link>
-					<Link
-						className={`links ${pageIndex == 2 ? "active" : ""}`}
-						to="employeeList"
-						onClick={() => setPageIndex(2)}
-					>
-						<div className="icon">
-							<img src={employees} alt="icon" className="imgicon" />
-						</div>
-						Employees
-					</Link> */}
+						{sideBar
+							.filter((item) => item.render)
+							.map((item, index) => (
+								<Link
+									key={item.id}
+									className={`links ${location.pathname.search(item.to) >= 0 ? "active" : ""}`}
+									to={item.to}
+									onClick={() => setPageIndex(index)}
+								>
+									<div className="icon">
+										<img src={item.icon} alt="icon" className="imgicon" />
+									</div>
+									{item.title}
+								</Link>
+							))}
 					</div>
 					<div className="bottom">
 						<div className="links" onClick={handleLogout}>
