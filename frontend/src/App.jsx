@@ -9,7 +9,7 @@ import TaskDetail from "./pages/Task Detail/taskDetail";
 import EmployeeTierList from "./pages/EmployeeTierList/employeeTierList";
 import { Provider } from "react-redux";
 import store from "./store/store";
-import ReviewPage from "./pages/ReviewPage/ReviewPage.jsx";
+// import ReviewPage from "./pages/ReviewPage/ReviewPage.jsx";
 import "./App.scss";
 import TaskList from "./pages/TaskList/tastList.jsx";
 import Progressbar from "./components/ProgressBar/ProgressBar.jsx";

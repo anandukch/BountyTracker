@@ -69,6 +69,7 @@ const taskApi = apiWithTaskTags.injectEndpoints({
 
 export const {
 	useGetTaskListQuery,
+	useLazyGetTaskListQuery,
 	useGetTaskByIdQuery,
 	useLazyGetTaskByIdQuery,
 	useCreateTaskMutation,
@@ -79,5 +80,5 @@ export const {
 	useJoinTaskMutation,
 	useCompleteTaskMutation,
 	useGetTaskContributionsQuery,
-	useLazyDownloadFileQuery
+	useLazyDownloadFileQuery,
 } = taskApi;

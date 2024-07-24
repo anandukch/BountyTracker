@@ -24,9 +24,9 @@ import { useNavigate } from "react-router-dom";
 
 const EmployeeDashboard = () => {
 	const [list, setList] = useState([]);
-	const [employeeTasks, { isSuccess: isCurrentTaskFetched, isLoading: loading1 }] =
+	const [employeeTasks, { isSuccess: isCurrentTaskFetched, isFetching: loading1 }] =
 		useLazyGetEmployeeCurrentTasksQuery();
-	const [employeeCreatedTask, { isSuccess: isCreatedTaskFetched, isLoading: loading2 }] =
+	const [employeeCreatedTask, { isSuccess: isCreatedTaskFetched, isFetching: loading2, isFetching }] =
 		useLazyGetEmployeeCreatedTasksQuery();
 	const { data: employeeAllTaskData = [], isSuccess: isAllTaskFetched, isLoading: loading3 } = useGetTaskListQuery();
 
