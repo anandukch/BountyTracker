@@ -77,6 +77,8 @@ class CommentService {
 
 		if (comment.commentType != CommentType.Review) {
 			throw new HttpException(400, "Only review comments can be reviewed");
+		} else if (comment.commentType != CommentType.Review) {
+			throw new HttpException(400, "Cannot change already accepted review");
 		}
 		const { reviewStatus, reviewRewardBounty } = commentDto;
 		comment.reviewStatus = reviewStatus;
