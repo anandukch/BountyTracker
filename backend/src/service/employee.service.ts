@@ -159,7 +159,6 @@ class EmployeeService {
 		if (!task) {
 			throw new EntityNotFoundException("Task not found");
 		}
-		console.log(employeeId);
 
 		const employee = await this.employeeRespository.findOneBy({
 			id: employeeId,

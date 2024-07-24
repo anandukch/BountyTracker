@@ -1,4 +1,6 @@
+/* eslint-disable no-undef */
 import { useNavigate } from "react-router-dom";
+import Progressbar from "./ProgressBar/ProgressBar";
 import { formatDate } from "../utils/date.utils";
 import { setStatus } from "../utils/status.util";
 
@@ -14,6 +16,9 @@ const FetchMyListRow = ({
 	taskStatus,
 	reviewPendingCount,
 }) => {
+	 
+	
+	const prog = ((progress / koyns) * 100).toFixed(2);
 	const navigate = useNavigate();
 	const handledisplay = () => {
 		navigate(`/tasks/${taskid}`);
@@ -44,7 +49,9 @@ const FetchMyListRow = ({
 			</div>
 
 			<div className="taskPercentage" onClick={handledisplay}>
-				{((progress / koyns) * 100).toFixed(2)} %
+				
+			
+				<Progressbar per ={prog}/>
 			</div>
 
 			<div className="taskBounty" onClick={handledisplay}>
