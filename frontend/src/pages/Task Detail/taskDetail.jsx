@@ -74,7 +74,6 @@ const TaskDetail = () => {
 	const handleSend = async () => {
 		const formData = new FormData();
 		if (file) formData.append("file", file);
-		if (file) formData.append("file", file);
 		formData.append("commentType", commentType);
 		formData.append("content", comment);
 		if (mentionId) formData.append("mentionCommentId", mentionId);
