@@ -54,6 +54,11 @@ const taskApi = apiWithTaskTags.injectEndpoints({
 				method: "PATCH",
 			}),
 		}),
+
+		getTaskContributions: builder.query({
+			query: (id) => `/tasks/${id}/contributions`,
+			providesTags: ["TASK"],
+		}),
 	}),
 });
 
@@ -68,4 +73,5 @@ export const {
 	useGetCommentByIdQuery,
 	useJoinTaskMutation,
 	useCompleteTaskMutation,
+	useGetTaskContributionsQuery,
 } = taskApi;
