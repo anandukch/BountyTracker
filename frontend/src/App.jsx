@@ -59,16 +59,16 @@ const App = () => {
 				{ path: "profile", element: <EmployeeProfile /> },
 			],
 		},
-		// {
-		// 	path: "/tasks",
-		// 	element: <HomeLayout />,
-		// 	children: [
-		// 		{ index: true, element: <TaskList /> },
-		// 		{ path: ":taskId/review", element: <ReviewPage /> },
-		// 		{ path: ":taskId", element: <TaskDetail /> },
-		// 		{ path: "create", element: <CreateTask /> },
-		// 	],
-		// },
+		{
+			path: "/tasks",
+			element: <HomeLayout />,
+			children: [
+				{ index: true, element: <TaskList /> },
+				{ path: ":taskId/review", element: <ReviewPage /> },
+				{ path: ":taskId", element: <TaskDetail /> },
+				{ path: "create", element: <CreateTask /> },
+			],
+		},
 		// {
 		// 	path: "/myTasks",
 		// 	element: <HomeLayout />,
@@ -83,8 +83,8 @@ const App = () => {
 			element: <HomeLayout />,
 			children: [{ index: true, element: <RequestList /> }],
 		},
-		{ path: "tasklist/", element: <HomeLayout />, children: [{ index: true, element: <TaskList /> }] },
-		{ path: "bar/", element: <HomeLayout />, children: [{ index: true, element: <Progressbar /> }] },
+		// { path: "tasklist/", element: <HomeLayout />, children: [{ index: true, element: <TaskList /> }] },
+		// { path: "bar/", element: <HomeLayout />, children: [{ index: true, element: <Progressbar /> }] },
 	]);
 
 	return (
