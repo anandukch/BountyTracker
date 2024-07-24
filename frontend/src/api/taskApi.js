@@ -9,6 +9,7 @@ const taskApi = apiWithTaskTags.injectEndpoints({
 		getTaskById: builder.query({
 			query: (id) => `/tasks/${id}`,
 			providesTags: ["TASK"],
+			invalidatesTags: ["COMMENTS"],
 		}),
 		createTask: builder.mutation({
 			query: (data) => ({ url: "/tasks", method: "POST", body: data }),

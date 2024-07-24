@@ -97,12 +97,15 @@ const TaskDetail = () => {
 			console.log("effect 1");
 			const participants = taskDetail.data.participants;
 			setParticipantList(participants);
-			participants.forEach((participant) => {
-				if (participant.email === tokenPayload.email) {
-					// dispatch(addJoinedStatus({ id: taskId, status: "joined" }));
-					setJoined(true);
-				}
-			});
+			if (taskDetail?.data.createdBy.email === tokenPayload.email) setJoined(true);
+			else {
+				participants.forEach((participant) => {
+					if (participant.email === tokenPayload.email) {
+						// dispatch(addJoinedStatus({ id: taskId, status: "joined" }));
+						setJoined(true);
+					}
+				});
+			}
 		}
 	}, [taskSuccess, taskDetail, tokenPayload]);
 
@@ -111,6 +114,7 @@ const TaskDetail = () => {
 		if (joinSuccess) {
 			console.log("effect 2");
 			dispatch(addJoinedStatus({ status: "joined" }));
+			setJoined(true);
 		}
 	}, [joinSuccess, dispatch, getTaskById, taskId]);
 
