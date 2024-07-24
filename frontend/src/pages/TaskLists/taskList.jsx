@@ -19,7 +19,7 @@ import { addLoggedState } from "../../store/employeeReducer";
 import GridColumn from "../../components/GridColumn";
 import Search from "../../components/Search/Search";
 import Button from "../../components/Button/Button";
-import { useGetTaskListQuery } from "../../api/taskApi";
+import { useGetTaskListQuery, useLazyGetTaskListQuery } from "../../api/taskApi";
 import { useNavigate } from "react-router-dom";
 
 const EmployeeDashboard = () => {
@@ -29,6 +29,7 @@ const EmployeeDashboard = () => {
 	const [employeeCreatedTask, { isSuccess: isCreatedTaskFetched, isFetching: loading2, isFetching }] =
 		useLazyGetEmployeeCreatedTasksQuery();
 	const { data: employeeAllTaskData = [], isSuccess: isAllTaskFetched, isLoading: loading3 } = useGetTaskListQuery();
+	const [employeeAllTask, { isSuccess: isAllTaskFetchedLazy, isFetching: loading4 }] = useLazyGetTaskListQuery();
 
 	const [addClass, setAddClass] = useState(0);
 
@@ -42,11 +43,9 @@ const EmployeeDashboard = () => {
 		}
 	}, [isAllTaskFetched]);
 
-	useEffect(() => {
-		console.log(addClass);
-	}, [addClass]);
-
-	const handleAll = () => {
+	const handleAll = async () => {
+		const data = await employeeAllTask();
+		setList(data.data.data);
 		setAddClass(0);
 	};
 
@@ -78,23 +77,10 @@ const EmployeeDashboard = () => {
 		{ name: "Status" },
 		{ name: "KoYns" },
 	];
-	// const [createTask, { data, isSuccess, isError, error }] = useCreateTaskMutation();
-	// const createTaskHandler = () => {
-	// 	createTask({
-	// 		...formData,
-	// 		totalBounty: parseInt(formData.totalBounty),
-	// 		maxParticipants: parseInt(formData.maxParticipants),
-	// 	});
-	// };
-
-	// (dont)
-	// useEffect(() => {
-	// 	console.log(employee);
-	// }, [employee]);
 
 	return (
 		<div className="employeeDashboardWrapper">
-			{(loading1 || loading2 || loading3) && <Loader />}
+			{(loading1 || loading2 || loading4) && <Loader />}
 			<section className="employeeDashboard">
 				<div className="searchSort">
 					<h1>Task List</h1>
@@ -109,32 +95,7 @@ const EmployeeDashboard = () => {
 						/>
 					</div>
 				</div>
-				{/* <div className="employeeDetailsWrapper">
-					<div className="employeeProfileWrapper">
-						<div className="employeeProfilePage">
-							<img src={profilImg} />
-							<h3 className="employeeNameText">{employee.name}</h3>
-							<div className="taskCountWrapper">
-								<div className="totalTasksProfile">
-									<h4>{employee.completedTasks + employee.pendingTasks || 0}</h4>
-									<p>Total</p>
-								</div>
-								<div className="pendingTasksProfile">
-									<h4>{employee.pendingTasks || 0}</h4>
-									<p>Pending</p>
-								</div>
-							</div>
-							<p className="totalBounty">
-								KoYns : <span className="bountyValue">{employee?.details?.totalBounty || 0}</span> KYN
-							</p>
-						</div>
-					</div>
-					<div className="employeeDetailsGrid">
-						{employeeDetails.map((detail) => {
-							return <DetailBlock key={detail.header} header={detail.header} content={detail.content} />;
-						})}
-					</div>
-				</div> */}
+
 				<div className="employeeTasksWrapper">
 					<div className="list">
 						<div className="taskBarWrap0">
@@ -170,16 +131,13 @@ const EmployeeDashboard = () => {
 					</div>
 
 					<div className="taskLogWrapper">
-						{/* <div className="taskHeaderWrapper">
-							<TaskDataHeader taskRows={tasksHeader} />
-						</div> */}
 						<div className="listHeaderTask">
 							{tasksHeader.map((header) => {
 								return <GridColumn key={header.name} name={header.name} />;
 							})}
 						</div>
 						<div className="taskDetailsWrapper">
-							{isAllTaskFetched &&
+							{(isAllTaskFetched || isAllTaskFetchedLazy) &&
 								list.map((task) => {
 									let formattedTask = task;
 									if (addClass == 0 || addClass == 3) {
@@ -187,11 +145,13 @@ const EmployeeDashboard = () => {
 											task: task,
 										};
 									}
-
-									// if (addClass === 2 && task.task.status !== "Completed")
-									return <TaskDataRow key={task.id} taskRows={formattedTask} />;
-									// else if (addClass === 1 && task.task.status == "Completed") {
-									// 	return <TaskDataRow key={task.id} taskRows={task} />;
+									if (addClass == 0 || addClass == 3)
+										return <TaskDataRow key={task.id} taskRows={formattedTask} />;
+									else if (addClass === 1 && task.task.status !== "Completed")
+										return <TaskDataRow key={task.id} taskRows={formattedTask} />;
+									else if (addClass === 2 && task.task.status == "Completed") {
+										return <TaskDataRow key={task.id} taskRows={task} />;
+									}
 								})}
 							{!isAllTaskFetched &&
 								tasksHeader.map((header) => {

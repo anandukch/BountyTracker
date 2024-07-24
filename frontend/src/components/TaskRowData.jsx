@@ -7,7 +7,7 @@ import "../pages/TaskLists/style.scss";
 
 const TaskDataRow = ({ taskRows }) => {
 	let color = "#efecda";
-	const status = setStatus(taskRows.task.startDate, taskRows.task.deadLine, taskRows.task.status);
+	const status = taskRows.task.status;
 	if (status == "In review") color = "#f5ecb8";
 	if (taskRows.task.status == "In progress") color = "#d3f4be";
 	if (status == "Completed") color = "#d3f4be";
