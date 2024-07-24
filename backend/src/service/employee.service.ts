@@ -11,6 +11,7 @@ import jsonwebtoken from "jsonwebtoken";
 import { JWT_SECRET, JWT_VALIDITY } from "../utils/constants";
 import EmployeeDetails from "../entity/employeeDetails.entity";
 import TaskParticipantService from "./taskParticipant.service";
+import { TaskStatusEnum } from "../utils/taskStatus.enum";
 class EmployeeService {
 	constructor(
 		private employeeRespository: EmployeeRepository,
@@ -38,8 +39,7 @@ class EmployeeService {
 		if (!employee) {
 			throw new EntityNotFoundException("Employee not found");
 		}
-
-		return employee.participatingTasks;
+		return employee.participatingTasks
 	};
 
 	getProfile = async (employeeID: number) => {

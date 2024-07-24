@@ -7,6 +7,7 @@ import employees from "../assets/employees.svg";
 import logout from "../assets/logout.svg";
 import logo from "../assets/KoYns-Logo.png";
 import text from "../assets/KoYns-Text.png";
+import requests from "../assets/requests.svg"
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addLoggedState } from "../store/employeeReducer";
@@ -70,6 +71,12 @@ const HomeLayout = () => {
 			icon: myTask,
 			to: "/myTasks",
 		},
+		{
+			id:4,
+			title: "Requests",
+			icon: requests,
+			to: "/requests"
+		}
 	];
 
 	return (
@@ -93,7 +100,17 @@ const HomeLayout = () => {
 						<img src={logo} alt="icon" className="logo-image" />
 						<img src={text} alt="icon" className="logo-text" />
 					</div>
-					<h2><img src={profileHead} alt="Profile Icon" />{tokenPayload.name}</h2>
+					<h2>
+						<span
+							className="profileHeaderWrapper"
+							onClick={() => {
+								navigate("/employees/profile");
+							}}
+						>
+							<img src={profileHead} alt="Profile Icon" />
+							{tokenPayload.name}
+						</span>
+					</h2>
 				</div>
 				<aside className="HomeLayout">
 					<div className="top">
