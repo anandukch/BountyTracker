@@ -30,3 +30,9 @@ export class ReviewCommentDto {
 	@IsNumber()
 	reviewRewardBounty: number;
 }
+
+export class HrRequestDto {
+	@IsNotEmpty()
+	@IsEnum(ReviewStatus)
+	reviewStatus: ReviewStatus;
+}
