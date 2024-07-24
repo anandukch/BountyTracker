@@ -19,23 +19,14 @@ import { formatDate } from "../../utils/date.utils";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addJoinedStatus } from "../../store/employeeReducer";
-
 import CustomModal from "../../components/Modal/CustomModal";
 import ListButton from "../../components/Button/ListButton";
 import CommentComponent from "../../components/CommentComponent/CommentComponent";
 const TaskDetail = () => {
-	//-----------constants--------
 	const [commentList, setCommentList] = useState([]);
 	const [participantList, setParticipantList] = useState([]);
-	const [file, uploadFile] = useState();
-	const [replyText, setReplyText] = useState("");
 	const [joined, setJoined] = useState(false);
-	const style = {
-		backgroundColor: "white",
-		color: "#2c95ce",
-		boxShadow: "0.5px 0.5px 0.5px  0.5px #8c96a0",
-	};
-
+	const [file, uploadFile] = useState();
 	const [showContributionModal, setShowContributionModal] = useState(false);
 	const [comment, setComment] = useState("");
 	const [contribution, setContribution] = useState("");
@@ -46,6 +37,7 @@ const TaskDetail = () => {
 
 	const { taskId } = useParams();
 	const inputRef = useRef();
+	const dispatch = useDispatch();
 
 	const [getTaskById, { data: taskDetail, isSuccess: taskSuccess }] = useLazyGetTaskByIdQuery();
 	const { data: commentsData, isSuccess: commentSuccess } = useGetCommentsByTaskIdQuery(taskId);
@@ -56,8 +48,6 @@ const TaskDetail = () => {
 	const loggedState = useSelector((state) => state.employee);
 
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
-	//----
 	const token = localStorage.getItem("token");
 	const arrayToken = token.split(".");
 	const tokenPayload = JSON.parse(atob(arrayToken[1]));
@@ -84,22 +74,14 @@ const TaskDetail = () => {
 		createComment({ taskId, formData });
 		setComment("");
 	};
-
 	const handleTextArea = (e) => {
 		setComment(e.target.value);
 	};
-
 	const handleUpload = (e) => {
 		uploadFile(e.target.files[0]);
 	};
-
 	const handleReply = (id) => {
 		inputRef.current.focus();
-		const mentionComment = commentList.normalComments.filter((record) => record.id === id);
-		// console.log(mentionComment);
-		const replyText = `replied : (${mentionComment[0].employee.name}) [${mentionComment[0].content}]: \n`;
-		inputRef.current.value = replyText;
-		setReplyText(replyText);
 		setMentionId(id);
 	};
 	const handleJoin = () => {
@@ -116,13 +98,13 @@ const TaskDetail = () => {
 			const participants = taskDetail.data.participants;
 			setParticipantList(participants);
 			participants.forEach((participant) => {
-				if (participant.email ===tokenPayload.email) {
+				if (participant.email === tokenPayload.email) {
 					// dispatch(addJoinedStatus({ id: taskId, status: "joined" }));
 					setJoined(true);
 				}
 			});
 		}
-	}, [taskSuccess, tokenPayload, taskDetail, ]);
+	}, [taskSuccess, taskDetail, tokenPayload]);
 
 	useEffect(() => {
 		getTaskById(taskId);
@@ -209,7 +191,7 @@ const TaskDetail = () => {
 				<div className="particpantsListSection">
 					<div className="particpantsListHeader">Particpants</div>
 					<div className="particpantsList">
-						{taskDetail?.data.participants.map((participant) => {
+						{participantList.map((participant) => {
 							return (
 								<div className="partcipants" key={participant.id}>
 									<img src={profile} alt="profile icon" />
@@ -235,29 +217,13 @@ const TaskDetail = () => {
 
 						<div className="commentSectionWrapper">
 							<div className="commentList">
-								{commentList?.normalComments?.map(
-									(comment) => (
-										<CommentComponent
-											comment={comment}
-											handleReplyClick={handleReply}
-											currentEmployeeId={loggedState.id}
-										/>
-									),
-
-									/* return (
-										<CommentComponent
-											key={record.id}
-											name={record.employee.name}
-											comment={record.content}
-											currEmployee="Arun Doe"
-											type="Normal"
-											onClick={() => handleReply(record.id)}
-											loggedState={loggedState}
-											status={record.review_status}
-											reply={record.mentionCommentId}
-										/>
-									); */
-								)}
+								{commentList?.normalComments?.map((comment) => (
+									<CommentComponent
+										comment={comment}
+										handleReplyClick={handleReply}
+										currentEmployeeId={loggedState.id}
+									/>
+								))}
 							</div>
 							<div className="addComment">
 								<img src={commentIcon} alt="Comment Icon" />
