@@ -5,6 +5,7 @@ import Button from "../../components/Button/Button";
 import profilImg from "../../assets/profile.png";
 import TaskDataHeader from "../../components/TaskDataHeader";
 import { useGetEmployeeCurrentTasksQuery, useGetProfileQuery } from "../../api/employeeApi";
+import platinumBadge from "../../assets/platinumMedal.svg";
 import { useEffect, useState } from "react";
 import { Loader } from "../../components/Loader/Loader";
 import { formatDate } from "../../utils/date.utils";
@@ -59,6 +60,13 @@ const EmployeeProfile = () => {
 	useEffect(() => {
 		console.log(employee);
 	}, [employee]);
+
+	// const tierBadge = (tier) => {
+	// 	if (tier == "Gold") return goldBadge;
+	// 	else if (tier == "Silver") return silverBadge;
+	// 	else if (tier == "Bronze") return bronzeBadge;
+	// 	else return platinumBadge;
+	// };
 
 	return (
 		<div className="employeeProfileWrapper">
@@ -151,7 +159,11 @@ const EmployeeProfile = () => {
 				</div>
 				<div className="employeeTasksWrapper">
 					<div className="currentTier">
-						Tier:<h4>{employee.currentTier}</h4>
+						<p>Platinum Count:</p>
+						<span className="platinumCountWrapper">
+							<img className="platinumCount" src={platinumBadge} />
+							<p>x{employee.platinumCount || 0}</p>
+						</span>
 					</div>
 					<div className="bounty">
 						Total Bounty:

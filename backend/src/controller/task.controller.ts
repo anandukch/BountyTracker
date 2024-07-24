@@ -187,7 +187,7 @@ class TaskController {
 			res.status(200).json({
 				success: true,
 				message: "Comments fetched succesfully",
-				data: allComments,
+				data: allComments.reverse(),
 			});
 		} catch (error) {
 			next(error);

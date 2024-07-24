@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import "./ContributionCommentComponent.scss";
 import attach from "../../assets/attachwhite.svg";
 

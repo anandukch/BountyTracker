@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import "./styles.scss";
 
 const CommentComponent = ({ comment, handleReplyClick, currentEmployeeEmail }) => {

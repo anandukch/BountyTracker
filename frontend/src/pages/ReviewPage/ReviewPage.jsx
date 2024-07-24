@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./ReviewPage.styles.scss";
 import ParticipantContribution from "../../components/ParticipantContribution/ParticipantContribution";
 import { useCompleteTaskMutation, useGetTaskContributionsQuery, useLazyDownloadFileQuery } from "../../api/taskApi";
