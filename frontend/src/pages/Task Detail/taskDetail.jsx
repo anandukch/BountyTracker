@@ -238,14 +238,16 @@ const TaskDetail = () => {
 							</div>
 
 							<div className="commentSectionWrapper">
-								<div className="commentList">
-									{commentList?.normalComments?.map((comment) => (
-										<CommentComponent
-											comment={comment}
-											handleReplyClick={handleReply}
-											currentEmployeeId={loggedState.id}
-										/>
-									))}
+								<div className="commentListWrapper">
+									<div className="commentList">
+										{commentList?.normalComments?.map((comment) => (
+											<CommentComponent
+												comment={comment}
+												handleReplyClick={handleReply}
+												currentEmployeeId={loggedState.id}
+											/>
+										))}
+									</div>{" "}
 								</div>
 								<div className="addComment">
 									<img src={commentIcon} alt="Comment Icon" />
@@ -267,12 +269,13 @@ const TaskDetail = () => {
 									/>
 									<span className="commentButtons">
 										<div className="sendButton">
-										<img src={send} alt="Send Comment" onClick={handleSend} />
+											<img src={send} alt="Send Comment" onClick={handleSend} />
 										</div>
 									</span>
 								</div>
 								<div className="reviewCheckBox">
-								<label htmlFor="Review">Mark For Review</label><input type="checkbox" name="Review" />
+									<label htmlFor="Review">Mark For Review</label>
+									<input type="checkbox" name="Review" />
 								</div>
 							</div>
 						</div>
