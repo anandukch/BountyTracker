@@ -77,8 +77,7 @@ class TaskController {
 
 	public getTaskCreatedByUser = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			const tasks = await this.taskService.getTaskCreatedByUser(req.user.id, ["comments"]);
-			console.log(tasks);
+			const tasks = await this.taskService.getTaskCreatedByUser(req.user.id, ["comments", "createdBy"]);
 
 			const data = tasks.map((task, i) => {
 				let deadLine = task.deadLine;
