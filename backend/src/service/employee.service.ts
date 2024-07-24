@@ -11,6 +11,7 @@ import jsonwebtoken from "jsonwebtoken";
 import { JWT_SECRET, JWT_VALIDITY } from "../utils/constants";
 import EmployeeDetails from "../entity/employeeDetails.entity";
 import TaskParticipantService from "./taskParticipant.service";
+import { getCurrentTier, getReward } from "../utils/getTierAndReward.utils";
 class EmployeeService {
 	constructor(
 		private employeeRespository: EmployeeRepository,
@@ -104,6 +105,8 @@ class EmployeeService {
 		newEmployeeDetails.birthday = new Date(employeeDto.birthday);
 		newEmployeeDetails.phoneNo = employeeDto.phoneNo;
 		newEmployeeDetails.totalBounty = 0;
+		newEmployeeDetails.platinumCount = 0;
+		newEmployeeDetails.rewards = 0;
 		employee.details = newEmployeeDetails;
 		return this.employeeRespository.save(employee);
 	};
@@ -175,7 +178,21 @@ class EmployeeService {
 		if (!employee) {
 			throw new EntityNotFoundException("Employee not found");
 		}
-		employee.details.totalBounty += bounty;
+
+		// const newTier = checkIfNewTierReached(employee.details.totalBounty + bounty);
+		const currentTier = getCurrentTier(employee.details.totalBounty);
+		employee.details.totalBounty += bounty; // add awarded bounty
+		const newTier = getCurrentTier(employee.details.totalBounty);
+
+		if (currentTier !== newTier) {
+			const reward = getReward(newTier);
+			employee.details.rewards += reward;
+		}
+		if (newTier === "Platinum") {
+			employee.details.platinumCount += 1;
+			employee.details.totalBounty -= 2000; //reset Bounty on reaching Platinum
+		}
+
 		await this.employeeRespository.save(employee);
 		return employee;
 	};

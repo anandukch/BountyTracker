@@ -272,6 +272,7 @@ class TaskController {
 			res.sendFile(file);
 		} catch (error) {}
 	};
+
 }
 
 export default TaskController;
