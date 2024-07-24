@@ -27,8 +27,8 @@ const EmployeeTierList = () => {
 
 	const columns = [
 		// { name:"Emplouee ID"},
-		{ name: "Employee Name" },
 		{ name: "Employee ID" },
+		{ name: "Employee Name" },
 		{ name: "Birthday" },
 		{ name: "Role" },
 		{ name: "KoYns" },

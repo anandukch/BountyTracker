@@ -13,11 +13,11 @@ const GridRequestColumn=({name,id,requestTime,bounty})=>{
     return(
         <div className="listDataSet">
            
-            <div className="employeeName">
-                {name}
-            </div>
             <div className="employeeId">
                 {id}
+            </div>
+            <div className="employeeName">
+                {name}
             </div>
             <div className="requestTime">
                 {requestTime}

@@ -14,11 +14,11 @@ const GridDataColumn = ({name,id,bounty,birthday,role}) =>{
             {/* <div className="employeeId">
                 {id}
             </div> */}
-            <div className="employeeName">
-                {name}
-            </div>
             <div className="employeeID">
                 {id}
+            </div>
+            <div className="employeeName">
+                {name}
             </div>
             <div className="employeeBirthday">
                 {birthday}

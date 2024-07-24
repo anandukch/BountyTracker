@@ -30,8 +30,8 @@ const RequestList=() =>{
     
     const columns = [
 		// { name:"Emplouee ID"},
-		{ name: "Employee Name" },
         { name: "Employee ID" },
+		{ name: "Employee Name" },
 		{ name: "Request Time" },
 		{ name: "Tier" },
         {name: "Action"}
