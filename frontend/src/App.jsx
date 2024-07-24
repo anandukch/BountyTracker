@@ -48,37 +48,38 @@ const App = () => {
 			],
 		},
 
-		// {
-		// 	path: "/tasks",
-		// 	element: <HomeLayout />,
-		// 	children: [
-		// 		{ index: true, element: <EmployeeDashboard /> },
-		// 		{ path: ":taskId", element: <TaskDetail /> },
-		// 	],
-		// },
-
-		// {
-		// 	path: "/employees",
-		// 	element: <HomeLayout />,
-		// 	children: [
-		// 		{ index: true, element: <EmployeeTierList /> },
-
-		// 		// { path: "taskList", element: <TaskList /> },
-		// 		// { path: "employeeList", element: <EmployeeTierList /> },
-		// 		{ path: "taskDetails", element: <TaskDetail /> },
-		// 		{ path: "profile", element: <EmployeeProfile /> },
-		// 	],
-		// },
 		{
 			path: "/tasks",
 			element: <HomeLayout />,
 			children: [
-				{ index: true, element: <TaskList /> },
-				{ path: ":taskId/review", element: <ReviewPage /> },
+				{ index: true, element: <EmployeeDashboard /> },
 				{ path: ":taskId", element: <TaskDetail /> },
-				{ path: "create", element: <CreateTask /> },
+				{path:"create", element: <CreateTask/>}
 			],
 		},
+
+		{
+			path: "/employees",
+			element: <HomeLayout />,
+			children: [
+				{ index: true, element: <EmployeeTierList /> },
+
+				// { path: "taskList", element: <TaskList /> },
+				// { path: "employeeList", element: <EmployeeTierList /> },
+				{ path: "taskDetails", element: <TaskDetail /> },
+				{ path: "profile", element: <EmployeeProfile /> },
+			],
+		},
+		// {
+		// 	path: "/tasks",
+		// 	element: <HomeLayout />,
+		// 	children: [
+		// 		{ index: true, element: <TaskList /> },
+		// 		{ path: ":taskId/review", element: <ReviewPage /> },
+		// 		{ path: ":taskId", element: <TaskDetail /> },
+		// 		{ path: "create", element: <CreateTask /> },
+		// 	],
+		// },
 		// {
 		// 	path: "/myTasks",
 		// 	element: <HomeLayout />,
