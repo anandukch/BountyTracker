@@ -33,6 +33,7 @@ const TaskDetail = () => {
 	const [commentType, setCommentType] = useState("Normal");
 	const [contribution, setContribution] = useState("");
 	const [mentionId, setMentionId] = useState();
+	const [isCreator, setIsCreator] = useState(false);
 
 	//------------queries--------
 	// const { data: taskDetail, isSuccess: taskSuccess } = useGetTaskByIdQuery(taskId);
@@ -43,7 +44,9 @@ const TaskDetail = () => {
 	const dispatch = useDispatch();
 
 	const [getTaskById, { data: taskDetail, isSuccess: taskSuccess }] = useLazyGetTaskByIdQuery();
-	const { data: commentsData, isSuccess: commentSuccess } = useGetCommentsByTaskIdQuery(taskId);
+	const { data: commentsData, isSuccess: commentSuccess } = useGetCommentsByTaskIdQuery(taskId, {
+		// pollingInterval: 5000,
+	});
 	const [join, { isSuccess: joinSuccess }] = useJoinTaskMutation();
 	const [createComment] = useCreateCommentMutation();
 	const [completeTaskRequest] = useCompleteTaskMutation();
@@ -118,8 +121,10 @@ const TaskDetail = () => {
 			console.log("effect 1");
 			const participants = taskDetail.data.participants;
 			setParticipantList(participants);
-			if (taskDetail?.data.createdBy.email === tokenPayload.email) setJoined(true);
-			else {
+			if (taskDetail?.data.createdBy.email === tokenPayload.email) {
+				setJoined(true);
+				setIsCreator(true);
+			} else {
 				participants.forEach((participant) => {
 					if (participant.email === tokenPayload.email) {
 						// dispatch(addJoinedStatus({ id: taskId, status: "joined" }));
@@ -182,7 +187,9 @@ const TaskDetail = () => {
 				</span>
 				<span>
 					<h3>Due : {formatDate(taskDetail?.data.deadLine)}</h3>
-					<Button text="Complete Task" isPrimary={true} onClick={completeTask} />
+					{formatDate(new Date()) < formatDate(taskDetail?.data.deadLine) && (
+						isCreator) && (<Button text="Complete Task" isPrimary={true} onClick={completeTask} />
+					)}
 				</span>
 			</div>
 			<div className="data">
@@ -235,7 +242,7 @@ const TaskDetail = () => {
 				</div>
 				{/* {joined ? ( */}
 				<div className="bottomSectionWrapper">
-					{!joined && (
+					{!joined  && (
 						<div className="joinButtonWrapper">
 							<Button text="Join Task" isPrimary={true} onClick={handleJoin} />
 						</div>
