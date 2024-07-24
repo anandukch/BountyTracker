@@ -48,40 +48,6 @@ const App = () => {
 			],
 		},
 
-<<<<<<< HEAD
-		{
-			path: "/tasks",
-			element: <HomeLayout />,
-			children: [
-				{ index: true, element: <EmployeeDashboard /> },
-				{ path: ":taskId", element: <TaskDetail /> },
-			],
-		},
-
-		{
-			path: "/employees",
-			element: <HomeLayout />,
-			children: [
-				{ index: true, element: <EmployeeTierList /> },
-
-				// { path: "taskList", element: <TaskList /> },
-				// { path: "employeeList", element: <EmployeeTierList /> },
-				{ path: "taskDetails", element: <TaskDetail /> },
-				{ path: "profile", element: <EmployeeProfile /> },
-			],
-		},
-		{
-			path: "/tasks",
-			element: <HomeLayout />,
-			children: [
-				{ index: true, element: <TaskList /> },
-				{ path: ":taskId/review", element: <ReviewPage /> },
-				{ path: ":taskId", element: <TaskDetail /> },
-				{ path: "create", element: <CreateTask /> },
-			],
-		},
-
-=======
 		// {
 		// 	path: "/tasks",
 		// 	element: <HomeLayout />,
@@ -103,7 +69,6 @@ const App = () => {
 		// 		{ path: "profile", element: <EmployeeProfile /> },
 		// 	],
 		// },
->>>>>>> b8ee93b (Task review page)
 		{
 			path: "/tasks",
 			element: <HomeLayout />,
@@ -128,11 +93,8 @@ const App = () => {
 			element: <HomeLayout />,
 			children: [{ index: true, element: <RequestList /> }],
 		},
-<<<<<<< HEAD
-=======
 		// { path: "tasklist/", element: <HomeLayout />, children: [{ index: true, element: <TaskList /> }] },
 		{ path: "bar/", element: <HomeLayout />, children: [{ index: true, element: <Progressbar /> }] },
->>>>>>> b8ee93b (Task review page)
 	]);
 
 	return (
