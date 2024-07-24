@@ -18,6 +18,8 @@ import { addLoggedState } from "./store/employeeReducer.js";
 import { useGetProfileQuery } from "./api/employeeApi.js";
 import MyTask from "./pages/myTask/myTask.jsx";
 import RequestList from "./pages/RequestList/requestList.jsx";
+import EmployeeProfile from "./pages/EmployeeProfile/employeeProfile.jsx";
+
 
 const App = () => {
 	const router = createBrowserRouter([
@@ -56,6 +58,7 @@ const App = () => {
 				// { path: "employeeList", element: <EmployeeTierList /> },
 				{ path: "comment/:id", element: <ReviewPage /> },
 				{ path: "taskDetails", element: <TaskDetail /> },
+				{ path: "profile", element: <EmployeeProfile /> },
 			],
 		},
 		{

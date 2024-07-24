@@ -100,7 +100,17 @@ const HomeLayout = () => {
 						<img src={logo} alt="icon" className="logo-image" />
 						<img src={text} alt="icon" className="logo-text" />
 					</div>
-					<h2><img src={profileHead} alt="Profile Icon" />{tokenPayload.name}</h2>
+					<h2>
+						<span
+							className="profileHeaderWrapper"
+							onClick={() => {
+								navigate("/employees/profile");
+							}}
+						>
+							<img src={profileHead} alt="Profile Icon" />
+							{tokenPayload.name}
+						</span>
+					</h2>
 				</div>
 				<aside className="HomeLayout">
 					<div className="top">
