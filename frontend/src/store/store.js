@@ -8,7 +8,6 @@ const store = configureStore({
 	reducer: {
 		employee: employeeReducer,
 		toasts: toastReducer,
-
 		[baseApi.reducerPath]: baseApi.reducer,
 	},
 

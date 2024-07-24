@@ -7,7 +7,7 @@ import Hero from "./components/Hero/Hero";
 import EmployeeDashboard from "./pages/TaskLists/taskList.jsx";
 import TaskDetail from "./pages/Task Detail/taskDetail";
 import EmployeeTierList from "./pages/EmployeeTierList/employeeTierList";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import store from "./store/store";
 // import ReviewPage from "./pages/ReviewPage/ReviewPage.jsx";
 import "./App.scss";
@@ -17,8 +17,22 @@ import MyTask from "./pages/myTask/myTask.jsx";
 import RequestList from "./pages/RequestList/requestList.jsx";
 import EmployeeProfile from "./pages/EmployeeProfile/employeeProfile.jsx";
 import ReviewPage from "./pages/ReviewPage/ReviewPage.jsx";
+import { addLoggedState } from "./store/employeeReducer.js";
+import { useGetProfileQuery } from "./api/employeeApi.js";
+import { useEffect } from "react";
 
 const App = () => {
+	const { data, isSuccess } = useGetProfileQuery();
+
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if (isSuccess) {
+			const { data: employeeData } = data;
+			console.log(employeeData);
+			dispatch(addLoggedState(employeeData));
+		}
+	}, [data, dispatch, isSuccess]);
 	const router = createBrowserRouter([
 		{
 			path: "/",
@@ -79,11 +93,9 @@ const App = () => {
 	]);
 
 	return (
-		<Provider store={store}>
-			<main className="App">
-				<RouterProvider router={router} />
-			</main>
-		</Provider>
+		<main className="App">
+			<RouterProvider router={router} />
+		</main>
 	);
 };
 export default App;
