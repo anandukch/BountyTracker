@@ -51,6 +51,8 @@ class EmployeeController {
 	public getEmployeeProfile = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			const employee = await this.employeeService.getProfile(req.user.id);
+			console.log(employee);
+			
 			res.status(200).json({
 				success: true,
 				message: "Employee fetched successfully",
@@ -148,10 +150,6 @@ class EmployeeController {
 
 	public createEmployee = async (req: Request, res: Response, next: NextFunction) => {
 		try {
-			// if (req.role > Role.LEAD) {
-			//     throw new HttpException(403, "Access Denied");
-			// }
-
 			const createdEmployee = await this.employeeService.createEmployee(req.body as CreateEmployeeDto);
 			delete createdEmployee.password;
 			res.status(201).send(createdEmployee);
