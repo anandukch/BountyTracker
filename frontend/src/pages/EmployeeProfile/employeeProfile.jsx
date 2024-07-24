@@ -163,8 +163,8 @@ const EmployeeProfile = () => {
 						<div className="rewards">
 							Total Rewards:
 							<h4>
-								{employee?.details?.totalRewards}
-								20000
+								{employee?.details?.rewards}
+								{/* 20000 */}
 								</h4>
 
 
