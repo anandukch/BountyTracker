@@ -7,6 +7,7 @@ import employees from "../assets/employees.svg";
 import logout from "../assets/logout.svg";
 import logo from "../assets/KoYns-Logo.png";
 import text from "../assets/KoYns-Text.png";
+import requests from "../assets/requests.svg"
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addLoggedState } from "../store/employeeReducer";
@@ -70,6 +71,12 @@ const HomeLayout = () => {
 			icon: myTask,
 			to: "/myTasks",
 		},
+		{
+			id:4,
+			title: "Requests",
+			icon: requests,
+			to: "/requests"
+		}
 	];
 
 	return (

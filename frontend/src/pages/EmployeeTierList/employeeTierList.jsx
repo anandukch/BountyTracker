@@ -35,7 +35,7 @@ const EmployeeTierList = () => {
 	const columns = [
 		// { name:"Emplouee ID"},
 		{ name: "Employee Name" },
-		{ name: "Gender" },
+		{ name: "Employee ID" },
 		{ name: "Birthday" },
 		{ name: "Role" },
 		{ name: "KoYns" },
@@ -73,9 +73,7 @@ const EmployeeTierList = () => {
 							<GridDataColumn
 								key={employee.id}
 								name={employee.name}
-								// id={employee.id}
-								
-								gender={employee.details.gender}
+								id={employee.id}
 								bounty={employee.details.totalBounty}
 								birthday={employee.birthday}
 								role={employee.role}
