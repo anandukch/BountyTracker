@@ -17,6 +17,4 @@ export class EmployeeDetailsDto {
 	@IsNumber()
 	totalBounty: number;
 
-	@IsNumber()
-	platinumCount: number;
 }
