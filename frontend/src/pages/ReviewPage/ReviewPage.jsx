@@ -114,7 +114,8 @@ const ReviewPage = () => {
 			)}
 			{/* {isLoading && <Loader />} */}
 			<div className="wrapHeading">
-				<h1>Review Task</h1>
+				<div>Review Task</div>
+				<div className="balancebounty">Balance KoYnz:</div>
 			</div>
 
 			<main className="reviewMain">

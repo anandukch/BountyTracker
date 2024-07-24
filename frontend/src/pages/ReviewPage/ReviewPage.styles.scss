@@ -75,19 +75,41 @@
 			display: flex;
 			justify-content: space-between;
 			margin-bottom: 20px;
-			font-size: larger;
+			font-size:large;
 			padding-right: 50px;
+<<<<<<< HEAD
 
 			.split {
 				margin-left: 100px;
 				margin-right: 100px;
 				width: 100px;
+=======
+			.bounty{
+
+				font-size: large; 
+  font-weight: bold; 
+  font-style: normal; 
+  margin-right: 10px;
+			}
+          .title{
+			font-size: x-large;
+		  }
+		
+			.split {
+				margin-left: 500px;
+				width:150px;
+				padding-left:20px;
+				 padding-top: 3px;
+>>>>>>> b8ee93b (Task review page)
 				min-width: fit-content;
 				background-color: #f5ebb1;
 				border-style: solid;
-				border-color: #e4d99a;
-				border-width: 5px;
+				border-color:white;
+			 
+			 
+				border-width: 2px;
 				border-radius: 10px;
+<<<<<<< HEAD
 				height: 50px;
 				padding: 10px;
 				box-shadow:
@@ -99,6 +121,19 @@
 			}
 			.split:hover {
 				background-color: white;
+=======
+				height: 30px;
+				 
+				// box-shadow:
+				//   -1px -1px 20px 0.5px rgba(235, 233, 233, 0.3) inset,
+				//   0 0 10px #00000027;
+				cursor: pointer;  
+			  
+				transition: all 0.3s ease;  
+			  }
+			  .split:hover {
+			 
+>>>>>>> b8ee93b (Task review page)
 				box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 			}
 
@@ -207,14 +242,28 @@
 			.rewardWrapper {
 				display: flex;
 				align-items: center;
+				margin-left:100px;
+				margin-top:15px;
 			}
 		}
 	}
 }
+<<<<<<< HEAD
 .split {
 	margin-left: 100px;
 	margin-right: 100px;
 	width: 100px;
+=======
+.confirm{
+	align-content: center;
+	font-weight: bold; 
+	font-style: normal; 
+	font-size: large;
+	margin:100px;
+	margin-right:100px;
+	width:200px;
+ 
+>>>>>>> b8ee93b (Task review page)
 	min-width: fit-content;
 	background-color: #f5ebb1;
 	border-style: solid;
@@ -224,9 +273,39 @@
 	height: 50px;
 	padding: 10px;
 	box-shadow:
+<<<<<<< HEAD
 		-1px -1px 20px 0.5px rgba(235, 233, 233, 0.3) inset,
 		0 0 10px #00000027;
 	cursor: pointer;
 
 	transition: all 0.3s ease;
 }
+=======
+	  -1px -1px 20px 0.5px rgba(235, 233, 233, 0.3) inset,
+	  0 0 10px #00000027;
+	cursor: pointer;  
+  
+	transition: all 0.3s ease;  
+	margin: auto;
+    margin-top: auto;
+  margin-top: 100px;
+  padding-left: 55px;
+  }
+  .confirm:hover {
+	background-color:white;  
+	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .confirm:active {
+	transform: translateY(1px);  
+	box-shadow: none; }
+
+
+	.wrapHeading
+	{  display: flex;
+		justify-content: space-between;
+		font-size: xx-large;
+		margin-left: 20px;
+		margin-right: 20px;
+	}
+>>>>>>> b8ee93b (Task review page)
