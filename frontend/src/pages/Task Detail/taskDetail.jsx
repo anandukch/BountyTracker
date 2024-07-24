@@ -32,6 +32,9 @@ const TaskDetail = () => {
 	const [contribution, setContribution] = useState("");
 	const [mentionId, setMentionId] = useState();
 
+	//------------queries--------
+	// const { data: taskDetail, isSuccess: taskSuccess } = useGetTaskByIdQuery(taskId);
+
 	const { taskId } = useParams();
 	const inputRef = useRef();
 	const dispatch = useDispatch();
