@@ -11,11 +11,10 @@ import ListButton from "../../components/Button/ListButton";
 import { useDispatch } from "react-redux";
 import { addLoggedState } from "../../store/employeeReducer";
 
-const EmployeeDashboard = () => {
+const EmployeeProfile = () => {
 	const [employee, setEmployee] = useState({});
 	const [employeeDetails, setEmployeeDetails] = useState([]);
 	const { data, isLoading, isSuccess } = useGetProfileQuery();
-	const { data: employeeTasksData = [], isSuccess: isTaskFetched } = useGetEmployeeCurrentTasksQuery();
 	const dispatch = useDispatch();
 	useEffect(() => {
 		if (isSuccess) {
@@ -31,7 +30,7 @@ const EmployeeDashboard = () => {
 			]);
 			dispatch(addLoggedState({ role: employeeData.role, name: employeeData.name }));
 		}
-	}, [data, isSuccess]);
+	}, [data, dispatch, isSuccess]);
 
 	const [addClass, setAddClass] = useState(0);
 
@@ -60,7 +59,7 @@ const EmployeeDashboard = () => {
 	}, [employee]);
 
 	return (
-		<div className="employeeDashboardWrapper">
+		<div className="employeeProfileWrapper">
 			{isLoading && <Loader />}
 			<section className="employeeDashboard">
 				<div className="employeeDetailsWrapper">
@@ -68,60 +67,47 @@ const EmployeeDashboard = () => {
 						<div className="employeeProfilePage">
 							<img src={profilImg} />
 							<h3 className="employeeNameText">{employee.name}</h3>
-							<div className="taskCountWrapper">
-								<div className="totalTasksProfile">
-									<h4>{employee.completedTasks + employee.pendingTasks || 0}</h4>
-									<p>Total</p>
-								</div>
-								<div className="pendingTasksProfile">
-									<h4>{employee.pendingTasks || 0}</h4>
-									<p>Pending</p>
-								</div>
-							</div>
-							<p className="totalBounty">
-								KoYns : <span className="bountyValue">{employee?.details?.totalBounty || 0}</span> KYN
-							</p>
-						</div>
-					</div>
-					<div className="employeeDetailsGrid">
-						{employeeDetails.map((detail) => {
-							return <DetailBlock key={detail.header} header={detail.header} content={detail.content} />;
-						})}
-					</div>
-				</div>
-				<div className="employeeTasksWrapper">
-					<div className="taskBarWrapper">
-						<ListButton
-							text={"Pending Task"}
-							buttonClass={`dashboardTaskPending${addClass === 0 ? " activeTab" : ""}`}
-							clickHandle={handlePending}
-						/>
-						<ListButton
-							text={"Completed Task"}
-							buttonClass={`dashboardTaskCompleted${addClass === 1 ? " activeTab" : ""}`}
-							clickHandle={handleCompleted}
-						/>
-					</div>
-					<div className="taskLogWrapper">
-						<div className="taskHeaderWrapper">
-							<TaskDataHeader taskRows={tasksHeader} />
-						</div>
-						<div className="taskDetailsWrapper">
-							{/* {isTaskLoading && <Loader />} */}
-							{isTaskFetched &&
-								employeeTasksData.data.map((task) => {
-									if (addClass === 0 && task.task.status !== "Completed")
-										return <TaskDataRow key={task.id} taskRows={task} />;
-									else if (addClass === 1 && task.task.status == "Completed") {
-										return <TaskDataRow key={task.id} taskRows={task} />;
-									}
+							<div className="employeeDetailsGrid">
+								{employeeDetails.map((detail) => {
+									return (
+										<DetailBlock
+											key={detail.header}
+											header={detail.header}
+											content={detail.content}
+										/>
+									);
 								})}
+							</div>
+							{/* <p className="totalBounty">
+								KoYns : <span className="bountyValue">{employee?.details?.totalBounty || 0}</span> KYN
+							</p> */}
+						</div>
+					</div>
+					<div className="taskCountWrapper">
+						<div className="taskCounter">
+							<div className="totalTaskWrapper">
+								<h3>Total Tasks</h3>
+								<p>{employee.completedTasks + employee.pendingTasks}</p>
+							</div>
+							<div className="pendingTaskWrapper">
+								<h3>Pending Tasks</h3>
+								<p>{employee.pendingTasks}</p>
+							</div>
+							<div className="completedTaskWrapper">
+								<h3>Completed Tasks</h3>
+								<p>{employee.completedTasks}</p>
+							</div>
+						</div>
+						<div className="taskGraph">
+
+							
 						</div>
 					</div>
 				</div>
+				<div className="employeeTasksWrapper"></div>
 			</section>
 		</div>
 	);
 };
 
-export default EmployeeDashboard;
+export default EmployeeProfile;

@@ -9,7 +9,7 @@ import TaskDetail from "./pages/Task Detail/taskDetail";
 import EmployeeTierList from "./pages/EmployeeTierList/employeeTierList";
 import { Provider, useDispatch } from "react-redux";
 import store from "./store/store";
-import ReviewPage from "./pages/ReviewPage/reviewPage";
+import ReviewPage from "./pages/ReviewPage/ReviewPage.jsx";
 import "./App.scss";
 import TaskList from "./pages/TaskList/tastList.jsx";
 import Progressbar from "./components/ProgressBar/ProgressBar.jsx";
@@ -17,6 +17,9 @@ import { useEffect } from "react";
 import { addLoggedState } from "./store/employeeReducer.js";
 import { useGetProfileQuery } from "./api/employeeApi.js";
 import MyTask from "./pages/myTask/myTask.jsx";
+import RequestList from "./pages/RequestList/requestList.jsx";
+import EmployeeProfile from "./pages/EmployeeProfile/employeeProfile.jsx";
+
 
 const App = () => {
 	const router = createBrowserRouter([
@@ -53,8 +56,8 @@ const App = () => {
 
 				// { path: "taskList", element: <TaskList /> },
 				// { path: "employeeList", element: <EmployeeTierList /> },
-				{ path: "comment/:id", element: <ReviewPage /> },
 				{ path: "taskDetails", element: <TaskDetail /> },
+				{ path: "profile", element: <EmployeeProfile /> },
 			],
 		},
 		{
@@ -62,6 +65,7 @@ const App = () => {
 			element: <HomeLayout />,
 			children: [
 				{ index: true, element: <TaskList /> },
+				{ path: ":taskId/review", element: <ReviewPage /> },
 				{ path: ":taskId", element: <TaskDetail /> },
 				{ path: "create", element: <CreateTask /> },
 			],
@@ -74,6 +78,12 @@ const App = () => {
 				// { path: ":taskId", element: <TaskDetail /> },
 				{ path: "create", element: <CreateTask /> },
 			],
+		},
+		{
+			path: "/requests",
+			element: <HomeLayout />,
+			children: [{ index: true, element: <RequestList /> }],
+
 		},
 		{ path: "tasklist/", element: <HomeLayout />, children: [{ index: true, element: <TaskList /> }] },
 		{ path: "bar/", element: <HomeLayout />, children: [{ index: true, element: <Progressbar /> }] },

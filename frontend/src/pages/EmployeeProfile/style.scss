@@ -1,0 +1,317 @@
+.employeeProfileWrapper {
+	width: 100%;
+	height: 100%;
+	padding: 20px;
+	overflow: hidden;
+
+	.employeeDashboard {
+		width: 100%;
+		height: 100%;
+		padding: 10px;
+		display: flex;
+		flex-direction: column;
+		background-color: transparent;
+		justify-content: space-between;
+
+		.employeeDetailsWrapper {
+			border-radius: 20px;
+			display: flex;
+			height: 80%;
+			background-color: transparent;
+			justify-content: space-between;
+
+			.employeeProfileWrapper {
+				display: flex;
+				flex-direction: column;
+				padding: 10px;
+				width: 30%;
+				height: 100%;
+				align-items: center;
+				justify-content: center;
+				background-color: var(--bgWhite);
+				border-radius: 10px;
+
+				.employeeProfilePage {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-content: space-between;
+					height: 100%;
+					width: 100%;
+					padding: 10px 5px 10px 5px;
+
+					.employeeDetailsGrid {
+						display: grid;
+						grid-template-rows: 1fr 1fr 1fr;
+						grid-template-columns: 1fr 1fr;
+						width: 100%;
+						height: 100%;
+						padding: 20px;
+						background-color: var(--bgWhite);
+						border-radius: 10px;
+
+						.employeeDetailBlock {
+							display: flex;
+							flex-direction: column;
+							// justify-content: center;
+							// align-items: center;
+							// padding-left: 10px;
+
+							h4 {
+								color: var(--textGray);
+								font-weight: 800;
+								padding: 10px 5px 10px 0px;
+							}
+
+							p {
+								color: var(--textBlack);
+								font-weight: 500;
+								padding: 10px 5px 10px 0px;
+							}
+						}
+					}
+
+					.employeeNameText,
+					.totalTasksProfile h4,
+					.pendingTasksProfile h4 {
+						color: var(--textBlack);
+						font-weight: 800;
+						padding: 5px 0px 5px 0px;
+					}
+
+					.employeeMailText,
+					.totalTasksProfile p,
+					.pendingTasksProfile p {
+						color: var(--textGray);
+						padding: 5px 0px 5px 0px;
+					}
+
+					.totalBounty {
+						font-size: 18px;
+						display: flex;
+						color: var(--koynsText);
+						font-weight: 800;
+						padding: 10px 5px 0px 5px;
+
+						.bountyValue {
+							padding: 0px 5px 0px 5px;
+							color: #a49464;
+						}
+					}
+				}
+
+				.employeeProfilePage p,
+				.employeeProfilePage h4 {
+					display: flex;
+					justify-content: center;
+				}
+
+				.employeeProfilePage img {
+					height: 150px;
+					width: 150px;
+				}
+
+				// .totalBounty {
+				// }
+			}
+
+			.employeeDetailsGrid {
+				display: grid;
+				grid-template-rows: 1fr 1fr;
+				grid-template-columns: 1fr 1fr 1fr;
+				width: 65%;
+				height: 100%;
+				padding: 20px;
+				background-color: var(--bgWhite);
+				border-radius: 10px;
+
+				.employeeDetailBlock {
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					padding-left: 10px;
+
+					h4 {
+						color: var(--textGray);
+						font-weight: 800;
+						padding: 10px 5px 10px 5px;
+					}
+
+					p {
+						color: var(--textBlack);
+						font-weight: 500;
+						padding: 10px 5px 10px 5px;
+					}
+				}
+			}
+			.taskCountWrapper {
+				display: flex;
+				flex-direction: row;
+				width: 68%;
+				height: 100%;
+				background-color: var(--bgWhite);
+
+				.taskCounter {
+					display: flex;
+					flex-direction: column;
+					width: 30%;
+					height: 100%;
+					justify-content: space-between;
+
+					.pendingTaskWrapper {
+						width: 100%;
+						height: 100%;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						flex-direction: column;
+					}
+					.completedTaskWrapper {
+						width: 100%;
+						display: flex;
+						height: 100%;
+						align-items: center;
+						justify-content: center;
+						flex-direction: column;
+					}
+					.totalTaskWrapper {
+						width: 100%;
+						height: 100%;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						flex-direction: column;
+					}
+				}
+				.taskGraph{
+					
+					
+				}
+			}
+		}
+
+		.employeeTasksWrapper {
+			display: flex;
+			flex-direction: column;
+			padding: 30px 10px 30px 10px;
+			height: 15%;
+			background-color: var(--bgWhite);
+			border-radius: 10px;
+
+			.employeeDetailsGrid {
+				display: grid;
+				grid-template-rows: 1fr 1fr;
+				grid-template-columns: 1fr 1fr 1fr;
+				width: 100%;
+				height: 100%;
+				padding: 20px;
+				background-color: var(--bgWhite);
+				border-radius: 10px;
+
+				.employeeDetailBlock {
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					padding-left: 10px;
+
+					h4 {
+						color: var(--textGray);
+						font-weight: 800;
+						padding: 10px 5px 10px 5px;
+					}
+
+					p {
+						color: var(--textBlack);
+						font-weight: 500;
+						padding: 10px 5px 10px 5px;
+					}
+				}
+			}
+
+			.taskDataRow {
+				text-decoration: none;
+				display: grid;
+				grid-template-rows: 1fr;
+				grid-template-columns: 1fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr;
+			}
+
+			.taskDataColumn {
+				padding-left: 10px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				color: var(--textBlack);
+			}
+
+			.taskHeaderWrapper {
+				display: flex;
+				flex-direction: column;
+				padding: 10px 10px 10px 10px;
+				border-radius: 10px;
+				background-color: var(--bgGray);
+				color: var(--textBlack);
+				font-weight: 800;
+			}
+
+			.taskBarWrapper {
+				display: flex;
+				padding: 15px;
+				width: fit-content;
+				padding: 5px;
+				background-color: var(--bgGray);
+				border-radius: 10px;
+				margin-left: 10px;
+
+				.dashboardTaskPending,
+				.dashboardTaskCompleted,
+				.dashboardTaskAssigned {
+					padding: 10px 20px 10px 20px;
+					outline: none;
+					border: none;
+					text-decoration: none;
+					background-color: var(--bgGray);
+					font-weight: 800;
+					color: var(--textGray);
+					margin-right: 5px;
+					border-radius: 5px;
+					cursor: pointer;
+				}
+
+				.activeTab {
+					background-color: var(--bgWhite);
+					color: var(--navBlue);
+					padding: 10px 20px 10px 20px;
+					outline: none;
+					border: none;
+					text-decoration: none;
+					font-weight: 800;
+					margin-right: 5px;
+					border-radius: 5x;
+				}
+			}
+
+			.taskLogWrapper {
+				padding: 20px 10px 20px 10px;
+				max-height: 80%;
+
+				.taskDetailsWrapper {
+					margin-top: 10px;
+					display: flex;
+					flex-direction: column;
+					padding: 10px 10px 10px 10px;
+					border-radius: 10px;
+					background-color: var(--bgGray);
+					max-height: 100%;
+					overflow: auto;
+
+					.taskDataRow {
+						border-radius: 10px;
+						background-color: var(--bgWhite);
+						padding: 10px 0px 10px 0px;
+						margin: 5px 0px 5px 0px;
+					}
+				}
+			}
+		}
+	}
+}

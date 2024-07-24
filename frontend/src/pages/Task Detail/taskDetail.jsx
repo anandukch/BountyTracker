@@ -50,6 +50,7 @@ const TaskDetail = () => {
 	const token = localStorage.getItem("token");
 	const arrayToken = token.split(".");
 	const tokenPayload = JSON.parse(atob(arrayToken[1]));
+	const navigate = useNavigate();
 
 	const form_fields = [
 		{
@@ -99,7 +100,8 @@ const TaskDetail = () => {
 	};
 
 	const completeTask = () => {
-		completeTaskRequest(Number(taskId));
+		navigate(`/tasks/${taskId}/review`);
+		// completeTaskRequest(Number(taskId));
 	};
 
 	useEffect(() => {
@@ -171,7 +173,7 @@ const TaskDetail = () => {
 				</span>
 				<span>
 					<h3>Due : {formatDate(taskDetail?.data.deadLine)}</h3>
-					<ListButton text="Complete Task" buttonClass="taskCompleteButton" clickHandle={completeTask} />
+					<Button text="Complete Task" isPrimary={true} onClick={completeTask} />
 				</span>
 			</div>
 			<div className="data">

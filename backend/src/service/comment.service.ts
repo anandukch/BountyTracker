@@ -99,7 +99,16 @@ class CommentService {
 
 		return this.commentRepository.update(id, comment);
 	};
+
+	getUserTaskReviewComments = async (employeeId: number, taskId: number) => {
+		const comments = await this.commentRepository.find({
+			employee: { id: employeeId },
+			task: { id: taskId } as any,
+
+			commentType: CommentType.Review,
+		});
+		return comments;
+	};
 }
 
 export default CommentService;
-
