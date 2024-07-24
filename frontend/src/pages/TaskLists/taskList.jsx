@@ -3,7 +3,13 @@ import TaskDataRow from "../../components/TaskRowData";
 import "./style.scss";
 import profilImg from "../../assets/profile.png";
 import TaskDataHeader from "../../components/TaskDataHeader";
-import { useGetEmployeeCurrentTasksQuery, useGetProfileQuery } from "../../api/employeeApi";
+import {
+	// useGetEmployeeCreatedTasksQuery,
+	// useGetEmployeeCurrentTasksQuery,
+	// useGetProfileQuery,
+	useLazyGetEmployeeCreatedTasksQuery,
+	useLazyGetEmployeeCurrentTasksQuery,
+} from "../../api/employeeApi";
 import { useEffect, useState } from "react";
 import { Loader } from "../../components/Loader/Loader";
 import { formatDate } from "../../utils/date.utils";
@@ -13,44 +19,54 @@ import { addLoggedState } from "../../store/employeeReducer";
 import GridColumn from "../../components/GridColumn";
 import Search from "../../components/Search/Search";
 import Button from "../../components/Button/Button";
+import { useGetTaskListQuery } from "../../api/taskApi";
+import { useNavigate } from "react-router-dom";
 
 const EmployeeDashboard = () => {
-	// const [employee, setEmployee] = useState({});
-	// const [employeeDetails, setEmployeeDetails] = useState([]);
-	// const { data, isLoading, isSuccess } = useGetProfileQuery();
-	const { data: employeeTasksData = [], isSuccess: isTaskFetched, isLoading } = useGetEmployeeCurrentTasksQuery();
-	// const dispatch = useDispatch();
-	// useEffect(() => {
-	// 	if (isSuccess) {
-	// 		const { data: employeeData } = data;
-	// 		setEmployee(employeeData);
-	// 		setEmployeeDetails([
-	// 			{ header: "Role", content: employeeData.role },
-	// 			{ header: "Email", content: employeeData.email },
-	// 			{ header: "Tier", content: employeeData.tier || "N/A" },
-	// 			{ header: "Birthday", content: formatDate(employeeData.details.birthday) },
-	// 			{ header: "Gender", content: employeeData.details.gender },
-	// 			{ header: "Phone", content: employeeData.details.phoneNo },
-	// 		]);
-	// 		dispatch(addLoggedState({ role: employeeData.role, name: employeeData.name }));
-	// 	}
-	// }, [data, isSuccess]);
+	const [list, setList] = useState([]);
+	const [employeeTasks, { isSuccess: isCurrentTaskFetched, isLoading: loading1 }] =
+		useLazyGetEmployeeCurrentTasksQuery();
+	const [employeeCreatedTask, { isSuccess: isCreatedTaskFetched, isLoading: loading2 }] =
+		useLazyGetEmployeeCreatedTasksQuery();
+	const { data: employeeAllTaskData = [], isSuccess: isAllTaskFetched, isLoading: loading3 } = useGetTaskListQuery();
 
 	const [addClass, setAddClass] = useState(0);
 
-	const handlePending = () => {
-		setAddClass(2);
-	};
+	const navigate = useNavigate();
 
-	const handleCompleted = () => {
-		setAddClass(1);
-	};
+	useEffect(() => {
+		if (isAllTaskFetched) {
+			setList(employeeAllTaskData.data);
+			console.log("hi");
+			console.log(employeeAllTaskData.data);
+		}
+	}, [isAllTaskFetched]);
+
+	useEffect(() => {
+		console.log(addClass);
+	}, [addClass]);
 
 	const handleAll = () => {
 		setAddClass(0);
 	};
 
-	const handleCreatedTasks = () => {
+	const handlePending = async () => {
+		const data = await employeeTasks();
+
+		setList(data.data.data);
+		setAddClass(1);
+	};
+
+	const handleCompleted = async () => {
+		const data = await employeeTasks();
+		setList(data.data.data);
+		setAddClass(2);
+	};
+
+	const handleCreatedTasks = async () => {
+		const data = await employeeCreatedTask();
+
+		setList(data.data.data);
 		setAddClass(3);
 	};
 	const tasksHeader = [
@@ -78,13 +94,19 @@ const EmployeeDashboard = () => {
 
 	return (
 		<div className="employeeDashboardWrapper">
-			{isLoading && <Loader />}
+			{(loading1 || loading2 || loading3) && <Loader />}
 			<section className="employeeDashboard">
 				<div className="searchSort">
 					<h1>Task List</h1>
 
 					<div className="createTask">
-						<Button text="CreateTask" isPrimary={true} onClick={"/"} />
+						<Button
+							text="CreateTask"
+							isPrimary={true}
+							onClick={() => {
+								navigate("/tasks/create");
+							}}
+						/>
 					</div>
 				</div>
 				{/* <div className="employeeDetailsWrapper">
@@ -125,12 +147,12 @@ const EmployeeDashboard = () => {
 						<div className="taskBarWrapper">
 							<ListButton
 								text={"Pending Task"}
-								buttonClass={`dashboardTaskPending${addClass === 2 ? " activeTab" : ""}`}
+								buttonClass={`dashboardTaskPending${addClass === 1 ? " activeTab" : ""}`}
 								clickHandle={handlePending}
 							/>
 							<ListButton
 								text={"Completed Task"}
-								buttonClass={`dashboardTaskCompleted${addClass === 1 ? " activeTab" : ""}`}
+								buttonClass={`dashboardTaskCompleted${addClass === 2 ? " activeTab" : ""}`}
 								clickHandle={handleCompleted}
 							/>
 						</div>
@@ -157,14 +179,23 @@ const EmployeeDashboard = () => {
 							})}
 						</div>
 						<div className="taskDetailsWrapper">
-							{/* {isTaskLoading && <Loader />} */}
-							{isTaskFetched &&
-								employeeTasksData.data.map((task) => {
-									if (addClass === 2 && task.task.status !== "Completed")
-										return <TaskDataRow key={task.id} taskRows={task} />;
-									else if (addClass === 1 && task.task.status == "Completed") {
-										return <TaskDataRow key={task.id} taskRows={task} />;
+							{isAllTaskFetched &&
+								list.map((task) => {
+									let formattedTask = task;
+									if (addClass == 0 || addClass == 3) {
+										formattedTask = {
+											task: task,
+										};
 									}
+
+									// if (addClass === 2 && task.task.status !== "Completed")
+									return <TaskDataRow key={task.id} taskRows={formattedTask} />;
+									// else if (addClass === 1 && task.task.status == "Completed") {
+									// 	return <TaskDataRow key={task.id} taskRows={task} />;
+								})}
+							{!isAllTaskFetched &&
+								tasksHeader.map((header) => {
+									return <GridColumn key={header.name} name={header.name} />;
 								})}
 						</div>
 					</div>
@@ -175,3 +206,5 @@ const EmployeeDashboard = () => {
 };
 
 export default EmployeeDashboard;
+
+// (isCurrentTaskFetched || isCreatedTaskFetched || isAllTaskFetched)/

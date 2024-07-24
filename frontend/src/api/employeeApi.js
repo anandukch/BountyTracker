@@ -56,7 +56,9 @@ export const {
 	useGetEmployeeListQuery,
 	useAddEmployeeMutation,
 	useGetEmployeeQuery,
-	useGetEmployeeCurrentTasksQuery,
+	useLazyGetEmployeeCurrentTasksQuery,
+	useLazyGetEmployeeCreatedTasksQuery,
 	useGetEmployeeCreatedTasksQuery,
+	useGetEmployeeCurrentTasksQuery,
 	useLoginMutation,
 } = employeeApi;
