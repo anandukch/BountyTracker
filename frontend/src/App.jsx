@@ -67,15 +67,15 @@ const App = () => {
 		// 		{ path: "create", element: <CreateTask /> },
 		// 	],
 		// },
-		{
-			path: "/myTasks",
-			element: <HomeLayout />,
-			children: [
-				{ index: true, element: <MyTask /> },
-				// { path: ":taskId", element: <TaskDetail /> },
-				{ path: "create", element: <CreateTask /> },
-			],
-		},
+		// {
+		// 	path: "/myTasks",
+		// 	element: <HomeLayout />,
+		// 	children: [
+		// 		{ index: true, element: <MyTask /> },
+		// 		// { path: ":taskId", element: <TaskDetail /> },
+		// 		{ path: "create", element: <CreateTask /> },
+		// 	],
+		// },
 		{
 			path: "/requests",
 			element: <HomeLayout />,

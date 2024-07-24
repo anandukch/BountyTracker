@@ -54,25 +54,25 @@ const HomeLayout = () => {
 		// 	to: "/profile",
 		// },
 		{
-			id: 1,
+			id: 0,
 			title: "Tasks",
 			icon: tasks,
 			to: "/tasks",
 		},
 		{
-			id: 2,
+			id: 1,
 			title: "Employees",
 			icon: employees,
 			to: "/employees",
 		},
+		// {
+		// 	id: 3,
+		// 	title: "My Tasks",
+		// 	icon: myTask,
+		// 	to: "/myTasks",
+		// },
 		{
-			id: 3,
-			title: "My Tasks",
-			icon: myTask,
-			to: "/myTasks",
-		},
-		{
-			id:4,
+			id:2,
 			title: "Requests",
 			icon: requests,
 			to: "/requests"
