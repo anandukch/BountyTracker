@@ -32,9 +32,9 @@
 			background-color: white;
 			border-radius: 10px;
 			min-height: 200px;
-			padding: 10px;
-			padding-left: 10px;
+			padding: 20px;
 			margin-bottom: 30px;
+
 			.taskDetailsHeader {
 				display: flex;
 				justify-content: space-between;
@@ -58,6 +58,10 @@
 					padding: 0 5px 0 5px;
 					border-radius: 8px;
 				}
+
+				.taskDetails {
+				}
+
 				.review {
 					height: 32px;
 					align-content: center;
@@ -73,11 +77,11 @@
 			margin-bottom: 20px;
 			font-size: larger;
 			padding-right: 50px;
-		
+
 			.split {
 				margin-left: 100px;
 				margin-right: 100px;
-				width:100px;
+				width: 100px;
 				min-width: fit-content;
 				background-color: #f5ebb1;
 				border-style: solid;
@@ -87,21 +91,21 @@
 				height: 50px;
 				padding: 10px;
 				box-shadow:
-				  -1px -1px 20px 0.5px rgba(235, 233, 233, 0.3) inset,
-				  0 0 10px #00000027;
-				cursor: pointer;  
-			  
-				transition: all 0.3s ease;  
-			  }
-			  .split:hover {
-				background-color:white;  
+					-1px -1px 20px 0.5px rgba(235, 233, 233, 0.3) inset,
+					0 0 10px #00000027;
+				cursor: pointer;
+
+				transition: all 0.3s ease;
+			}
+			.split:hover {
+				background-color: white;
 				box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-			  }
-			  
-			  .split:active {
-				transform: translateY(1px);  
-				box-shadow: none; }
-			  
+			}
+
+			.split:active {
+				transform: translateY(1px);
+				box-shadow: none;
+			}
 		}
 		.contributionSection {
 			display: flex;
@@ -191,7 +195,7 @@
 					align-items: center;
 					gap: 5px;
 					input {
-						width: 40px;
+						width: min-content;
 						height: 40px;
 						text-align: center;
 					}
@@ -210,7 +214,7 @@
 .split {
 	margin-left: 100px;
 	margin-right: 100px;
-	width:100px;
+	width: 100px;
 	min-width: fit-content;
 	background-color: #f5ebb1;
 	border-style: solid;
@@ -220,9 +224,9 @@
 	height: 50px;
 	padding: 10px;
 	box-shadow:
-	  -1px -1px 20px 0.5px rgba(235, 233, 233, 0.3) inset,
-	  0 0 10px #00000027;
-	cursor: pointer;  
-  
-	transition: all 0.3s ease;  
-  }
+		-1px -1px 20px 0.5px rgba(235, 233, 233, 0.3) inset,
+		0 0 10px #00000027;
+	cursor: pointer;
+
+	transition: all 0.3s ease;
+}

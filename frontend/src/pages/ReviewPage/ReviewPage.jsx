@@ -1,13 +1,28 @@
 import React, { useEffect, useState } from "react";
 import "./ReviewPage.styles.scss";
 import ParticipantContribution from "../../components/ParticipantContribution/ParticipantContribution";
-import { useGetTaskContributionsQuery, useLazyDownloadFileQuery } from "../../api/taskApi";
+import { useCompleteTaskMutation, useGetTaskContributionsQuery, useLazyDownloadFileQuery } from "../../api/taskApi";
 import { useParams } from "react-router-dom";
 import CustomModal from "../../components/Modal/CustomModal";
-
+import { useDispatch } from "react-redux";
+import { addToastMessage } from "../../store/toastReducer";
+import { v4 } from "uuid";
+import { createToastError } from "../../utils/createToastError";
 
 const ReviewPage = () => {
 	const [participantList, setParticipantList] = useState([]);
+	const [remainingBounty, setRemainingBounty] = useState(0);
+	const dispatch = useDispatch();
+	const [taskDetails, setTaskDetails] = useState({
+		name: "",
+		id: "",
+		description: "",
+	});
+
+	useEffect(() => {
+		const bountySum = participantList.reduce((tot, participant) => tot + parseInt(participant.rewardedBounty), 0);
+		setRemainingBounty(taskDetails.totalBounty - bountySum);
+	}, [participantList, taskDetails.totalBounty]);
 
 	const [expandedIndex, setExpandedIndex] = useState(-1);
 	const [showContributionModal, setShowContributionModal] = useState();
@@ -17,12 +32,39 @@ const ReviewPage = () => {
 	const handleExpand = (index) => setExpandedIndex((prev) => (prev !== index ? index : -1));
 
 	const { data: contributionData, isSuccess } = useGetTaskContributionsQuery(parseInt(taskId));
+	const [completeTask] = useCompleteTaskMutation();
+	const handleContributeConfirm = () => {
+		if (remainingBounty > 0) {
+			dispatch(
+				addToastMessage({
+					id: v4(),
+					status: "error",
+					message: `You still have ${remainingBounty} Bounty left to distribute`,
+				}),
+			);
+		} else if (remainingBounty < 0) {
+			createToastError(dispatch, `You have exceeded the maximum distributable bounty by ${-remainingBounty}`);
+		} else {
+			// completeTask()
+			// TODO: logic to submit user bounty
+		}
+	};
 
 	useEffect(() => {
 		if (isSuccess) {
 			console.log(contributionData);
 			const participantListReceived = contributionData.data.participants;
-			setParticipantList(participantListReceived);
+			const participantListUpdated = participantListReceived.map((participant) => {
+				return { ...participant, rewardedBounty: 0 };
+			});
+
+			setTaskDetails({
+				name: contributionData.data.name,
+				id: contributionData.data.id,
+				description: contributionData.data.description,
+				totalBounty: contributionData.data.totalBounty,
+			});
+			setParticipantList(participantListUpdated);
 		}
 	}, [contributionData, isSuccess]);
 
@@ -62,19 +104,22 @@ const ReviewPage = () => {
 			<main className="reviewMain">
 				<section className="taskDetails">
 					<span className="taskDetailsHeader">
-						<h2 className="taskTitle">{"Task: ${taskName}"}</h2>
-						<h2 className="taskId">{"Task #taskId"}</h2>
+						<h2 className="taskTitle">{`Task: ${taskDetails.name}`}</h2>
+						<h2 className="taskId">{`Task #${taskDetails.id}`}</h2>
 					</span>
-					<h3>{"{Task Desciption}"}</h3>
+					<p className="taskDetails">{`${taskDetails.description}`}</p>
+					<span>
+						<p>{`Total Bounty: ${taskDetails.totalBounty}`}</p>
+						<p>{`Remaining Bounty: ${remainingBounty}`}</p>
+					</span>
 				</section>
 				<div className="contributionHeading">
-						<div>Participant Contributions</div>
-						<div className="split">Split Equally</div>
-				
-						<div>Bounty</div>
-					</div>
+					<div>Participant Contributions</div>
+					<div className="split">Split Equally</div>
+
+					<div>Bounty</div>
+				</div>
 				<section className="contributionSection">
-					
 					{isSuccess &&
 						participantList.map((participant, index) => (
 							<ParticipantContribution
@@ -83,10 +128,23 @@ const ReviewPage = () => {
 								isExpanded={index === expandedIndex}
 								onClick={() => handleExpand(index)}
 								handleContributionModal={handleContributionModal}
+								handleChangeBounty={(e) => {
+									let bounty = parseInt(e.target.value);
+									if (e.target.value === "") bounty = 0;
+									if (bounty >= 0) {
+										setParticipantList((prev) => {
+											const newList = [...prev];
+											newList[index].rewardedBounty = bounty;
+											return newList;
+										});
+									}
+								}}
 							/>
 						))}
 				</section>
-				<div className="split">Confirm</div>
+				<div className="split" onClick={handleContributeConfirm}>
+					Confirm
+				</div>
 			</main>
 		</div>
 	);

@@ -4,9 +4,21 @@ import downArrow from "../../assets/downArrow.svg";
 import diamond from "../../assets/diamond.svg";
 import TextField from "../../components/TextField/TextField";
 
-const ParticipantContribution = ({ participant, isExpanded, onClick, handleContributionModal }) => {
-	const [rewardBounty, setRewardBounty] = useState(0);
+const ParticipantContribution = ({
+	participant,
+	isExpanded,
+	onClick,
+	handleContributionModal,
+	remainingBounty,
+	handleChangeBounty,
+}) => {
+	// const [rewardBounty, setRewardBounty] = useState(0);
 	const contributionList = participant.contributions;
+	// const handleChangeBounty = (e) => {
+	// 	// if (e.target.value === "") setRewardBounty(0);
+	// 	// const bounty = parseInt(e.target.value);
+	// 	// if (bounty) setRewardBounty(bounty);
+	// };
 	return (
 		<div className="contributionWrapper">
 			<div className="contribution">
@@ -34,7 +46,7 @@ const ParticipantContribution = ({ participant, isExpanded, onClick, handleContr
 				)}
 			</div>
 			<div className="rewardWrapper">
-				<TextField label=" " value={rewardBounty} onChange={() => {}} />
+				<TextField label="" value={participant.rewardedBounty} onChange={handleChangeBounty} />
 				<span>Koyns</span>
 			</div>
 		</div>

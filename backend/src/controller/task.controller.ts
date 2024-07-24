@@ -43,6 +43,7 @@ class TaskController {
 					name: taskContributions.title,
 					description: taskContributions.description,
 					id: taskContributions.id,
+					totalBounty: taskContributions.totalBounty,
 					participants: taskContributions.participants.map((participant) => {
 						return {
 							id: participant.employee.id,
