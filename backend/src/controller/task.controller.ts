@@ -160,7 +160,9 @@ class TaskController {
 			if (!taskId) {
 				throw new HttpException(400, "Task not found");
 			}
-			const response = await this.taskService.completeTask(parseInt(taskId));
+			const participantContributions = req.body.participantContributions;
+
+			const response = await this.taskService.completeTask(parseInt(taskId), participantContributions);
 			res.status(200).json({
 				success: true,
 				message: "Task completed succesfully",

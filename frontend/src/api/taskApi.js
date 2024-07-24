@@ -49,10 +49,14 @@ const taskApi = apiWithTaskTags.injectEndpoints({
 		}),
 
 		completeTask: builder.mutation({
-			query: (id) => ({
-				url: `tasks/complete/${id}`,
-				method: "PATCH",
-			}),
+			query: ({ taskId, participantContributions }) => {
+				console.log(taskId, participantContributions);
+				return {
+					url: `tasks/complete/${parseInt(taskId)}`,
+					method: "PATCH",
+					body: { participantContributions },
+				};
+			},
 		}),
 
 		getTaskContributions: builder.query({

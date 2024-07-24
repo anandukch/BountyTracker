@@ -33,7 +33,7 @@ const ReviewPage = () => {
 
 	const { data: contributionData, isSuccess } = useGetTaskContributionsQuery(parseInt(taskId));
 	const [completeTask] = useCompleteTaskMutation();
-	const handleContributeConfirm = () => {
+	const handleContributeConfirm = async () => {
 		if (remainingBounty > 0) {
 			dispatch(
 				addToastMessage({
@@ -45,7 +45,14 @@ const ReviewPage = () => {
 		} else if (remainingBounty < 0) {
 			createToastError(dispatch, `You have exceeded the maximum distributable bounty by ${-remainingBounty}`);
 		} else {
-			// completeTask()
+			const participantContributions = participantList.map((participant) => ({
+				employeeId: participant.id,
+				rewardedBounty: participant.rewardedBounty,
+			}));
+			console.log(participantContributions);
+
+			await completeTask({ taskId, participantContributions });
+
 			// TODO: logic to submit user bounty
 		}
 	};

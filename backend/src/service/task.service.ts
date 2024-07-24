@@ -70,7 +70,7 @@ class TaskService {
 		return updatedTask;
 	};
 
-	completeTask = async (id: number) => {
+	completeTask = async (id: number, participantContribution: { employeeId: number; rewardedBounty: number }[]) => {
 		const task = await this.taskRepository.findOneBy({ id }, ["comments", "participants", "participants.employee"]);
 		if (!task) {
 			throw new HttpException(404, "Task not found");
@@ -78,17 +78,17 @@ class TaskService {
 		if (task.status === TaskStatusEnum.COMPLETED) {
 			throw new HttpException(400, "Task already completed");
 		}
-		const comments = task.comments.filter((comment) => comment.reviewStatus === ReviewStatus.PENDING);
-		if (comments.length > 0) {
-			throw new HttpException(400, "Cannot complete task with pending comments");
-		}
-		const participants = task.participants;
+		// const comments = task.comments.filter((comment) => comment.reviewStatus === ReviewStatus.PENDING);
+		// if (comments.length > 0) {
+		// 	throw new HttpException(400, "Cannot complete task with pending comments");
+		// }
+		// const participants = task.participants;
 
 		await Promise.all(
-			participants.map(async (participant) => {
-				const employee = participant.employee;
-				const contribution = participant.contribution;
-				await employeeService.updateBounty(employee.id, contribution);
+			participantContribution.map(async (contribution) => {
+				const employeeId = contribution.employeeId;
+				const rewardedBounty = contribution.rewardedBounty;
+				await employeeService.updateBounty(employeeId, rewardedBounty);
 			})
 		);
 
