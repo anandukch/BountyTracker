@@ -52,7 +52,6 @@ const ReviewPage = () => {
 
 	useEffect(() => {
 		if (isSuccess) {
-			console.log(contributionData);
 			const participantListReceived = contributionData.data.participants;
 			const participantListUpdated = participantListReceived.map((participant) => {
 				return { ...participant, rewardedBounty: 0 };

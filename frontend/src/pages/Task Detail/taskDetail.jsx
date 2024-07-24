@@ -11,7 +11,6 @@ import {
 	useCompleteTaskMutation,
 	useCreateCommentMutation,
 	useGetCommentsByTaskIdQuery,
-	useGetTaskByIdQuery,
 	useJoinTaskMutation,
 	useLazyGetTaskByIdQuery,
 } from "../../api/taskApi";
@@ -19,11 +18,10 @@ import { formatDate } from "../../utils/date.utils";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addJoinedStatus } from "../../store/employeeReducer";
-import CustomModal from "../../components/Modal/CustomModal";
-import ListButton from "../../components/Button/ListButton";
 import CommentComponent from "../../components/CommentComponent/CommentComponent";
 import ContributionCommentComponent from "../../components/ContributionCommentComponent/ContributionCommentComponent";
 const TaskDetail = () => {
+	const user = useSelector((state) => state.employee.employee);
 	const [commentList, setCommentList] = useState([]);
 	const [participantList, setParticipantList] = useState([]);
 	const [joined, setJoined] = useState(false);
@@ -53,9 +51,6 @@ const TaskDetail = () => {
 
 	const loggedState = useSelector((state) => state.employee);
 
-	const token = localStorage.getItem("token");
-	const arrayToken = token.split(".");
-	const tokenPayload = JSON.parse(atob(arrayToken[1]));
 	const navigate = useNavigate();
 
 	const form_fields = [
@@ -121,19 +116,19 @@ const TaskDetail = () => {
 			console.log("effect 1");
 			const participants = taskDetail.data.participants;
 			setParticipantList(participants);
-			if (taskDetail?.data.createdBy.email === tokenPayload.email) {
+			if (taskDetail?.data.createdBy.email === user.email) {
 				setJoined(true);
 				setIsCreator(true);
 			} else {
 				participants.forEach((participant) => {
-					if (participant.email === tokenPayload.email) {
+					if (participant.email === user.email) {
 						// dispatch(addJoinedStatus({ id: taskId, status: "joined" }));
 						setJoined(true);
 					}
 				});
 			}
 		}
-	}, [taskSuccess, taskDetail, tokenPayload]);
+	}, [taskSuccess, taskDetail, user]);
 
 	useEffect(() => {
 		getTaskById(taskId);
@@ -262,7 +257,7 @@ const TaskDetail = () => {
 												<CommentComponent
 													comment={comment}
 													handleReplyClick={handleReply}
-													currentEmployeeEmail={tokenPayload.email}
+													currentEmployeeEmail={user.email}
 												/>
 											) : (
 												<ContributionCommentComponent comment={comment} />

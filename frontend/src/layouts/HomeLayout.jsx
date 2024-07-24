@@ -19,40 +19,30 @@ const HomeLayout = () => {
 	const [pageIndex, setPageIndex] = useState(0);
 	const location = useLocation();
 	const navigate = useNavigate();
+
+	const state = useSelector((state) => state.employee.employee);
+
 	const handleLogout = () => {
 		localStorage.clear("token");
 		navigate("/login");
 	};
-	const { data: employeeData, isLoading, isSuccess } = useGetProfileQuery();
+	const { data: employeeData, isError, isSuccess } = useGetProfileQuery();
 	const dispatch = useDispatch();
 
 	const toastMessages = useSelector((state) => state.toasts.toastMessages);
-	const token = localStorage.getItem("token");
-	const arrayToken = token.split(".");
-	const tokenPayload = JSON.parse(atob(arrayToken[1]));
+
 	useEffect(() => {
 		if (isSuccess) {
-			// console.log(tokenPayload);
-			const token = localStorage.getItem("token");
-			const arrayToken = token.split(".");
-			const tokenPayload = JSON.parse(atob(arrayToken[1]));
-			dispatch(
-				addLoggedState({
-					role: tokenPayload.role,
-					username: tokenPayload.name,
-					id: employeeData.data.id,
-				}),
-			);
+			dispatch(addLoggedState(employeeData.data));
 		}
-	}, [employeeData, isSuccess, dispatch]);
+
+		if (isError) {
+			localStorage.clear("token");
+			navigate("/login");
+		}
+	}, [employeeData, isSuccess, dispatch, isError, navigate]);
 
 	const sideBar = [
-		// {
-		// 	id: 0,
-		// 	title: "Profile",
-		// 	icon: profile,
-		// 	to: "/profile",
-		// },
 		{
 			id: 0,
 			title: "Tasks",
@@ -73,7 +63,7 @@ const HomeLayout = () => {
 			title: "Requests",
 			icon: requests,
 			to: "/requests",
-			render: tokenPayload.role == "HR",
+			render: state.role == "HR",
 		},
 	];
 
@@ -106,7 +96,7 @@ const HomeLayout = () => {
 							}}
 						>
 							<img src={profileHead} alt="Profile Icon" />
-							{tokenPayload.name}
+							{state.name}
 						</span>
 					</h2>
 				</div>
