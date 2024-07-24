@@ -1,15 +1,6 @@
 import Button from "./Button/Button"
-const GridRequestColumn=({name,id,requestTime,bounty})=>{
-    let tier;
-    if (bounty>1500){
-        tier="Diamond"
-    }
-    else if(bounty>1000){
-        tier="Gold"
-    }
-    else{
-        tier="Silver"
-    }
+const GridRequestColumn=({name,id,requestTime,tier})=>{
+    
     return(
         <div className="listDataSet">
            

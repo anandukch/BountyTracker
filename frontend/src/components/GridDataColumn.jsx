@@ -1,14 +1,5 @@
-const GridDataColumn = ({name,id,bounty,birthday,role}) =>{
-    let tier;
-    if (bounty>300){
-        tier="Diamond"
-    }
-    else if(bounty>200){
-        tier="Gold"
-    }
-    else{
-        tier="Silver"
-    }
+const GridDataColumn = ({name,id,bounty,birthday,role,tier}) =>{
+    
     return(
         <div className="listDataSet">
             {/* <div className="employeeId">

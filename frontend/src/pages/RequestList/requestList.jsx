@@ -6,12 +6,12 @@ import { useState, useEffect } from "react";
 import { formatDate } from "../../utils/date.utils";
 import GridRequestColumn from "../../components/GridRequestColumn"
 const dummyRequests=[
-    {id:1,name:"John Doe",requestTime:"23-07-2024",totalBounty:1200},
-    {id: 2, name: "Jane Smith", requestTime: "24-07-2024", totalBounty:900},
-    {id: 3, name: "Robert Brown", requestTime: "22-07-2024", totalBounty:800},
-    {id: 4, name: "Emily Johnson", requestTime: "21-07-2024", totalBounty:700},
-    {id: 5, name: "Michael Davis", requestTime: "23-07-2024", totalBounty:600},
-    {id: 6, name: "Jessica Wilson", requestTime: "20-07-2024", totalBounty:3000}
+    {id:1,name:"John Doe",requestTime:"23-07-2024",currentTier:"gold"},
+    {id: 2, name: "Jane Smith", requestTime: "24-07-2024", currentTier:"gold"},
+    {id: 3, name: "Robert Brown", requestTime: "22-07-2024", currentTier:"silver"},
+    {id: 4, name: "Emily Johnson", requestTime: "21-07-2024", currentTier:"gold"},
+    {id: 5, name: "Michael Davis", requestTime: "23-07-2024", currentTier:"platinum"},
+    {id: 6, name: "Jessica Wilson", requestTime: "20-07-2024", currentTier:"gold"}
 ]
 const RequestList=() =>{
     const [list, setList]=useState([]);
@@ -69,7 +69,8 @@ const RequestList=() =>{
                             name={requestList.name}
                             id={requestList.id}
                             requestTime={requestList.requestTime}
-                            bounty={requestList.totalBounty}
+                            tier={requestList.currentTier}
+
                             />
                         )
                     })}
