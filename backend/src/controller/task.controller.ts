@@ -34,7 +34,12 @@ class TaskController {
 
 	public getAllTasks = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			const tasks = await this.taskService.getAllTasks(["createdBy"]);
+			const tasks = await this.taskService.getTasks(
+				{
+					status: TaskStatusEnum.YET_TO_START,
+				},
+				["createdBy"]
+			);
 			res.status(200).json({
 				success: true,
 				message: "Tasks fetched successfully",
@@ -148,7 +153,7 @@ class TaskController {
 			if (!taskId) {
 				throw new HttpException(400, "Task not found");
 			}
-			const allComments = await this.commentService.getAllCommentsByTaskId(parseInt(taskId));
+			const allComments = await this.commentService.getAllCommentsByTaskId(parseInt(taskId), req.user.id);
 
 			const normalComments = allComments.filter((comment) => comment.commentType === CommentType.Normal);
 			const reviewComments = allComments.filter((comment) => comment.commentType === CommentType.Review);
