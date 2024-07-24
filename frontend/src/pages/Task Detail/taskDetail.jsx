@@ -70,8 +70,7 @@ const TaskDetail = () => {
 
 	const handleSend = async () => {
 		const formData = new FormData();
-		if(file)
-			formData.append("file",file)
+		if (file) formData.append("file", file);
 		formData.append("commentType", commentType);
 		formData.append("content", comment);
 		if (mentionId) formData.append("mentionCommentId", mentionId);
@@ -118,7 +117,7 @@ const TaskDetail = () => {
 			console.log("effect 1");
 			const participants = taskDetail.data.participants;
 			setParticipantList(participants);
-			if (taskDetail?.data.createdBy.email === tokenPayload.email) setJoined(true);
+			if (taskDetail?.data.createdBy.email === tokenPayload.email) setIsCreator(true);
 			else {
 				participants.forEach((participant) => {
 					if (participant.email === tokenPayload.email) {
@@ -182,7 +181,9 @@ const TaskDetail = () => {
 				</span>
 				<span>
 					<h3>Due : {formatDate(taskDetail?.data.deadLine)}</h3>
-					<Button text="Complete Task" isPrimary={true} onClick={completeTask} />
+					{formatDate(new Date()) < formatDate(taskDetail?.data.deadLine) && (
+						<Button text="Complete Task" isPrimary={true} onClick={completeTask} />
+					)}
 				</span>
 			</div>
 			<div className="data">
@@ -235,7 +236,7 @@ const TaskDetail = () => {
 				</div>
 				{/* {joined ? ( */}
 				<div className="bottomSectionWrapper">
-					{!joined && (
+					{!joined  && (
 						<div className="joinButtonWrapper">
 							<Button text="Join Task" isPrimary={true} onClick={handleJoin} />
 						</div>

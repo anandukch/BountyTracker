@@ -24,7 +24,7 @@ const EmployeeProfile = () => {
 			setEmployeeDetails([
 				{ header: "Role", content: employeeData.role },
 				{ header: "Email", content: employeeData.email },
-				{ header: "Tier", content: employeeData.tier || "N/A" },
+				{ header: "Tier", content: employeeData.currentTier || "N/A" },
 				{ header: "Birthday", content: formatDate(employeeData.details.birthday) },
 				{ header: "Gender", content: employeeData.details.gender },
 				{ header: "Phone", content: employeeData.details.phoneNo },
