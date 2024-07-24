@@ -4,7 +4,7 @@ import "./style.scss";
 import Button from "../../components/Button/Button";
 import profilImg from "../../assets/profile.png";
 import TaskDataHeader from "../../components/TaskDataHeader";
-import { useGetEmployeeCurrentTasksQuery, useGetProfileQuery } from "../../api/employeeApi";
+import { useGetEmployeeCurrentTasksQuery, useGetProfileQuery, useRedeemRewardMutation } from "../../api/employeeApi";
 import { useEffect, useState } from "react";
 import { Loader } from "../../components/Loader/Loader";
 import { formatDate } from "../../utils/date.utils";
@@ -16,7 +16,10 @@ import { PieChart } from "react-minimal-pie-chart";
 const EmployeeProfile = () => {
 	const [employee, setEmployee] = useState({});
 	const [employeeDetails, setEmployeeDetails] = useState([]);
+
+	const [redeemReward, { isSuccess: redeemSuccess }] = useRedeemRewardMutation();
 	const { data, isLoading, isSuccess } = useGetProfileQuery();
+
 	const dispatch = useDispatch();
 	useEffect(() => {
 		if (isSuccess) {
@@ -29,14 +32,17 @@ const EmployeeProfile = () => {
 				{ header: "Birthday", content: formatDate(employeeData.details.birthday) },
 				{ header: "Gender", content: employeeData.details.gender },
 				{ header: "Phone", content: employeeData.details.phoneNo },
-				
 			]);
 			dispatch(addLoggedState({ role: employeeData.role, name: employeeData.name }));
 		}
 	}, [data, dispatch, isSuccess]);
 
 	const [addClass, setAddClass] = useState(0);
-
+	const handleRedeem = () => {
+		redeemReward();
+		console.log("handle redeem")
+		if (redeemSuccess) console.log("redeem request sent");
+	};
 	const handlePending = () => {
 		setAddClass(0);
 	};
@@ -57,9 +63,9 @@ const EmployeeProfile = () => {
 		status: "Status",
 		bounty: "Bounty",
 	};
-	useEffect(() => {
-		console.log(employee);
-	}, [employee]);
+	// useEffect(() => {
+	// 	console.log(employee);
+	// }, [employee]);
 
 	return (
 		<div className="employeeProfileWrapper">
@@ -154,23 +160,22 @@ const EmployeeProfile = () => {
 					</div>
 				</div>
 				<div className="employeeTasksWrapper">
-					<div className="currentTier">Tier:<h4>{employee.currentTier}</h4></div>
+					<div className="currentTier">
+						Tier:<h4>{employee.currentTier}</h4>
+					</div>
 					<div className="bounty">
 						Total Bounty:
 						<h4>{employee?.details?.totalBounty}</h4>
-						
-						</div>
-						<div className="rewards">
-							Total Rewards:
-							<h4>
-								{employee?.details?.totalRewards}
-								20000
-								</h4>
-
-
-						</div>
+					</div>
+					<div className="rewards">
+						Total Rewards:
+						<h4>
+							{employee?.details?.rewards}
+							{/* 20000 */}
+						</h4>
+					</div>
 					<div className="requestButton">
-						<Button text="Redeem Request" isPrimary={true} />
+						<Button text="Redeem Request" isPrimary={true} onClick={handleRedeem} />
 					</div>
 				</div>
 			</section>

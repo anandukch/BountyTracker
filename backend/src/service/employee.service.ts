@@ -21,12 +21,12 @@ class EmployeeService {
 	) {}
 
 	getAllEmployees = async (relations?: Array<string>): Promise<Employee[]> => {
-		const employeeList= await this.employeeRespository.find({}, relations)
-		const updatedEmployeeList=[]
-		employeeList.forEach((employee)=>{
+		const employeeList = await this.employeeRespository.find({}, relations);
+		const updatedEmployeeList = [];
+		employeeList.forEach((employee) => {
 			const currentTier = getCurrentTier(employee.details.totalBounty);
-			updatedEmployeeList.push({...employee,currentTier})
-		})
+			updatedEmployeeList.push({ ...employee, currentTier });
+		});
 		return updatedEmployeeList;
 	};
 
@@ -210,7 +210,8 @@ class EmployeeService {
 			throw new EntityNotFoundException("Employee not found");
 		}
 		// TODO: After Migration
-		// employee.details.rewards = 0;
+		employee.details.rewards = 0;
+		await this.employeeRespository.save(employee);
 		return;
 	};
 }
