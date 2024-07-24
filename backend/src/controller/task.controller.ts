@@ -181,16 +181,13 @@ class TaskController {
 			}
 			const allComments = await this.commentService.getAllCommentsByTaskId(parseInt(taskId), req.user.id);
 
-			const normalComments = allComments.filter((comment) => comment.commentType === CommentType.Normal);
-			const reviewComments = allComments.filter((comment) => comment.commentType === CommentType.Review);
+			// const normalComments = allComments.filter((comment) => comment.commentType === CommentType.Normal);
+			// const reviewComments = allComments.filter((comment) => comment.commentType === CommentType.Review);
 
 			res.status(200).json({
 				success: true,
 				message: "Comments fetched succesfully",
-				data: {
-					normalComments,
-					reviewComments,
-				},
+				data: allComments,
 			});
 		} catch (error) {
 			next(error);
