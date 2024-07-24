@@ -20,10 +20,11 @@ class CommentService {
 			"mentionComment.employee",
 		]);
 
-		const task = await taskService.getTaskById(taskId, ["participants", "participants.employee"]);
+		const task = await taskService.getTaskById(taskId, ["participants", "participants.employee","createdBy"]);
+		const isUserCreator = task.createdBy.id === userId
 		const isParticipant = task.participants.some((participant) => participant.employee.id === userId);
-		if (!isParticipant) {
-			return [];
+		if(!isUserCreator && !isParticipant){
+			return []
 		}
 		return comments;
 	};
