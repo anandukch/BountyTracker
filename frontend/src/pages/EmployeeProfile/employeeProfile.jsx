@@ -1,6 +1,7 @@
 import DetailBlock from "../../components/DetailBlock";
 import TaskDataRow from "../../components/TaskRowData";
 import "./style.scss";
+import Button from "../../components/Button/Button";
 import profilImg from "../../assets/profile.png";
 import TaskDataHeader from "../../components/TaskDataHeader";
 import { useGetEmployeeCurrentTasksQuery, useGetProfileQuery } from "../../api/employeeApi";
@@ -28,6 +29,7 @@ const EmployeeProfile = () => {
 				{ header: "Birthday", content: formatDate(employeeData.details.birthday) },
 				{ header: "Gender", content: employeeData.details.gender },
 				{ header: "Phone", content: employeeData.details.phoneNo },
+				
 			]);
 			dispatch(addLoggedState({ role: employeeData.role, name: employeeData.name }));
 		}
@@ -141,7 +143,6 @@ const EmployeeProfile = () => {
 								animationEasing="ease-out"
 								// label={({ dataEntry }) => dataEntry.value}
 								// lineWidth={50}
-								
 
 								data={[
 									{ title: "One", value: employee.pendingTasks, color: "#C13C37" },
@@ -149,11 +150,29 @@ const EmployeeProfile = () => {
 									// { title: "Three", value: 20, color: "#6A2135" },
 								]}
 							/>
-							
 						</div>
 					</div>
 				</div>
-				<div className="employeeTasksWrapper"></div>
+				<div className="employeeTasksWrapper">
+					<div className="currentTier">Tier:<h4>{employee.currentTier}</h4></div>
+					<div className="bounty">
+						Total Bounty:
+						<h4>{employee?.details?.totalBounty}</h4>
+						
+						</div>
+						<div className="rewards">
+							Total Rewards:
+							<h4>
+								{employee?.details?.totalRewards}
+								20000
+								</h4>
+
+
+						</div>
+					<div className="requestButton">
+						<Button text="Redeem Request" isPrimary={true} />
+					</div>
+				</div>
 			</section>
 		</div>
 	);
