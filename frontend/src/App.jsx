@@ -16,7 +16,7 @@ import Progressbar from "./components/ProgressBar/ProgressBar.jsx";
 import MyTask from "./pages/myTask/myTask.jsx";
 import RequestList from "./pages/RequestList/requestList.jsx";
 import EmployeeProfile from "./pages/EmployeeProfile/employeeProfile.jsx";
-import ReviewPage from "./pages/ReviewPage/ReviewPage.jsx";
+
 
 const App = () => {
 	const router = createBrowserRouter([
@@ -40,7 +40,7 @@ const App = () => {
 		},
 
 		{
-			path: "/profile",
+			path: "/tasks",
 			element: <HomeLayout />,
 			children: [{ index: true, element: <EmployeeDashboard /> }],
 		},
@@ -57,16 +57,16 @@ const App = () => {
 				{ path: "profile", element: <EmployeeProfile /> },
 			],
 		},
-		{
-			path: "/tasks",
-			element: <HomeLayout />,
-			children: [
-				{ index: true, element: <TaskList /> },
-				{ path: ":taskId/review", element: <ReviewPage /> },
-				{ path: ":taskId", element: <TaskDetail /> },
-				{ path: "create", element: <CreateTask /> },
-			],
-		},
+		// {
+		// 	path: "/tasks",
+		// 	element: <HomeLayout />,
+		// 	children: [
+		// 		{ index: true, element: <TaskList /> },
+		// 		{ path: ":taskId/review", element: <ReviewPage /> },
+		// 		{ path: ":taskId", element: <TaskDetail /> },
+		// 		{ path: "create", element: <CreateTask /> },
+		// 	],
+		// },
 		{
 			path: "/myTasks",
 			element: <HomeLayout />,

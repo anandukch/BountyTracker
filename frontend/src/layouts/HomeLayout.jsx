@@ -47,12 +47,12 @@ const HomeLayout = () => {
 	}, [employeeData, isSuccess, dispatch]);
 
 	const sideBar = [
-		{
-			id: 0,
-			title: "Profile",
-			icon: profile,
-			to: "/profile",
-		},
+		// {
+		// 	id: 0,
+		// 	title: "Profile",
+		// 	icon: profile,
+		// 	to: "/profile",
+		// },
 		{
 			id: 1,
 			title: "Tasks",
