@@ -17,7 +17,6 @@ import MyTask from "./pages/myTask/myTask.jsx";
 import RequestList from "./pages/RequestList/requestList.jsx";
 import EmployeeProfile from "./pages/EmployeeProfile/employeeProfile.jsx";
 
-
 const App = () => {
 	const router = createBrowserRouter([
 		{
@@ -42,7 +41,10 @@ const App = () => {
 		{
 			path: "/tasks",
 			element: <HomeLayout />,
-			children: [{ index: true, element: <EmployeeDashboard /> }],
+			children: [
+				{ index: true, element: <EmployeeDashboard /> },
+				{ path: ":taskId", element: <TaskDetail /> },
+			],
 		},
 
 		{
