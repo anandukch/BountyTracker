@@ -5,6 +5,7 @@ import HttpException from "../exceptions/http.exceptions";
 import ValidationException from "../exceptions/validationException";
 import TaskRepository from "../repository/task.repository";
 import { employeeService } from "../routes/employee.routes";
+import { commentService } from "../routes/task.routes";
 import { CommentType } from "../utils/commentType.enum";
 import ReviewStatus from "../utils/reviewStatus.enum";
 import { TaskStatusEnum } from "../utils/taskStatus.enum";
@@ -94,6 +95,28 @@ class TaskService {
 
 		task.status = TaskStatusEnum.COMPLETED;
 		await this.taskRepository.save(task);
+	};
+
+	getContributions = async (id: number) => {
+		const task = await this.taskRepository.findOneBy({ id }, [
+			"participants",
+			"participants.employee",
+			"participants.employee.comments",
+		]);
+		if (!task) {
+			throw new HttpException(404, "Task not found");
+		}
+
+		await Promise.all(
+			task.participants.map(async (participant) => {
+				const employee = participant.employee;
+				const comment = await commentService.getUserTaskReviewComments(employee.id, id);
+				participant.employee.comments = comment;
+				return participant;
+			})
+		);
+
+		return task;
 	};
 }
 

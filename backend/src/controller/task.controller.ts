@@ -30,8 +30,33 @@ class TaskController {
 		this.router.patch("/comments/:commentId", this.reviewComment);
 		this.router.patch("/:taskId", this.updateTask);
 		this.router.patch("/complete/:taskId", this.completeTask);
+		this.router.get("/:id/contributions", this.getTaskContributions);
 	}
 
+	public getTaskContributions = async (req: RequestWithRole, res: Response, next: NextFunction) => {
+		try {
+			const taskContributions = await this.taskService.getContributions(parseInt(req.params.id));
+			res.status(200).json({
+				success: true,
+				message: "Contributions fetched successfully",
+				data: {
+					name: taskContributions.title,
+					description: taskContributions.description,
+					id: taskContributions.id,
+					participants: taskContributions.participants.map((participant) => {
+						return {
+							id: participant.employee.id,
+							name: participant.employee.name,
+							email: participant.employee.email,
+							contribution: participant.employee.comments,
+						};
+					}),
+				},
+			});
+		} catch (error) {
+			next(error);
+		}
+	};
 	public getAllTasks = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			const tasks = await this.taskService.getTasks(
