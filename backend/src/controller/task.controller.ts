@@ -81,14 +81,14 @@ class TaskController {
 			console.log(tasks);
 
 			const data = tasks.map((task, i) => {
-				let startDate = task.startDate;
 				let deadLine = task.deadLine;
 				let today = new Date();
-
-				if (compareDates(today, startDate) >= 0 && compareDates(today, deadLine) <= 0) {
-					task.status = TaskStatusEnum.IN_PROGRESS;
-				} else if (compareDates(today, deadLine) > 0 && task.status !== TaskStatusEnum.COMPLETED) {
-					task.status = TaskStatusEnum.IN_REVIEW;
+				if (task.status !== TaskStatusEnum.COMPLETED) {
+					if (compareDates(today, deadLine) > 0) {
+						task.status = TaskStatusEnum.IN_REVIEW;
+					} else {
+						task.status = TaskStatusEnum.IN_PROGRESS;
+					}
 				}
 
 				return task;
