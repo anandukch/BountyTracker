@@ -1,0 +1,76 @@
+*
+{
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif,
+    Verdana, Geneva, Tahoma, sans-serif;
+}
+  .skill-main {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .skill-wrrap {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      .skill-name {
+        color:#2a3644;
+        font-size: 18px;
+        font-weight: 500;
+    
+      }
+     .skill-bar-frame
+     {
+      height: 40px;
+      width:400px;
+        border-style:solid;
+        border-color:#fafbfc;
+        box-shadow: -1px -1px 20px .5px rgba(117, 114, 114, 0.3) inset, 0 0 10px rgba(0, 0, 0, 0.3);
+    border-width: 7px;
+        border-radius:16px;
+        .skill-bar {
+          
+          .skill-per {
+            height: 27px;
+            background: #ebd09d;
+            border-radius: 9px;
+            width: 0;
+           
+            box-shadow: inset 0px 0px 2px 2px #d4b273;
+         
+           
+            transition: 1s linear;
+            position: relative;
+            &:before {
+              content: attr(per);
+              position: absolute;
+              padding: 4px 6px;
+              background-color: #ebd09d;
+              color: #fff;
+              font-size: 15px;
+              border-radius: 4px;
+              top: -39px;
+              right: 0;
+              transform: translateX(50%);
+            }
+      
+            &:after {
+              content: "";
+              position: absolute;
+              width: 10px;
+              height: 10px;
+              background-color: #ebd09d;
+              top: -20px;
+              right: 0;
+              transform: translateX(50%) rotate(45deg);
+              border-radius: 2px;
+            }
+          }
+        }
+     }
+     
+  
+     
+    }
+  }

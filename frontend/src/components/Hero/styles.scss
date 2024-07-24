@@ -32,22 +32,26 @@
 			display: flex;
 			flex-direction: column;
 			row-gap: 10px;
-			.login-image {
-				width: 300px;
-				height: 300px;
-				padding: 5px;
-				border-radius: 50%;
-				align-content: center;
-				text-align: center;
-				background-color: var(--bgWhite);
-				border: 3px solid #60391f;
-			}
+			// .login-image {
+			// 	width: 300px;
+			// 	height: 300px;
+			// 	padding: 5px;
+			// 	border-radius: 50%;
+			// 	align-content: center;
+			// 	text-align: center;
+			// 	background-color: var(--bgWhite);
+			// 	border: 3px solid #60391f;
+			// }
 			.logo-image {
 				border-radius: 50%;
 				width: 100%;
+				height: 400px;
+				width:400px;
 			}
 			.logo-text {
+				margin-left: 85px;
 				height: 60px;
+				width:200px;
 			}
 		}
 	}

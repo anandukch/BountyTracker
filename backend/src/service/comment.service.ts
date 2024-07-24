@@ -14,12 +14,20 @@ class CommentService {
 	constructor(private commentRepository: CommentRepository) {}
 
 	getAllCommentsByTaskId = async (taskId: number): Promise<Comment[]> => {
-		const comments = await this.commentRepository.findBy({ task: { id: taskId } as any });
+		const comments = await this.commentRepository.find({ task: { id: taskId } as any }, [
+			"employee",
+			"mentionComment",
+			"mentionComment.employee",
+		]);
 		return comments;
 	};
 
 	getCommentByCommentId = async (id: number) => {
-		const comment = await this.commentRepository.findOneBy({ id });
+		const comment = await this.commentRepository.findOneBy(
+			{ id },
+
+			["mentionComment", "employee", "task"]
+		);
 		if (!comment) {
 			throw new HttpException(404, "Comment not found");
 		}
@@ -59,6 +67,8 @@ class CommentService {
 	reviewComment = async (id: number, commentDto: ReviewCommentDto) => {
 		//TODO:'Update comment business logic'
 		const comment = await this.getCommentByCommentId(id);
+		console.log(comment);
+
 		if (comment.commentType != CommentType.Review) {
 			throw new HttpException(400, "Only review comments can be reviewed");
 		}

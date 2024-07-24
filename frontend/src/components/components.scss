@@ -71,6 +71,7 @@
 
 .toastContainer {
 	position: fixed;
+	z-index: 100;
 	.toast {
 		position: relative;
 		top: 0px;

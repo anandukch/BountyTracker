@@ -10,6 +10,9 @@ import HttpException from "../exceptions/http.exceptions";
 import { CreateTaskDto, UpdateTaskDto } from "../dto/task.dto";
 import ValidationException from "../exceptions/validationException";
 import fileUploadMiddleware from "../middleware/fileUploadMiddleware";
+import validationMiddleware from "../middleware/validate.middleware";
+import { compareDates } from "../utils/date.utils";
+import { TaskStatusEnum } from "../utils/taskStatus.enum";
 
 class TaskController {
 	public router: Router;
@@ -17,7 +20,7 @@ class TaskController {
 		this.router = Router();
 		this.router.get("/", this.getAllTasks);
 		this.router.get("/created", this.getTaskCreatedByUser);
-		this.router.post("/", this.createTask);
+		this.router.post("/", validationMiddleware(CreateTaskDto), this.createTask);
 		this.router.get("/:taskId", this.getTaskById);
 		// this.router.use("/:taskId/comments", commentRouter);
 		this.router.get("/:taskId/comments", this.getAllTaskComments);
@@ -26,6 +29,7 @@ class TaskController {
 		this.router.post("/:taskId/comments", fileUploadMiddleware.single("file"), this.createComment);
 		this.router.patch("/comments/:commentId", this.reviewComment);
 		this.router.patch("/:taskId", this.updateTask);
+		this.router.patch("/complete/:taskId", this.completeTask);
 	}
 
 	public getAllTasks = async (req: RequestWithRole, res: Response, next: NextFunction) => {
@@ -43,11 +47,25 @@ class TaskController {
 
 	public getTaskCreatedByUser = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			const tasks = await this.taskService.getTaskCreatedByUser(req.user.id);
+			const tasks = await this.taskService.getTaskCreatedByUser(req.user.id, ["comments"]);
+
+			const data = tasks.map((task, i) => {
+				let startDate = task.startDate;
+				let deadLine = task.deadLine;
+				let today = new Date();
+
+				if (compareDates(today, startDate) >= 0 && compareDates(today, deadLine) <= 0) {
+					task.status = TaskStatusEnum.IN_PROGRESS;
+				} else if (compareDates(today, deadLine) > 0 && task.status !== TaskStatusEnum.COMPLETED) {
+					task.status = TaskStatusEnum.IN_REVIEW;
+				}
+
+				return task;
+			});
 			res.status(200).json({
 				success: true,
 				message: "Tasks fetched successfully",
-				data: tasks,
+				data: data,
 			});
 		} catch (error) {
 			next(error);
@@ -78,6 +96,7 @@ class TaskController {
 					},
 					participants: task.participants.map((participant) => {
 						return {
+							id: participant.employee.id,
 							name: participant.employee.name,
 							email: participant.employee.email,
 							contribution: participant.contribution,
@@ -92,13 +111,7 @@ class TaskController {
 
 	public createTask = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			const task = req.body;
-			const taskDto = plainToInstance(CreateTaskDto, task);
-			const errors = await validate(taskDto);
-			if (errors.length) {
-				throw new ValidationException(400, "Validation Failed", errors);
-			}
-			await this.taskService.createTask(taskDto, req.user);
+			await this.taskService.createTask(req.body as CreateTaskDto, req.user);
 			res.status(200).json({
 				success: true,
 				message: "Tasks created successfully",
@@ -106,6 +119,23 @@ class TaskController {
 		} catch (error) {
 			console.log(error);
 
+			next(error);
+		}
+	};
+
+	public completeTask = async (req: RequestWithRole, res: Response, next: NextFunction) => {
+		try {
+			const { taskId } = req.params;
+			if (!taskId) {
+				throw new HttpException(400, "Task not found");
+			}
+			const response = await this.taskService.completeTask(parseInt(taskId));
+			res.status(200).json({
+				success: true,
+				message: "Task completed succesfully",
+				data: response,
+			});
+		} catch (error) {
 			next(error);
 		}
 	};

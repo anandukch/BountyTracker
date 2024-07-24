@@ -1,6 +1,8 @@
-import apiWithTag from "./baseApi";
+// import apiWithTag from "./baseApi";
 
-export const employeeApi = apiWithTag.injectEndpoints({
+import { apiWithEmployeeTag } from "./baseApi";
+
+export const employeeApi = apiWithEmployeeTag.injectEndpoints({
 	endpoints: (builder) => ({
 		getEmployeeList: builder.query({
 			query: () => "/employees",
@@ -18,15 +20,33 @@ export const employeeApi = apiWithTag.injectEndpoints({
 		getEmployee: builder.query({
 			query: (id) => `/employees/${id}`,
 			// invalidatesTags: ["EMPLOYEE_LIST"],
+			// invalidatesTags: ["EMPLOYEE"],
 			providesTags: ["EMPLOYEE"],
 		}),
 
 		getProfile: builder.query({
 			query: () => "/employees/profile",
+			providesTags: ["EMPLOYEE"],
+			// invalidatesTags: ["EMPLOYEE"],
 		}),
 
 		getEmployeeCurrentTasks: builder.query({
 			query: () => "/employees/tasks",
+			providesTags: ["EMPLOYEE"],
+		}),
+
+		getEmployeeCreatedTasks: builder.query({
+			query: () => "/tasks/created",
+			providesTags: ["EMPLOYEE"],
+		}),
+
+		login: builder.mutation({
+			query: (data) => ({
+				url: "/employees/login",
+				method: "POST",
+				body: data,
+			}),
+			invalidatesTags: ["EMPLOYEE_LIST", "EMPLOYEE"],
 		}),
 	}),
 });
@@ -37,4 +57,6 @@ export const {
 	useAddEmployeeMutation,
 	useGetEmployeeQuery,
 	useGetEmployeeCurrentTasksQuery,
+	useGetEmployeeCreatedTasksQuery,
+	useLoginMutation,
 } = employeeApi;

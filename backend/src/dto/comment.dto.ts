@@ -17,7 +17,7 @@ export class CreateComementDto {
 	fileUrl: string;
 
 	@IsOptional()
-	@IsNumber()
+	@IsString()
 	mentionCommentId: number;
 }
 

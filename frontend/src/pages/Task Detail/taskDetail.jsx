@@ -14,14 +14,22 @@ import {
 	useGetTaskByIdQuery,
 	useJoinTaskMutation,
 } from "../../api/taskApi";
+import {
+	useCreateCommentMutation,
+	useGetCommentsByTaskIdQuery,
+	useGetTaskByIdQuery,
+	useJoinTaskMutation,
+	useLazyGetTaskByIdQuery,
+} from "../../api/taskApi";
 import { formatDate } from "../../utils/date.utils";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addJoinedStatus } from "../../store/employeeReducer";
 
+import CustomModal from "../../components/Modal/CustomModal";
+import CommentComponent1 from "../../components/CommentComponent/CommentComponent";
 const TaskDetail = () => {
 	//-----------constants--------
-	const { taskId } = useParams();
 	const [commentList, setCommentList] = useState([]);
 	const [participantList, setParticipantList] = useState([]);
 	const [file, uploadFile] = useState();
@@ -34,16 +42,23 @@ const TaskDetail = () => {
 		boxShadow: "0.5px 0.5px 0.5px  0.5px #8c96a0",
 	};
 
+	const [file, uploadFile] = useState();
+	const [showContributionModal, setShowContributionModal] = useState(false);
+	const [commentType, setCommentType] = useState("Normal");
 	const [comment, setComment] = useState("");
 	const [mentionId, setMentionId] = useState();
 
 	//------------queries--------
 	const { data: taskDetail, isSuccess: taskSuccess } = useGetTaskByIdQuery(taskId);
+
+	const { taskId } = useParams();
+	const inputRef = useRef();
+
+	const [getTaskById, { data: taskDetail, isSuccess: taskSuccess }] = useLazyGetTaskByIdQuery();
 	const { data: commentsData, isSuccess: commentSuccess } = useGetCommentsByTaskIdQuery(taskId);
 	const [join, { isSuccess: joinSuccess }] = useJoinTaskMutation();
 	const [createComment] = useCreateCommentMutation();
 
-	// ----------stateVar----------
 	const loggedState = useSelector((state) => state.employee);
 	const dispatch = useDispatch();
 	//----
@@ -55,28 +70,24 @@ const TaskDetail = () => {
 		{
 			id: "description",
 			name: "Description",
-			// value: "create a bounty tracker system with rewwards and bounty points for tasks completed",
 			value: taskDetail?.description,
 		},
 
 		{
 			id: "skills",
 			name: "Skills",
-			// value: "Node, react, java, c",
 			value: taskDetail?.skillList,
 		},
 	];
+
 	const handleSend = async () => {
 		const formData = new FormData();
-		const commentData = {
-			id: taskId,
-			content: comment,
-			commentType: "Normal",
-			mentionCommentId: mentionId,
-		};
-		createComment(commentData);
-		inputRef.current.value = "";
-		setReplyText("");
+		formData.append("file", file);
+		formData.append("commentType", commentType);
+		formData.append("content", comment);
+		if (mentionId) formData.append("mentionCommentId", mentionId);
+		createComment({ taskId, formData });
+		setComment("");
 	};
 
 	const handleTextArea = (e) => {
@@ -96,23 +107,36 @@ const TaskDetail = () => {
 		setReplyText(replyText);
 		setMentionId(id);
 	};
-
 	const handleJoin = () => {
 		join(taskId);
 	};
 
-	//--------useEffects--------
+	const handleSubmitReview = () => {
+		setCommentType("Review");
+	};
+
 	useEffect(() => {
 		if (taskSuccess) {
-			taskDetail.data.participants.forEach((participant) => {
-				if (participant.name === tokenPayload.name) {
+			console.log("effect 1");
+			const participants = taskDetail.data.participants;
+			setParticipantList(participants);
+			participants.forEach((participant) => {
+				if (participant.email ===tokenPayload.email) {
 					// dispatch(addJoinedStatus({ id: taskId, status: "joined" }));
 					setJoined(true);
-					console.log("joined");
 				}
 			});
 		}
-	}, [taskSuccess, taskDetail, joined]);
+	}, [taskSuccess, tokenPayload, taskDetail, ]);
+
+	useEffect(() => {
+		getTaskById(taskId);
+		if (joinSuccess) {
+			console.log("effect 2");
+			dispatch(addJoinedStatus({ status: "joined" }));
+		}
+	}, [joinSuccess, dispatch, getTaskById, taskId]);
+
 	useEffect(() => {
 		if (commentSuccess) {
 			setCommentList(commentsData.data);
@@ -126,6 +150,25 @@ const TaskDetail = () => {
 	}, [joinSuccess]);
 	return (
 		<main className="taskDetail">
+			{showContributionModal && (
+				<CustomModal
+					title="Add Contribution"
+					submitText="Contribute"
+					handleCancel={() => setShowContributionModal(false)}
+					// handleSubmit={}
+				>
+					<textarea className="contributionTextArea" placeholder="Enter contribution details..."></textarea>
+					<div className="contributionFileUpload">
+						{file ? file.name : "Choose a file to upload..."}
+						<div className="contributionFileUploadButton">
+							<label htmlFor="file" className="uploadFileLabel">
+								<input type="file" id="file" className="uploadFile" onChange={handleUpload} />
+								<img src={attach} alt="Add attachment" />
+							</label>
+						</div>
+					</div>
+				</CustomModal>
+			)}
 			<div className="title">
 				<span>
 					<h3>Task : # {taskDetail?.data.title}</h3>
@@ -168,7 +211,7 @@ const TaskDetail = () => {
 					<div className="particpantsList">
 						{taskDetail?.data.participants.map((participant) => {
 							return (
-								<div className="partcipants">
+								<div className="partcipants" key={participant.id}>
 									<img src={profile} alt="profile icon" />
 									{participant.name}
 								</div>
@@ -177,38 +220,56 @@ const TaskDetail = () => {
 					</div>
 				</div>
 			</div>
-			{joined ? (
+			{joined  ? (
 				<div className="bottomSection">
 					<div className="commentSection">
 						<div className="commentSectionHeader">
 							<span>Comments</span>
 						</div>
 
-						<div className="commentWrapper">
+						<div className="commentSectionWrapper">
 							<div className="commentList">
-								{commentList?.normalComments?.map((record) => {
-									return (
+								{commentList?.normalComments?.map(
+									(comment) => (
+										<CommentComponent1
+											comment={comment}
+											handleReplyClick={handleReply}
+											currentEmployeeId={loggedState.id}
+										/>
+									),
+
+									/* return (
 										<CommentComponent
 											key={record.id}
 											name={record.employee.name}
 											comment={record.content}
+											currEmployee="Arun Doe"
 											type="Normal"
 											onClick={() => handleReply(record.id)}
 											loggedState={loggedState}
 											status={record.review_status}
 											reply={record.mentionCommentId}
 										/>
-									);
-								})}
+									); */
+								)}
 							</div>
 							<div className="addComment">
 								<img src={commentIcon} alt="Comment Icon" />
+								{mentionId && (
+									<div className="mentionShowWrapper">
+										<span className="mentionShow">{`Replying to ${mentionId}`}</span>
+										<span className="removeMention" onClick={() => setMentionId(undefined)}>
+											x
+										</span>
+									</div>
+								)}
 								<textarea
 									ref={inputRef}
 									className="commentBox"
 									placeholder="//add comments"
 									rows="1"
 									onChange={handleTextArea}
+									value={comment}
 								/>
 								<span className="commentButtons">
 									<div className="sendButton">
@@ -232,7 +293,6 @@ const TaskDetail = () => {
 											name={record.employee.name}
 											comment={record.content}
 											type="Review"
-											onClick={() => handleReply(record.id)}
 											loggedState={loggedState}
 											status={record.reviewStatus}
 										/>

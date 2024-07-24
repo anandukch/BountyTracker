@@ -11,6 +11,8 @@ import authorize from "../middleware/authorize.middleware";
 import ValidationException from "../exceptions/validationException";
 import { compareDates } from "../utils/date.utils";
 import { TaskStatusEnum } from "../utils/taskStatus.enum";
+import validationMiddleware from "../middleware/validate.middleware";
+import { CreateComementDto } from "../dto/comment.dto";
 class EmployeeController {
 	public router: Router;
 	constructor(private employeeService: EmployeeService) {
@@ -21,7 +23,7 @@ class EmployeeController {
 		this.router.get("/tasks/not-joined", authorize, this.getTasksNotJoinedByEmployee);
 		this.router.get("/:id", this.getEmployeeByID);
 		this.router.post("/login", this.loginEmployee);
-		this.router.post("/", this.createEmployee);
+		this.router.post("/", validationMiddleware(CreateEmployeeDto), this.createEmployee);
 		this.router.post("/tasks/:id", authorize, this.joinTask);
 		this.router.put("/:employeeId/tasks/:taskId/contributions", authorize, this.giveContribution);
 	}
@@ -61,7 +63,7 @@ class EmployeeController {
 
 	public getAllEmployees = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			const employees = await this.employeeService.getAllEmployees();
+			const employees = await this.employeeService.getAllEmployees(["details"]);
 			res.status(200).json({
 				success: true,
 				message: "Employees fetched successfully",
@@ -92,22 +94,39 @@ class EmployeeController {
 	public getEmployeeAssignedTasks = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			const participatingTasks = await this.employeeService.getEmployeeTasksByID(req.user.id);
-			participatingTasks.map((participatingTask) => {
+
+			const data = participatingTasks.map((participatingTask) => {
 				delete participatingTask.task.createdBy.password;
 				let startDate = participatingTask.task.startDate;
 				let deadLine = participatingTask.task.deadLine;
 				let today = new Date();
-				if (compareDates(today, startDate) === 0 && compareDates(today, deadLine) === -1) {
+
+				if (compareDates(today, startDate) >= 0 && compareDates(today, deadLine) <= 0) {
 					participatingTask.task.status = TaskStatusEnum.IN_PROGRESS;
-				} else if (compareDates(today, deadLine) === 1) {
+				} else if (
+					compareDates(today, deadLine) > 0 &&
+					participatingTask.task.status !== TaskStatusEnum.COMPLETED
+				) {
 					participatingTask.task.status = TaskStatusEnum.IN_REVIEW;
 				}
+
+				return {
+					...participatingTask,
+					task: {
+						...participatingTask.task,
+						createdBy: {
+							name: participatingTask.task.createdBy.name,
+							email: participatingTask.task.createdBy.email,
+							role: participatingTask.task.createdBy.role,
+						},
+					},
+				};
 			});
 
 			res.status(200).json({
 				success: true,
 				message: "Employee tasks fetched successfully",
-				data: participatingTasks,
+				data: data,
 			});
 		} catch (error) {
 			next(error);
@@ -132,13 +151,8 @@ class EmployeeController {
 			// if (req.role > Role.LEAD) {
 			//     throw new HttpException(403, "Access Denied");
 			// }
-			const employeeDto = plainToInstance(CreateEmployeeDto, req.body);
-			const errors = await validate(employeeDto);
-			// const validationErrorConstraints = getValidationErrorConstraints(errors);
-			if (errors.length) {
-				throw new ValidationException(400, "Validation Failed", errors);
-			}
-			const createdEmployee = await this.employeeService.createEmployee(employeeDto);
+
+			const createdEmployee = await this.employeeService.createEmployee(req.body as CreateEmployeeDto);
 			delete createdEmployee.password;
 			res.status(201).send(createdEmployee);
 		} catch (error) {

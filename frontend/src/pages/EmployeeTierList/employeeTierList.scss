@@ -1,27 +1,10 @@
 .fullWrap {
-	padding: 20px;
+	padding: 10px;
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
 
-	input[type="text"] {
-		border-radius: 20px;
-		padding-left: 35px;
-		width: 300px;
-		height: 35px;
-		background-color: white;
-		border: thick;
-	}
-	.searchBar {
-		position: relative;
-		display: flex;
-		align-items: center;
-	}
-	.searchBar img {
-		position: absolute;
-		padding-left: 5px;
-		height: 90%;
-	}
+ 
 
 	.searchSort {
 		display: flex;
@@ -67,12 +50,20 @@
 		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 		align-content: center;
 
-		background-color: #f2f5fa;
-		height: 50px;
+		height: 80px;
 		align-items: center;
 
 		padding: 5px;
 		border-radius: 5px;
+
+		padding-left: 3%;
+		box-shadow: 1px 0px 5px 1px #eaeaea;
+		justify-content: space-around;
+
+		background-color: #efecda;
+		display: grid;
+		border-bottom: 2px solid #ccc;
+		box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.3);
 	}
 	.listHeadings {
 		display: flex;
@@ -101,12 +92,20 @@
 	.listDataSet {
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-		margin: 5px;
-		height: 20px;
 		align-items: center;
 		padding: 5px;
-		background-color: #fffdfe;
-		border-radius: 10px;
+		padding-left: 3%;
+		height: 40px;
+		margin: 5px 2px;
+		background-color: rgb(253, 253, 253);
+		border-radius: 5px;
+		box-shadow: 1px 0px 5px 1px #eaeaea;
+		transition: transform 0.2s ease;
+
+		&:hover {
+			transform: translateY(-2px) scale(1.02);
+			box-shadow: 0px 5px 10px #efecda;
+		}
 	}
 	.employeeName,
 	.employeeBounty,

@@ -1,20 +1,8 @@
 import "./styles.scss";
-const CommentComponent = ({ name, comment, type, onClick, loggedState, status, reply }) => {
-	// console.log(name);
-	const flagUser = loggedState.username == name ? true : false;
-	const flagType = type === "Normal" ? true : false;
 
-	const styleCommentUser = {
-		justifyContent: "right",
-		width: "fit-content",
-		borderRadius: "15px 0 15px 15px",
-	};
-	const styleCommentNotUser = {
-		justifyContent: "left",
-		width: "max-content",
-		borderRadius: "0 15px 15px 15px",
-	};
-	const styleName = {};
+const CommentComponent1 = ({ comment, handleReplyClick, currentEmployeeId }) => {
+	const isOwnComment = comment.employee.id === currentEmployeeId;
+	// console.log(comment);
 	return (
 		<div className="commentRecord" style={flagType ? (flagUser ? { justifyContent: "right" } : null) : null}>
 			{!flagUser ? <div className="name">{name}</div> : null}
@@ -25,13 +13,24 @@ const CommentComponent = ({ name, comment, type, onClick, loggedState, status, r
 						{status}
 					</div>
 				) : null}
-			</div>
-			{flagType ? (
-				<div className="replyButton" onClick={onClick}>
-					reply
+		<>
+			<div className={`commentWrapper ${isOwnComment ? "ownComment" : ""}`}>
+				<div className="commentBody">
+					{!isOwnComment && <span className="commentUsername">{comment.employee.name}</span>}
+					{comment.mentionComment && (
+						<span className="mentionComment">
+							<span className="mentionedEmployee">{comment.mentionComment.employee.name}</span>
+							<span className="mentionedCommentContent">{comment.mentionComment.content}</span>
+						</span>
+					)}
+					<span className="commentContent">{comment.content}</span>
 				</div>
-			) : null}
-		</div>
+				<span className="replyLink" onClick={() => handleReplyClick(comment.id)}>
+					Reply
+				</span>
+			</div>
+		</>
 	);
 };
-export default CommentComponent;
+
+export default CommentComponent1;
