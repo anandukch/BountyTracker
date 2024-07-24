@@ -13,24 +13,24 @@ import fileUploadMiddleware from "../middleware/fileUploadMiddleware";
 import validationMiddleware from "../middleware/validate.middleware";
 import { compareDates } from "../utils/date.utils";
 import { TaskStatusEnum } from "../utils/taskStatus.enum";
+import authorize from "../middleware/authorize.middleware";
 
 class TaskController {
 	public router: Router;
 	constructor(private taskService: TaskService, private commentService: CommentService) {
 		this.router = Router();
-		this.router.get("/", this.getAllTasks);
-		this.router.get("/created", this.getTaskCreatedByUser);
-		this.router.post("/", validationMiddleware(CreateTaskDto), this.createTask);
-		this.router.get("/:taskId", this.getTaskById);
-		// this.router.use("/:taskId/comments", commentRouter);
-		this.router.get("/:taskId/comments", this.getAllTaskComments);
-		this.router.get("/comments/:commentId", this.getCommentById);
+		this.router.get("/", authorize(), this.getAllTasks);
+		this.router.get("/created", authorize(), this.getTaskCreatedByUser);
+		this.router.post("/", authorize(), validationMiddleware(CreateTaskDto), this.createTask);
+		this.router.get("/:taskId", authorize(), this.getTaskById);
+		this.router.get("/:taskId/comments", authorize(), this.getAllTaskComments);
+		this.router.get("/comments/:commentId", authorize(), this.getCommentById);
 		this.router.get("/comments/:commentId/file", this.getCommentFile);
-		this.router.post("/:taskId/comments", fileUploadMiddleware.single("file"), this.createComment);
-		this.router.patch("/comments/:commentId", this.reviewComment);
-		this.router.patch("/:taskId", this.updateTask);
-		this.router.patch("/complete/:taskId", this.completeTask);
-		this.router.get("/:id/contributions", this.getTaskContributions);
+		this.router.post("/:taskId/comments", authorize(), fileUploadMiddleware.single("file"), this.createComment);
+		this.router.patch("/comments/:commentId", authorize(), this.reviewComment);
+		this.router.patch("/:taskId", authorize(), this.updateTask);
+		this.router.patch("/complete/:taskId", authorize(), this.completeTask);
+		this.router.get("/:id/contributions", authorize(), this.getTaskContributions);
 	}
 
 	public getTaskContributions = async (req: RequestWithRole, res: Response, next: NextFunction) => {
@@ -298,7 +298,6 @@ class TaskController {
 			res.sendFile(file);
 		} catch (error) {}
 	};
-
 }
 
 export default TaskController;
