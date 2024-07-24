@@ -71,6 +71,7 @@ const TaskDetail = () => {
 		createComment({ taskId, formData });
 		setComment("");
 	};
+
 	const handleTextArea = (e) => {
 		setComment(e.target.value);
 	};
