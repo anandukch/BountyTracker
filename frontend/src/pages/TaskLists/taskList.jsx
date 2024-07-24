@@ -41,7 +41,7 @@ const EmployeeDashboard = () => {
 			console.log("hi");
 			console.log(employeeAllTaskData.data);
 		}
-	}, [isAllTaskFetched]);
+	}, [employeeAllTaskData.data, isAllTaskFetched]);
 
 	const handleAll = async () => {
 		const data = await employeeAllTask();
