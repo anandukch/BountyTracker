@@ -9,7 +9,7 @@ import TaskDetail from "./pages/Task Detail/taskDetail";
 import EmployeeTierList from "./pages/EmployeeTierList/employeeTierList";
 import { Provider, useDispatch } from "react-redux";
 import store from "./store/store";
-import ReviewPage from "./pages/ReviewPage/reviewPage";
+import ReviewPage from "./pages/ReviewPage/ReviewPage.jsx";
 import "./App.scss";
 import TaskList from "./pages/TaskList/tastList.jsx";
 import Progressbar from "./components/ProgressBar/ProgressBar.jsx";
@@ -53,7 +53,6 @@ const App = () => {
 
 				// { path: "taskList", element: <TaskList /> },
 				// { path: "employeeList", element: <EmployeeTierList /> },
-				{ path: "comment/:id", element: <ReviewPage /> },
 				{ path: "taskDetails", element: <TaskDetail /> },
 			],
 		},
@@ -62,6 +61,7 @@ const App = () => {
 			element: <HomeLayout />,
 			children: [
 				{ index: true, element: <TaskList /> },
+				{ path: ":taskId/review", element: <ReviewPage /> },
 				{ path: ":taskId", element: <TaskDetail /> },
 				{ path: "create", element: <CreateTask /> },
 			],

@@ -1,0 +1,112 @@
+.ReviewPage {
+	display: flex;
+	flex-direction: column;
+	margin: 20px;
+	gap: 20px;
+
+	.reviewMain {
+		background-color: white;
+		border-radius: 20px;
+		padding: 20px;
+		height: calc(100vh - 200px);
+		width: 100%;
+
+		.taskDetails {
+			min-height: 200px;
+			.taskDetailsHeader {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+
+				.taskTitle {
+					font-size: 24px;
+					font-weight: 700;
+				}
+
+				.taskId {
+					font-size: 18px;
+					font-weight: 600;
+					color: #4d4d4d;
+				}
+
+				.taskStatus {
+					height: 32px;
+					align-content: center;
+					color: var(--textGray);
+					padding: 0 5px 0 5px;
+					border-radius: 8px;
+				}
+				.review {
+					height: 32px;
+					align-content: center;
+					color: var(--textGray);
+					padding: 0 5px 0 5px;
+					border-radius: 8px;
+				}
+			}
+		}
+
+		.contributionSection {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+			.contributionHeading {
+				display: flex;
+				justify-content: space-between;
+			}
+			.contribution {
+				display: flex;
+				gap: 20px;
+				align-items: center;
+				.contributedParticipant {
+					cursor: pointer;
+					background-color: rgb(180, 180, 180);
+					width: 80%;
+					padding: 20px;
+					border-radius: 20px;
+					display: flex;
+					align-items: center;
+					gap: 20px;
+					/* justify-content: space-between; */
+					/* flex-direction: column; */
+					.participantName {
+						font-size: 20px;
+						font-weight: 500;
+					}
+					.contributionCount {
+						font-size: 16px;
+						font-weight: 300;
+						flex: 1;
+						/* color: #4d4d4d; */
+					}
+					.imgContainer {
+						height: 20px;
+						img {
+							height: 100%;
+							border-radius: 50%;
+						}
+					}
+				}
+				.TextField {
+					/* width: 125px; */
+					flex-direction: row;
+					justify-content: space-between;
+					align-items: center;
+					gap: 5px;
+					input {
+						width: 40px;
+						height: 40px;
+						text-align: center;
+					}
+					label {
+						margin: 0;
+					}
+				}
+			}
+			.rewardWrapper {
+				display: flex;
+				align-items: center;
+			}
+		}
+	}
+}
