@@ -98,6 +98,10 @@ const EmployeeProfile = () => {
 								<p>{employee.completedTasks}</p>
 							</div>
 						</div>
+						<div className="taskGraph">
+
+							
+						</div>
 					</div>
 				</div>
 				<div className="employeeTasksWrapper"></div>
