@@ -4,7 +4,7 @@ import downArrow from "../../assets/downArrow.svg";
 import diamond from "../../assets/diamond.svg";
 import TextField from "../../components/TextField/TextField";
 
-const ParticipantContribution = ({ participant, isExpanded, onClick }) => {
+const ParticipantContribution = ({ participant, isExpanded, onClick, handleContributionModal }) => {
 	const [rewardBounty, setRewardBounty] = useState(0);
 	const contributionList = participant.contributions;
 	return (
@@ -21,7 +21,10 @@ const ParticipantContribution = ({ participant, isExpanded, onClick }) => {
 					<div className="contributionList">
 						{contributionList.map((contribution) => (
 							<div key={participant.id + contribution.id} className="contributionListElement">
-								<span className="contributionListElementBody">
+								<span
+									className="contributionListElementBody"
+									onClick={() => handleContributionModal(contribution)}
+								>
 									<img src={diamond} />
 									<span className="contributionListElementContent">{contribution.content}</span>
 								</span>
