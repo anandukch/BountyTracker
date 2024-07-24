@@ -31,7 +31,7 @@ const EmployeeDashboard = () => {
 			]);
 			dispatch(addLoggedState({ role: employeeData.role, name: employeeData.name }));
 		}
-	}, [data, isSuccess]);
+	}, [data, dispatch, isSuccess]);
 
 	const [addClass, setAddClass] = useState(0);
 
