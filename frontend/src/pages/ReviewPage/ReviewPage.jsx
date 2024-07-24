@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./ReviewPage.styles.scss";
 import ParticipantContribution from "../../components/ParticipantContribution/ParticipantContribution";
-import { useGetTaskContributionsQuery, useLazyDownloadFileQuery } from "../../api/taskApi";
+import { useGetTaskContributionsQuery } from "../../api/taskApi";
 import { useParams } from "react-router-dom";
 import CustomModal from "../../components/Modal/CustomModal";
-
 
 const ReviewPage = () => {
 	const [participantList, setParticipantList] = useState([]);
@@ -68,13 +67,12 @@ const ReviewPage = () => {
 					<h3>{"{Task Desciption}"}</h3>
 				</section>
 				<div className="contributionHeading">
-						<div>Participant Contributions</div>
-						<div className="split">Split Equally</div>
-				
-						<div>Bounty</div>
-					</div>
+					<div>Participant Contributions</div>
+					<div className="split">Split Equally</div>
+
+					<div>Bounty</div>
+				</div>
 				<section className="contributionSection">
-					
 					{isSuccess &&
 						participantList.map((participant, index) => (
 							<ParticipantContribution

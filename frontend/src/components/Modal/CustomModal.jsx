@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Button from "../Button/Button";
 import "./style.scss";
 import close from "../../assets/close.svg";

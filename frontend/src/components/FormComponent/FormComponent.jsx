@@ -4,13 +4,6 @@ import TextField from "../../components/TextField/TextField";
 import Select from "../../components/Select/Select";
 
 const FormComponent = ({ onChange, formFields }) => {
-	// const [type, setType] = useState(false);
-
-	// const handleChange = (props) => {
-	// 	if (props.type === "Group") setType(true);
-	// 	if (props.type === "Individual") setType(false);
-	// 	onChange(props);
-	// };
 	return (
 		<form className="formComponent">
 			{formFields.map((field) => {
