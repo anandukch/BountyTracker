@@ -5,8 +5,6 @@
 	gap: 20px;
 	margin: 20px;
 
- 
-
 	.searchSort {
 		display: flex;
 		flex-direction: row;
@@ -112,9 +110,9 @@
 	.employeeName,
 	.employeeBounty,
 	.employeeTier,
+	.tierBadge,
 	.employeePhone,
-	.employeeBirthday
-	 {
+	.employeeBirthday {
 		display: flex;
 		// padding-left: 20px;
 		color: #2a3644;
@@ -125,7 +123,11 @@
 		height: 100%;
 		align-items: center;
 	}
-	.employeeID{
+	.tierBadge {
+		width: 40px;
+		height: 40px;
+	}
+	.employeeID {
 		display: flex;
 		// padding-left: 20px;
 		color: #2a3644;
@@ -135,7 +137,6 @@
 
 		height: 100%;
 		align-items: center;
-
 	}
 
 	// .employeeName{
