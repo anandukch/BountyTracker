@@ -21,7 +21,7 @@ const taskApi = apiWithTaskTags.injectEndpoints({
 		}),
 		createComment: builder.mutation({
 			query: (data) => {
-				console.log(data);
+				// console.log(data);
 				return {
 					url: `/tasks/${parseInt(data.taskId)}/comments`,
 					method: "POST",
@@ -54,6 +54,16 @@ const taskApi = apiWithTaskTags.injectEndpoints({
 				method: "PATCH",
 			}),
 		}),
+
+		getTaskContributions: builder.query({
+			query: (id) => `/tasks/${id}/contributions`,
+			responseHandler: (response) => response.blob(),
+			providesTags: ["TASK"],
+		}),
+
+		downloadFile: builder.query({
+			query: (id) => `/tasks/comments/${id}/file`,
+		}),
 	}),
 });
 
@@ -68,4 +78,6 @@ export const {
 	useGetCommentByIdQuery,
 	useJoinTaskMutation,
 	useCompleteTaskMutation,
+	useGetTaskContributionsQuery,
+	useLazyDownloadFileQuery
 } = taskApi;

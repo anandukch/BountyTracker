@@ -13,7 +13,7 @@ const Login = () => {
 	useEffect(() => {
 		if (isSuccess) {
 			localStorage.setItem("token", data.token);
-			navigate("/profile");
+			navigate("/tasks");
 		}
 	}, [data, isSuccess, navigate]);
 

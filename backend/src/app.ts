@@ -10,6 +10,7 @@ import cors from "cors";
 import employeeRouter from "./routes/employee.routes";
 import taskRouter from "./routes/task.routes";
 import authorize from "./middleware/authorize.middleware";
+import { Role } from "./utils/role.enum";
 
 const server = express();
 server.use(bodyParser.json());
@@ -17,7 +18,7 @@ server.use(cors());
 
 server.use(loggerMiddleWare);
 server.use("/employees", employeeRouter);
-server.use("/tasks", authorize, taskRouter);
+server.use("/tasks", taskRouter);
 
 server.get("/", (req: Request, res: Response) => {
 	res.status(200).send("Hello world");

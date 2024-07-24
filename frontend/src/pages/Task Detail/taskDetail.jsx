@@ -29,6 +29,7 @@ const TaskDetail = () => {
 	const [file, uploadFile] = useState();
 	const [showContributionModal, setShowContributionModal] = useState(false);
 	const [comment, setComment] = useState("");
+	const [commentType, setCommentType] = useState("Normal");
 	const [contribution, setContribution] = useState("");
 	const [mentionId, setMentionId] = useState();
 
@@ -37,6 +38,7 @@ const TaskDetail = () => {
 
 	const { taskId } = useParams();
 	const inputRef = useRef();
+	const checkboxRef = useRef();
 	const dispatch = useDispatch();
 
 	const [getTaskById, { data: taskDetail, isSuccess: taskSuccess }] = useLazyGetTaskByIdQuery();
@@ -50,6 +52,7 @@ const TaskDetail = () => {
 	const token = localStorage.getItem("token");
 	const arrayToken = token.split(".");
 	const tokenPayload = JSON.parse(atob(arrayToken[1]));
+	const navigate = useNavigate();
 
 	const form_fields = [
 		{
@@ -67,27 +70,34 @@ const TaskDetail = () => {
 
 	const handleSend = async () => {
 		const formData = new FormData();
-		formData.append("commentType", "Normal");
+		if(file)
+			formData.append("file",file)
+		formData.append("commentType", commentType);
 		formData.append("content", comment);
 		if (mentionId) formData.append("mentionCommentId", mentionId);
 		createComment({ taskId, formData });
 		setComment("");
+		setCommentType("Normal");
 		setMentionId(undefined);
+		checkboxRef.current.checked = false;
 	};
 
-	const handleSubmitReview = async () => {
-		const formData = new FormData();
-		formData.append("file", file);
-		formData.append("commentType", "Review");
-		formData.append("content", contribution);
-		createComment({ taskId, formData });
-		setContribution("");
+	// const handleSubmitReview = async () => {
+	// 	const formData = new FormData();
+	// 	formData.append("file", file);
+	// 	formData.append("commentType", "Review");
+	// 	formData.append("content", contribution);
+	// 	createComment({ taskId, formData });
+	// 	setContribution("");
+	// };
+	const handleReview = () => {
+		setCommentType("Review");
 	};
-
 	const handleTextArea = (e) => {
 		setComment(e.target.value);
 	};
 	const handleUpload = (e) => {
+		console.log("file");
 		uploadFile(e.target.files[0]);
 	};
 	const handleReply = (id) => {
@@ -99,7 +109,8 @@ const TaskDetail = () => {
 	};
 
 	const completeTask = () => {
-		completeTaskRequest(Number(taskId));
+		navigate(`/tasks/${taskId}/review`);
+		// completeTaskRequest(Number(taskId));
 	};
 
 	useEffect(() => {
@@ -130,14 +141,14 @@ const TaskDetail = () => {
 
 	useEffect(() => {
 		if (commentSuccess) {
-			console.log(commentsData.data);
+			// console.log(commentsData.data);
 			setCommentList(commentsData.data);
 		}
 	}, [commentsData, commentSuccess]);
 
 	return (
 		<main className="taskDetail">
-			{showContributionModal && (
+			{/* {showContributionModal && (
 				<CustomModal
 					title="Add Contribution"
 					submitText="Contribute"
@@ -164,109 +175,131 @@ const TaskDetail = () => {
 						</div>
 					</div>
 				</CustomModal>
-			)}
+			)} */}
 			<div className="title">
 				<span>
 					<h3>Task : # {taskDetail?.data.title}</h3>
 				</span>
 				<span>
 					<h3>Due : {formatDate(taskDetail?.data.deadLine)}</h3>
-					<ListButton text="Complete Task" buttonClass="taskCompleteButton" clickHandle={completeTask} />
+					<Button text="Complete Task" isPrimary={true} onClick={completeTask} />
 				</span>
 			</div>
-			<div className="details">
-				<div className="detailSectionData">
-					{form_fields.map((fields) => {
-						return (
-							<div className="fields">
-								<label> {fields.name}</label>
-								<div className={fields.id}>{taskDetail?.data[fields.id]}</div>
-							</div>
-						);
-					})}
-					<div className="typeSection">
-						<div className="fields">
-							<label> Type</label>
-							<div className="type">{taskDetail?.data.maxParticipants > 1 ? "Group" : "Individual"}</div>
-						</div>
-
-						<div className="fields">
-							<label> Max Participants</label>
-							<div className="maxParticipants">{taskDetail?.data.maxParticipants}</div>
-						</div>
-					</div>
-				</div>
-				<div className="detailSectionBounty">
-					<h3>Reward</h3> <img src={logo} alt="KoYns logo" />
-					<div className="bountyPoints">{taskDetail?.data.totalBounty} KYNs</div>
-					<div className="assignedBy">
-						<h4>Assigned By : {taskDetail?.data.createdBy.name}</h4>
-					</div>
-				</div>
-				<div className="particpantsListSection">
-					<div className="particpantsListHeader">Particpants</div>
-					<div className="particpantsList">
-						{participantList.map((participant) => {
+			<div className="data">
+				<div className="details">
+					<div className="detailSectionData">
+						{form_fields.map((fields) => {
 							return (
-								<div className="partcipants" key={participant.id}>
-									<img src={profile} alt="profile icon" />
-									{participant.name}
+								<div className="fields">
+									<label> {fields.name}</label>
+									<div className={fields.id}>{taskDetail?.data[fields.id]}</div>
 								</div>
 							);
 						})}
+						<div className="typeSection">
+							<div className="fields">
+								<label> Type</label>
+								<div className="type">
+									{taskDetail?.data.maxParticipants > 1 ? "Group" : "Individual"}
+								</div>
+							</div>
+
+							<div className="fields">
+								<label> Max Participants</label>
+								<div className="maxParticipants">{taskDetail?.data.maxParticipants}</div>
+							</div>
+						</div>
+					</div>
+					<div className="dataBottom">
+						<div className="detailSectionBounty">
+							<h3>Reward</h3> <img src={logo} alt="KoYns logo" />
+							<div className="bountyPoints">{taskDetail?.data.totalBounty} KYNs</div>
+							<div className="assignedBy">
+								<h4>Assigned By : {taskDetail?.data.createdBy.name}</h4>
+							</div>
+						</div>
+						<div className="particpantsListSection">
+							<div className="particpantsListHeader">Particpants</div>
+							<div className="particpantsList">
+								{participantList.map((participant) => {
+									return (
+										<div className="partcipants" key={participant.id}>
+											<img src={profile} alt="profile icon" />
+											{participant.name}
+										</div>
+									);
+								})}
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
-			{/* {joined ? ( */}
-			<div className="bottomSectionWrapper">
-				{!joined && (
-					<div className="joinButtonWrapper">
-						<Button text="Join Task" isPrimary={true} onClick={handleJoin} />
-					</div>
-				)}
-				<div className={`bottomSection ${!joined ? "beforeJoining" : ""}`}>
-					<div className="commentSection">
-						<div className="commentSectionHeader">
-							<span>Comments</span>
+				{/* {joined ? ( */}
+				<div className="bottomSectionWrapper">
+					{!joined && (
+						<div className="joinButtonWrapper">
+							<Button text="Join Task" isPrimary={true} onClick={handleJoin} />
 						</div>
+					)}
+					<div className={`bottomSection ${!joined ? "beforeJoining" : ""}`}>
+						<div className="commentSection">
+							<div className="commentSectionHeader">
+								<span>Comments</span>
+							</div>
 
-						<div className="commentSectionWrapper">
-							<div className="commentList">
-								{commentList?.normalComments?.map((comment) => (
-									<CommentComponent
-										comment={comment}
-										handleReplyClick={handleReply}
-										currentEmployeeId={loggedState.id}
+							<div className="commentSectionWrapper">
+								<div className="commentListWrapper">
+									<div className="commentList">
+										{commentList?.normalComments?.map((comment) => (
+											<CommentComponent
+												comment={comment}
+												handleReplyClick={handleReply}
+												currentEmployeeId={loggedState.id}
+											/>
+										))}
+									</div>{" "}
+								</div>
+								<div className="addComment">
+									<img src={commentIcon} alt="Comment Icon" />
+									{mentionId && (
+										<div className="mentionShowWrapper">
+											<span className="mentionShow">{`Replying to ${mentionId}`}</span>
+											<span className="removeMention" onClick={() => setMentionId(undefined)}>
+												x
+											</span>
+										</div>
+									)}
+									<textarea
+										ref={inputRef}
+										className="commentBox"
+										placeholder="//add comments"
+										rows="1"
+										onChange={handleTextArea}
+										value={comment}
 									/>
-								))}
-							</div>
-							<div className="addComment">
-								<img src={commentIcon} alt="Comment Icon" />
-								{mentionId && (
-									<div className="mentionShowWrapper">
-										<span className="mentionShow">{`Replying to ${mentionId}`}</span>
-										<span className="removeMention" onClick={() => setMentionId(undefined)}>
-											x
-										</span>
-									</div>
-								)}
-								<textarea
-									ref={inputRef}
-									className="commentBox"
-									placeholder="//add comments"
-									rows="1"
-									onChange={handleTextArea}
-									value={comment}
-								/>
-								<span className="commentButtons">
-									<div className="sendButton">
-										<img src={send} alt="Send Comment" onClick={handleSend} />
-									</div>
-								</span>
+									<span className="commentButtons">
+										<div className="contributionFileUploadButton">
+											<label htmlFor="file" className="uploadFileLabel">
+												<input
+													type="file"
+													id="file"
+													className="uploadFile"
+													onChange={handleUpload}
+												/>
+												<img src={attach} alt="Add attachment" />
+											</label>
+										</div>
+										<div className="sendButton">
+											<img src={send} alt="Send Comment" onClick={handleSend} />
+										</div>
+									</span>
+								</div>
+								<div className="reviewCheckBox">
+									<label htmlFor="Review">Mark For Review</label>
+									<input type="checkbox" ref={checkboxRef} name="Review" onChange={handleReview} />
+								</div>
 							</div>
 						</div>
-					</div>
-					<div className="reviewSection">
+						{/* <div className="reviewSection">
 						<div className="reviewSectionHeader">
 							<span>Contributions</span>
 							<Button
@@ -284,6 +317,7 @@ const TaskDetail = () => {
 								})}
 							</div>
 						</div>
+					</div> */}
 					</div>
 				</div>
 			</div>
