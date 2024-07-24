@@ -57,7 +57,12 @@ const taskApi = apiWithTaskTags.injectEndpoints({
 
 		getTaskContributions: builder.query({
 			query: (id) => `/tasks/${id}/contributions`,
+			responseHandler: (response) => response.blob(),
 			providesTags: ["TASK"],
+		}),
+
+		downloadFile: builder.query({
+			query: (id) => `/tasks/comments/${id}/file`,
 		}),
 	}),
 });
@@ -74,4 +79,5 @@ export const {
 	useJoinTaskMutation,
 	useCompleteTaskMutation,
 	useGetTaskContributionsQuery,
+	useLazyDownloadFileQuery
 } = taskApi;
