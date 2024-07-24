@@ -5,9 +5,17 @@ const ReviewPage = () => {
 	const [participantList, setParticipantList] = useState([
 		{
 			name: "Alnas",
+			contributions: [{ content: "SOmething" }, { content: "SOmething" }, { content: "SOmething" }],
+		},
+		{
+			name: "Alnas",
 			contributions: [{}, {}, {}],
 		},
 	]);
+
+	const [expandedIndex, setExpandedIndex] = useState(-1);
+
+	const handleExpand = (index) => setExpandedIndex((prev) => (prev !== index ? index : -1));
 	return (
 		<div className="ReviewPage">
 			{/* {isLoading && <Loader />} */}
@@ -26,10 +34,15 @@ const ReviewPage = () => {
 				<section className="contributionSection">
 					<div className="contributionHeading">
 						<h3>Participant Contributions</h3>
-						<span>Remaining Bounty: 200</span>
+						<span>Remaining Bounty: 200 KoYns</span>
 					</div>
-					{participantList.map((participant) => (
-						<ParticipantContribution key={participant.id} participant={participant} />
+					{participantList.map((participant, index) => (
+						<ParticipantContribution
+							key={participant.id}
+							participant={participant}
+							isExpanded={index === expandedIndex}
+							onClick={() => handleExpand(index)}
+						/>
 					))}
 				</section>
 			</main>
