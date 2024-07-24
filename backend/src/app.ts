@@ -18,7 +18,7 @@ server.use(cors());
 
 server.use(loggerMiddleWare);
 server.use("/employees", employeeRouter);
-server.use("/tasks", authorize([Role.LEAD]), taskRouter);
+server.use("/tasks", authorize(), taskRouter);
 
 server.get("/", (req: Request, res: Response) => {
 	res.status(200).send("Hello world");
