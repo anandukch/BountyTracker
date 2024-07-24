@@ -21,6 +21,7 @@ import Search from "../../components/Search/Search";
 import Button from "../../components/Button/Button";
 import { useGetTaskListQuery, useLazyGetTaskListQuery } from "../../api/taskApi";
 import { useNavigate } from "react-router-dom";
+import getTokenPayload from "../../utils/getPayload";
 
 const EmployeeDashboard = () => {
 	const [list, setList] = useState([]);
@@ -34,6 +35,8 @@ const EmployeeDashboard = () => {
 	const [addClass, setAddClass] = useState(0);
 
 	const navigate = useNavigate();
+
+	const user = getTokenPayload();
 
 	useEffect(() => {
 		if (isAllTaskFetched) {
@@ -85,15 +88,17 @@ const EmployeeDashboard = () => {
 				<div className="searchSort">
 					<h1>Task List</h1>
 
-					<div className="createTask">
-						<Button
-							text="CreateTask"
-							isPrimary={true}
-							onClick={() => {
-								navigate("/tasks/create");
-							}}
-						/>
-					</div>
+					{user.role === "Lead" && (
+						<div className="createTask">
+							<Button
+								text="CreateTask"
+								isPrimary={true}
+								onClick={() => {
+									navigate("/tasks/create");
+								}}
+							/>
+						</div>
+					)}
 				</div>
 
 				<div className="employeeTasksWrapper">

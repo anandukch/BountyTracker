@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import Toast from "../Toast/customToast";
 const Hero = () => {
 	const toastMessages = useSelector((state) => state.toasts.toastMessages);
-	console.log(toastMessages);
 
 	return (
 		<>

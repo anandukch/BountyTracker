@@ -29,7 +29,6 @@ const EmployeeProfile = () => {
 				{ header: "Birthday", content: formatDate(employeeData.details.birthday) },
 				{ header: "Gender", content: employeeData.details.gender },
 				{ header: "Phone", content: employeeData.details.phoneNo },
-				
 			]);
 			dispatch(addLoggedState({ role: employeeData.role, name: employeeData.name }));
 		}
@@ -141,9 +140,6 @@ const EmployeeProfile = () => {
 								segmentsShift={1}
 								paddingAngle={0}
 								animationEasing="ease-out"
-								// label={({ dataEntry }) => dataEntry.value}
-								// lineWidth={50}
-
 								data={[
 									{ title: "One", value: employee.pendingTasks, color: "#C13C37" },
 									{ title: "Two", value: employee.completedTasks, color: "#6bb456" },
@@ -154,21 +150,20 @@ const EmployeeProfile = () => {
 					</div>
 				</div>
 				<div className="employeeTasksWrapper">
-					<div className="currentTier">Tier:<h4>{employee.currentTier}</h4></div>
+					<div className="currentTier">
+						Tier:<h4>{employee.currentTier}</h4>
+					</div>
 					<div className="bounty">
 						Total Bounty:
 						<h4>{employee?.details?.totalBounty}</h4>
-						
-						</div>
-						<div className="rewards">
-							Total Rewards:
-							<h4>
-								{employee?.details?.rewards}
-								{/* 20000 */}
-								</h4>
-
-
-						</div>
+					</div>
+					<div className="rewards">
+						Total Rewards:
+						<h4>
+							{employee?.details?.rewards}
+							{/* 20000 */}
+						</h4>
+					</div>
 					<div className="requestButton">
 						<Button text="Redeem Request" isPrimary={true} />
 					</div>

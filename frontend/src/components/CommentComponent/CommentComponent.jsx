@@ -2,7 +2,6 @@ import "./styles.scss";
 
 const CommentComponent = ({ comment, handleReplyClick, currentEmployeeEmail }) => {
 	const isOwnComment = comment?.employee?.email === currentEmployeeEmail;
-	// console.log(comment);
 	return (
 		comment && (
 			<>
