@@ -16,8 +16,8 @@ const TaskList = () => {
 
 	useEffect(() => {
 		if (isSuccess) {
-			const formattedData = data.data.filter((task) => task.status == "Yet to start");
-			setList(formattedData);
+			// const formattedData = data.data.filter((task) => task.status == "Yet to start");
+			setList(data.data);
 		}
 	}, [data, isSuccess]);
 

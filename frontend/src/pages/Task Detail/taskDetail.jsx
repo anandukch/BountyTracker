@@ -72,6 +72,16 @@ const TaskDetail = () => {
 		if (mentionId) formData.append("mentionCommentId", mentionId);
 		createComment({ taskId, formData });
 		setComment("");
+		setMentionId(undefined);
+	};
+
+	const handleSubmitReview = async () => {
+		const formData = new FormData();
+		formData.append("file", file);
+		formData.append("commentType", "Review");
+		formData.append("content", contribution);
+		createComment({ taskId, formData });
+		setContribution("");
 	};
 
 	const handleTextArea = (e) => {
@@ -120,6 +130,7 @@ const TaskDetail = () => {
 
 	useEffect(() => {
 		if (commentSuccess) {
+			console.log(commentsData.data);
 			setCommentList(commentsData.data);
 		}
 	}, [commentsData, commentSuccess]);
