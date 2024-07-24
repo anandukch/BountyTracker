@@ -8,13 +8,6 @@ import IconFilter from "../../assets/iconFilter.png";
 import Search from "../../components/Search/Search";
 import { useGetEmployeeListQuery } from "../../api/employeeApi";
 import { formatDate } from "../../utils/date.utils";
-// Dummy data
-// const dummyData = [
-// 	{ id: 1, name: "John Doe", gender: "Male", birthday: "20-12-2002", phone: "930708788", bounty: 1200 },
-// 	{ id: 2, name: "Jane Smith", gender: "Female", birthday: "20-12-2002", phone: "930708788", bounty: 90 },
-// 	{ id: 3, name: "Alice Johnson", gender: "Female", birthday: "20-12-2002", phone: "930708788", bounty: 150 },
-// 	{ id: 4, name: "Bob Brown", gender: "Male", birthday: "20-12-2002", phone: "930708788", bounty: 700 },
-// ];
 
 const EmployeeTierList = () => {
 	const [list, setList] = useState([]);
