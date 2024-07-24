@@ -4,13 +4,15 @@ const taskApi = apiWithTaskTags.injectEndpoints({
 	endpoints: (builder) => ({
 		getTaskList: builder.query({
 			query: () => "/tasks",
+			providesTags: ["TASK_LIST"],
 		}),
 		getTaskById: builder.query({
 			query: (id) => `/tasks/${id}`,
-			invalidatesTags: ["EMPLOYEE"],
+			providesTags: ["TASK"],
 		}),
 		createTask: builder.mutation({
 			query: (data) => ({ url: "/tasks", method: "POST", body: data }),
+			invalidatesTags: ["TASK", "TASK_LIST"],
 		}),
 		getCommentsByTaskId: builder.query({
 			query: (id) => `/tasks/${id}/comments`,
@@ -34,6 +36,7 @@ const taskApi = apiWithTaskTags.injectEndpoints({
 
 		getCommentById: builder.query({
 			query: (id) => `/tasks/comments/${id}`,
+			providesTags: ["COMMENTS"],
 		}),
 
 		joinTask: builder.mutation({
@@ -42,6 +45,13 @@ const taskApi = apiWithTaskTags.injectEndpoints({
 				method: "POST",
 			}),
 			invalidatesTags: ["COMMENTS", "REVIEW"],
+		}),
+
+		completeTask: builder.mutation({
+			query: (id) => ({
+				url: `tasks/complete/${id}`,
+				method: "PATCH",
+			}),
 		}),
 	}),
 });
@@ -56,4 +66,5 @@ export const {
 	useReviewCommentByIdMutation,
 	useGetCommentByIdQuery,
 	useJoinTaskMutation,
+	useCompleteTaskMutation,
 } = taskApi;

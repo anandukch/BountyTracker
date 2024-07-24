@@ -20,7 +20,7 @@ const apiWithEmployeeTag = baseApi.enhanceEndpoints({
 });
 
 const apiWithTaskTags = baseApi.enhanceEndpoints({
-	addTagTypes: ["COMMENTS", "REVIEW"],
+	addTagTypes: ["COMMENTS", "REVIEW", "TASK", "TASK_LIST"],
 });
 
 // const apiWith

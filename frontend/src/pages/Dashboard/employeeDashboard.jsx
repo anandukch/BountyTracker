@@ -110,11 +110,9 @@ const EmployeeDashboard = () => {
 							{/* {isTaskLoading && <Loader />} */}
 							{isTaskFetched &&
 								employeeTasksData.data.map((task) => {
-									if (addClass === 0 && task.task.status !== "completed")
+									if (addClass === 0 && task.task.status !== "Completed")
 										return <TaskDataRow key={task.id} taskRows={task} />;
-									else if (addClass === 1 && task.task.status == "completed")
-									{
-										
+									else if (addClass === 1 && task.task.status == "Completed") {
 										return <TaskDataRow key={task.id} taskRows={task} />;
 									}
 								})}
