@@ -47,7 +47,6 @@ const TaskDetail = () => {
 
 	const loggedState = useSelector((state) => state.employee);
 
-	const navigate = useNavigate();
 	const token = localStorage.getItem("token");
 	const arrayToken = token.split(".");
 	const tokenPayload = JSON.parse(atob(arrayToken[1]));
@@ -74,6 +73,7 @@ const TaskDetail = () => {
 		createComment({ taskId, formData });
 		setComment("");
 	};
+
 	const handleTextArea = (e) => {
 		setComment(e.target.value);
 	};
