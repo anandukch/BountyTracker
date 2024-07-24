@@ -16,6 +16,7 @@ import Progressbar from "./components/ProgressBar/ProgressBar.jsx";
 import MyTask from "./pages/myTask/myTask.jsx";
 import RequestList from "./pages/RequestList/requestList.jsx";
 import EmployeeProfile from "./pages/EmployeeProfile/employeeProfile.jsx";
+import ReviewPage from "./pages/ReviewPage/ReviewPage.jsx";
 
 const App = () => {
 	const router = createBrowserRouter([
