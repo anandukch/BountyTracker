@@ -1,7 +1,7 @@
 import "./styles.scss";
 
-const CommentComponent = ({ comment, handleReplyClick, currentEmployeeId }) => {
-	const isOwnComment = comment?.employee?.id === currentEmployeeId;
+const CommentComponent = ({ comment, handleReplyClick, currentEmployeeEmail }) => {
+	const isOwnComment = comment?.employee?.email === currentEmployeeEmail;
 	// console.log(comment);
 	return (
 		comment && (

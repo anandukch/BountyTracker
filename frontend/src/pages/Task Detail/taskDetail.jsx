@@ -187,8 +187,8 @@ const TaskDetail = () => {
 				</span>
 				<span>
 					<h3>Due : {formatDate(taskDetail?.data.deadLine)}</h3>
-					{formatDate(new Date()) < formatDate(taskDetail?.data.deadLine) && (
-						isCreator) && (<Button text="Complete Task" isPrimary={true} onClick={completeTask} />
+					{formatDate(new Date()) < formatDate(taskDetail?.data.deadLine) && isCreator && (
+						<Button text="Complete Task" isPrimary={true} onClick={completeTask} />
 					)}
 				</span>
 			</div>
@@ -242,7 +242,7 @@ const TaskDetail = () => {
 				</div>
 				{/* {joined ? ( */}
 				<div className="bottomSectionWrapper">
-					{!joined  && (
+					{!joined && (
 						<div className="joinButtonWrapper">
 							<Button text="Join Task" isPrimary={true} onClick={handleJoin} />
 						</div>
@@ -262,7 +262,7 @@ const TaskDetail = () => {
 												<CommentComponent
 													comment={comment}
 													handleReplyClick={handleReply}
-													currentEmployeeId={loggedState.id}
+													currentEmployeeEmail={tokenPayload.email}
 												/>
 											) : (
 												<ContributionCommentComponent comment={comment} />
