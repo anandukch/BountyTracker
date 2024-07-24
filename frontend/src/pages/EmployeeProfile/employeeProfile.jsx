@@ -10,6 +10,7 @@ import { formatDate } from "../../utils/date.utils";
 import ListButton from "../../components/Button/ListButton";
 import { useDispatch } from "react-redux";
 import { addLoggedState } from "../../store/employeeReducer";
+import { PieChart } from "react-minimal-pie-chart";
 
 const EmployeeProfile = () => {
 	const [employee, setEmployee] = useState({});
@@ -99,7 +100,55 @@ const EmployeeProfile = () => {
 							</div>
 						</div>
 						<div className="taskGraph">
+							{/* <PieChart
 
+
+								
+								animation
+								animationDuration={500}
+								animationEasing="ease-out"
+								// center={[50, 50]}
+								data={[
+									{
+									color: "#E38627",
+									title: "One",
+									value: 10,
+									},
+									{
+									color: "#C13C37",
+									title: "Two",
+									value: 15,
+									},
+									{
+									color: "#6A2135",
+									title: "Three",
+									value: 20,
+									},
+								]}
+								// labelPosition={50}
+								// lengthAngle={360}
+								// lineWidth={5}
+								paddingAngle={0}
+								radius={50}
+								startAngle={0}
+								viewBoxSize={[100, 100]}
+									/> */}
+							<PieChart
+								animate
+								animationDuration={500}
+								segmentsShift={1}
+								paddingAngle={0}
+								animationEasing="ease-out"
+								label={({ dataEntry }) => dataEntry.value}
+								// lineWidth={50}
+								
+
+								data={[
+									{ title: "One", value: employee.pendingTasks, color: "#E38627" },
+									{ title: "Two", value: employee.completedTasks, color: "#C13C37" },
+									// { title: "Three", value: 20, color: "#6A2135" },
+								]}
+							/>
 							
 						</div>
 					</div>
