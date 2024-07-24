@@ -34,7 +34,7 @@ const ParticipantContribution = ({ participant, isExpanded, onClick, handleContr
 				)}
 			</div>
 			<div className="rewardWrapper">
-				<TextField label="Bounty Reward:" value={rewardBounty} onChange={() => {}} />
+				<TextField label=" " value={rewardBounty} onChange={() => {}} />
 				<span>Koyns</span>
 			</div>
 		</div>

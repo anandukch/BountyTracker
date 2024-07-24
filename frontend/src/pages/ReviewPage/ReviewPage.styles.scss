@@ -1,3 +1,21 @@
+* {
+	font-family:
+		system-ui,
+		-apple-system,
+		BlinkMacSystemFont,
+		"Segoe UI",
+		Roboto,
+		Oxygen,
+		Ubuntu,
+		Cantarell,
+		"Open Sans",
+		"Helvetica Neue",
+		sans-serif,
+		Verdana,
+		Geneva,
+		Tahoma,
+		sans-serif;
+}
 .ReviewPage {
 	display: flex;
 	flex-direction: column;
@@ -5,14 +23,18 @@
 	gap: 20px;
 
 	.reviewMain {
-		background-color: white;
 		border-radius: 20px;
 		padding: 20px;
 		height: calc(100vh - 200px);
 		width: 100%;
 
 		.taskDetails {
+			background-color: white;
+			border-radius: 10px;
 			min-height: 200px;
+			padding: 10px;
+			padding-left: 10px;
+			margin-bottom: 30px;
 			.taskDetailsHeader {
 				display: flex;
 				justify-content: space-between;
@@ -45,15 +67,50 @@
 				}
 			}
 		}
-
+		.contributionHeading {
+			display: flex;
+			justify-content: space-between;
+			margin-bottom: 20px;
+			font-size: larger;
+			padding-right: 50px;
+		
+			.split {
+				margin-left: 100px;
+				margin-right: 100px;
+				width:100px;
+				min-width: fit-content;
+				background-color: #f5ebb1;
+				border-style: solid;
+				border-color: #e4d99a;
+				border-width: 5px;
+				border-radius: 10px;
+				height: 50px;
+				padding: 10px;
+				box-shadow:
+				  -1px -1px 20px 0.5px rgba(235, 233, 233, 0.3) inset,
+				  0 0 10px #00000027;
+				cursor: pointer;  
+			  
+				transition: all 0.3s ease;  
+			  }
+			  .split:hover {
+				background-color:white;  
+				box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+			  }
+			  
+			  .split:active {
+				transform: translateY(1px);  
+				box-shadow: none; }
+			  
+		}
 		.contributionSection {
 			display: flex;
 			flex-direction: column;
 			gap: 20px;
-			.contributionHeading {
-				display: flex;
-				justify-content: space-between;
-			}
+			background-color: white;
+			border-radius: 8px;
+			padding: 15px;
+
 			.contributionWrapper {
 				display: flex;
 				gap: 20px;
@@ -62,10 +119,11 @@
 				.contribution {
 					width: 80%;
 					background-color: #d4d4d4;
+					background-color: white;
 					border-radius: 20px;
 					.contributedParticipant {
 						cursor: pointer;
-						background-color: rgb(180, 180, 180);
+						background-color: #f5ebb1;
 						padding: 20px;
 						border-radius: 20px;
 						display: flex;
@@ -107,7 +165,7 @@
 								border-radius: 20px;
 								display: flex;
 								align-items: center;
-								background-color: rgb(57, 160, 126);
+								background-color: #efecda;
 								cursor: pointer;
 
 								img {
@@ -115,7 +173,7 @@
 									width: 30px;
 									padding: 8px;
 									border-radius: 50%;
-									background-color: rgb(236, 113, 113);
+									background-color: rgba(236, 113, 113, 0.788);
 								}
 
 								.contributionListElementContent {
@@ -149,3 +207,22 @@
 		}
 	}
 }
+.split {
+	margin-left: 100px;
+	margin-right: 100px;
+	width:100px;
+	min-width: fit-content;
+	background-color: #f5ebb1;
+	border-style: solid;
+	border-color: #e4d99a;
+	border-width: 5px;
+	border-radius: 10px;
+	height: 50px;
+	padding: 10px;
+	box-shadow:
+	  -1px -1px 20px 0.5px rgba(235, 233, 233, 0.3) inset,
+	  0 0 10px #00000027;
+	cursor: pointer;  
+  
+	transition: all 0.3s ease;  
+  }

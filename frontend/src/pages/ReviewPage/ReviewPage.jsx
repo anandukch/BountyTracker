@@ -67,11 +67,14 @@ const ReviewPage = () => {
 					</span>
 					<h3>{"{Task Desciption}"}</h3>
 				</section>
-				<section className="contributionSection">
-					<div className="contributionHeading">
-						<h3>Participant Contributions</h3>
-						<span>Remaining Bounty: 200 KoYns</span>
+				<div className="contributionHeading">
+						<div>Participant Contributions</div>
+						<div className="split">Split Equally</div>
+				
+						<div>Bounty</div>
 					</div>
+				<section className="contributionSection">
+					
 					{isSuccess &&
 						participantList.map((participant, index) => (
 							<ParticipantContribution
@@ -83,6 +86,7 @@ const ReviewPage = () => {
 							/>
 						))}
 				</section>
+				<div className="split">Confirm</div>
 			</main>
 		</div>
 	);
