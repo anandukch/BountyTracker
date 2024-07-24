@@ -126,6 +126,7 @@ const TaskDetail = () => {
 
 	useEffect(() => {
 		if (commentSuccess) {
+			console.log(commentsData.data);
 			setCommentList(commentsData.data);
 		}
 	}, [commentsData, commentSuccess]);

@@ -42,18 +42,18 @@ const CreateTask = () => {
 			name: "description",
 			Component: "text-area",
 		},
-		{
-			id: "due date",
-			label: "Due Date",
-			type: "date",
-			name: "deadLine",
-		},
 
 		{
 			id: "Start Date",
 			label: "Start Date",
 			type: "date",
 			name: "startDate",
+		},
+		{
+			id: "due date",
+			label: "Due Date",
+			type: "date",
+			name: "deadLine",
 		},
 		{
 			id: "skills",

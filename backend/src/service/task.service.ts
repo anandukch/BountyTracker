@@ -2,6 +2,7 @@ import { CreateTaskDto, ResponseTaskDto, UpdateTaskDto } from "../dto/task.dto";
 import Employee from "../entity/employee.entity";
 import Task from "../entity/task.entity";
 import HttpException from "../exceptions/http.exceptions";
+import ValidationException from "../exceptions/validationException";
 import TaskRepository from "../repository/task.repository";
 import { employeeService } from "../routes/employee.routes";
 import { CommentType } from "../utils/commentType.enum";
@@ -30,6 +31,9 @@ class TaskService {
 	createTask = async (task: CreateTaskDto, user: Employee) => {
 		let newTask = new Task();
 		const { title, description, maxParticipants, totalBounty, startDate, deadLine, skills } = task;
+		if(startDate>deadLine){
+			throw new HttpException(400,"start date should be after due date")
+		}
 		newTask.title = title;
 		newTask.description = description;
 		newTask.status = TaskStatusEnum.YET_TO_START;
@@ -41,7 +45,6 @@ class TaskService {
 		newTask.startDate = startDate;
 		newTask.deadLine = deadLine;
 		newTask.skills = skills;
-
 		await this.taskRepository.save(newTask);
 	};
 

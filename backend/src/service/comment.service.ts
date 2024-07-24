@@ -13,12 +13,18 @@ import ReviewStatus from "../utils/reviewStatus.enum";
 class CommentService {
 	constructor(private commentRepository: CommentRepository) {}
 
-	getAllCommentsByTaskId = async (taskId: number): Promise<Comment[]> => {
+	getAllCommentsByTaskId = async (taskId: number, userId: number): Promise<Comment[]> => {
 		const comments = await this.commentRepository.find({ task: { id: taskId } as any }, [
 			"employee",
 			"mentionComment",
 			"mentionComment.employee",
 		]);
+
+		const task = await taskService.getTaskById(taskId, ["participants", "participants.employee"]);
+		const isParticipant = task.participants.some((participant) => participant.employee.id === userId);
+		if (!isParticipant) {
+			return [];
+		}
 		return comments;
 	};
 
