@@ -31,12 +31,12 @@ class TaskService {
 	createTask = async (task: CreateTaskDto, user: Employee) => {
 		let newTask = new Task();
 		const { title, description, maxParticipants, totalBounty, startDate, deadLine, skills } = task;
-		if(startDate>deadLine){
-			throw new HttpException(400,"start date should be after due date")
+		if (startDate > deadLine) {
+			throw new HttpException(400, "start date should be after due date");
 		}
 		newTask.title = title;
 		newTask.description = description;
-		newTask.status = TaskStatusEnum.YET_TO_START;
+		newTask.status = TaskStatusEnum.IN_PROGRESS;
 		newTask.createdBy = user;
 		newTask.maxParticipants = maxParticipants;
 		newTask.currentParticipants = 0;
@@ -58,6 +58,7 @@ class TaskService {
 
 	getTaskCreatedByUser = async (id: number, relations?: Array<string>) => {
 		const tasks = await this.taskRepository.find({ createdById: id }, relations);
+
 		const updatedTask = tasks.map((task) => {
 			let reviewCommentCount = 0;
 			task.comments.forEach((comment) => {
@@ -74,7 +75,7 @@ class TaskService {
 		if (!task) {
 			throw new HttpException(404, "Task not found");
 		}
-		if(task.status === TaskStatusEnum.COMPLETED) {
+		if (task.status === TaskStatusEnum.COMPLETED) {
 			throw new HttpException(400, "Task already completed");
 		}
 		const comments = task.comments.filter((comment) => comment.reviewStatus === ReviewStatus.PENDING);

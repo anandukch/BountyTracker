@@ -36,7 +36,7 @@ class TaskController {
 		try {
 			const tasks = await this.taskService.getTasks(
 				{
-					status: TaskStatusEnum.YET_TO_START,
+					// status: TaskStatusEnum.IN_PROGRESS,
 				},
 				["createdBy"]
 			);
@@ -53,6 +53,7 @@ class TaskController {
 	public getTaskCreatedByUser = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			const tasks = await this.taskService.getTaskCreatedByUser(req.user.id, ["comments"]);
+			console.log(tasks);
 
 			const data = tasks.map((task, i) => {
 				let startDate = task.startDate;
