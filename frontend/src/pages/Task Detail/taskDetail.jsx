@@ -8,6 +8,7 @@ import send from "../../assets/send.svg";
 import Button from "../../components/Button/Button";
 import { useEffect, useRef, useState } from "react";
 import {
+	useCompleteTaskMutation,
 	useCreateCommentMutation,
 	useGetCommentsByTaskIdQuery,
 	useGetTaskByIdQuery,
@@ -29,21 +30,19 @@ const TaskDetail = () => {
 	const [file, uploadFile] = useState();
 	const [replyText, setReplyText] = useState("");
 	const [joined, setJoined] = useState(false);
-	const inputRef = useRef();
 	const style = {
 		backgroundColor: "white",
 		color: "#2c95ce",
 		boxShadow: "0.5px 0.5px 0.5px  0.5px #8c96a0",
 	};
 
-	const [file, uploadFile] = useState();
 	const [showContributionModal, setShowContributionModal] = useState(false);
 	const [comment, setComment] = useState("");
 	const [contribution, setContribution] = useState("");
 	const [mentionId, setMentionId] = useState();
 
 	//------------queries--------
-	const { data: taskDetail, isSuccess: taskSuccess } = useGetTaskByIdQuery(taskId);
+	// const { data: taskDetail, isSuccess: taskSuccess } = useGetTaskByIdQuery(taskId);
 
 	const { taskId } = useParams();
 	const inputRef = useRef();
@@ -105,10 +104,6 @@ const TaskDetail = () => {
 	};
 	const handleJoin = () => {
 		join(taskId);
-	};
-
-	const handleSubmitReview = () => {
-		setCommentType("Review");
 	};
 
 	const completeTask = () => {
