@@ -19,6 +19,9 @@ class EmployeeDetails extends AbstractEntity {
 
 	@Column()
 	totalBounty: number;
+
+	@Column({ nullable: true })
+	platinumCount: number;
 }
 
 export default EmployeeDetails;
