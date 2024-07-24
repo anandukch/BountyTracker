@@ -46,7 +46,7 @@ class EmployeeService {
 		if (!employee) {
 			throw new EntityNotFoundException("Employee not found");
 		}
-		return employee.participatingTasks
+		return employee.participatingTasks;
 	};
 
 	getProfile = async (employeeID: number) => {
@@ -202,6 +202,16 @@ class EmployeeService {
 
 		await this.employeeRespository.save(employee);
 		return employee;
+	};
+
+	resetReward = async (employeeId: number) => {
+		const employee = await this.employeeRespository.findOneBy({ id: employeeId }, ["details"]);
+		if (!employee) {
+			throw new EntityNotFoundException("Employee not found");
+		}
+		// TODO: After Migration
+		// employee.details.rewards = 0;
+		return;
 	};
 }
 

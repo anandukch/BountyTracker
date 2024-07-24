@@ -1,5 +1,5 @@
 import path from "path";
-import { CreateComementDto, ReviewCommentDto } from "../dto/comment.dto";
+import { CreateComementDto, HrRequestDto, ReviewCommentDto } from "../dto/comment.dto";
 import Comment from "../entity/comment.entity";
 import Employee from "../entity/employee.entity";
 import Task from "../entity/task.entity";
@@ -107,6 +107,23 @@ class CommentService {
 
 			commentType: CommentType.Review,
 		});
+		return comments;
+	};
+
+	hrRequestComment = async (employee: Employee) => {
+		const newComment = new Comment();
+		newComment.reviewStatus = ReviewStatus.REWARD;
+		newComment.employee = employee;
+
+		return this.commentRepository.save(newComment);
+	};
+
+	getRewardComment = async () => {
+		const comments = await this.commentRepository.find({ reviewStatus: ReviewStatus.REWARD as any }, [
+			"employee",
+			"employee.details",
+		]);
+
 		return comments;
 	};
 }
