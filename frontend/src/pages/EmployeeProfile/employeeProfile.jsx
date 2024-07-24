@@ -31,9 +31,9 @@ const EmployeeProfile = () => {
 				{ header: "Gender", content: employeeData.details.gender },
 				{ header: "Phone", content: employeeData.details.phoneNo },
 			]);
-			dispatch(addLoggedState({ role: employeeData.role, name: employeeData.name }));
+			// dispatch(addLoggedState({ role: employeeData.role, name: employeeData.name }));
 		}
-	}, [data, dispatch, isSuccess]);
+	}, [data, isSuccess]);
 
 	const [addClass, setAddClass] = useState(0);
 

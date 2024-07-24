@@ -63,7 +63,7 @@ const RegisterEmployee = () => {
 		{
 			id: "role",
 			label: "Role",
-			values: [{ option: "Lead" }, { option: "Regular" }],
+			values: [{ option: "Lead" }, { option: "Regular" },{ option: "HR" }],
 			type: "select",
 			name: "role",
 		},
