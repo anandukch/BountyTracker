@@ -20,7 +20,13 @@ class EmployeeService {
 	) {}
 
 	getAllEmployees = async (relations?: Array<string>): Promise<Employee[]> => {
-		return this.employeeRespository.find({}, relations);
+		const employeeList= await this.employeeRespository.find({}, relations)
+		const updatedEmployeeList=[]
+		employeeList.forEach((employee)=>{
+			const currentTier = getCurrentTier(employee.details.totalBounty);
+			updatedEmployeeList.push({...employee,currentTier})
+		})
+		return updatedEmployeeList;
 	};
 
 	getEmployeeByEmail = async (email: string): Promise<Employee> => {
@@ -65,10 +71,12 @@ class EmployeeService {
 		});
 		employee.participatingTasks = undefined;
 		employee.password = undefined;
+		const currentTier = getCurrentTier(employee.details.totalBounty);
 		return {
 			...employee,
 			completedTasks,
 			pendingTasks,
+			currentTier,
 		};
 	};
 
