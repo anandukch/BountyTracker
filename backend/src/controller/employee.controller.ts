@@ -184,12 +184,6 @@ class EmployeeController {
 			next(error);
 		}
 	};
-	public approveRedeemRequest = async (req: RequestWithRole, res: Response, next: NextFunction) => {
-		try {
-		} catch (error) {
-			next(error);
-		}
-	};
 }
 
 export default EmployeeController;

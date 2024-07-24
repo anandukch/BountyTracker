@@ -29,6 +29,7 @@ const TaskDetail = () => {
 	const [file, uploadFile] = useState();
 	const [showContributionModal, setShowContributionModal] = useState(false);
 	const [comment, setComment] = useState("");
+	const [commentType, setCommentType] = useState("Normal");
 	const [contribution, setContribution] = useState("");
 	const [mentionId, setMentionId] = useState();
 
@@ -37,6 +38,7 @@ const TaskDetail = () => {
 
 	const { taskId } = useParams();
 	const inputRef = useRef();
+	const checkboxRef = useRef();
 	const dispatch = useDispatch();
 
 	const [getTaskById, { data: taskDetail, isSuccess: taskSuccess }] = useLazyGetTaskByIdQuery();
@@ -68,27 +70,34 @@ const TaskDetail = () => {
 
 	const handleSend = async () => {
 		const formData = new FormData();
-		formData.append("commentType", "Normal");
+		if(file)
+			formData.append("file",file)
+		formData.append("commentType", commentType);
 		formData.append("content", comment);
 		if (mentionId) formData.append("mentionCommentId", mentionId);
 		createComment({ taskId, formData });
 		setComment("");
+		setCommentType("Normal");
 		setMentionId(undefined);
+		checkboxRef.current.checked = false;
 	};
 
-	const handleSubmitReview = async () => {
-		const formData = new FormData();
-		formData.append("file", file);
-		formData.append("commentType", "Review");
-		formData.append("content", contribution);
-		createComment({ taskId, formData });
-		setContribution("");
+	// const handleSubmitReview = async () => {
+	// 	const formData = new FormData();
+	// 	formData.append("file", file);
+	// 	formData.append("commentType", "Review");
+	// 	formData.append("content", contribution);
+	// 	createComment({ taskId, formData });
+	// 	setContribution("");
+	// };
+	const handleReview = () => {
+		setCommentType("Review");
 	};
-
 	const handleTextArea = (e) => {
 		setComment(e.target.value);
 	};
 	const handleUpload = (e) => {
+		console.log("file");
 		uploadFile(e.target.files[0]);
 	};
 	const handleReply = (id) => {
@@ -132,7 +141,7 @@ const TaskDetail = () => {
 
 	useEffect(() => {
 		if (commentSuccess) {
-			console.log(commentsData.data);
+			// console.log(commentsData.data);
 			setCommentList(commentsData.data);
 		}
 	}, [commentsData, commentSuccess]);
@@ -268,6 +277,17 @@ const TaskDetail = () => {
 										value={comment}
 									/>
 									<span className="commentButtons">
+										<div className="contributionFileUploadButton">
+											<label htmlFor="file" className="uploadFileLabel">
+												<input
+													type="file"
+													id="file"
+													className="uploadFile"
+													onChange={handleUpload}
+												/>
+												<img src={attach} alt="Add attachment" />
+											</label>
+										</div>
 										<div className="sendButton">
 											<img src={send} alt="Send Comment" onClick={handleSend} />
 										</div>
@@ -275,7 +295,7 @@ const TaskDetail = () => {
 								</div>
 								<div className="reviewCheckBox">
 									<label htmlFor="Review">Mark For Review</label>
-									<input type="checkbox" name="Review" />
+									<input type="checkbox" ref={checkboxRef} name="Review" onChange={handleReview} />
 								</div>
 							</div>
 						</div>

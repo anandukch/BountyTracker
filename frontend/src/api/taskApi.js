@@ -21,7 +21,7 @@ const taskApi = apiWithTaskTags.injectEndpoints({
 		}),
 		createComment: builder.mutation({
 			query: (data) => {
-				console.log(data);
+				// console.log(data);
 				return {
 					url: `/tasks/${parseInt(data.taskId)}/comments`,
 					method: "POST",
