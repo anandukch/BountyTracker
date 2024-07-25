@@ -14,46 +14,66 @@
 	gap: 5px;
 	max-width: 60%;
 	/* width: min-content; */
-
-	.commentBody {
-		/* height: 20px; */
-		align-self: flex-start;
+	.commentBodyWithAttachment {
 		display: flex;
-		gap: 5px;
-		flex-direction: column;
-		background-color: #a1d69c;
-		padding: 10px;
-		border-radius: 0 15px 15px 15px;
-
-		.commentUsername {
-			font-weight: 800;
-			font-size: 14px;
-			color: var(--textBlack);
-		}
-
-		.mentionComment {
-			background-color: #d5eec6;
+		align-items: center;
+		gap: 10px;
+		.commentBody {
+			/* height: 20px; */
+			align-self: flex-start;
 			display: flex;
-			flex-direction: column;
-			padding: 10px;
-			border-radius: 10px;
 			gap: 5px;
-			.mentionedEmployee {
+			flex-direction: column;
+			background-color: #a1d69c;
+			padding: 10px;
+			border-radius: 0 15px 15px 15px;
+
+			.commentUsername {
 				font-weight: 800;
-				font-size: 13px;
+				font-size: 14px;
+				color: var(--textBlack);
 			}
 
-			.mentionedCommentContent {
-				font-size: 12px;
-				text-wrap: nowrap;
-				max-lines: 1;
-				text-overflow: ellipsis;
-				overflow: hidden;
+			.mentionComment {
+				background-color: #d5eec6;
+				display: flex;
+				flex-direction: column;
+				padding: 10px;
+				border-radius: 10px;
+				gap: 5px;
+				.mentionedEmployee {
+					font-weight: 800;
+					font-size: 13px;
+				}
+
+				.mentionedCommentContent {
+					font-size: 12px;
+					text-wrap: nowrap;
+					max-lines: 1;
+					text-overflow: ellipsis;
+					overflow: hidden;
+				}
+			}
+		}
+
+		.downloadButton {
+			cursor: pointer;
+			height: 30px;
+			border-radius: 50%;
+			border: 1px solid #2a3644;
+			background-color: #d9f3d6;
+			padding: 5px;
+
+			img {
+				height: 100%;
 			}
 		}
 	}
 
 	&.ownComment {
+		.commentBodyWithAttachment {
+			flex-direction: row-reverse;
+		}
 		align-self: flex-end;
 		.commentBody {
 			border-radius: 10px 0 10px 10px;

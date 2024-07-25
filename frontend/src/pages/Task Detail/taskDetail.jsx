@@ -12,6 +12,7 @@ import {
 	useCreateCommentMutation,
 	useGetCommentsByTaskIdQuery,
 	useJoinTaskMutation,
+	useLazyGetCommentsByTaskIdQuery,
 	useLazyGetTaskByIdQuery,
 } from "../../api/taskApi";
 import { formatDate } from "../../utils/date.utils";
@@ -42,9 +43,11 @@ const TaskDetail = () => {
 	const dispatch = useDispatch();
 
 	const [getTaskById, { data: taskDetail, isSuccess: taskSuccess }] = useLazyGetTaskByIdQuery();
-	const { data: commentsData, isSuccess: commentSuccess } = useGetCommentsByTaskIdQuery(taskId, {
-		pollingInterval: 2000,
-	});
+	// const { data: commentsData, isSuccess: commentSuccess } = useGetCommentsByTaskIdQuery(taskId, {
+	// 	// pollingInterval: 2000,
+	// });
+
+	const [getCommentByTaskId, { data: commentsData,isSuccess: commentSuccess }] = useLazyGetCommentsByTaskIdQuery();
 	const [join, { isSuccess: joinSuccess }] = useJoinTaskMutation();
 	const [createComment] = useCreateCommentMutation();
 	const [completeTaskRequest] = useCompleteTaskMutation();
@@ -66,6 +69,16 @@ const TaskDetail = () => {
 			value: taskDetail?.skillList,
 		},
 	];
+
+	useEffect(() => {
+		getCommentByTaskId(taskId);
+		const timer = setInterval(() => {
+			// setShowError(false);
+			getCommentByTaskId(taskId);
+		}, 2000);
+
+		return () => clearInterval(timer);
+	}, [getCommentByTaskId, taskId]);
 
 	const handleSend = async () => {
 		const formData = new FormData();
@@ -109,6 +122,12 @@ const TaskDetail = () => {
 	const completeTask = () => {
 		navigate(`/tasks/${taskId}/review`);
 		// completeTaskRequest(Number(taskId));
+	};
+
+	const setColor = (status) => {
+		if (status == "In Progress") return "#efecda";
+		else if (status == "In Review") return "#f5ecb8";
+		else return "#d3f4be";
 	};
 
 	useEffect(() => {
@@ -180,6 +199,9 @@ const TaskDetail = () => {
 			<div className="title">
 				<span>
 					<h3>Task : # {taskDetail?.data.title}</h3>
+					<p className="statusPill" style={{ backgroundColor: `${setColor(taskDetail?.data.status)}` }}>
+						{taskDetail?.data.status}
+					</p>
 				</span>
 				<span>
 					<h3>Due : {formatDate(taskDetail?.data.deadLine)}</h3>
