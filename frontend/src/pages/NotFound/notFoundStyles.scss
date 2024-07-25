@@ -1,0 +1,41 @@
+.errorMsg {
+   * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "roboto";
+   }
+   //    position: absolute;
+   height: 100vh;
+   width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-direction: column;
+   .errorCode {
+      font-size: 300px;
+      font-weight: 600;
+      color: rgba(255, 104, 104, 0.822);
+      position: absolute;
+      z-index: -1;
+   }
+   .simpsonImg{
+      position: absolute;
+      z-index: -1;
+      height: 240px;
+      width: auto;
+      margin-left: 750px;
+   }
+   h1 {
+      color: #ffd90f;
+      font-size: 40px;
+      background-color: rgb(255, 255, 255);
+   }
+   .exitIcon {
+      // margin-top: 100px;
+      position: absolute;
+      width: 40px;
+      height: auto;
+      bottom: 300px;
+   }
+}
