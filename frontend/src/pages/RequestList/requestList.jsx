@@ -23,6 +23,7 @@ const RequestList = () => {
 		const data = {
 			employeeId: props.id,
 			requestId: props.commentId,
+			status:props.status
 		};
 		console.log(data);
 		approve(data);
@@ -56,8 +57,11 @@ const RequestList = () => {
 								id={request.employee.id}
 								requestTime={formatDate(request.createdAt)}
 								tier={request.currentTier}
-								onApprove={({ id: id, commentId: commentId }) =>
-									handleApprove({ id: id, commentId: commentId })
+								onApprove={({ id: id, commentId: commentId, status: status }) =>
+									handleApprove({ id: id, commentId: commentId, status: status })
+								}
+								onReject={({ id: id, commentId: commentId, status: status }) =>
+									handleReject({ id: id, commentId: commentId, status: status })
 								}
 								commentId={request.id}
 							/>

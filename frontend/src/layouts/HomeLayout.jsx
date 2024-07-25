@@ -23,7 +23,7 @@ const HomeLayout = () => {
 	const state = useSelector((state) => state.employee.employee);
 
 	const handleLogout = () => {
-		localStorage.clear("token");
+		localStorage.removeItem("token");
 		navigate("/login");
 	};
 	const { data: employeeData, isError, isSuccess } = useGetProfileQuery();

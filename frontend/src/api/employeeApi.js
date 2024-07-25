@@ -57,10 +57,10 @@ export const employeeApi = apiWithTags.injectEndpoints({
 			providesTags: ["REDEEM"],
 		}),
 		approveRedeemRequest: builder.mutation({
-			query: ({ employeeId, requestId }) => ({
+			query: ({ employeeId, requestId, status }) => ({
 				url: `/employees/redeem`,
 				method: "PATCH",
-				body: { employeeId, requestId },
+				body: { employeeId, requestId, status },
 			}),
 			invalidatesTags: ["PROFILE", "REDEEM"],
 		}),
