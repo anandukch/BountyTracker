@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./ReviewPage.styles.scss";
 import ParticipantContribution from "../../components/ParticipantContribution/ParticipantContribution";
 import { useCompleteTaskMutation, useGetTaskContributionsQuery, useLazyDownloadFileQuery } from "../../api/taskApi";
-import { useParams } from "react-router-dom";
+import { useNavigate, useNavigation, useParams } from "react-router-dom";
 import CustomModal from "../../components/Modal/CustomModal";
 import { useDispatch } from "react-redux";
 import { addToastMessage } from "../../store/toastReducer";
@@ -33,6 +33,7 @@ const ReviewPage = () => {
 
 	const { data: contributionData, isSuccess } = useGetTaskContributionsQuery(parseInt(taskId));
 	const [completeTask] = useCompleteTaskMutation();
+	const navigate = useNavigate();
 	const handleContributeConfirm = async () => {
 		if (remainingBounty > 0) {
 			dispatch(
@@ -49,9 +50,15 @@ const ReviewPage = () => {
 				employeeId: participant.id,
 				rewardedBounty: participant.rewardedBounty,
 			}));
-			console.log(participantContributions);
-
-			await completeTask({ taskId, participantContributions });
+			// console.log(participantContributions);
+			navigate(`/tasks/${taskId}`);
+			await completeTask({ taskId, participantContributions })
+				.then(() => {
+					navigate(`/tasks/${taskId}`);
+				})
+				.catch((error) => {
+					createToastError(dispatch, error);
+				});
 
 			// TODO: logic to submit user bounty
 		}

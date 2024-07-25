@@ -182,6 +182,9 @@ class EmployeeService {
 
 	updateBounty = async (employeeId: number, bounty: number) => {
 		const employee = await this.employeeRespository.findOneBy({ id: employeeId }, ["details"]);
+
+		console.log(employee);
+		
 		if (!employee) {
 			throw new EntityNotFoundException("Employee not found");
 		}

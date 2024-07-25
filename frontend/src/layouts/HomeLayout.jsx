@@ -92,7 +92,7 @@ const HomeLayout = () => {
 						<span
 							className="profileHeaderWrapper"
 							onClick={() => {
-								navigate("/employees/profile");
+								navigate("/profile");
 							}}
 						>
 							<img src={profileHead} alt="Profile Icon" />

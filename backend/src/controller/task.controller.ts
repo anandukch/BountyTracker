@@ -161,6 +161,7 @@ class TaskController {
 				throw new HttpException(400, "Task not found");
 			}
 			const participantContributions = req.body.participantContributions;
+			// console.log(participantContributions);
 
 			const response = await this.taskService.completeTask(parseInt(taskId), participantContributions);
 			res.status(200).json({
@@ -189,7 +190,9 @@ class TaskController {
 			res.status(200).json({
 				success: true,
 				message: "Comments fetched succesfully",
-				data: allComments.reverse(),
+				data: allComments.sort((a, b) => {
+					return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+				}),
 			});
 		} catch (error) {
 			next(error);

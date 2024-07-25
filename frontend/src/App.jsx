@@ -48,6 +48,12 @@ const App = () => {
 		},
 
 		{
+			path: "/profile",
+			element: <HomeLayout />,
+			children: [{ index: true, element: <EmployeeProfile /> }],
+		},
+
+		{
 			path: "/tasks",
 			element: <HomeLayout />,
 			children: [
@@ -67,7 +73,6 @@ const App = () => {
 				// { path: "taskList", element: <TaskList /> },
 				// { path: "employeeList", element: <EmployeeTierList /> },
 				{ path: "taskDetails", element: <TaskDetail /> },
-				{ path: "profile", element: <EmployeeProfile /> },
 			],
 		},
 		// {

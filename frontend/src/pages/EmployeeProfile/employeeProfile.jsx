@@ -168,7 +168,7 @@ const EmployeeProfile = () => {
 						<p>Platinum Count:</p>
 						<span className="platinumCountWrapper">
 							<img className="platinumCount" src={platinumBadge} />
-							<p>x{employee.platinumCount || 0}</p>
+							<p>x{employee?.details?.platinumCount || 0}</p>
 						</span>
 					</div>
 					<div className="bounty">

@@ -50,13 +50,14 @@ const taskApi = apiWithTaskTags.injectEndpoints({
 
 		completeTask: builder.mutation({
 			query: ({ taskId, participantContributions }) => {
-				console.log(taskId, participantContributions);
+				// console.log(taskId, participantContributions);
 				return {
 					url: `tasks/complete/${parseInt(taskId)}`,
 					method: "PATCH",
 					body: { participantContributions },
 				};
 			},
+			invalidatesTags: ["TASK", "TASK_LIST"],
 		}),
 
 		getTaskContributions: builder.query({
@@ -68,7 +69,6 @@ const taskApi = apiWithTaskTags.injectEndpoints({
 		downloadFile: builder.query({
 			query: (id) => `/tasks/comments/${id}/file`,
 		}),
-		
 	}),
 });
 
