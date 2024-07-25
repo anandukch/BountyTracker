@@ -211,11 +211,16 @@ const EmployeeProfile = () => {
 							<p>{employee?.details?.rewards || 0}</p>
 						</span>
 					</div>
-					{!redeemDisable && (
-						<div className="requestButton">
-							<Button text="Redeem Request" isPrimary={true} onClick={handleRedeem} />
-						</div>
-					)}
+					{/* {!redeemDisable && ( */}
+					<div className="requestButton">
+						<Button
+							text="Redeem Request"
+							isPrimary={true}
+							onClick={handleRedeem}
+							isDisabled={redeemDisable}
+						/>
+					</div>
+					{/* )} */}
 				</div>
 			</section>
 		</div>

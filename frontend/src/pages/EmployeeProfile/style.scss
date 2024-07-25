@@ -1,3 +1,5 @@
+// .requestButton button::disa
+
 .employeeProfileWrapper {
 	width: 100%;
 	height: 100%;
@@ -9,7 +11,7 @@
 		// background-repeat: no-repeat;
 		// background-position: 7000% -50%;
 		// background-size:1500px;
-		
+
 		// background-color: #f1eedd;
 
 		width: 100%;
@@ -19,7 +21,6 @@
 		flex-direction: column;
 
 		justify-content: space-between;
-
 
 		.employeeDetailsWrapper {
 			border-radius: 20px;
@@ -330,12 +331,16 @@
 					align-items: center;
 					width: 100%;
 					gap: 10px;
-  					margin-top: 10px;
+					margin-top: 10px;
 					.rewardCount {
 						width: 30px;
 						height: 30px;
 					}
 				}
+			}
+			.requestButton button:disabled {
+				cursor: not-allowed;
+				background-color: var(--textGray);
 			}
 			.requestButton {
 				width: 25%;
