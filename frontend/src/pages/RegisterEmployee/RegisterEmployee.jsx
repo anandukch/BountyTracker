@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToastMessage } from "../../store/toastReducer";
 import { v4 } from "uuid";
+import { Loader } from "../../components/Loader/Loader";
 const initalState = {
 	name: "",
 	email: "",
@@ -19,7 +20,7 @@ const initalState = {
 };
 const RegisterEmployee = () => {
 	const [formData, setFormData] = useState(initalState);
-	const [addEmployee, { isSuccess, error, isError }] = useAddEmployeeMutation();
+	const [addEmployee, { isSuccess, error, isError, isLoading }] = useAddEmployeeMutation();
 	const navigate = useNavigate();
 
 	const form_fields = [
@@ -63,7 +64,7 @@ const RegisterEmployee = () => {
 		{
 			id: "role",
 			label: "Role",
-			values: [{ option: "Lead" }, { option: "Regular" },{ option: "HR" }],
+			values: [{ option: "Lead" }, { option: "Regular" }, { option: "HR" }],
 			type: "select",
 			name: "role",
 		},
@@ -115,6 +116,7 @@ const RegisterEmployee = () => {
 
 	return (
 		<main className="RegisterEmployee">
+			{isLoading && <Loader />}
 			<h1>Register</h1>
 			<div className="formWrapper">
 				<FormComponent formFields={form_fields} onChange={handleChange} />

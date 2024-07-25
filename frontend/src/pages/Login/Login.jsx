@@ -6,17 +6,18 @@ import { useEffect, useState } from "react";
 import { useLoginMutation } from "../../api/employeeApi";
 import { useDispatch } from "react-redux";
 import { createToastError } from "../../utils/createToastError";
+import { Loader } from "../../components/Loader/Loader";
 
 const Login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [login, { isSuccess, data, isError, error }] = useLoginMutation();
+	const [login, { isSuccess, data, isError, error, isLoading }] = useLoginMutation();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		const token=localStorage.getItem("token")
-		if(token) navigate("/tasks")
+		const token = localStorage.getItem("token");
+		if (token) navigate("/tasks");
 		if (isSuccess) {
 			localStorage.setItem("token", data.token);
 			navigate("/tasks");
@@ -45,6 +46,7 @@ const Login = () => {
 
 	return (
 		<div className="login">
+			{isLoading && <Loader />}
 			<h1>Login</h1>
 			<form action="/" method="post">
 				<TextField label="Username" name="email" type="text" className="fields" onChange={emailChangeHandler} />
