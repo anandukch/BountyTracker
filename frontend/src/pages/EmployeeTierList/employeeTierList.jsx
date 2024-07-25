@@ -18,7 +18,6 @@ const EmployeeTierList = () => {
 			const formattedData = data.data.map((employee) => ({
 				...employee,
 				birthday: formatDate(employee.details.birthday),
-				
 			}));
 			console.log(formattedData);
 			setList(formattedData);
@@ -40,7 +39,7 @@ const EmployeeTierList = () => {
 			<div className="wrapHeading">
 				<h1>Employee List</h1>
 				<div className="searchSort">
-					<Search/>
+					<Search />
 					<div className="sort">
 						<label></label>
 						<img src={IconFilter} alt="filter"></img>
@@ -60,7 +59,7 @@ const EmployeeTierList = () => {
 						return <GridColumn key={column.name} name={column.name} />;
 					})}
 				</div>
-				<div className="listData">
+				<div className="listDataTier">
 					{list.map((employee) => {
 						return (
 							<GridDataColumn
