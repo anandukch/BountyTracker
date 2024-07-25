@@ -18,22 +18,24 @@ import { commentService } from "../routes/task.routes";
 import Comment from "../entity/comment.entity";
 import ReviewStatus from "../utils/reviewStatus.enum";
 import { log } from "console";
+import RedeemRequestService from "../service/redeemRequest.service";
 class EmployeeController {
 	public router: Router;
-	constructor(private employeeService: EmployeeService) {
+	constructor(private employeeService: EmployeeService, private redeemRequestService: RedeemRequestService) {
 		this.router = Router();
 		this.router.get("/tasks/not-joined", authorize(), this.getTasksNotJoinedByEmployee);
 		this.router.get("/reward", this.getRewardComments);
+		this.router.post("/reward", authorize(), this.requestRewards);
 		this.router.get("/profile", authorize(), this.getEmployeeProfile);
 		this.router.get("/tasks", authorize(), this.getEmployeeAssignedTasks);
 		this.router.get("/", authorize(), this.getAllEmployees);
-		this.router.patch("/redeem/:employeeId", this.redeemRewards);
+		this.router.patch("/redeem", this.redeemRewards);
 		this.router.get("/:id", this.getEmployeeByID);
 		this.router.post("/login", this.loginEmployee);
 		this.router.post("/", validationMiddleware(CreateEmployeeDto), this.createEmployee);
 		this.router.post("/tasks/:id", authorize(), this.joinTask);
 		this.router.put("/:employeeId/tasks/:taskId/contributions", authorize(), this.giveContribution);
-		this.router.post("/reward", authorize(), this.requestRewards);
+		
 		// this.router.delete("/:id", this.deleteRedeemRequest);
 	}
 
@@ -193,10 +195,10 @@ class EmployeeController {
 	};
 	public redeemRewards = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			const employeeId = parseInt(req.params.employeeId);
+			const employeeId = parseInt(req.body.employeeId);
 			await this.employeeService.resetReward(employeeId);
-			const { commentId } = req.body;
-			await commentService.deleteCommentByID(commentId);
+			const { requestId } = req.body;
+			await this.redeemRequestService.approveRedeemRequest(requestId);
 			res.status(200).json({
 				success: true,
 				message: "Reward redeemed and reset successfully and Redeem Request deleted",
@@ -208,7 +210,8 @@ class EmployeeController {
 
 	public requestRewards = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			await commentService.hrRequestComment(req.user);
+			// await commentService.hrRequestComment(req.user);
+			await this.redeemRequestService.sendRedeemRequest(req.user, req.body.amount);
 
 			res.status(201).json({
 				success: true,
@@ -221,12 +224,13 @@ class EmployeeController {
 
 	public getRewardComments = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			const rewardComments = await commentService.getRewardComment();
+			// const rewardComments = await commentService.getRewardComment();
+			const redeemRequest = await this.redeemRequestService.getRedeemRequest();
 
 			res.status(200).json({
 				success: true,
 				message: "Hr Requests fetched successfully",
-				data: rewardComments,
+				data: redeemRequest,
 			});
 		} catch (error) {
 			next(error);

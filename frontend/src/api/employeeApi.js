@@ -45,9 +45,10 @@ export const employeeApi = apiWithEmployeeTag.injectEndpoints({
 			invalidatesTags: ["EMPLOYEE_LIST", "EMPLOYEE"],
 		}),
 		redeemReward: builder.mutation({
-			query: () => ({
+			query: (body) => ({
 				url: "/employees/reward",
 				method: "POST",
+				body,
 			}),
 			invalidatesTags: ["REDEEM"],
 		}),
