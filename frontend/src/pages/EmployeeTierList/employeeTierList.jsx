@@ -8,6 +8,7 @@ import IconFilter from "../../assets/iconFilter.png";
 import Search from "../../components/Search/Search";
 import { useGetEmployeeListQuery } from "../../api/employeeApi";
 import { formatDate } from "../../utils/date.utils";
+import { Loader } from "../../components/Loader/Loader";
 
 const EmployeeTierList = () => {
 	const [list, setList] = useState([]);
@@ -38,6 +39,7 @@ const EmployeeTierList = () => {
 
 	return (
 		<div className="fullWrap">
+			{isLoading && <Loader />}
 			<div className="wrapHeading">
 				<h1>Employees</h1>
 				{/* <div className="searchSort">
