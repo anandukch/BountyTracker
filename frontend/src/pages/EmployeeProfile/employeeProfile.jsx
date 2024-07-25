@@ -40,16 +40,15 @@ const EmployeeProfile = () => {
 				{ header: "Phone", content: employeeData.details.phoneNo },
 			]);
 			const redeemReq = redeemRequests?.data.filter((request) => request.employee.id === employeeData.id);
-			if (redeemReq) setRedeemDisable(true);
+			if (redeemReq || employeeData.details.rewards === 0) setRedeemDisable(true);
 			// dispatch(addLoggedState({ role: employeeData.role, name: employeeData.name }));
 		}
 	}, [data, isSuccess]);
 
 	const [addClass, setAddClass] = useState(0);
 	const handleRedeem = () => {
-		console.log();
-		redeemReward(employee.details.rewards);
-		console.log("handle redeem");
+		const reward = employee.details.rewards;
+		redeemReward({ reward });
 		if (redeemSuccess) console.log("redeem request sent");
 	};
 	const handlePending = () => {
@@ -192,10 +191,11 @@ const EmployeeProfile = () => {
 						</p>
 						</span>
 					</div>
-					{}
-					<div className="requestButton">
-						<Button text="Redeem Request" isPrimary={true} onClick={handleRedeem} />
-					</div>
+					{!redeemDisable && (
+						<div className="requestButton">
+							<Button text="Redeem Request" isPrimary={true} onClick={handleRedeem} />
+						</div>
+					)}
 				</div>
 			</section>
 		</div>
