@@ -106,7 +106,7 @@ class TaskController {
 	public getTaskById = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			const { taskId } = req.params;
-			if (!taskId) {
+			if (!taskId || isNaN(parseInt(taskId))) {
 				throw new HttpException(400, "Task not found");
 			}
 			const task = await this.taskService.getTaskById(parseInt(taskId), [
@@ -115,6 +115,11 @@ class TaskController {
 				"participants",
 				"participants.employee",
 			]);
+
+			if (!task) {
+				throw new HttpException(404, "Task not found");
+			}
+
 			res.status(200).json({
 				success: true,
 				message: "Tasks fetched successfully",

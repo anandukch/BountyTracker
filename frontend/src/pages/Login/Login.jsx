@@ -15,6 +15,8 @@ const Login = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
+		const token=localStorage.getItem("token")
+		if(token) navigate("/tasks")
 		if (isSuccess) {
 			localStorage.setItem("token", data.token);
 			navigate("/tasks");
