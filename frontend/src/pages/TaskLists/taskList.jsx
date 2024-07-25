@@ -12,7 +12,7 @@ import GridColumn from "../../components/GridColumn";
 import Button from "../../components/Button/Button";
 import { useGetTaskListQuery, useLazyGetTaskListQuery } from "../../api/taskApi";
 import { useNavigate } from "react-router-dom";
-import NotFound from "../../assets/notFound.svg"
+import NotFound from "../../assets/notFound.svg";
 
 const EmployeeDashboard = () => {
 	const state = useSelector((state) => state.employee.employee);
@@ -75,8 +75,45 @@ const EmployeeDashboard = () => {
 				<div className="searchSort">
 					<h1>Tasks</h1>
 
-					{state.role === "Lead" && (
-						<div className="createTask">
+					<div className="headerLeft">
+						<div className="taskFilters">
+							<div className="list">
+								<div className="taskBarWrap0">
+									<ListButton
+										text={"All tasks"}
+										buttonClass={`dashboardTaskAll${addClass === 0 ? " activeTab" : ""}`}
+										clickHandle={handleAll}
+									/>
+								</div>
+								<div className="taskBarWrapper">
+									<ListButton
+										text={"Pending Task"}
+										buttonClass={`dashboardTaskPending${addClass === 1 ? " activeTab" : ""}`}
+										clickHandle={handlePending}
+									/>
+									<ListButton
+										text={"Completed Task"}
+										buttonClass={`dashboardTaskCompleted${addClass === 2 ? " activeTab" : ""}`}
+										clickHandle={handleCompleted}
+									/>
+								</div>
+
+								{state.role == "Lead" && (
+									<div className="taskBarWrap0">
+										<ListButton
+											text={"Created tasks"}
+											buttonClass={`dashboardTaskAll${addClass === 3 ? " activeTab" : ""}`}
+											clickHandle={handleCreatedTasks}
+										/>
+									</div>
+								)}
+								{/* <div className="search">
+							<Search />
+						</div> */}
+							</div>
+						</div>
+
+						{state.role === "Lead" && (
 							<Button
 								text="Create Task"
 								isPrimary={true}
@@ -84,46 +121,11 @@ const EmployeeDashboard = () => {
 									navigate("/tasks/create");
 								}}
 							/>
-						</div>
-					)}
+						)}
+					</div>
 				</div>
 
 				<div className="employeeTasksWrapper">
-					<div className="list">
-						<div className="taskBarWrap0">
-							<ListButton
-								text={"All tasks"}
-								buttonClass={`dashboardTaskAll${addClass === 0 ? " activeTab" : ""}`}
-								clickHandle={handleAll}
-							/>
-						</div>
-						<div className="taskBarWrapper">
-							<ListButton
-								text={"Pending Task"}
-								buttonClass={`dashboardTaskPending${addClass === 1 ? " activeTab" : ""}`}
-								clickHandle={handlePending}
-							/>
-							<ListButton
-								text={"Completed Task"}
-								buttonClass={`dashboardTaskCompleted${addClass === 2 ? " activeTab" : ""}`}
-								clickHandle={handleCompleted}
-							/>
-						</div>
-
-						{state.role == "Lead" && (
-							<div className="taskBarWrap0">
-								<ListButton
-									text={"Created tasks"}
-									buttonClass={`dashboardTaskAll${addClass === 3 ? " activeTab" : ""}`}
-									clickHandle={handleCreatedTasks}
-								/>
-							</div>
-						)}
-						{/* <div className="search">
-							<Search />
-						</div> */}
-					</div>
-
 					<div className="taskLogWrapper">
 						<div className="listHeaderTask">
 							{tasksHeader.map((header) => {
@@ -151,11 +153,12 @@ const EmployeeDashboard = () => {
 								tasksHeader.map((header) => {
 									return <GridColumn key={header.name} name={header.name} />;
 								})}
-								{/* <div className="noTasks">
+							{(list.length == 0 || employeeAllTaskData.length == 0) && (
+								<div className="noTasks">
 									<img className="noTasksImage" src={NotFound}></img>
 									<h3>NO TASKS FOUND</h3>
-
-								</div> */}
+								</div>
+							)}
 						</div>
 					</div>
 				</div>

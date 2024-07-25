@@ -35,6 +35,18 @@ class RedeemRequestService {
 		redeemRequest.status = RedeemRequestEnum.APPROVED;
 		return this.repository.save(redeemRequest);
 	};
+
+	getUserRedeemRequest = async (employeeId: number) => {
+		const redeemRequest = await this.repository.find(
+			{
+				employee: { id: employeeId },
+				status: RedeemRequestEnum.REQUESTED,
+			},
+			["employee"]
+		);
+
+		return redeemRequest;
+	};
 }
 
 export default RedeemRequestService;

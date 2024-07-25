@@ -27,6 +27,7 @@ class EmployeeController {
 		this.router.get("/reward", this.getRewardComments);
 		this.router.patch("/redeem", this.redeemRewards);
 		this.router.post("/reward", authorize(), this.requestRewards);
+		this.router.get("/reward/user", authorize(), this.getUserRewards);
 		this.router.get("/profile", authorize(), this.getEmployeeProfile);
 		this.router.get("/tasks", authorize(), this.getEmployeeAssignedTasks);
 		this.router.get("/", authorize(), this.getAllEmployees);
@@ -232,6 +233,19 @@ class EmployeeController {
 				success: true,
 				message: "Hr Requests fetched successfully",
 				data: redeemRequest,
+			});
+		} catch (error) {
+			next(error);
+		}
+	};
+
+	public getUserRewards = async (req: RequestWithRole, res: Response, next: NextFunction) => {
+		try {
+			const response = await this.redeemRequestService.getUserRedeemRequest(req.user.id);
+			return res.status(200).json({
+				success: true,
+				message: "User Redeem Request fetched successfully",
+				data: response,
 			});
 		} catch (error) {
 			next(error);

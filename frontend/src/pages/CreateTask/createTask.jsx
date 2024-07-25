@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToastMessage } from "../../store/toastReducer";
 import { v4 } from "uuid";
+import { Loader } from "../../components/Loader/Loader";
 
 const initialFormData = {
 	title: "",
@@ -19,7 +20,7 @@ const initialFormData = {
 };
 const CreateTask = () => {
 	const [formData, setFormData] = useState(initialFormData);
-	const [createTask, { data, isSuccess, isError, error }] = useCreateTaskMutation();
+	const [createTask, { data, isSuccess, isError, error, isLoading }] = useCreateTaskMutation();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const formFields = [
@@ -107,6 +108,7 @@ const CreateTask = () => {
 
 	return (
 		<main className="createTask">
+			{isLoading && <Loader />}
 			<div className="title">Add Task</div>
 			<section className="taskFormWrap">
 				<FormComponent formFields={formFields} onChange={handleChange} />
