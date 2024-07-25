@@ -33,20 +33,27 @@
 		resize: none;
 		padding: 20px;
 	}
-	.contributionFileUpload {
-		height: 40px;
-		width: 70%;
+	.commentButtons {
+		/* height: 40px; */
+		/* width: 70%; */
 		padding: 10px;
 		font-size: 14px;
-		border: 1px solid black;
+		/* border: 1px solid black; */
 		display: flex;
-		justify-content: space-between;
+		/* justify-content: space-between; */
 		align-items: center;
 
 		.contributionFileUploadButton {
 			/* width: 20px; */
 			/* height: 40px; */
+			background-color: transparent;
+			border: none;
 			width: 40px;
+
+			&:hover {
+				/* background-color: #92cdf5; */
+				filter: invert(1);
+			}
 			.uploadFileLabel {
 				cursor: pointer;
 				input {
@@ -339,6 +346,16 @@
 						padding-left: 10px;
 						padding-right: 15px;
 						border: 1px solid var(--textGray);
+
+						&.reviewTextBox {
+							textarea {
+								/* color: black; */
+								background-color: #4dc1ff;
+								&::placeholder {
+									color: black;
+								}
+							}
+						}
 						img {
 							height: 38px;
 						}
@@ -361,7 +378,7 @@
 						}
 						textarea {
 							width: 80%;
-							height: 46px;
+							/* height: 46px; */
 							outline: none;
 							border: none;
 							padding: 15px 5px;

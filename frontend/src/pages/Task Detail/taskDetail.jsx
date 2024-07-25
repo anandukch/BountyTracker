@@ -132,7 +132,7 @@ const TaskDetail = () => {
 			// console.log(taskDetail.data);
 			const participants = taskDetail.data.participants;
 			setParticipantList(participants);
-			if (taskDetail?.data.createdBy.email === user.email) {
+			if (taskDetail.data.createdBy.email === user.email) {
 				setJoined(true);
 				setIsCreator(true);
 			} else {
@@ -290,7 +290,7 @@ const TaskDetail = () => {
 										})}
 									</div>
 								</div>
-								<div className="addComment">
+								<div className={`addComment ${commentType === "Review" ? "reviewTextBox" : ""}`}>
 									<img src={commentIcon} alt="Comment Icon" />
 									{mentionId && (
 										<div className="mentionShowWrapper">
@@ -317,7 +317,7 @@ const TaskDetail = () => {
 										</div>
 									)}
 									<span className="commentButtons">
-										<div className="contributionFileUploadButton">
+										<button className="contributionFileUploadButton">
 											<label htmlFor="file" className="uploadFileLabel">
 												<input
 													type="file"
@@ -327,22 +327,26 @@ const TaskDetail = () => {
 												/>
 												<img src={attach} alt="Add attachment" />
 											</label>
-										</div>
+										</button>
 										<button className="sendButton">
 											<img src={send} alt="Send Comment" onClick={handleSend} />
 										</button>
 									</span>
 								</div>
-								<div className="reviewCheckBox">
-									<label htmlFor="Review">Mark For Review</label>
-									<input
-										type="checkbox"
-										ref={checkboxRef}
-										name="Review"
-										onChange={handleReview}
-										checked={commentType === "Review"}
-									/>
-								</div>
+								{!isCreator ? (
+									<div className="reviewCheckBox">
+										<label htmlFor="Review">Mark As Contribution</label>
+										<input
+											type="checkbox"
+											ref={checkboxRef}
+											name="Review"
+											onChange={handleReview}
+											checked={commentType === "Review"}
+										/>
+									</div>
+								) : (
+									""
+								)}
 							</div>
 						</div>
 						{/* <div className="reviewSection">
