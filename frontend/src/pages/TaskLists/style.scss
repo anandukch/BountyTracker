@@ -268,6 +268,29 @@
 							transition: transform 0.2s ease;
 						}
 					}
+					.noTasks{
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						border-radius: 10px;
+						// background-color: var(--bgWhite);
+						padding: 10px 0px 10px 0px;
+						margin: 5px 0px 5px 0px;
+						background-color: white;
+						flex-direction: column;
+						gap: 40px;
+						padding: 40px;
+
+
+					}
+					.noTasksImage{
+						
+						height: 10%;
+						width: 10%;
+						
+        				filter: drop-shadow(3px 4px 4px  #2A3644);
+						
+					}
 				}
 			}
 		}
