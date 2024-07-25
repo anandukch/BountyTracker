@@ -75,8 +75,45 @@ const EmployeeDashboard = () => {
 				<div className="searchSort">
 					<h1>Tasks</h1>
 
-					{state.role === "Lead" && (
-						<div className="createTask">
+					<div className="headerLeft">
+						<div className="taskFilters">
+							<div className="list">
+								<div className="taskBarWrap0">
+									<ListButton
+										text={"All tasks"}
+										buttonClass={`dashboardTaskAll${addClass === 0 ? " activeTab" : ""}`}
+										clickHandle={handleAll}
+									/>
+								</div>
+								<div className="taskBarWrapper">
+									<ListButton
+										text={"Pending Task"}
+										buttonClass={`dashboardTaskPending${addClass === 1 ? " activeTab" : ""}`}
+										clickHandle={handlePending}
+									/>
+									<ListButton
+										text={"Completed Task"}
+										buttonClass={`dashboardTaskCompleted${addClass === 2 ? " activeTab" : ""}`}
+										clickHandle={handleCompleted}
+									/>
+								</div>
+
+								{state.role == "Lead" && (
+									<div className="taskBarWrap0">
+										<ListButton
+											text={"Created tasks"}
+											buttonClass={`dashboardTaskAll${addClass === 3 ? " activeTab" : ""}`}
+											clickHandle={handleCreatedTasks}
+										/>
+									</div>
+								)}
+								{/* <div className="search">
+							<Search />
+						</div> */}
+							</div>
+						</div>
+
+						{state.role === "Lead" && (
 							<Button
 								text="Create Task"
 								isPrimary={true}
@@ -84,46 +121,11 @@ const EmployeeDashboard = () => {
 									navigate("/tasks/create");
 								}}
 							/>
-						</div>
-					)}
+						)}
+					</div>
 				</div>
 
 				<div className="employeeTasksWrapper">
-					<div className="list">
-						<div className="taskBarWrap0">
-							<ListButton
-								text={"All tasks"}
-								buttonClass={`dashboardTaskAll${addClass === 0 ? " activeTab" : ""}`}
-								clickHandle={handleAll}
-							/>
-						</div>
-						<div className="taskBarWrapper">
-							<ListButton
-								text={"Pending Task"}
-								buttonClass={`dashboardTaskPending${addClass === 1 ? " activeTab" : ""}`}
-								clickHandle={handlePending}
-							/>
-							<ListButton
-								text={"Completed Task"}
-								buttonClass={`dashboardTaskCompleted${addClass === 2 ? " activeTab" : ""}`}
-								clickHandle={handleCompleted}
-							/>
-						</div>
-
-						{state.role == "Lead" && (
-							<div className="taskBarWrap0">
-								<ListButton
-									text={"Created tasks"}
-									buttonClass={`dashboardTaskAll${addClass === 3 ? " activeTab" : ""}`}
-									clickHandle={handleCreatedTasks}
-								/>
-							</div>
-						)}
-						{/* <div className="search">
-							<Search />
-						</div> */}
-					</div>
-
 					<div className="taskLogWrapper">
 						<div className="listHeaderTask">
 							{tasksHeader.map((header) => {

@@ -1,12 +1,12 @@
-.requestWrap{
-    padding: 10px;
+.requestWrap {
+	/* padding: 10px; */
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
-    margin: 20px;
-    padding: 20px;
+	margin: 20px;
+	/* padding: 20px; */
 
-    .searchSort {
+	.searchSort {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
@@ -44,10 +44,11 @@
 		flex-direction: column;
 		height: 100%;
 		gap: 10px;
+		padding: 30px 10px;
 	}
 	.listHeader {
 		display: grid;
-		grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 		align-content: center;
 
 		height: 80px;
@@ -65,12 +66,12 @@
 		border-bottom: 2px solid #ccc;
 		box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.3);
 	}
-    .listHeader :nth-child(5){
-        display: flex;
-        justify-content: center;
-        padding-right: 30px;
-    }
-    .listData {
+	.listHeader :nth-child(5) {
+		display: flex;
+		justify-content: center;
+		padding-right: 30px;
+	}
+	.listData {
 		display: flex;
 		flex-direction: column;
 
@@ -79,9 +80,9 @@
 		padding-bottom: 20px;
 		border-radius: 10px;
 	}
-    .listDataSet {
+	.listDataSet {
 		display: grid;
-		grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 		align-items: center;
 		// padding: 5px;
 		padding-left: 3%;
@@ -96,20 +97,14 @@
 			transform: translateY(-2px) scale(1.02);
 			box-shadow: 0px 5px 10px #efecda;
 		}
-        .buttons{
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            
-            
-            
-        }
-        .buttons button{
-            width: 80%;
-            margin: 5px;
-            padding:8px;
-            
-        }
+		.buttons {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+		}
+		.buttons button {
+			width: 80%;
+			margin: 5px;
+			padding: 8px;
+		}
 	}
-    
-
 }
