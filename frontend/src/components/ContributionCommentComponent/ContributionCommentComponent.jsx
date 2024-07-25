@@ -3,7 +3,6 @@ import "./ContributionCommentComponent.scss";
 import download from "../../assets/download.svg";
 
 const ContributionCommentComponent = ({ comment }) => {
-	console.log(comment);
 	const onDownloadClick = (id) => {
 		window.open(`http://localhost:3000/tasks/comments/${id}/file`);
 	};
@@ -14,15 +13,13 @@ const ContributionCommentComponent = ({ comment }) => {
 				<div className="contributionCommentBody">
 					<div className="contributionCommentContent">{comment?.content}</div>
 					{comment.fileUrl && (
-						<button className="attachmentButton">
+						<button className="attachmentButton" onClick={() => onDownloadClick(comment.id)}>
 							<img src={download}></img>
 						</button>
 					)}
 				</div>
 			</div>
-			<span className="replyLink" onClick={() => onDownloadClick(comment.id)}>
-				Reply
-			</span>
+			<span className="replyLink">Reply</span>
 		</div>
 	);
 };

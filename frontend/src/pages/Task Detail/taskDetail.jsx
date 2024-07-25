@@ -205,10 +205,12 @@ const TaskDetail = () => {
 				</span>
 				<span>
 					<h3>Due : {formatDate(taskDetail?.data.deadLine)}</h3>
+				</span>
+				<span>
 					{taskDetail &&
 						formatDate(new Date()) < formatDate(taskDetail?.data.deadLine) &&
 						taskDetail.data.status != "Completed" &&
-						isCreator && <Button text="Complete Task" isPrimary={true} onClick={completeTask} />}
+						isCreator && <Button text="Review Task" isPrimary={true} onClick={completeTask} />}
 				</span>
 			</div>
 			<div className="data">
