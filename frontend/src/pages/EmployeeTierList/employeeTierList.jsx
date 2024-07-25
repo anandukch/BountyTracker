@@ -37,8 +37,8 @@ const EmployeeTierList = () => {
 	return (
 		<div className="fullWrap">
 			<div className="wrapHeading">
-				<h1>Employee List</h1>
-				<div className="searchSort">
+				<h1>Employees</h1>
+				{/* <div className="searchSort">
 					<Search />
 					<div className="sort">
 						<label></label>
@@ -51,7 +51,7 @@ const EmployeeTierList = () => {
 							<option value="bountyLow">Tier ▲</option>
 						</select>
 					</div>
-				</div>
+				</div> */}
 			</div>
 			<div className="listWrapper">
 				<div className="listHeader">
