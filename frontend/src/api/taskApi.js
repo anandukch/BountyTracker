@@ -86,4 +86,5 @@ export const {
 	useCompleteTaskMutation,
 	useGetTaskContributionsQuery,
 	useLazyDownloadFileQuery,
+	useLazyGetCommentsByTaskIdQuery
 } = taskApi;
