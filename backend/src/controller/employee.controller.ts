@@ -15,22 +15,28 @@ import validationMiddleware from "../middleware/validate.middleware";
 import { CreateComementDto, HrRequestDto } from "../dto/comment.dto";
 import CommentService from "../service/comment.service";
 import { commentService } from "../routes/task.routes";
+import Comment from "../entity/comment.entity";
+import ReviewStatus from "../utils/reviewStatus.enum";
+import { log } from "console";
+import RedeemRequestService from "../service/redeemRequest.service";
 class EmployeeController {
 	public router: Router;
-	constructor(private employeeService: EmployeeService) {
+	constructor(private employeeService: EmployeeService, private redeemRequestService: RedeemRequestService) {
 		this.router = Router();
-		this.router.get("/", authorize(), this.getAllEmployees);
+		this.router.get("/tasks/not-joined", authorize(), this.getTasksNotJoinedByEmployee);
+		this.router.get("/reward", this.getRewardComments);
+		this.router.post("/reward", authorize(), this.requestRewards);
 		this.router.get("/profile", authorize(), this.getEmployeeProfile);
 		this.router.get("/tasks", authorize(), this.getEmployeeAssignedTasks);
-		this.router.get("/tasks/not-joined", authorize(), this.getTasksNotJoinedByEmployee);
+		this.router.get("/", authorize(), this.getAllEmployees);
+		this.router.patch("/redeem", this.redeemRewards);
 		this.router.get("/:id", this.getEmployeeByID);
 		this.router.post("/login", this.loginEmployee);
 		this.router.post("/", validationMiddleware(CreateEmployeeDto), this.createEmployee);
 		this.router.post("/tasks/:id", authorize(), this.joinTask);
 		this.router.put("/:employeeId/tasks/:taskId/contributions", authorize(), this.giveContribution);
-		this.router.patch("/redeem/:employeeId", this.redeemRewards);
-		this.router.post("/reward", this.requestRewards);
-		this.router.get("/reward", this.getRewardComments);
+		
+		// this.router.delete("/:id", this.deleteRedeemRequest);
 	}
 
 	public giveContribution = async (req: RequestWithRole, res: Response, next: NextFunction) => {
@@ -56,7 +62,6 @@ class EmployeeController {
 	public getEmployeeProfile = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			const employee = await this.employeeService.getProfile(req.user.id);
-
 			res.status(200).json({
 				success: true,
 				message: "Employee fetched successfully",
@@ -190,10 +195,13 @@ class EmployeeController {
 	};
 	public redeemRewards = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			await this.employeeService.resetReward(req.user.id);
+			const employeeId = parseInt(req.body.employeeId);
+			await this.employeeService.resetReward(employeeId);
+			const { requestId } = req.body;
+			await this.redeemRequestService.approveRedeemRequest(requestId);
 			res.status(200).json({
 				success: true,
-				message: "Reward redeemed and reset successfully",
+				message: "Reward redeemed and reset successfully and Redeem Request deleted",
 			});
 		} catch (error) {
 			next(error);
@@ -202,16 +210,8 @@ class EmployeeController {
 
 	public requestRewards = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			// commentService: CommentService;
-			const comment = req.body;
-			const commentDto = plainToInstance(HrRequestDto, comment);
-			const errors = await validate(commentDto);
-			const employee = req.user;
-			if (errors.length) {
-				throw new ValidationException(400, "Validation Failed", errors);
-			}
-
-			await commentService.hrRequestComment(employee);
+			// await commentService.hrRequestComment(req.user);
+			await this.redeemRequestService.sendRedeemRequest(req.user, req.body.amount);
 
 			res.status(201).json({
 				success: true,
@@ -224,11 +224,13 @@ class EmployeeController {
 
 	public getRewardComments = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			const rewardComments = await commentService.getRewardComment();
+			// const rewardComments = await commentService.getRewardComment();
+			const redeemRequest = await this.redeemRequestService.getRedeemRequest();
+
 			res.status(200).json({
 				success: true,
 				message: "Hr Requests fetched successfully",
-				data: rewardComments,
+				data: redeemRequest,
 			});
 		} catch (error) {
 			next(error);

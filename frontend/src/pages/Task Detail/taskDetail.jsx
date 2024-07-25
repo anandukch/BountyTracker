@@ -12,6 +12,7 @@ import {
 	useCreateCommentMutation,
 	useGetCommentsByTaskIdQuery,
 	useJoinTaskMutation,
+	useLazyGetCommentsByTaskIdQuery,
 	useLazyGetTaskByIdQuery,
 } from "../../api/taskApi";
 import { formatDate } from "../../utils/date.utils";
@@ -42,9 +43,11 @@ const TaskDetail = () => {
 	const dispatch = useDispatch();
 
 	const [getTaskById, { data: taskDetail, isSuccess: taskSuccess }] = useLazyGetTaskByIdQuery();
-	const { data: commentsData, isSuccess: commentSuccess } = useGetCommentsByTaskIdQuery(taskId, {
-		// pollingInterval: 5000,
-	});
+	// const { data: commentsData, isSuccess: commentSuccess } = useGetCommentsByTaskIdQuery(taskId, {
+	// 	// pollingInterval: 2000,
+	// });
+
+	const [getCommentByTaskId, { data: commentsData, isSuccess: commentSuccess }] = useLazyGetCommentsByTaskIdQuery();
 	const [join, { isSuccess: joinSuccess }] = useJoinTaskMutation();
 	const [createComment] = useCreateCommentMutation();
 	const [completeTaskRequest] = useCompleteTaskMutation();
@@ -66,6 +69,16 @@ const TaskDetail = () => {
 			value: taskDetail?.skillList,
 		},
 	];
+
+	useEffect(() => {
+		getCommentByTaskId(taskId);
+		const timer = setInterval(() => {
+			// setShowError(false);
+			getCommentByTaskId(taskId);
+		}, 2000);
+
+		return () => clearInterval(timer);
+	}, [getCommentByTaskId, taskId]);
 
 	const handleSend = async () => {
 		const formData = new FormData();
@@ -95,7 +108,7 @@ const TaskDetail = () => {
 		setComment(e.target.value);
 	};
 	const handleUpload = (e) => {
-		console.log("file");
+		// console.log("file");
 		uploadFile(e.target.files[0]);
 	};
 	const handleReply = (id) => {
@@ -111,9 +124,16 @@ const TaskDetail = () => {
 		// completeTaskRequest(Number(taskId));
 	};
 
+	const setColor = (status) => {
+		if (status == "In Progress") return "#efecda";
+		else if (status == "In Review") return "#f5ecb8";
+		else return "#d3f4be";
+	};
+
 	useEffect(() => {
 		if (taskSuccess) {
-			console.log("effect 1");
+			// console.log("effect 1");
+			// console.log(taskDetail.data);
 			const participants = taskDetail.data.participants;
 			setParticipantList(participants);
 			if (taskDetail?.data.createdBy.email === user.email) {
@@ -133,7 +153,7 @@ const TaskDetail = () => {
 	useEffect(() => {
 		getTaskById(taskId);
 		if (joinSuccess) {
-			console.log("effect 2");
+			// console.log("effect 2");
 			dispatch(addJoinedStatus({ status: "joined" }));
 			setJoined(true);
 		}
@@ -179,12 +199,16 @@ const TaskDetail = () => {
 			<div className="title">
 				<span>
 					<h3>Task : # {taskDetail?.data.title}</h3>
+					<p className="statusPill" style={{ backgroundColor: `${setColor(taskDetail?.data.status)}` }}>
+						{taskDetail?.data.status}
+					</p>
 				</span>
 				<span>
 					<h3>Due : {formatDate(taskDetail?.data.deadLine)}</h3>
-					{formatDate(new Date()) < formatDate(taskDetail?.data.deadLine) || isCreator && (
-						<Button text="Complete Task" isPrimary={true} onClick={completeTask} />
-					)}
+					{taskDetail &&
+						formatDate(new Date()) < formatDate(taskDetail?.data.deadLine) &&
+						taskDetail.data.status != "Completed" &&
+						isCreator && <Button text="Complete Task" isPrimary={true} onClick={completeTask} />}
 				</span>
 			</div>
 			<div className="data">
@@ -252,7 +276,7 @@ const TaskDetail = () => {
 								<div className="commentListWrapper">
 									<div className="commentList">
 										{commentList?.map((comment) => {
-											console.log(comment);
+											// console.log(comment);
 											return comment.commentType === "Normal" ? (
 												<CommentComponent
 													comment={comment}
@@ -260,7 +284,10 @@ const TaskDetail = () => {
 													currentEmployeeEmail={user.email}
 												/>
 											) : (
-												<ContributionCommentComponent comment={comment} />
+												<ContributionCommentComponent
+													comment={comment}
+													handleReplyClick={handleReply}
+												/>
 											);
 										})}
 									</div>
@@ -283,6 +310,14 @@ const TaskDetail = () => {
 										onChange={handleTextArea}
 										value={comment}
 									/>
+									{file && (
+										<div className="mentionShowWrapper">
+											<span className="mentionShow">{`${file.name.toString().slice(0, 10)} attached`}</span>
+											<span className="removeMention" onClick={() => uploadFile(undefined)}>
+												x
+											</span>
+										</div>
+									)}
 									<span className="commentButtons">
 										<div className="contributionFileUploadButton">
 											<label htmlFor="file" className="uploadFileLabel">
@@ -295,9 +330,9 @@ const TaskDetail = () => {
 												<img src={attach} alt="Add attachment" />
 											</label>
 										</div>
-										<div className="sendButton">
+										<button className="sendButton">
 											<img src={send} alt="Send Comment" onClick={handleSend} />
-										</div>
+										</button>
 									</span>
 								</div>
 								<div className="reviewCheckBox">

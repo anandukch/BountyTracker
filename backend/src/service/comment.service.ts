@@ -110,22 +110,27 @@ class CommentService {
 		return comments;
 	};
 
-	hrRequestComment = async (employee: Employee) => {
-		const newComment = new Comment();
-		newComment.reviewStatus = ReviewStatus.REWARD;
-		newComment.employee = employee;
+	// hrRequestComment = async (employee: Employee) => {
+	// 	const newComment = new Comment();
+	// 	newComment.content = `Redeem Request by : #${employee.id} : ${employee.name} `;
+	// 	newComment.commentType = CommentType.Redeem;
+	// 	newComment.reviewStatus = ReviewStatus.REWARD;
+	// 	newComment.employee = employee;
+	// 	return this.commentRepository.save(newComment);
+	// };
 
-		return this.commentRepository.save(newComment);
-	};
+	// getRewardComment = async () => {
+	// 	const comments = await this.commentRepository.find({ reviewStatus: ReviewStatus.REWARD as any }, [
+	// 		"employee",
+	// 		"employee.details",
+	// 	]);
 
-	getRewardComment = async () => {
-		const comments = await this.commentRepository.find({ reviewStatus: ReviewStatus.REWARD as any }, [
-			"employee",
-			"employee.details",
-		]);
-
-		return comments;
-	};
+	// 	return comments;
+	// };
+	// deleteCommentByID = async (id: number) => {
+	// 	const comment = await this.commentRepository.findOneBy({ id });
+	// 	return this.commentRepository.softDelete(comment)
+	// };
 }
 
 export default CommentService;

@@ -44,6 +44,26 @@ export const employeeApi = apiWithEmployeeTag.injectEndpoints({
 			}),
 			invalidatesTags: ["EMPLOYEE_LIST", "EMPLOYEE"],
 		}),
+		redeemReward: builder.mutation({
+			query: (body) => ({
+				url: "/employees/reward",
+				method: "POST",
+				body,
+			}),
+			invalidatesTags: ["REDEEM"],
+		}),
+		getRedeemRequests: builder.query({
+			query: () => "/employees/reward",
+			providesTags: ["REDEEM"],
+		}),
+		approveRedeemRequest: builder.mutation({
+			query: ({ id, commentId }) => ({
+				url: `/employees/redeem/${parseInt(id)}`,
+				method: "PATCH",
+				body: { commentId },
+			}),
+			invalidatesTags: ["EMPLOYEE", "REDEEM"],
+		}),
 	}),
 });
 
@@ -57,4 +77,7 @@ export const {
 	useGetEmployeeCreatedTasksQuery,
 	useGetEmployeeCurrentTasksQuery,
 	useLoginMutation,
+	useRedeemRewardMutation,
+	useGetRedeemRequestsQuery,
+	useApproveRedeemRequestMutation,
 } = employeeApi;

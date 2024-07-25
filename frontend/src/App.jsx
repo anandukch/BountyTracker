@@ -14,7 +14,6 @@ import RequestList from "./pages/RequestList/requestList.jsx";
 import EmployeeProfile from "./pages/EmployeeProfile/employeeProfile.jsx";
 import ReviewPage from "./pages/ReviewPage/ReviewPage.jsx";
 
-
 const App = () => {
 	// const { data, isSuccess } = useGetProfileQuery();
 
@@ -49,12 +48,19 @@ const App = () => {
 		},
 
 		{
+			path: "/profile",
+			element: <HomeLayout />,
+			children: [{ index: true, element: <EmployeeProfile /> }],
+		},
+
+		{
 			path: "/tasks",
 			element: <HomeLayout />,
 			children: [
 				{ index: true, element: <EmployeeDashboard /> },
 				{ path: ":taskId", element: <TaskDetail /> },
-				{path:"create", element: <CreateTask/>}
+				{ path: "create", element: <CreateTask /> },
+				{ path: ":taskId/review", element: <ReviewPage /> },
 			],
 		},
 
@@ -67,7 +73,6 @@ const App = () => {
 				// { path: "taskList", element: <TaskList /> },
 				// { path: "employeeList", element: <EmployeeTierList /> },
 				{ path: "taskDetails", element: <TaskDetail /> },
-				{ path: "profile", element: <EmployeeProfile /> },
 			],
 		},
 		{

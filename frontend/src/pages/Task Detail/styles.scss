@@ -71,6 +71,14 @@
 		padding-right: 20px;
 		display: flex;
 		justify-content: space-between;
+
+		.statusPill {
+			margin-left: 20px;
+			padding: 10px 20px 10px 20px;
+			border-radius: 10px;
+			border: 1px solid #474a4e86;
+		}
+
 		span {
 			display: flex;
 			flex-direction: row;
@@ -232,7 +240,7 @@
 			flex-direction: row;
 			gap: 10px;
 			height: 100%;
-			padding-bottom: 10px;
+			/* padding-bottom: 10px; */
 
 			.commentSection {
 				width: 100%;
@@ -291,12 +299,24 @@
 					gap: 10px;
 					.commentListWrapper {
 						height: calc(100% - 50px);
-						overflow: scroll;
+						overflow-y: scroll;
 						display: flex;
 						flex-direction: column;
 						justify-content: flex-end;
 						background-color: var(--bgGray);
 						border-radius: 10px;
+
+						&::-webkit-scrollbar {
+							/* display: none; */
+						}
+						&::-webkit-scrollbar-thumb {
+							background-color: black;
+							border-radius: 10px;
+						}
+						&::-webkit-scrollbar-track {
+							background-color: blue;
+						}
+
 						.commentList {
 							max-height: calc(100% - 50px);
 							display: flex;
@@ -366,10 +386,15 @@
 								background-color: var(--bgGray);
 								align-content: center;
 								border-radius: 100%;
-								box-shadow: 1px 1px 1px 1px var(--textGray);
+								/* box-shadow: 1px 1px 1px 1px var(--textGray); */
 								padding: 3px;
+								border: 1px solid black;
+								transition: ease-out 0.1s;
 								img {
 									height: 100%;
+								}
+								&:hover {
+									filter: invert(1);
 								}
 							}
 							.reviewButton {
