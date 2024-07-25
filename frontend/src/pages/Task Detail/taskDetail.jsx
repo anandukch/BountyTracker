@@ -72,12 +72,12 @@ const TaskDetail = () => {
 
 	useEffect(() => {
 		getCommentByTaskId(taskId);
-		const timer = setInterval(() => {
-			// setShowError(false);
-			getCommentByTaskId(taskId);
-		}, 2000);
+		// const timer = setInterval(() => {
+		// 	// setShowError(false);
+		// 	getCommentByTaskId(taskId);
+		// }, 2000);
 
-		return () => clearInterval(timer);
+		// return () => clearInterval(timer);
 	}, [getCommentByTaskId, taskId]);
 
 	const handleSend = async () => {
