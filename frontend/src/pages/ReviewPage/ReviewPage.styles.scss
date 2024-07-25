@@ -16,16 +16,22 @@
 		Tahoma,
 		sans-serif;
 }
+.content{
+	 
+	// height:100vh;
+
+}
 .ReviewPage {
 	display: flex;
 	flex-direction: column;
-	margin: 20px;
+	margin: 10px;
 	gap: 20px;
-
+  
 	.reviewMain {
 		border-radius: 20px;
 		padding: 20px;
-		height: calc(100vh - 200px);
+	 height: calc(100vh - 200px);
+		 
 		width: 100%;
 
 		.taskDetails {
@@ -33,7 +39,7 @@
 			border-radius: 10px;
 			min-height: 200px;
 			padding: 20px;
-			margin-bottom: 30px;
+			margin-bottom: 20px;
 
 			.taskDetailsHeader {
 				display: flex;
@@ -59,9 +65,6 @@
 					border-radius: 8px;
 				}
 
-				.taskDetails {
-				}
-
 				.review {
 					height: 32px;
 					align-content: center;
@@ -74,39 +77,26 @@
 		.contributionHeading {
 			display: flex;
 			justify-content: space-between;
-			margin-bottom: 20px;
-			font-size:large;
-			padding-right: 50px;
-
-			.split {
-				margin-left: 100px;
-				margin-right: 100px;
-				width: 100px;
-				min-width: fit-content;
-				background-color: #f5ebb1;
-				border-style: solid;
-				border-color:white;
-			 
-			 
-				border-width: 2px;
-				border-radius: 10px;
-				height: 50px;
-				padding: 10px;
-				box-shadow:
-					-1px -1px 20px 0.5px rgba(235, 233, 233, 0.3) inset,
-					0 0 10px #00000027;
-				cursor: pointer;
-
-				transition: all 0.3s ease;
+			margin-bottom: 10px;
+			font-size: large;
+			font-weight: bolder;
+		 
+			padding-bottom: 5px;
+			border-bottom: 2px solid #4d4d4d46;
+			margin-right: 5px;
+.participantcont
+{
+	font-size: larger;
+	
+}
+			.bounty {
+				font-size: large;
+				font-weight: bold;
+				font-style: normal;
+				margin-right: 10px;
 			}
-			.split:hover {
-				background-color: white;
-				box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-			}
-
-			.split:active {
-				transform: translateY(1px);
-				box-shadow: none;
+			.title {
+				font-size: x-large;
 			}
 		}
 		.contributionSection {
@@ -129,7 +119,8 @@
 					border-radius: 20px;
 					.contributedParticipant {
 						cursor: pointer;
-						background-color: #f5ebb1;
+						// background-color: #f5ebb1;
+						background-color: #a1d1f181;
 						padding: 20px;
 						border-radius: 20px;
 						display: flex;
@@ -161,17 +152,25 @@
 						padding-top: 0;
 
 						.contributionListElement {
-							height: 40px;
+							height: 55px;
 							display: flex;
 							align-items: end;
+							gap:10px;
+							 
 							border-left: black 2px solid;
+
+							margin-bottom: 5px;
 							.contributionListElementBody {
 								margin-left: -16px;
 								width: 100%;
-								border-radius: 20px;
+								border-radius: 20px 10px 10px 20px;
 								display: flex;
 								align-items: center;
 								background-color: #efecda;
+								padding:7px;
+								padding-bottom: 5px;
+			
+						
 								cursor: pointer;
 
 								img {
@@ -209,17 +208,18 @@
 			.rewardWrapper {
 				display: flex;
 				align-items: center;
-				margin-left:100px;
-				margin-top:15px;
+				 
+				margin-top: 15px;
+				margin-right: 20px;
 			}
 		}
 	}
 }
-.split {
-	margin-left: 100px;
+.confirm {
+	margin-left: 90px;
 	margin-right: 100px;
-	width: 100px;
-	min-width: fit-content;
+
+	width: 300px;
 	background-color: #f5ebb1;
 	border-style: solid;
 	border-color: #e4d99a;
@@ -233,4 +233,47 @@
 	cursor: pointer;
 
 	transition: all 0.3s ease;
+	margin: auto;
+	margin-top: auto;
+	margin-top: 30px;
+ 
+	padding-left: 120px;
+	position: relative;
+	margin-bottom: 10px;
+}
+.confirm:hover {
+	background-color: white;
+	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+
+.confirm:active {
+	transform: translateY(1px);
+	box-shadow: none;
+}
+
+.wrapHeading {
+	display: flex;
+  justify-content: left;
+  justify-self: center;
+	font-size: xx-large;
+	font-weight: bolder;
+	margin-left: 20px;
+ 
+ 
+}
+
+.taskdetails {
+	min-height: 200px;
+	padding-top: 10px;
+	padding-left: 3px;
+	 
+
+}
+
+.footer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	padding-right: 2px;
 }

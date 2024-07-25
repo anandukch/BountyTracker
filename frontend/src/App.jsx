@@ -75,16 +75,16 @@ const App = () => {
 				{ path: "taskDetails", element: <TaskDetail /> },
 			],
 		},
-		// {
-		// 	path: "/tasks",
-		// 	element: <HomeLayout />,
-		// 	children: [
-		// 		{ index: true, element: <TaskList /> },
-		// 		{ path: ":taskId/review", element: <ReviewPage /> },
-		// 		{ path: ":taskId", element: <TaskDetail /> },
-		// 		{ path: "create", element: <CreateTask /> },
-		// 	],
-		// },
+		{
+			path: "/tasks",
+			element: <HomeLayout />,
+			children: [
+				{ index: true, element: <TaskList /> },
+				{ path: ":taskId/review", element: <ReviewPage /> },
+				{ path: ":taskId", element: <TaskDetail /> },
+				{ path: "create", element: <CreateTask /> },
+			],
+		},
 		// {
 		// 	path: "/myTasks",
 		// 	element: <HomeLayout />,

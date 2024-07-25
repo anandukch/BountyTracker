@@ -72,7 +72,7 @@ const EmployeeDashboard = () => {
 			{(loading1 || loading2 || loading4) && <Loader />}
 			<section className="employeeDashboard">
 				<div className="searchSort">
-					<h1>Task List</h1>
+					<h1>Tasks</h1>
 
 					{state.role === "Lead" && (
 						<div className="createTask">

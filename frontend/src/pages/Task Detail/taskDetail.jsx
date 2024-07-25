@@ -47,7 +47,7 @@ const TaskDetail = () => {
 	// 	// pollingInterval: 2000,
 	// });
 
-	const [getCommentByTaskId, { data: commentsData,isSuccess: commentSuccess }] = useLazyGetCommentsByTaskIdQuery();
+	const [getCommentByTaskId, { data: commentsData, isSuccess: commentSuccess }] = useLazyGetCommentsByTaskIdQuery();
 	const [join, { isSuccess: joinSuccess }] = useJoinTaskMutation();
 	const [createComment] = useCreateCommentMutation();
 	const [completeTaskRequest] = useCompleteTaskMutation();
@@ -72,12 +72,12 @@ const TaskDetail = () => {
 
 	useEffect(() => {
 		getCommentByTaskId(taskId);
-		const timer = setInterval(() => {
-			// setShowError(false);
-			getCommentByTaskId(taskId);
-		}, 2000);
+		// const timer = setInterval(() => {
+		// 	// setShowError(false);
+		// 	getCommentByTaskId(taskId);
+		// }, 2000);
 
-		return () => clearInterval(timer);
+		// return () => clearInterval(timer);
 	}, [getCommentByTaskId, taskId]);
 
 	const handleSend = async () => {
@@ -205,10 +205,12 @@ const TaskDetail = () => {
 				</span>
 				<span>
 					<h3>Due : {formatDate(taskDetail?.data.deadLine)}</h3>
+				</span>
+				<span>
 					{taskDetail &&
 						formatDate(new Date()) < formatDate(taskDetail?.data.deadLine) &&
 						taskDetail.data.status != "Completed" &&
-						isCreator && <Button text="Complete Task" isPrimary={true} onClick={completeTask} />}
+						isCreator && <Button text="Review Task" isPrimary={true} onClick={completeTask} />}
 				</span>
 			</div>
 			<div className="data">
@@ -284,7 +286,10 @@ const TaskDetail = () => {
 													currentEmployeeEmail={user.email}
 												/>
 											) : (
-												<ContributionCommentComponent comment={comment} />
+												<ContributionCommentComponent
+													comment={comment}
+													handleReplyClick={handleReply}
+												/>
 											);
 										})}
 									</div>
@@ -307,6 +312,14 @@ const TaskDetail = () => {
 										onChange={handleTextArea}
 										value={comment}
 									/>
+									{file && (
+										<div className="mentionShowWrapper">
+											<span className="mentionShow">{`${file.name.toString().slice(0, 10)} attached`}</span>
+											<span className="removeMention" onClick={() => uploadFile(undefined)}>
+												x
+											</span>
+										</div>
+									)}
 									<span className="commentButtons">
 										<div className="contributionFileUploadButton">
 											<label htmlFor="file" className="uploadFileLabel">
@@ -319,9 +332,9 @@ const TaskDetail = () => {
 												<img src={attach} alt="Add attachment" />
 											</label>
 										</div>
-										<div className="sendButton">
+										<button className="sendButton">
 											<img src={send} alt="Send Comment" onClick={handleSend} />
-										</div>
+										</button>
 									</span>
 								</div>
 								<div className="reviewCheckBox">

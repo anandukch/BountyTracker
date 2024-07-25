@@ -4,6 +4,10 @@ import download from "../../assets/download.svg";
 
 const CommentComponent = ({ comment, handleReplyClick, currentEmployeeEmail }) => {
 	const isOwnComment = comment?.employee?.email === currentEmployeeEmail;
+
+	const onDownloadClick = (id) => {
+		window.open(`http://localhost:3000/tasks/comments/${id}/file`);
+	};
 	return (
 		comment && (
 			<>
@@ -20,7 +24,7 @@ const CommentComponent = ({ comment, handleReplyClick, currentEmployeeEmail }) =
 							<span className="commentContent">{comment.content}</span>
 						</div>
 						{comment.fileUrl && (
-							<button className="downloadButton" onClick={() => comment.fileUrl}>
+							<button className="downloadButton" onClick={() => onDownloadClick(comment.id)}>
 								<img src={download}></img>
 							</button>
 						)}

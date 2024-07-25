@@ -59,7 +59,7 @@ const TaskList = () => {
 						return <GridColumn key={column.name} name={column.name} />;
 					})}
 				</div>
-				<div className="listData">
+				<div className="listDataTask">
 					{isSuccess &&
 						list.map((employee) => {
 							return (

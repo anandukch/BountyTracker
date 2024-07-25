@@ -12,7 +12,7 @@ const CustomModal = ({ children, title, submitText, handleCancel, handleSubmit, 
 			<div className={`CustomModal ${hideButtons ? "shrink" : ""}`}>
 				<img src={close} onClick={handleCancel} />
 				<header>{title}</header>
-				{children}
+				<div className="content ">{children}</div>
 				<main>
 					{!hideButtons && (
 						<span className="modalButtons">
