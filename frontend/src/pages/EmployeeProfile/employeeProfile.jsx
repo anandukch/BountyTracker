@@ -17,8 +17,8 @@ import { formatDate } from "../../utils/date.utils";
 import ListButton from "../../components/Button/ListButton";
 import { addLoggedState } from "../../store/employeeReducer";
 import { PieChart } from "react-minimal-pie-chart";
-import koynLogo from "../../assets/KoYns-Logo.png"
-import rewardsLogo from "../../assets/rewards.svg"
+import koynLogo from "../../assets/KoYns-Logo.png";
+import rewardsLogo from "../../assets/rewards.svg";
 const EmployeeProfile = () => {
 	const [employee, setEmployee] = useState({});
 	const [employeeDetails, setEmployeeDetails] = useState([]);
@@ -39,8 +39,10 @@ const EmployeeProfile = () => {
 				{ header: "Gender", content: employeeData.details.gender },
 				{ header: "Phone", content: employeeData.details.phoneNo },
 			]);
-			const redeemReq = redeemRequests?.data.filter((request) => request.employee.id === employeeData.id);
-			if (redeemReq || employeeData.details.rewards === 0) setRedeemDisable(true);
+			const redeemReq = redeemRequests?.data.filter(
+				(request) => request.employee.id === employeeData.id && request.status != "PENDING",
+			);
+			if (!redeemReq || employeeData.details.rewards === 0) setRedeemDisable(true);
 			// dispatch(addLoggedState({ role: employeeData.role, name: employeeData.name }));
 		}
 	}, [data, isSuccess]);
@@ -79,7 +81,6 @@ const EmployeeProfile = () => {
 		<div className="employeeProfileWrapper">
 			{isLoading && <Loader />}
 			<section className="employeeDashboard">
-				
 				<div className="employeeDetailsWrapper">
 					<div className="employeeProfileWrapper">
 						<div className="employeeProfilePage">
@@ -176,19 +177,15 @@ const EmployeeProfile = () => {
 					<div className="bounty">
 						Total KoYns:
 						<span className="bountyCountWrapper">
-							<img className="bountyCount" src={koynLogo}>
-							</img>
+							<img className="bountyCount" src={koynLogo}></img>
 							<p>{employee?.details?.totalBounty}</p>
 						</span>
 					</div>
 					<div className="rewards">
 						Total Rewards:
 						<span className="rewardCountWrapper">
-							<img className="rewardCount" src={rewardsLogo}>
-							</img>	
-							<p>
-							{employee?.details?.rewards}
-						</p>
+							<img className="rewardCount" src={rewardsLogo}></img>
+							<p>{employee?.details?.rewards}</p>
 						</span>
 					</div>
 					{!redeemDisable && (
