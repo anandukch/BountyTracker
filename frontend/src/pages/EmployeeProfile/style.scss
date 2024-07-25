@@ -55,9 +55,11 @@
 						grid-template-columns: 1fr 1fr;
 						width: 100%;
 						height: 100%;
-						padding: 20px;
+						padding:5px;
+						padding-right: 30px;
 						background-color: var(--bgWhite);
 						border-radius: 10px;
+						border:none;
 
 						.employeeDetailBlock {
 							display: flex;
@@ -68,14 +70,14 @@
 
 							h4 {
 								color: var(--textGray);
-								font-weight: 800;
-								padding: 10px 5px 10px 0px;
+								font-weight: 400;
+								padding: 3px 5px 3px 0px;
 							}
 
 							p {
 								color: var(--textBlack);
 								font-weight: 500;
-								padding: 10px 5px 10px 0px;
+								padding: 3px 5px 10px 0px;
 							}
 						}
 					}
@@ -85,7 +87,8 @@
 					.pendingTasksProfile h4 {
 						color: var(--textBlack);
 						font-weight: 800;
-						padding: 5px 0px 5px 0px;
+						padding: 5px 0px 10px 0px;
+						
 					}
 
 					.employeeMailText,
@@ -165,6 +168,7 @@
 				width: 68%;
 				height: 100%;
 				background-color: rgba(255, 255, 255, 0.897);
+				border-radius: 10px;
 
 				.taskCounter {
 					display: flex;
@@ -181,9 +185,11 @@
 						justify-content: center;
 						flex-direction: column;
 						// border: thin;
-
-						background: linear-gradient(82.59deg, #e43d1f 0%, #b22222 100%);
-						box-shadow: 0 8px 8px -2px #ca5d59;
+						
+						// background: linear-gradient(82.59deg, #e43d1f 0%, #b22222 100%);
+						// box-shadow: 0 8px 8px -2px #ca5d59;
+						background-color:#fff0eb;
+						
 						border-radius: 30px;
 						margin: 20px;
 						gap: 20px;
@@ -191,12 +197,15 @@
 
 						// border-top: 4px solid #1a030e ;
 					}
-					.pendingTaskWrapper h3 {
-						color: #fffdfe;
+					.pendingTaskWrapper h3{
+						color:#cd8f88;
+
 					}
 					.pendingTaskWrapper p {
 						font-size: 50px;
-						color: #fffdfe;
+						color:#cd8f88;
+					
+						
 					}
 
 					.completedTaskWrapper {
@@ -207,18 +216,21 @@
 						justify-content: center;
 						flex-direction: column;
 						border: thin;
-						background: linear-gradient(82.59deg, #00c48c 0%, #00a173 100%);
-						box-shadow: 0 8px 8px -2px #95d683;
+						// background: linear-gradient(82.59deg, #00c48c 0%, #00a173 100%);
+						// box-shadow: 0 8px 8px -2px #95d683;
+						background-color: #e4f3dc;
+						
 						border-radius: 30px;
 						margin: 20px;
 						gap: 20px;
 						cursor: pointer;
 					}
-					.completedTaskWrapper h3 {
-						color: #fffdfe;
+					.completedTaskWrapper h3{
+						color: #7ea16e;
+
 					}
-					.completedTaskWrapper p {
-						color: #fffdfe;
+					.completedTaskWrapper p{
+						color: 	#7ea16e;
 						font-size: 50px;
 					}
 
@@ -230,28 +242,31 @@
 						justify-content: center;
 						flex-direction: column;
 						border: thin;
-						background: linear-gradient(82.59deg, #a7a7a7 0%, #808080 100%);
-						box-shadow: 0 8px 8px -2px rgb(168, 167, 167);
+						// background: linear-gradient(82.59deg, #a7a7a7 0%, #808080 100%);
+						// box-shadow: 0 8px 8px -2px rgb(168, 167, 167);
+						background-color:#fff1d7;
+						
 						border-radius: 30px;
 						margin: 20px;
 						gap: 20px;
 						font-size: large;
 						cursor: pointer;
 					}
-					.totalTaskWrapper h3 {
-						color: #fffdfe;
+					.totalTaskWrapper h3{
+						color:#e5a983;
 					}
 					.totalTaskWrapper p {
 						font-size: 50px;
-						color: #fffdfe;
+						color:#e5a983;
 					}
 				}
 				.taskGraph {
 					width: 70%;
 					padding: 100px;
-
+					font-size: large;
 					svg {
 						overflow: visible;
+					
 					}
 				}
 			}
@@ -353,3 +368,14 @@
 		}
 	}
 }
+
+.heads {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px; /* Adjust as needed */
+	color: #333333a2; /* Text color */
+	border-bottom: 2px solid #00000049; /* Border bottom style */
+	padding-bottom: 5px; /* Space between text and border */
+	width:400px;
+  }
+  

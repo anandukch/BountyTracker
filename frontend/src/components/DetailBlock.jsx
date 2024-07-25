@@ -14,15 +14,16 @@ const DetailBlock = ({ header, content }) => {
 	if (header == "Tier") {
 		const image = tierBadge(content);
 		return (
+			
 			<div className="employeeDetailBlock">
-				<h4>{header}</h4>
+				<div className="header">{header}</div>
 				<img className="tierBadge" src={image} />
 			</div>
 		);
 	}
 	return (
 		<div className="employeeDetailBlock">
-			<h4>{header}</h4>
+			<div className="header">{header}</div>
 			<p>{content}</p>
 		</div>
 	);
