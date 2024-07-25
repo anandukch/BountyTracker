@@ -11,16 +11,15 @@
 		// background-size:1500px;
 		
 		// background-color: #f1eedd;
-		
+
 		width: 100%;
 		height: 100%;
 		padding: 10px;
 		display: flex;
 		flex-direction: column;
-	
+
 		justify-content: space-between;
-		
-		
+
 
 		.employeeDetailsWrapper {
 			border-radius: 20px;
@@ -181,25 +180,24 @@
 						justify-content: center;
 						flex-direction: column;
 						// border: thin;
-						
+
 						background: linear-gradient(82.59deg, #e43d1f 0%, #b22222 100%);
 						box-shadow: 0 8px 8px -2px #ca5d59;
 						border-radius: 30px;
-						margin:20px;
+						margin: 20px;
 						gap: 20px;
-						
+						cursor: pointer;
+
 						// border-top: 4px solid #1a030e ;
 					}
-					.pendingTaskWrapper h3{
-						color: #FFFDFE;
-
+					.pendingTaskWrapper h3 {
+						color: #fffdfe;
 					}
-					.pendingTaskWrapper p{
+					.pendingTaskWrapper p {
 						font-size: 50px;
-						color: #FFFDFE;
-						
+						color: #fffdfe;
 					}
-					
+
 					.completedTaskWrapper {
 						width: 100%;
 						height: 100%;
@@ -211,20 +209,16 @@
 						background: linear-gradient(82.59deg, #00c48c 0%, #00a173 100%);
 						box-shadow: 0 8px 8px -2px #95d683;
 						border-radius: 30px;
-						margin:20px;
+						margin: 20px;
 						gap: 20px;
-						
-						
+						cursor: pointer;
 					}
-					.completedTaskWrapper h3{
-						color: #FFFDFE;
-
+					.completedTaskWrapper h3 {
+						color: #fffdfe;
 					}
-					.completedTaskWrapper p{
-						color: #FFFDFE;
+					.completedTaskWrapper p {
+						color: #fffdfe;
 						font-size: 50px;
-						
-
 					}
 
 					.totalTaskWrapper {
@@ -238,20 +232,18 @@
 						background: linear-gradient(82.59deg, #a7a7a7 0%, #808080 100%);
 						box-shadow: 0 8px 8px -2px rgb(168, 167, 167);
 						border-radius: 30px;
-						margin:20px;
+						margin: 20px;
 						gap: 20px;
 						font-size: large;
-						
+						cursor: pointer;
 					}
-					.totalTaskWrapper h3{
-						color: #FFFDFE;
+					.totalTaskWrapper h3 {
+						color: #fffdfe;
 					}
-					.totalTaskWrapper p{
+					.totalTaskWrapper p {
 						font-size: 50px;
-						color: #FFFDFE;
+						color: #fffdfe;
 					}
-
-
 				}
 				.taskGraph {
 					width: 70%;
@@ -280,7 +272,7 @@
 				justify-content: center;
 				border: thin;
 				border-radius: 10px;
-				background-color: #F2F5FA;
+				background-color: #f2f5fa;
 				margin-left: 10px;
 				margin-right: 10px;
 
@@ -303,26 +295,23 @@
 				justify-content: center;
 				border: thin;
 				border-radius: 10px;
-				background-color: #F2F5FA;
+				background-color: #f2f5fa;
 				margin-left: 10px;
 				margin-right: 10px;
 
-				.bountyCountWrapper{
+				.bountyCountWrapper {
 					display: flex;
 					justify-content: center;
 					align-items: center;
 					width: 100%;
 					gap: 10px;
 					margin-top: 10px;
-					
+
 					.bountyCount {
 						width: 30px;
 						height: 30px;
-						
 					}
-
 				}
-
 			}
 			.rewards {
 				width: 25%;
@@ -332,10 +321,10 @@
 				justify-content: center;
 				border: thin;
 				border-radius: 10px;
-				background-color: #F2F5FA;
+				background-color: #f2f5fa;
 				margin-left: 10px;
 				margin-right: 10px;
-				.rewardCountWrapper{
+				.rewardCountWrapper {
 					display: flex;
 					justify-content: center;
 					align-items: center;
@@ -346,7 +335,6 @@
 						width: 30px;
 						height: 30px;
 					}
-
 				}
 			}
 			.requestButton {
@@ -356,7 +344,6 @@
 				justify-content: center;
 				padding: 10px;
 				margin: 10px;
-
 			}
 		}
 	}

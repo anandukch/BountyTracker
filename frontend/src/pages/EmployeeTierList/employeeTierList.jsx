@@ -24,6 +24,8 @@ const EmployeeTierList = () => {
 		}
 	}, [data, isSuccess]);
 
+	// useEffect(()=>{},[employee])
+
 	const columns = [
 		// { name:"Emplouee ID"},
 		{ name: "Employee ID" },
@@ -61,6 +63,7 @@ const EmployeeTierList = () => {
 				</div>
 				<div className="listDataTier">
 					{list.map((employee) => {
+						console.log(employee);
 						return (
 							<GridDataColumn
 								key={employee.id}
@@ -70,6 +73,7 @@ const EmployeeTierList = () => {
 								birthday={employee.birthday}
 								role={employee.role}
 								tier={employee.currentTier}
+								platinumCount={employee.details.platinumCount}
 							/>
 						);
 					})}

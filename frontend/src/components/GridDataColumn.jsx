@@ -10,7 +10,9 @@ const tierBadge = (tier) => {
 	else return platinumBadge;
 };
 
-const GridDataColumn = ({ name, id, bounty, birthday, role, tier }) => {
+const GridDataColumn = ({ name, id, bounty, birthday, role, tier, platinumCount }) => {
+	let pBadge = false;
+	if (platinumCount > 0) pBadge = true;
 	const badge = tierBadge(tier);
 	return (
 		<div className="listDataSet">
@@ -23,7 +25,15 @@ const GridDataColumn = ({ name, id, bounty, birthday, role, tier }) => {
 			<div className="employeePhone">{role}</div>
 			<div className="employeeBounty">{bounty} Kyns</div>
 			{/* <div className="employeeTier"> */}
-			<img className="tierBadge" src={badge} />
+			<span className="tierDetails">
+				<img className="tierBadge" src={badge} />
+				{pBadge && (
+					<p>
+						[ {platinumCount}x
+						<img className="platinumCount" src={platinumBadge} /> ]
+					</p>
+				)}
+			</span>
 			{/* </div> */}
 		</div>
 	);
