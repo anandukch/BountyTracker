@@ -40,10 +40,15 @@ const EmployeeProfile = () => {
 				{ header: "Gender", content: employeeData.details.gender },
 				{ header: "Phone", content: employeeData.details.phoneNo },
 			]);
-			const redeemReq = redeemRequests?.data.filter(
-				(request) => request.employee.id === employeeData.id && request.status != "REQUESTED",
-			);
-			if (!redeemReq || employeeData.details.rewards === 0) setRedeemDisable(true);
+
+			if (redeemRequests?.data.length > 0) setRedeemDisable(true);
+
+			const redeemReq = redeemRequests?.data.filter((request) => {
+				return request.employee.id === employeeData.id;
+			});
+			if(redeemReq.length > 0) setRedeemDisable(true);
+
+			// if (!redeemReq || employeeData.details.rewards === 0) setRedeemDisable(true);
 			// dispatch(addLoggedState({ role: employeeData.role, name: employeeData.name }));
 		}
 	}, [data, isSuccess]);
