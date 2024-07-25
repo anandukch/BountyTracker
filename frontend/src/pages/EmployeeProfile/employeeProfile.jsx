@@ -4,7 +4,7 @@ import "./style.scss";
 import Button from "../../components/Button/Button";
 import profilImg from "../../assets/profile.png";
 import TaskDataHeader from "../../components/TaskDataHeader";
-import { useGetEmployeeCurrentTasksQuery, useGetProfileQuery } from "../../api/employeeApi";
+import { useGetEmployeeCurrentTasksQuery, useGetProfileQuery, useRedeemRewardMutation } from "../../api/employeeApi";
 import platinumBadge from "../../assets/platinumMedal.svg";
 import { useEffect, useState } from "react";
 import { Loader } from "../../components/Loader/Loader";
@@ -17,7 +17,10 @@ import { PieChart } from "react-minimal-pie-chart";
 const EmployeeProfile = () => {
 	const [employee, setEmployee] = useState({});
 	const [employeeDetails, setEmployeeDetails] = useState([]);
+
+	const [redeemReward, { isSuccess: redeemSuccess }] = useRedeemRewardMutation();
 	const { data, isLoading, isSuccess } = useGetProfileQuery();
+
 	const dispatch = useDispatch();
 	useEffect(() => {
 		if (isSuccess) {
@@ -36,7 +39,11 @@ const EmployeeProfile = () => {
 	}, [data, isSuccess]);
 
 	const [addClass, setAddClass] = useState(0);
-
+	const handleRedeem = () => {
+		redeemReward();
+		console.log("handle redeem")
+		if (redeemSuccess) console.log("redeem request sent");
+	};
 	const handlePending = () => {
 		setAddClass(0);
 	};
@@ -57,16 +64,9 @@ const EmployeeProfile = () => {
 		status: "Status",
 		bounty: "Bounty",
 	};
-	useEffect(() => {
-		console.log(employee);
-	}, [employee]);
-
-	// const tierBadge = (tier) => {
-	// 	if (tier == "Gold") return goldBadge;
-	// 	else if (tier == "Silver") return silverBadge;
-	// 	else if (tier == "Bronze") return bronzeBadge;
-	// 	else return platinumBadge;
-	// };
+	// useEffect(() => {
+	// 	console.log(employee);
+	// }, [employee]);
 
 	return (
 		<div className="employeeProfileWrapper">
@@ -177,7 +177,7 @@ const EmployeeProfile = () => {
 						</h4>
 					</div>
 					<div className="requestButton">
-						<Button text="Redeem Request" isPrimary={true} />
+						<Button text="Redeem Request" isPrimary={true} onClick={handleRedeem} />
 					</div>
 				</div>
 			</section>
