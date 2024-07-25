@@ -40,20 +40,6 @@ const RequestList = () => {
 		<div className="requestWrap">
 			<div className="wrapHeading">
 				<h1>Requests List</h1>
-				<div className="searchSort">
-					<Search />
-					<div className="sort">
-						<label></label>
-						<img src={IconFilter} alt="filter"></img>
-						<select id="tier" name="tier">
-							<option value="" disabled selected>
-								Filter
-							</option>
-							<option value="high">Request Time ▼</option>
-							<option value="low">Request Time ▲</option>
-						</select>
-					</div>
-				</div>
 			</div>
 			<div className="listWrapper">
 				<div className="listHeader">
