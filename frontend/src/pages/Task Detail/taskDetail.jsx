@@ -111,6 +111,12 @@ const TaskDetail = () => {
 		// completeTaskRequest(Number(taskId));
 	};
 
+	const setColor = (status) => {
+		if (status == "In Progress") return "#efecda";
+		else if (status == "In Review") return "#f5ecb8";
+		else return "#d3f4be";
+	};
+
 	useEffect(() => {
 		if (taskSuccess) {
 			// console.log("effect 1");
@@ -180,6 +186,9 @@ const TaskDetail = () => {
 			<div className="title">
 				<span>
 					<h3>Task : # {taskDetail?.data.title}</h3>
+					<p className="statusPill" style={{ backgroundColor: `${setColor(taskDetail?.data.status)}` }}>
+						{taskDetail?.data.status}
+					</p>
 				</span>
 				<span>
 					<h3>Due : {formatDate(taskDetail?.data.deadLine)}</h3>
