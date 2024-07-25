@@ -33,8 +33,8 @@ class EmployeeController {
 		this.router.post("/", validationMiddleware(CreateEmployeeDto), this.createEmployee);
 		this.router.post("/tasks/:id", authorize(), this.joinTask);
 		this.router.put("/:employeeId/tasks/:taskId/contributions", authorize(), this.giveContribution);
-
 		this.router.post("/reward", authorize(), this.requestRewards);
+		// this.router.delete("/:id", this.deleteRedeemRequest);
 	}
 
 	public giveContribution = async (req: RequestWithRole, res: Response, next: NextFunction) => {
@@ -193,11 +193,13 @@ class EmployeeController {
 	};
 	public redeemRewards = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			const employeeId =parseInt(req.params.employeeId);
+			const employeeId = parseInt(req.params.employeeId);
 			await this.employeeService.resetReward(employeeId);
+			const { commentId } = req.body;
+			await commentService.deleteCommentByID(commentId);
 			res.status(200).json({
 				success: true,
-				message: "Reward redeemed and reset successfully",
+				message: "Reward redeemed and reset successfully and Redeem Request deleted",
 			});
 		} catch (error) {
 			next(error);

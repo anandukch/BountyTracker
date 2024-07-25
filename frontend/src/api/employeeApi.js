@@ -49,16 +49,19 @@ export const employeeApi = apiWithEmployeeTag.injectEndpoints({
 				url: "/employees/reward",
 				method: "POST",
 			}),
+			invalidatesTags: ["REDEEM"],
 		}),
 		getRedeemRequests: builder.query({
 			query: () => "/employees/reward",
+			providesTags: ["REDEEM"],
 		}),
 		approveRedeemRequest: builder.mutation({
-			query: (id) => ({
-				url: `/employees/redeem/${id}`,
+			query: ({ id, commentId }) => ({
+				url: `/employees/redeem/${parseInt(id)}`,
 				method: "PATCH",
+				body: { commentId },
 			}),
-			invalidatesTags: ["EMPLOYEE"]
+			invalidatesTags: ["EMPLOYEE", "REDEEM"],
 		}),
 	}),
 });

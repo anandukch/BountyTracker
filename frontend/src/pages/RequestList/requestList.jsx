@@ -19,8 +19,13 @@ const RequestList = () => {
 	const { data: redeemRequests, isSuccess } = useGetRedeemRequestsQuery();
 	const [approve, { isSuccess: approveSuccess }] = useApproveRedeemRequestMutation();
 	const handleApprove = (props) => {
-		console.log(props.commentId);
-		approve(parseInt(props.id));
+		console.log(props);
+		const data = {
+			id: props.id,
+			commentId: props.commentId,
+		};
+		console.log(data);
+		approve(data);
 	};
 
 	const columns = [
@@ -65,8 +70,10 @@ const RequestList = () => {
 								id={request.employee.id}
 								requestTime={formatDate(request.createdAt)}
 								tier={request.currentTier}
-								onApprove={({ id: id, commentId: commentId }) => handleApprove({ id: id, commentId: commentId })}
-                                commentId={request.id}
+								onApprove={({ id: id, commentId: commentId }) =>
+									handleApprove({ id: id, commentId: commentId })
+								}
+								commentId={request.id}
 							/>
 						);
 					})}

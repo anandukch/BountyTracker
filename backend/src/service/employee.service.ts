@@ -214,6 +214,7 @@ class EmployeeService {
 		await this.employeeRespository.save(employee);
 		return;
 	};
+	
 }
 
 export default EmployeeService;

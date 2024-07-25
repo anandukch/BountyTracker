@@ -4,24 +4,28 @@ import "./style.scss";
 import Button from "../../components/Button/Button";
 import profilImg from "../../assets/profile.png";
 import TaskDataHeader from "../../components/TaskDataHeader";
-import { useGetEmployeeCurrentTasksQuery, useGetProfileQuery, useRedeemRewardMutation } from "../../api/employeeApi";
+import {
+	useGetEmployeeCurrentTasksQuery,
+	useGetProfileQuery,
+	useGetRedeemRequestsQuery,
+	useRedeemRewardMutation,
+} from "../../api/employeeApi";
 import platinumBadge from "../../assets/platinumMedal.svg";
 import { useEffect, useState } from "react";
 import { Loader } from "../../components/Loader/Loader";
 import { formatDate } from "../../utils/date.utils";
 import ListButton from "../../components/Button/ListButton";
-import { useDispatch } from "react-redux";
 import { addLoggedState } from "../../store/employeeReducer";
 import { PieChart } from "react-minimal-pie-chart";
 
 const EmployeeProfile = () => {
 	const [employee, setEmployee] = useState({});
 	const [employeeDetails, setEmployeeDetails] = useState([]);
-
+	const [redeemDisable,setRedeemDisable]=useState(false)
 	const [redeemReward, { isSuccess: redeemSuccess }] = useRedeemRewardMutation();
 	const { data, isLoading, isSuccess } = useGetProfileQuery();
+	const { data: redeemRequests } = useGetRedeemRequestsQuery();
 
-	const dispatch = useDispatch();
 	useEffect(() => {
 		if (isSuccess) {
 			const { data: employeeData } = data;
@@ -34,6 +38,8 @@ const EmployeeProfile = () => {
 				{ header: "Gender", content: employeeData.details.gender },
 				{ header: "Phone", content: employeeData.details.phoneNo },
 			]);
+			const redeemReq = redeemRequests?.data.filter((request) => request.employee.id === employeeData.id);
+			if (redeemReq) setRedeemDisable(true)
 			// dispatch(addLoggedState({ role: employeeData.role, name: employeeData.name }));
 		}
 	}, [data, isSuccess]);
@@ -41,7 +47,7 @@ const EmployeeProfile = () => {
 	const [addClass, setAddClass] = useState(0);
 	const handleRedeem = () => {
 		redeemReward();
-		console.log("handle redeem")
+		console.log("handle redeem");
 		if (redeemSuccess) console.log("redeem request sent");
 	};
 	const handlePending = () => {
@@ -176,6 +182,7 @@ const EmployeeProfile = () => {
 							{/* 20000 */}
 						</h4>
 					</div>
+					{}
 					<div className="requestButton">
 						<Button text="Redeem Request" isPrimary={true} onClick={handleRedeem} />
 					</div>

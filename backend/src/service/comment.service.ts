@@ -112,8 +112,8 @@ class CommentService {
 
 	hrRequestComment = async (employee: Employee) => {
 		const newComment = new Comment();
-		newComment.content=`Redeem Request by : #${employee.id} : ${employee.name} `
-		newComment.commentType=CommentType.Redeem
+		newComment.content = `Redeem Request by : #${employee.id} : ${employee.name} `;
+		newComment.commentType = CommentType.Redeem;
 		newComment.reviewStatus = ReviewStatus.REWARD;
 		newComment.employee = employee;
 		return this.commentRepository.save(newComment);
@@ -126,6 +126,10 @@ class CommentService {
 		]);
 
 		return comments;
+	};
+	deleteCommentByID = async (id: number) => {
+		const comment = await this.commentRepository.findOneBy({ id });
+		return this.commentRepository.softDelete(comment)
 	};
 }
 
