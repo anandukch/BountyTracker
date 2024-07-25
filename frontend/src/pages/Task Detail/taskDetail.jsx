@@ -8,9 +8,7 @@ import send from "../../assets/send.svg";
 import Button from "../../components/Button/Button";
 import { useEffect, useRef, useState } from "react";
 import {
-	useCompleteTaskMutation,
 	useCreateCommentMutation,
-	useGetCommentsByTaskIdQuery,
 	useJoinTaskMutation,
 	useLazyGetCommentsByTaskIdQuery,
 	useLazyGetTaskByIdQuery,
@@ -27,10 +25,8 @@ const TaskDetail = () => {
 	const [participantList, setParticipantList] = useState([]);
 	const [joined, setJoined] = useState(false);
 	const [file, uploadFile] = useState();
-	const [showContributionModal, setShowContributionModal] = useState(false);
 	const [comment, setComment] = useState("");
 	const [commentType, setCommentType] = useState("Normal");
-	const [contribution, setContribution] = useState("");
 	const [mentionId, setMentionId] = useState();
 	const [isCreator, setIsCreator] = useState(false);
 
@@ -50,9 +46,6 @@ const TaskDetail = () => {
 	const [getCommentByTaskId, { data: commentsData, isSuccess: commentSuccess }] = useLazyGetCommentsByTaskIdQuery();
 	const [join, { isSuccess: joinSuccess }] = useJoinTaskMutation();
 	const [createComment] = useCreateCommentMutation();
-	const [completeTaskRequest] = useCompleteTaskMutation();
-
-	const loggedState = useSelector((state) => state.employee);
 
 	const navigate = useNavigate();
 
@@ -102,7 +95,10 @@ const TaskDetail = () => {
 	// 	setContribution("");
 	// };
 	const handleReview = () => {
-		setCommentType("Review");
+		setCommentType((prev) => {
+			if (prev == "Normal") return "Review";
+			return "Normal";
+		});
 	};
 	const handleTextArea = (e) => {
 		setComment(e.target.value);
@@ -208,7 +204,7 @@ const TaskDetail = () => {
 				</span>
 				<span>
 					{taskDetail &&
-						formatDate(new Date()) < formatDate(taskDetail?.data.deadLine) &&
+						// formatDate(new Date()) < formatDate(taskDetail?.data.deadLine) &&
 						taskDetail.data.status != "Completed" &&
 						isCreator && <Button text="Review Task" isPrimary={true} onClick={completeTask} />}
 				</span>
@@ -339,7 +335,13 @@ const TaskDetail = () => {
 								</div>
 								<div className="reviewCheckBox">
 									<label htmlFor="Review">Mark For Review</label>
-									<input type="checkbox" ref={checkboxRef} name="Review" onChange={handleReview} />
+									<input
+										type="checkbox"
+										ref={checkboxRef}
+										name="Review"
+										onChange={handleReview}
+										checked={commentType === "Review"}
+									/>
 								</div>
 							</div>
 						</div>

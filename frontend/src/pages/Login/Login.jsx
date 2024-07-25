@@ -4,12 +4,16 @@ import Button from "../../components/Button/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLoginMutation } from "../../api/employeeApi";
+import { useDispatch } from "react-redux";
+import { createToastError } from "../../utils/createToastError";
 
 const Login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [login, { isSuccess, data }] = useLoginMutation();
+	const [login, { isSuccess, data, isError, error }] = useLoginMutation();
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
 	useEffect(() => {
 		const token=localStorage.getItem("token")
 		if(token) navigate("/tasks")
@@ -18,6 +22,13 @@ const Login = () => {
 			navigate("/tasks");
 		}
 	}, [data, isSuccess, navigate]);
+
+	useEffect(() => {
+		if (isError) {
+			createToastError(dispatch, error.data.message);
+			error.errors?.map((message) => createToastError(dispatch, message));
+		}
+	}, [isError, error, dispatch]);
 
 	const passwordChangeHandler = (e) => {
 		setPassword(e.target.value);

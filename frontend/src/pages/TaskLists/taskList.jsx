@@ -12,6 +12,7 @@ import GridColumn from "../../components/GridColumn";
 import Button from "../../components/Button/Button";
 import { useGetTaskListQuery, useLazyGetTaskListQuery } from "../../api/taskApi";
 import { useNavigate } from "react-router-dom";
+import NotFound from "../../assets/notFound.svg"
 
 const EmployeeDashboard = () => {
 	const state = useSelector((state) => state.employee.employee);
@@ -77,7 +78,7 @@ const EmployeeDashboard = () => {
 					{state.role === "Lead" && (
 						<div className="createTask">
 							<Button
-								text="CreateTask"
+								text="Create Task"
 								isPrimary={true}
 								onClick={() => {
 									navigate("/tasks/create");
@@ -150,6 +151,11 @@ const EmployeeDashboard = () => {
 								tasksHeader.map((header) => {
 									return <GridColumn key={header.name} name={header.name} />;
 								})}
+								{/* <div className="noTasks">
+									<img className="noTasksImage" src={NotFound}></img>
+									<h3>NO TASKS FOUND</h3>
+
+								</div> */}
 						</div>
 					</div>
 				</div>
