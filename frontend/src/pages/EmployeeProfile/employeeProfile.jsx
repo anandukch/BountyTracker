@@ -17,7 +17,8 @@ import { formatDate } from "../../utils/date.utils";
 import ListButton from "../../components/Button/ListButton";
 import { addLoggedState } from "../../store/employeeReducer";
 import { PieChart } from "react-minimal-pie-chart";
-
+import koynLogo from "../../assets/KoYns-Logo.png"
+import rewardsLogo from "../../assets/rewards.svg"
 const EmployeeProfile = () => {
 	const [employee, setEmployee] = useState({});
 	const [employeeDetails, setEmployeeDetails] = useState([]);
@@ -79,6 +80,7 @@ const EmployeeProfile = () => {
 		<div className="employeeProfileWrapper">
 			{isLoading && <Loader />}
 			<section className="employeeDashboard">
+				
 				<div className="employeeDetailsWrapper">
 					<div className="employeeProfileWrapper">
 						<div className="employeeProfilePage">
@@ -173,15 +175,22 @@ const EmployeeProfile = () => {
 						</span>
 					</div>
 					<div className="bounty">
-						Total Bounty:
-						<h4>{employee?.details?.totalBounty}</h4>
+						Total KoYns:
+						<span className="bountyCountWrapper">
+							<img className="bountyCount" src={koynLogo}>
+							</img>
+							<p>{employee?.details?.totalBounty}</p>
+						</span>
 					</div>
 					<div className="rewards">
 						Total Rewards:
-						<h4>
+						<span className="rewardCountWrapper">
+							<img className="rewardCount" src={rewardsLogo}>
+							</img>	
+							<p>
 							{employee?.details?.rewards}
-							{/* 20000 */}
-						</h4>
+						</p>
+						</span>
 					</div>
 					{}
 					<div className="requestButton">
