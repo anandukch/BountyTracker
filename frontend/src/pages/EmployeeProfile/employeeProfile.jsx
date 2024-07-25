@@ -19,6 +19,7 @@ import { addLoggedState } from "../../store/employeeReducer";
 import { PieChart } from "react-minimal-pie-chart";
 import koynLogo from "../../assets/KoYns-Logo.png";
 import rewardsLogo from "../../assets/rewards.svg";
+import { useNavigate } from "react-router-dom";
 const EmployeeProfile = () => {
 	const [employee, setEmployee] = useState({});
 	const [employeeDetails, setEmployeeDetails] = useState([]);
@@ -46,6 +47,8 @@ const EmployeeProfile = () => {
 			// dispatch(addLoggedState({ role: employeeData.role, name: employeeData.name }));
 		}
 	}, [data, isSuccess]);
+
+	const navigate = useNavigate();
 
 	const [addClass, setAddClass] = useState(0);
 	const handleRedeem = () => {
@@ -104,17 +107,32 @@ const EmployeeProfile = () => {
 					</div>
 					<div className="taskCountWrapper">
 						<div className="taskCounter">
-							<div className="totalTaskWrapper">
+							<div
+								className="totalTaskWrapper"
+								onClick={() => {
+									navigate("/tasks");
+								}}
+							>
 								<h3>Total Tasks</h3>
-								<p>{employee.completedTasks + employee.pendingTasks}</p>
+								<p>{employee.completedTasks + employee.pendingTasks || 0}</p>
 							</div>
-							<div className="pendingTaskWrapper">
+							<div
+								className="pendingTaskWrapper"
+								onClick={() => {
+									navigate("/tasks");
+								}}
+							>
 								<h3>Pending Tasks</h3>
-								<p>{employee.pendingTasks}</p>
+								<p>{employee.pendingTasks || 0}</p>
 							</div>
-							<div className="completedTaskWrapper">
+							<div
+								className="completedTaskWrapper"
+								onClick={() => {
+									navigate("/tasks");
+								}}
+							>
 								<h3>Completed Tasks</h3>
-								<p>{employee.completedTasks}</p>
+								<p>{employee.completedTasks || 0}</p>
 							</div>
 						</div>
 						<div className="taskGraph">
@@ -167,7 +185,12 @@ const EmployeeProfile = () => {
 					</div>
 				</div>
 				<div className="employeeTasksWrapper">
-					<div className="currentTier">
+					<div
+						className="currentTier"
+						onClick={() => {
+							nav;
+						}}
+					>
 						<p>Platinum Count:</p>
 						<span className="platinumCountWrapper">
 							<img className="platinumCount" src={platinumBadge} />
@@ -178,21 +201,26 @@ const EmployeeProfile = () => {
 						Total KoYns:
 						<span className="bountyCountWrapper">
 							<img className="bountyCount" src={koynLogo}></img>
-							<p>{employee?.details?.totalBounty}</p>
+							<p>{employee?.details?.totalBounty || 0}</p>
 						</span>
 					</div>
 					<div className="rewards">
 						Total Rewards:
 						<span className="rewardCountWrapper">
 							<img className="rewardCount" src={rewardsLogo}></img>
-							<p>{employee?.details?.rewards}</p>
+							<p>{employee?.details?.rewards || 0}</p>
 						</span>
 					</div>
-					{!redeemDisable && (
-						<div className="requestButton">
-							<Button text="Redeem Request" isPrimary={true} onClick={handleRedeem} />
-						</div>
-					)}
+					{/* {!redeemDisable && ( */}
+					<div className="requestButton">
+						<Button
+							text="Redeem Request"
+							isPrimary={true}
+							onClick={handleRedeem}
+							isDisabled={redeemDisable}
+						/>
+					</div>
+					{/* )} */}
 				</div>
 			</section>
 		</div>

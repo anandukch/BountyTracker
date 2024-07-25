@@ -8,6 +8,7 @@ import IconFilter from "../../assets/iconFilter.png";
 import Search from "../../components/Search/Search";
 import { useGetEmployeeListQuery } from "../../api/employeeApi";
 import { formatDate } from "../../utils/date.utils";
+import { Loader } from "../../components/Loader/Loader";
 
 const EmployeeTierList = () => {
 	const [list, setList] = useState([]);
@@ -24,6 +25,8 @@ const EmployeeTierList = () => {
 		}
 	}, [data, isSuccess]);
 
+	// useEffect(()=>{},[employee])
+
 	const columns = [
 		// { name:"Emplouee ID"},
 		{ name: "Employee ID" },
@@ -36,6 +39,7 @@ const EmployeeTierList = () => {
 
 	return (
 		<div className="fullWrap">
+			{isLoading && <Loader />}
 			<div className="wrapHeading">
 				<h1>Employees</h1>
 				{/* <div className="searchSort">
@@ -61,6 +65,7 @@ const EmployeeTierList = () => {
 				</div>
 				<div className="listDataTier">
 					{list.map((employee) => {
+						console.log(employee);
 						return (
 							<GridDataColumn
 								key={employee.id}
@@ -70,6 +75,7 @@ const EmployeeTierList = () => {
 								birthday={employee.birthday}
 								role={employee.role}
 								tier={employee.currentTier}
+								platinumCount={employee.details.platinumCount}
 							/>
 						);
 					})}

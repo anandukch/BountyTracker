@@ -1,6 +1,6 @@
-import { apiWithTaskTags } from "./baseApi";
+import { apiWithTags } from "./baseApi";
 
-const taskApi = apiWithTaskTags.injectEndpoints({
+const taskApi = apiWithTags.injectEndpoints({
 	endpoints: (builder) => ({
 		getTaskList: builder.query({
 			query: () => "/tasks",
@@ -45,7 +45,7 @@ const taskApi = apiWithTaskTags.injectEndpoints({
 				url: `/employees/tasks/${id}`,
 				method: "POST",
 			}),
-			invalidatesTags: ["COMMENTS", "REVIEW"],
+			invalidatesTags: ["COMMENTS", "REVIEW", "TASK_LIST", "TASK"],
 		}),
 
 		completeTask: builder.mutation({
@@ -57,7 +57,7 @@ const taskApi = apiWithTaskTags.injectEndpoints({
 					body: { participantContributions },
 				};
 			},
-			invalidatesTags: ["TASK", "TASK_LIST"],
+			invalidatesTags: ["TASK", "TASK_LIST", "EMPLOYEE_LIST", "PROFILE"],
 		}),
 
 		getTaskContributions: builder.query({
@@ -86,5 +86,5 @@ export const {
 	useCompleteTaskMutation,
 	useGetTaskContributionsQuery,
 	useLazyDownloadFileQuery,
-	useLazyGetCommentsByTaskIdQuery
+	useLazyGetCommentsByTaskIdQuery,
 } = taskApi;

@@ -15,12 +15,8 @@ export const baseApi = createApi({
 	endpoints: () => ({}),
 });
 
-const apiWithEmployeeTag = baseApi.enhanceEndpoints({
-	addTagTypes: ["EMPLOYEE_LIST", "EMPLOYEE"],
+const apiWithTags = baseApi.enhanceEndpoints({
+	addTagTypes: ["EMPLOYEE_LIST", "PROFILE", "COMMENTS", "REVIEW", "TASK", "TASK_LIST"],
 });
 
-const apiWithTaskTags = baseApi.enhanceEndpoints({
-	addTagTypes: ["COMMENTS", "REVIEW", "TASK", "TASK_LIST"],
-});
-
-export { apiWithEmployeeTag, apiWithTaskTags };
+export { apiWithTags  };
