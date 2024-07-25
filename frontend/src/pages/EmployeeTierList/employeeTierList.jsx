@@ -3,37 +3,33 @@ import React, { useState, useEffect } from "react";
 import "../../pages/EmployeeTierList/employeeTierList.scss";
 import GridDataColumn from "../../components/GridDataColumn";
 import GridColumn from "../../components/GridColumn";
-import SearchIcon from "../../assets/iconssearch.png";
+import SearchIcon from "../../assets/iconsearch.svg";
 import IconFilter from "../../assets/iconFilter.png";
-// Dummy data
-const dummyData = [
-	{ id: 1, name: "John Doe", gender: "Male", birthday: "20-12-2002", phone: "930708788", bounty: 1200 },
-	{ id: 2, name: "Jane Smith", gender: "Female", birthday: "20-12-2002", phone: "930708788", bounty: 90 },
-	{ id: 3, name: "Alice Johnson", gender: "Female", birthday: "20-12-2002", phone: "930708788", bounty: 150 },
-	{ id: 4, name: "Bob Brown", gender: "Male", birthday: "20-12-2002", phone: "930708788", bounty: 700 },
-];
+import Search from "../../components/Search/Search";
+import { useGetEmployeeListQuery } from "../../api/employeeApi";
+import { formatDate } from "../../utils/date.utils";
 
 const EmployeeTierList = () => {
 	const [list, setList] = useState([]);
-
+	const { data, isLoading, isSuccess } = useGetEmployeeListQuery();
+	console.log(data);
 	useEffect(() => {
-		const formattedData = dummyData.map((employee) => ({
-			...employee,
-			birthday: new Date(employee.birthday).toLocaleDateString("en-GB", {
-				day: "numeric",
-				month: "short",
-				year: "numeric",
-			}),
-		}));
-		setList(dummyData);
-	}, []);
+		if (isSuccess) {
+			const formattedData = data.data.map((employee) => ({
+				...employee,
+				birthday: formatDate(employee.details.birthday),
+			}));
+			console.log(formattedData);
+			setList(formattedData);
+		}
+	}, [data, isSuccess]);
 
 	const columns = [
 		// { name:"Emplouee ID"},
+		{ name: "Employee ID" },
 		{ name: "Employee Name" },
-		{ name: "Gender" },
 		{ name: "Birthday" },
-		{ name: "Phone" },
+		{ name: "Role" },
 		{ name: "KoYns" },
 		{ name: "Tier" },
 	];
@@ -41,12 +37,9 @@ const EmployeeTierList = () => {
 	return (
 		<div className="fullWrap">
 			<div className="wrapHeading">
-				<h1>Employee List</h1>
-				<div className="searchSort">
-					<div className="searchBar">
-						<img src={SearchIcon} alt="search"></img>
-						<input type="text" placeholder="    Search here" />
-					</div>
+				<h1>Employees</h1>
+				{/* <div className="searchSort">
+					<Search />
 					<div className="sort">
 						<label></label>
 						<img src={IconFilter} alt="filter"></img>
@@ -58,7 +51,7 @@ const EmployeeTierList = () => {
 							<option value="bountyLow">Tier ▲</option>
 						</select>
 					</div>
-				</div>
+				</div> */}
 			</div>
 			<div className="listWrapper">
 				<div className="listHeader">
@@ -66,17 +59,17 @@ const EmployeeTierList = () => {
 						return <GridColumn key={column.name} name={column.name} />;
 					})}
 				</div>
-				<div className="listData">
+				<div className="listDataTier">
 					{list.map((employee) => {
 						return (
 							<GridDataColumn
 								key={employee.id}
 								name={employee.name}
-								// id={employee.id}
-								gender={employee.gender}
-								bounty={employee.bounty}
+								id={employee.id}
+								bounty={employee.details.totalBounty}
 								birthday={employee.birthday}
-								phone={employee.phone}
+								role={employee.role}
+								tier={employee.currentTier}
 							/>
 						);
 					})}

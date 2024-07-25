@@ -11,6 +11,8 @@ import jsonwebtoken from "jsonwebtoken";
 import { JWT_SECRET, JWT_VALIDITY } from "../utils/constants";
 import EmployeeDetails from "../entity/employeeDetails.entity";
 import TaskParticipantService from "./taskParticipant.service";
+import { TaskStatusEnum } from "../utils/taskStatus.enum";
+import { getCurrentTier, getReward } from "../utils/getTierAndReward.utils";
 class EmployeeService {
 	constructor(
 		private employeeRespository: EmployeeRepository,
@@ -18,8 +20,14 @@ class EmployeeService {
 		private taskParticipantService: TaskParticipantService
 	) {}
 
-	getAllEmployees = async (): Promise<Employee[]> => {
-		return this.employeeRespository.find();
+	getAllEmployees = async (relations?: Array<string>): Promise<Employee[]> => {
+		const employeeList = await this.employeeRespository.find({}, relations);
+		const updatedEmployeeList = [];
+		employeeList.forEach((employee) => {
+			const currentTier = getCurrentTier(employee.details.totalBounty);
+			updatedEmployeeList.push({ ...employee, currentTier });
+		});
+		return updatedEmployeeList;
 	};
 
 	getEmployeeByEmail = async (email: string): Promise<Employee> => {
@@ -36,9 +44,8 @@ class EmployeeService {
 			"participatingTasks.task.createdBy",
 		]);
 		if (!employee) {
-			throw new EntityNotFoundException(404, "Employee not found");
+			throw new EntityNotFoundException("Employee not found");
 		}
-
 		return employee.participatingTasks;
 	};
 
@@ -49,14 +56,14 @@ class EmployeeService {
 			"participatingTasks.task",
 		]);
 		if (!employee) {
-			throw new EntityNotFoundException(404, "Employee not found");
+			throw new EntityNotFoundException("Employee not found");
 		}
 
 		let completedTasks = 0;
 		let pendingTasks = 0;
 
 		employee.participatingTasks.forEach((task) => {
-			if (task.task.status === "completed") {
+			if (task.task.status === "Completed") {
 				completedTasks++;
 			} else {
 				pendingTasks++;
@@ -64,21 +71,23 @@ class EmployeeService {
 		});
 		employee.participatingTasks = undefined;
 		employee.password = undefined;
+		const currentTier = getCurrentTier(employee.details.totalBounty);
 		return {
 			...employee,
 			completedTasks,
 			pendingTasks,
+			currentTier,
 		};
 	};
 
 	loginEmployee = async (email: string, password: string): Promise<string> => {
 		const employee = await this.employeeRespository.findOneBy({ email });
 		if (!employee) {
-			throw new EntityNotFoundException(404, "Email Not Found");
+			throw new EntityNotFoundException("Email Not Found");
 		}
 		const result = await bcrypt.compare(password, employee.password);
 		if (!result) {
-			throw new IncorrectPasswordException(404, "Password is Incorrect");
+			throw new IncorrectPasswordException("Password is Incorrect");
 		}
 		const payload: jwtPayload = {
 			name: employee.name,
@@ -104,21 +113,33 @@ class EmployeeService {
 		newEmployeeDetails.birthday = new Date(employeeDto.birthday);
 		newEmployeeDetails.phoneNo = employeeDto.phoneNo;
 		newEmployeeDetails.totalBounty = 0;
+		newEmployeeDetails.platinumCount = 0;
+		newEmployeeDetails.rewards = 0;
 		employee.details = newEmployeeDetails;
 		return this.employeeRespository.save(employee);
 	};
 
 	joinTask = async (taskId: number, employee: Employee) => {
-		const task = await this.taskService.getTaskById(taskId, []);
+		const task = await this.taskService.getTaskById(taskId, ["createdBy"]);
 		if (!task) {
-			throw new EntityNotFoundException(404, "Task not found");
+			throw new EntityNotFoundException("Task not found");
 		}
 		if (task.maxParticipants === task.currentParticipants) {
-			throw new EntityNotFoundException(404, "Task is full");
+			throw new EntityNotFoundException("Task is full");
+		}
+		if (task.createdBy.id === employee.id) {
+			throw new EntityNotFoundException("Cannot join task created by self");
+		}
+
+		const alreadyJoined = await this.taskParticipantService.checkAlreadyJoined(taskId, employee.id);
+
+		if (alreadyJoined) {
+			throw new EntityNotFoundException("Task already joined");
 		}
 
 		task.currentParticipants += 1;
-		await this.taskService.updateTask(taskId, task);
+		const updatedTask = await this.taskService.updateTask(taskId, task);
+		console.log(updatedTask);
 
 		const taskParticipant = await this.taskParticipantService.create(task, employee);
 
@@ -136,25 +157,67 @@ class EmployeeService {
 	giveContribution = async (taskId: number, employeeId: number, contribution: number) => {
 		const task = await this.taskService.getTaskById(taskId, ["createdBy", "participants", "participants.employee"]);
 		if (!task) {
-			throw new EntityNotFoundException(404, "Task not found");
+			throw new EntityNotFoundException("Task not found");
 		}
+
 		const employee = await this.employeeRespository.findOneBy({
 			id: employeeId,
 		});
+
 		if (!employee) {
-			throw new EntityNotFoundException(404, "Employee not found");
+			throw new EntityNotFoundException("Employee not found");
 		}
+
 		const taskParticipant = await this.taskParticipantService.getTask({
 			taskId,
 			employeeId,
 		});
 		if (!taskParticipant) {
-			throw new EntityNotFoundException(404, "Employee not found in task");
+			throw new EntityNotFoundException("Employee not found in task");
 		}
-		taskParticipant.contribution = contribution;
+		taskParticipant.contribution += contribution;
 		await this.taskParticipantService.updateTaskParticipants(taskParticipant);
 		return taskParticipant;
 	};
+
+	updateBounty = async (employeeId: number, bounty: number) => {
+		const employee = await this.employeeRespository.findOneBy({ id: employeeId }, ["details"]);
+
+		console.log(employee);
+		
+		if (!employee) {
+			throw new EntityNotFoundException("Employee not found");
+		}
+
+		// const newTier = checkIfNewTierReached(employee.details.totalBounty + bounty);
+		const currentTier = getCurrentTier(employee.details.totalBounty);
+		employee.details.totalBounty += bounty; // add awarded bounty
+		const newTier = getCurrentTier(employee.details.totalBounty);
+
+		if (currentTier !== newTier) {
+			const reward = getReward(newTier);
+			employee.details.rewards += reward;
+		}
+		if (newTier === "Platinum") {
+			employee.details.platinumCount += 1;
+			employee.details.totalBounty -= 2000; //reset Bounty on reaching Platinum
+		}
+
+		await this.employeeRespository.save(employee);
+		return employee;
+	};
+
+	resetReward = async (employeeId: number) => {
+		const employee = await this.employeeRespository.findOneBy({ id: employeeId }, ["details"]);
+		if (!employee) {
+			throw new EntityNotFoundException("Employee not found");
+		}
+		// TODO: After Migration
+		employee.details.rewards = 0;
+		await this.employeeRespository.save(employee);
+		return;
+	};
+	
 }
 
 export default EmployeeService;

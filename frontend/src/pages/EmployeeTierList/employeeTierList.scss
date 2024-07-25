@@ -3,27 +3,7 @@
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
-
-	input[type="text"] {
-		border-radius: 20px;
-		padding-left: 35px;
-		width: 300px;
-
-		height: 35px;
-		// color:#F2F5FA
-		background-color: #f2f5fa;
-		border: thick;
-	}
-	.searchBar {
-		position: relative;
-		display: flex;
-		align-items: center;
-	}
-	.searchBar img {
-		position: absolute;
-		padding-left: 5px;
-		height: 90%;
-	}
+	margin: 20px;
 
 	.searchSort {
 		display: flex;
@@ -63,20 +43,26 @@
 		flex-direction: column;
 		height: 100%;
 		gap: 10px;
-
-		// box-shadow: 0px 1px 1px #C5C4C4;
 	}
 	.listHeader {
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 		align-content: center;
 
-		background-color: #f2f5fa;
-		height: 50px;
+		height: 80px;
 		align-items: center;
 
 		padding: 5px;
 		border-radius: 5px;
+
+		padding-left: 3%;
+		box-shadow: 1px 0px 5px 1px #eaeaea;
+		justify-content: space-around;
+
+		background-color: #efecda;
+		display: grid;
+		border-bottom: 2px solid #ccc;
+		box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.3);
 	}
 	.listHeadings {
 		display: flex;
@@ -87,42 +73,49 @@
 		padding-left: 10px;
 		height: 100%;
 		padding-left: 10px;
-
-		// border: solid;
-
-		// border-color: #8C96A0 ;
-		// border-width: 0.05px;
 	}
 	.listHeadings:nth-child(5) {
 		color: goldenrod;
 	}
 
-	.listData {
+	.listDataTier {
 		display: flex;
 		flex-direction: column;
-
+		overflow: scroll;
+		// overflow-x: hidden;
 		background-color: #f2f5fa;
-		padding-top: 20px;
-		padding-bottom: 20px;
+		// padding-top: 20px;
+		// padding-bottom: 20px;
+		padding: 20px 10px 20px 10px;
 		border-radius: 10px;
+		max-height: 595px;
 	}
 
 	.listDataSet {
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-		margin: 5px;
-		height: 20px;
 		align-items: center;
 		padding: 5px;
-		background-color: #fffdfe;
-		border-radius: 10px;
+		padding-left: 3%;
+		height: 40px;
+		margin: 5px 2px;
+		background-color: rgb(253, 253, 253);
+		border-radius: 5px;
+		box-shadow: 1px 0px 5px 1px #eaeaea;
+		transition: transform 0.2s ease;
+		height: 45px;
+
+		&:hover {
+			transform: translateY(-2px) scale(1.02);
+			box-shadow: 0px 5px 10px #efecda;
+		}
 	}
 	.employeeName,
 	.employeeBounty,
 	.employeeTier,
+	.tierBadge,
 	.employeePhone,
-	.employeeBirthday,
-	.employeeGender {
+	.employeeBirthday {
 		display: flex;
 		// padding-left: 20px;
 		color: #2a3644;
@@ -133,6 +126,22 @@
 		height: 100%;
 		align-items: center;
 	}
+	.tierBadge {
+		width: 40px;
+		height: 40px;
+	}
+	.employeeID {
+		display: flex;
+		// padding-left: 20px;
+		color: #2a3644;
+		// border: #2A3644;
+		justify-content: left;
+		padding-left: 10px;
+
+		height: 100%;
+		align-items: center;
+	}
+
 	// .employeeName{
 	//     color: #0C53FB;
 	// }

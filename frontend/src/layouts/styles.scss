@@ -4,6 +4,8 @@
 	--primary-btn: #6f8ce0;
 	--ut-orange: #ff8600ff;
 	--hunter-green: #3f6634ff;
+	--sidBarColor: #e0dbbb;
+	--headerColor: #efecda;
 }
 * {
 	margin: 0;
@@ -22,6 +24,15 @@
 	display: flex;
 	flex-direction: row;
 	position: fixed;
+
+	.profileHeaderWrapper {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+		gap: 10px;
+	}
+
 	.logo {
 		width: 300px;
 		height: 90px;
@@ -32,6 +43,7 @@
 		flex-direction: row;
 		padding: 10px;
 		gap: 10px;
+
 		.logo-image {
 			height: 70%;
 			padding: 2px;
@@ -43,12 +55,19 @@
 		}
 	}
 
-	h1 {
+	h2 {
+		display: flex;
+		flex-direction: row;
+		gap: 10px;
+		padding-right: 40px;
 		font-family: Arial, Helvetica, sans-serif;
 		width: calc(100vw - 300px);
-		text-align: center;
-		align-content: center;
+		justify-content: right;
+		align-items: center;
 		font-weight: 600;
+		img {
+			height: 35px;
+		}
 	}
 
 	border-bottom: solid 1px var(--borderColor);
@@ -79,7 +98,7 @@
 		margin-bottom: 20px;
 		.links {
 			cursor: pointer;
-			background-color: var(--ut-orange);
+			background-color: var(--sidBarColor);
 		}
 	}
 	.links {
@@ -98,7 +117,7 @@
 		font-weight: 700;
 
 		&.active {
-			background-color: #ff8600ff;
+			background-color: var(--sidBarColor);
 		}
 	}
 	.icon {

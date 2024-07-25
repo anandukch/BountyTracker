@@ -16,4 +16,10 @@ export class EmployeeDetailsDto {
 	@IsNotEmpty()
 	@IsNumber()
 	totalBounty: number;
+
+	@IsNumber()
+	platinumCount: number;
+
+	@IsNumber()
+	rewards: number;
 }

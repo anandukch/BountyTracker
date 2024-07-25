@@ -4,20 +4,13 @@ import TextField from "../../components/TextField/TextField";
 import Select from "../../components/Select/Select";
 
 const FormComponent = ({ onChange, formFields }) => {
-	// const [type, setType] = useState(false);
-
-	// const handleChange = (props) => {
-	// 	if (props.type === "Group") setType(true);
-	// 	if (props.type === "Individual") setType(false);
-	// 	onChange(props);
-	// };
 	return (
 		<form className="formComponent">
 			{formFields.map((field) => {
 				if (field.type == "select")
 					return (
 						<Select
-							key={field.id}
+							key={field.label}
 							label={field.label}
 							name={field.name}
 							values={field.values}
@@ -27,15 +20,9 @@ const FormComponent = ({ onChange, formFields }) => {
 					);
 				else if (field.Component === "text-area")
 					return (
-						<div className="fieldsTextArea">
+						<div className="fieldsTextArea" key={field.id}>
 							<label>Description</label>
-							<textarea
-								key={field.id}
-								name="description"
-								rows="5"
-								cols="40"
-								onChange={onChange}
-							/>
+							<textarea name="description" rows="5" placeholder="Description" onChange={onChange} />
 						</div>
 					);
 				return (

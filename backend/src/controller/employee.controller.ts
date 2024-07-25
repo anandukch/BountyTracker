@@ -9,19 +9,34 @@ import { CreateEmployeeDto } from "../dto/employee.dto";
 import getValidationErrorConstraints from "../utils/validationErrorConstraints";
 import authorize from "../middleware/authorize.middleware";
 import ValidationException from "../exceptions/validationException";
+import { compareDates } from "../utils/date.utils";
+import { TaskStatusEnum } from "../utils/taskStatus.enum";
+import validationMiddleware from "../middleware/validate.middleware";
+import { CreateComementDto, HrRequestDto } from "../dto/comment.dto";
+import CommentService from "../service/comment.service";
+import { commentService } from "../routes/task.routes";
+import Comment from "../entity/comment.entity";
+import ReviewStatus from "../utils/reviewStatus.enum";
+import { log } from "console";
+import RedeemRequestService from "../service/redeemRequest.service";
 class EmployeeController {
 	public router: Router;
-	constructor(private employeeService: EmployeeService) {
+	constructor(private employeeService: EmployeeService, private redeemRequestService: RedeemRequestService) {
 		this.router = Router();
-		this.router.get("/", authorize, this.getAllEmployees);
-		this.router.get("/profile", authorize, this.getEmployeeProfile);
-		this.router.get("/tasks", authorize, this.getEmployeeAssignedTasks);
-		this.router.get("/tasks/not-joined", authorize, this.getTasksNotJoinedByEmployee);
+		this.router.get("/tasks/not-joined", authorize(), this.getTasksNotJoinedByEmployee);
+		this.router.get("/reward", this.getRewardComments);
+		this.router.patch("/redeem", this.redeemRewards);
+		this.router.post("/reward", authorize(), this.requestRewards);
+		this.router.get("/profile", authorize(), this.getEmployeeProfile);
+		this.router.get("/tasks", authorize(), this.getEmployeeAssignedTasks);
+		this.router.get("/", authorize(), this.getAllEmployees);
 		this.router.get("/:id", this.getEmployeeByID);
 		this.router.post("/login", this.loginEmployee);
-		this.router.post("/", this.createEmployee);
-		this.router.post("/tasks/:id", authorize, this.joinTask);
-		this.router.put("/:employeeId/tasks/:taskId/contributions", authorize, this.giveContribution);
+		this.router.post("/", validationMiddleware(CreateEmployeeDto), this.createEmployee);
+		this.router.post("/tasks/:id", authorize(), this.joinTask);
+		this.router.put("/:employeeId/tasks/:taskId/contributions", authorize(), this.giveContribution);
+
+		// this.router.delete("/:id", this.deleteRedeemRequest);
 	}
 
 	public giveContribution = async (req: RequestWithRole, res: Response, next: NextFunction) => {
@@ -59,7 +74,7 @@ class EmployeeController {
 
 	public getAllEmployees = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			const employees = await this.employeeService.getAllEmployees();
+			const employees = await this.employeeService.getAllEmployees(["details"]);
 			res.status(200).json({
 				success: true,
 				message: "Employees fetched successfully",
@@ -89,13 +104,36 @@ class EmployeeController {
 	};
 	public getEmployeeAssignedTasks = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			console.log("as");
+			const status = req.query.status as TaskStatusEnum;
 
-			const employeeAssignedTasks = await this.employeeService.getEmployeeTasksByID(req.user.id);
+			const participatingTasks = await this.employeeService.getEmployeeTasksByID(req.user.id);
+
+			const data = participatingTasks.map((participatingTask) => {
+				delete participatingTask.task.createdBy.password;
+				let deadLine = participatingTask.task.deadLine;
+				let today = new Date();
+
+				if (compareDates(today, deadLine) > 0 && participatingTask.task.status !== TaskStatusEnum.COMPLETED) {
+					participatingTask.task.status = TaskStatusEnum.IN_REVIEW;
+				}
+
+				return {
+					...participatingTask,
+					task: {
+						...participatingTask.task,
+						createdBy: {
+							name: participatingTask.task.createdBy.name,
+							email: participatingTask.task.createdBy.email,
+							role: participatingTask.task.createdBy.role,
+						},
+					},
+				};
+			});
+
 			res.status(200).json({
 				success: true,
 				message: "Employee tasks fetched successfully",
-				data: employeeAssignedTasks,
+				data: data,
 			});
 		} catch (error) {
 			next(error);
@@ -117,16 +155,7 @@ class EmployeeController {
 
 	public createEmployee = async (req: Request, res: Response, next: NextFunction) => {
 		try {
-			// if (req.role > Role.LEAD) {
-			//     throw new HttpException(403, "Access Denied");
-			// }
-			const employeeDto = plainToInstance(CreateEmployeeDto, req.body);
-			const errors = await validate(employeeDto);
-			// const validationErrorConstraints = getValidationErrorConstraints(errors);
-			if (errors.length) {
-				throw new ValidationException(400, "Validation Failed", errors);
-			}
-			const createdEmployee = await this.employeeService.createEmployee(employeeDto);
+			const createdEmployee = await this.employeeService.createEmployee(req.body as CreateEmployeeDto);
 			delete createdEmployee.password;
 			res.status(201).send(createdEmployee);
 		} catch (error) {
@@ -159,6 +188,50 @@ class EmployeeController {
 				success: true,
 				message: "Tasks fetched successfully",
 				data: tasks,
+			});
+		} catch (error) {
+			next(error);
+		}
+	};
+	public redeemRewards = async (req: RequestWithRole, res: Response, next: NextFunction) => {
+		try {
+			const employeeId = parseInt(req.body.employeeId);
+			await this.employeeService.resetReward(employeeId);
+			const { requestId } = req.body;
+			await this.redeemRequestService.approveRedeemRequest(requestId);
+			res.status(200).json({
+				success: true,
+				message: "Reward redeemed and reset successfully and Redeem Request deleted",
+			});
+		} catch (error) {
+			next(error);
+		}
+	};
+
+	public requestRewards = async (req: RequestWithRole, res: Response, next: NextFunction) => {
+		try {
+			// await commentService.hrRequestComment(req.user);
+			console.log(req.body);
+			await this.redeemRequestService.sendRedeemRequest(req.user, req.body.reward);
+
+			res.status(201).json({
+				success: true,
+				message: "Hr request sent succesfully",
+			});
+		} catch (error) {
+			next(error);
+		}
+	};
+
+	public getRewardComments = async (req: RequestWithRole, res: Response, next: NextFunction) => {
+		try {
+			// const rewardComments = await commentService.getRewardComment();
+			const redeemRequest = await this.redeemRequestService.getRedeemRequest();
+
+			res.status(200).json({
+				success: true,
+				message: "Hr Requests fetched successfully",
+				data: redeemRequest,
 			});
 		} catch (error) {
 			next(error);

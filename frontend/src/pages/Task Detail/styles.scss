@@ -6,7 +6,8 @@
 	--textBlack: #2a3644;
 	--borderColor: #e2e5eb;
 	--bgList: #f0f1f6;
-	--statusTitle: #2c95ce;
+	--statusTitle: #4dc1ff;
+	--headerColor: #efecda;
 }
 * {
 	margin: 0;
@@ -21,35 +22,100 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: left;
 	row-gap: 20px;
 	width: 100%;
 	height: 100%;
+
+	.contributionTextArea {
+		width: 70%;
+		height: 30%;
+		resize: none;
+		padding: 20px;
+	}
+	.contributionFileUpload {
+		height: 40px;
+		width: 70%;
+		padding: 10px;
+		font-size: 14px;
+		border: 1px solid black;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		.contributionFileUploadButton {
+			/* width: 20px; */
+			/* height: 40px; */
+			width: 40px;
+			.uploadFileLabel {
+				cursor: pointer;
+				input {
+					display: none;
+				}
+
+				img {
+					object-fit: contain;
+					width: 90%;
+				}
+			}
+		}
+	}
+
 	.title {
 		width: 100%;
-		height: 60px;
-		background-color: var(--bgWhite);
+		height: 80px;
+		background-color: var(--headerColor);
 		align-items: center;
 		box-shadow: 2px 5px 8px -2px var(--bgGray);
 		padding-left: 30px;
 		padding-right: 20px;
 		display: flex;
 		justify-content: space-between;
+
+		.statusPill {
+			margin-left: 20px;
+			padding: 10px 20px 10px 20px;
+			border-radius: 10px;
+			border: 1px solid #474a4e86;
+		}
+
 		span {
 			display: flex;
 			flex-direction: row;
-			gap: 5px;
+			/* // gap: 10px; */
+			justify-content: center;
+			align-items: center;
+		}
+		.taskCompleteButton {
+			padding: 10px 12px;
+			width: 200px;
+			text-align: center;
+			border: none;
+			border-radius: 5px;
+			background-color: var(--primary-btn);
+			font-weight: 600;
+			cursor: pointer;
+			color: var(--bgWhite);
+			margin-left: 20px;
 		}
 	}
-	.details {
+	.data {
 		display: flex;
 		flex-direction: row;
 		width: 100%;
-		height: 300px;
+		height: calc(100% - 100px);
+		gap: 10px;
+	}
+	.details {
+		display: flex;
+		flex-direction: column;
+		width: 50%;
+		height: 100%;
 		gap: 10px;
 
 		.detailSectionData {
-			height: 100%;
-			width: 70%;
+			height: 50%;
+			width: 100%;
 			background-color: var(--bgWhite);
 			display: grid;
 			grid-template-columns: 1fr;
@@ -81,9 +147,15 @@
 				}
 			}
 		}
+		.dataBottom {
+			display: flex;
+			flex-direction: row;
+			gap: 10px;
+			height: 60%;
+		}
 		.detailSectionBounty {
 			height: 100%;
-			width: 30%;
+			width: 50%;
 			background-color: var(--bgWhite);
 			display: flex;
 			align-items: center;
@@ -104,161 +176,9 @@
 				gap: 5px;
 			}
 		}
-	}
-	.bottomSection {
-		width: 100%;
-		display: flex;
-		flex-direction: row;
-		gap: 10px;
-		height: 450px;
-		padding-bottom: 10px;
-		.commentSection {
-			width: 70%;
-			display: flex;
-			flex-direction: column;
-			row-gap: 10px;
-			background-color: var(--bgWhite);
-			padding: 10px;
-			.commentSectionHeader {
-				width: 100%;
-				height: 40px;
-				display: flex;
-				flex-direction: row;
-				align-items: center;
-				text-align: center;
-				gap: 5px;
-				padding: 0 15px 0 15px;
 
-				.nameHeader {
-					width: 21%;
-					text-align: center;
-					border-right: 1px solid var(--textBlack);
-					font-weight: 600;
-					font-size: 14px;
-				}
-				.commentHeader {
-					width: 79%;
-					text-align: center;
-					font-weight: 600;
-					font-size: 14px;
-					display: flex;
-					flex-direction: row;
-					align-items: center;
-					justify-content: space-between;
-					padding-left: 15px;
-					.commentFilter {
-						display: flex;
-						flex-direction: row;
-						height: 40px;
-						padding: 0 4px 0 4px;
-						gap: 5px;
-						font-size: 13px;
-						font-weight: 600;
-						align-items: center;
-						background-color: var(--bgGray);
-						border-radius: 12px;
-						// box-shadow: 0.5px 0.5px 0.5px  0.5px var(--textGray);
-						cursor: pointer;
-						.commentFlag {
-							height: 32px;
-							align-content: center;
-							// background-color: white;
-							color: var(--textGray);
-							padding: 0 5px 0 5px;
-							border-radius: 8px;
-						}
-						.review {
-							height: 32px;
-							align-content: center;
-							color: var(--textGray);
-							// background-color: white;
-							padding: 0 5px 0 5px;
-							border-radius: 8px;
-						}
-					}
-				}
-			}
-			.commentWrapper {
-				display: flex;
-				flex-direction: column;
-				justify-content: space-between;
-				height: 100%;
-				.commentList {
-					max-height: 300px;
-					overflow-y: scroll;
-					display: flex;
-					flex-direction: column;
-					row-gap: 10px;
-					background-color: var(--bgGray);
-					border-radius: 10px;
-					padding: 15px;
-				}
-				.addComment {
-					display: flex;
-					flex-direction: row;
-					justify-content: space-between;
-					align-items: center;
-					width: 100%;
-					height: 50px;
-					margin-right: 30%;
-					background-color: var(--bgWhite);
-					padding-left: 10px;
-					padding-right: 15px;
-					border: 1px solid var(--textGray);
-					img {
-						height: 38px;
-					}
-					textarea {
-						width: 80%;
-						height: 46px;
-						outline: none;
-						border: none;
-						padding: 15px 5px;
-						resize: none;
-						box-sizing: border-box;
-					}
-					.commentButtons {
-						display: flex;
-						flex-direction: row;
-						align-items: center;
-						gap: 15px;
-						input[type="file"] {
-							display: none;
-							// background-image: url( "../../assets/attach.svg");
-						}
-						label {
-							background-image: url("../../assets/attach.svg");
-						}
-						.sendButton {
-							height: 33px;
-							width: 33px;
-							background-color: var(--bgGray);
-							align-content: center;
-							border-radius: 100%;
-							box-shadow: 1px 1px 1px 1px var(--textGray);
-							padding: 3px;
-							img {
-								height: 100%;
-							}
-						}
-						.reviewButton {
-							height: 33px;
-							padding: 8px;
-							width: 90px;
-							border-radius: 8px;
-							background-color: var(--bgGray);
-							border: none;
-							box-shadow: 1px 1px 1px 1px var(--textGray);
-							font-size: 14px;
-							font-weight: 800;
-							color: var(--textBlack);
-						}
-					}
-				}
-			}
-		}
 		.particpantsListSection {
-			width: 30%;
+			width: 50%;
 			display: flex;
 			flex-direction: column;
 			row-gap: 5px;
@@ -274,21 +194,268 @@
 			.particpantsList {
 				display: flex;
 				flex-direction: column;
-				max-height: 400px;
+				overflow-y: scroll;
 				width: 100%;
 				height: 100%;
+				background-color: var(--bgWhite);
 				.partcipants {
 					width: 100%;
 					height: 50px;
 					padding: 10px;
 					padding-left: 30px;
-					background-color: var(--bgWhite);
+
 					align-items: center;
 					display: flex;
 					flex-direction: row;
 					gap: 15px;
 					img {
 						height: 28px;
+					}
+				}
+			}
+		}
+	}
+
+	.bottomSectionWrapper {
+		position: relative;
+		width: 50%;
+		.joinButtonWrapper {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 10;
+		}
+		.beforeJoining {
+			/* inset: 0; */
+			/* background-color: #d3e77780; */
+			filter: blur(10px);
+		}
+
+		.bottomSection {
+			width: 100%;
+			display: flex;
+			flex-direction: row;
+			gap: 10px;
+			height: 100%;
+			/* padding-bottom: 10px; */
+
+			.commentSection {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				row-gap: 10px;
+				background-color: var(--bgWhite);
+				padding: 10px;
+				height: 100%;
+				.commentSectionHeader {
+					width: 100%;
+					height: 40px;
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					text-align: center;
+					gap: 5px;
+					padding: 0 15px 0 15px;
+					.commentFilter {
+						display: flex;
+						flex-direction: row;
+						height: 40px;
+						padding: 0 4px 0 4px;
+						gap: 5px;
+						font-size: 13px;
+						font-weight: 600;
+						align-items: center;
+						background-color: var(--bgGray);
+						border-radius: 12px;
+						/* // box-shadow: 0.5px 0.5px 0.5px  0.5px var(--textGray); */
+						cursor: pointer;
+						.commentFlag {
+							height: 32px;
+							align-content: center;
+							/* // background-color: white; */
+							color: var(--textGray);
+							padding: 0 5px 0 5px;
+							border-radius: 8px;
+						}
+						.review {
+							height: 32px;
+							align-content: center;
+							color: var(--textGray);
+							/* // background-color: white; */
+							padding: 0 5px 0 5px;
+							border-radius: 8px;
+						}
+					}
+				}
+				.commentSectionWrapper {
+					display: flex;
+					flex-direction: column;
+					justify-content: space-between;
+					height: calc(100% - 40px);
+					width: 100%;
+					gap: 10px;
+					.commentListWrapper {
+						height: calc(100% - 50px);
+						overflow-y: scroll;
+						display: flex;
+						flex-direction: column;
+						justify-content: flex-end;
+						background-color: var(--bgGray);
+						border-radius: 10px;
+
+						&::-webkit-scrollbar {
+							/* display: none; */
+						}
+						&::-webkit-scrollbar-thumb {
+							background-color: black;
+							border-radius: 10px;
+						}
+						&::-webkit-scrollbar-track {
+							background-color: blue;
+						}
+
+						.commentList {
+							max-height: calc(100% - 50px);
+							display: flex;
+							flex-direction: column-reverse;
+							row-gap: 10px;
+							padding: 20px 10px;
+							justify-content: flex-end;
+						}
+					}
+
+					.addComment {
+						display: flex;
+						flex-direction: row;
+						justify-content: space-between;
+						align-items: center;
+						width: 100%;
+						height: 50px;
+						margin-right: 30%;
+						background-color: var(--bgWhite);
+						padding-left: 10px;
+						padding-right: 15px;
+						border: 1px solid var(--textGray);
+						img {
+							height: 38px;
+						}
+
+						.mentionShowWrapper {
+							background-color: #d5eec6;
+							padding: 5px;
+							border-radius: 10px;
+							display: flex;
+							align-items: center;
+							.mentionShow {
+								font-size: 12px;
+							}
+							.removeMention {
+								font-size: 12px;
+								color: red;
+								margin-left: 5px;
+								cursor: pointer;
+							}
+						}
+						textarea {
+							width: 80%;
+							height: 46px;
+							outline: none;
+							border: none;
+							padding: 15px 5px;
+							resize: none;
+							box-sizing: border-box;
+						}
+						.commentButtons {
+							display: flex;
+							flex-direction: row;
+							align-items: center;
+							gap: 15px;
+							input[type="file"] {
+								display: none;
+								/* // background-image: url( "../../assets/attach.svg"); */
+							}
+							label {
+								background-image: url("../../assets/attach.svg");
+							}
+							.sendButton {
+								height: 33px;
+								width: 33px;
+								background-color: var(--bgGray);
+								align-content: center;
+								border-radius: 100%;
+								/* box-shadow: 1px 1px 1px 1px var(--textGray); */
+								padding: 3px;
+								border: 1px solid black;
+								transition: ease-out 0.1s;
+								img {
+									height: 100%;
+								}
+								&:hover {
+									filter: invert(1);
+								}
+							}
+							.reviewButton {
+								height: 33px;
+								padding: 8px;
+								width: 90px;
+								border-radius: 8px;
+								background-color: var(--bgGray);
+								border: none;
+								box-shadow: 1px 1px 1px 1px var(--textGray);
+								font-size: 14px;
+								font-weight: 800;
+								color: var(--textBlack);
+							}
+						}
+					}
+					.reviewCheckBox {
+						width: 100%;
+						display: flex;
+						flex-direction: row;
+						gap: 5px;
+						justify-content: right;
+						align-items: center;
+					}
+				}
+			}
+			.reviewSection {
+				width: 50%;
+				display: flex;
+				flex-direction: column;
+				row-gap: 10px;
+				background-color: var(--bgWhite);
+				padding: 10px;
+				.reviewSectionHeader {
+					width: 100%;
+					height: 40px;
+					display: flex;
+					justify-content: space-between;
+					flex-direction: row;
+					align-items: center;
+					text-align: center;
+					gap: 5px;
+					padding: 0 15px 0 15px;
+
+					.addContributionButton {
+						width: 200px;
+					}
+				}
+				.reviewWrapper {
+					/* margin-top: 10px; */
+					height: 100%;
+					.reviewList {
+						/* // margin-top: 20px; */
+						max-height: 350px;
+						overflow-y: scroll;
+						display: flex;
+						flex-direction: column;
+						row-gap: 10px;
+						background-color: var(--bgGray);
+						border-radius: 10px;
+						padding: 20px 20px 20px 20px;
 					}
 				}
 			}

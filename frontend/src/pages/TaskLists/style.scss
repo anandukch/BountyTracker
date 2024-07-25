@@ -1,0 +1,356 @@
+.employeeDashboardWrapper {
+	width: 100%;
+	height: 100%;
+	padding: 20px;
+	overflow: hidden;
+
+	.employeeDashboard {
+		width: 100%;
+		height: 100%;
+		padding: 10px;
+		display: flex;
+		flex-direction: column;
+		background-color: transparent;
+
+		// .searchSort h1{ }
+
+		.searchSort {
+			display: grid;
+			grid-template-columns: 5fr 1fr;
+			// flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+			font-size: larger;
+			padding-left: 15px;
+		}
+		.employeeDetailsWrapper {
+			border-radius: 20px;
+			display: flex;
+			height: 35%;
+			background-color: transparent;
+			justify-content: space-between;
+
+			.employeeProfileWrapper {
+				display: flex;
+				flex-direction: column;
+				padding: 10px;
+				width: 25%;
+				height: 100%;
+				align-items: center;
+				justify-content: center;
+				background-color: var(--bgWhite);
+				border-radius: 10px;
+
+				.employeeProfilePage {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-content: space-between;
+					height: 100%;
+					width: 100%;
+					padding: 10px 5px 10px 5px;
+
+					.employeeNameText,
+					.totalTasksProfile h4,
+					.pendingTasksProfile h4 {
+						color: var(--textBlack);
+						font-weight: 800;
+						padding: 5px 0px 5px 0px;
+					}
+
+					.employeeMailText,
+					.totalTasksProfile p,
+					.pendingTasksProfile p {
+						color: var(--textGray);
+						padding: 5px 0px 5px 0px;
+					}
+
+					.totalBounty {
+						display: flex;
+						color: var(--koynsText);
+						font-weight: 800;
+						padding: 10px 5px 0px 5px;
+
+						.bountyValue {
+							padding: 0px 5px 0px 5px;
+							color: #a49464;
+						}
+					}
+				}
+
+				.employeeProfilePage p,
+				.employeeProfilePage h3 {
+					display: flex;
+					justify-content: center;
+				}
+
+				.employeeProfilePage img {
+					height: 80px;
+					width: 80px;
+				}
+
+				.taskCountWrapper {
+					display: flex;
+					width: 100%;
+					background-color: var(--bgGray);
+					justify-content: space-between;
+
+					.totalTasksProfile,
+					.pendingTasksProfile {
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						justify-content: center;
+						background-color: var(--bgWhite);
+						width: 49.5%;
+					}
+				}
+
+				// .totalBounty {
+				// }
+			}
+
+			.employeeDetailsGrid {
+				display: grid;
+				grid-template-rows: 1fr 1fr;
+				grid-template-columns: 1fr 1fr 1fr;
+				width: 72%;
+				height: 100%;
+				padding: 20px;
+				background-color: var(--bgWhite);
+				border-radius: 10px;
+
+				.employeeDetailBlock {
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					padding-left: 10px;
+
+					h4 {
+						color: var(--textGray);
+						font-weight: 800;
+						padding: 10px 5px 10px 5px;
+					}
+
+					p {
+						color: var(--textBlack);
+						font-weight: 500;
+						padding: 10px 5px 10px 5px;
+					}
+				}
+			}
+		}
+
+		.employeeTasksWrapper {
+			display: flex;
+			flex-direction: column;
+			padding: 30px 10px 30px 10px;
+			max-height: 80%;
+			border-radius: 10px;
+
+			.taskDataRow {
+				padding-left: 2px;
+				text-decoration: none;
+				display: grid;
+				grid-template-rows: 1fr;
+				grid-template-columns: 1fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr;
+			}
+
+			.taskDataColumn {
+				padding-left: 30px;
+				display: flex;
+				// display: grid;
+				// grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+
+				align-items: center;
+				color: var(--textBlack);
+			}
+
+			.taskHeaderWrapper {
+				display: flex;
+				flex-direction: column;
+				padding: 10px 10px 10px 10px;
+				border-radius: 10px;
+				background-color: var(--bgGray);
+				color: var(--textBlack);
+				font-weight: 800;
+
+				// display: grid;
+				// grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+				// align-content: center;
+
+				height: 80px;
+				align-items: center;
+
+				padding: 5px;
+				// border-radius: 5px;
+
+				padding-left: 3%;
+				box-shadow: 1px 0px 5px 1px #eaeaea;
+				justify-content: space-around;
+
+				background-color: #efecda;
+				// display: grid;
+				// border-bottom: 2px solid #ccc;
+				// box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.3);
+			}
+
+			.taskBarWrapper {
+				display: flex;
+				padding: 15px;
+				width: fit-content;
+				padding: 5px;
+				background-color: var(--bgGray);
+				border-radius: 10px;
+				margin-left: 10px;
+				background-color: #efecda;
+				border-bottom: 2px solid #ccc;
+				box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.3);
+
+				.dashboardTaskPending,
+				.dashboardTaskCompleted,
+				.dashboardTaskAssigned {
+					padding: 10px 20px 10px 20px;
+					outline: none;
+					border: none;
+					text-decoration: none;
+					background-color: var(--bgGray);
+					font-weight: 800;
+					color: var(--textGray);
+					margin-right: 5px;
+					border-radius: 5px;
+					cursor: pointer;
+					height: 50px;
+
+					margin-top: 3px;
+				}
+
+				.activeTab {
+					background-color: var(--bgWhite);
+					color: var(--navBlack);
+					padding: 10px 20px 10px 20px;
+					outline: none;
+					border: none;
+					text-decoration: none;
+					font-weight: 800;
+					margin-right: 5px;
+					border-radius: 5x;
+				}
+			}
+
+			.taskLogWrapper {
+				padding: 20px 10px 20px 10px;
+				max-height: 80%;
+
+				.taskDetailsWrapper {
+					margin-top: 10px;
+					display: flex;
+					flex-direction: column;
+					padding: 10px 10px 10px 10px;
+					border-radius: 10px;
+
+					max-height: 505px;
+					overflow-y: scroll;
+					overflow-x: hidden;
+					border-radius: 5px;
+
+					.taskDataRow {
+						border-radius: 10px;
+						// background-color: var(--bgWhite);
+						padding: 10px 0px 10px 0px;
+						margin: 5px 0px 5px 0px;
+						background-color: white;
+
+						&:hover {
+							transform: translateY(-2px) scale(1.02);
+							box-shadow: 0px 5px 10px #efecda;
+
+							transition: transform 0.2s ease;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.list {
+	display: flex;
+
+	justify-content: left;
+
+	.taskBarWrap0 {
+		background-color: #efecda;
+		padding: 15px;
+		width: fit-content;
+		padding-top: 14px;
+
+		border-radius: 10px;
+		margin-left: 10px;
+		border-bottom: 2px solid #ccc;
+		box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.3);
+
+		.dashboardTaskAll {
+			padding: 10px 20px 10px 20px;
+			outline: none;
+			border: none;
+			text-decoration: none;
+			background-color: var(--bgGray);
+			font-weight: 800;
+			color: var(--textGray);
+			margin-right: 5px;
+			border-radius: 5px;
+			cursor: pointer;
+			height: 40px;
+		}
+		.activeTab {
+			background-color: var(--bgWhite);
+			color: var(--navBlack);
+			padding: 10px 20px 10px 20px;
+			outline: none;
+			border: none;
+			text-decoration: none;
+			font-weight: 800;
+			margin-right: 5px;
+			border-radius: 5x;
+		}
+	}
+}
+
+.listHeaderTask {
+	display: grid;
+	grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+	align-content: center;
+
+	height: 80px;
+	align-items: center;
+
+	padding: 5px;
+	border-radius: 5px;
+
+	padding-left: 3%;
+	box-shadow: 1px 0px 5px 1px #eaeaea;
+	justify-content: space-around;
+
+	background-color: #efecda;
+	display: grid;
+	border-bottom: 2px solid #ccc;
+	box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.3);
+
+	.listHeadings {
+		display: flex;
+		// padding-left: 20px;
+		color: #2a3644;
+		align-items: center;
+		justify-content: left;
+		padding-left: 10px;
+		height: 100%;
+		padding-left: 10px;
+		font-weight: 300;
+	}
+}
+
+.search {
+	padding-left: 500px;
+	padding-top: 10px;
+}

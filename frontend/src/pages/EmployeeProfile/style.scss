@@ -1,0 +1,359 @@
+.employeeProfileWrapper {
+	width: 100%;
+	height: 100%;
+	padding: 20px;
+	overflow: hidden;
+
+	.employeeDashboard {
+		background-image: url("/src/assets/KoYns-Logo.png");
+		background-repeat: no-repeat;
+		background-position: 800px 400px; 
+		background-size:1000px;
+		// background-color: #f1eedd;
+		
+		width: 100%;
+		height: 100%;
+		padding: 10px;
+		display: flex;
+		flex-direction: column;
+	
+		justify-content: space-between;
+		
+
+		.employeeDetailsWrapper {
+			border-radius: 20px;
+			display: flex;
+			height: 80%;
+			background-color: transparent;
+			justify-content: space-between;
+
+			.employeeProfileWrapper {
+				display: flex;
+				flex-direction: column;
+				padding: 10px;
+				width: 30%;
+				height: 100%;
+				align-items: center;
+				justify-content: center;
+				background-color: var(--bgWhite);
+				border-radius: 10px;
+
+				.employeeProfilePage {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-content: space-between;
+					height: 100%;
+					width: 100%;
+					padding: 10px 5px 10px 5px;
+
+					.employeeDetailsGrid {
+						display: grid;
+						grid-template-rows: 1fr 1fr 1fr;
+						grid-template-columns: 1fr 1fr;
+						width: 100%;
+						height: 100%;
+						padding: 20px;
+						background-color: var(--bgWhite);
+						border-radius: 10px;
+
+						.employeeDetailBlock {
+							display: flex;
+							flex-direction: column;
+							// justify-content: center;
+							// align-items: center;
+							// padding-left: 10px;
+
+							h4 {
+								color: var(--textGray);
+								font-weight: 800;
+								padding: 10px 5px 10px 0px;
+							}
+
+							p {
+								color: var(--textBlack);
+								font-weight: 500;
+								padding: 10px 5px 10px 0px;
+							}
+						}
+					}
+
+					.employeeNameText,
+					.totalTasksProfile h4,
+					.pendingTasksProfile h4 {
+						color: var(--textBlack);
+						font-weight: 800;
+						padding: 5px 0px 5px 0px;
+					}
+
+					.employeeMailText,
+					.totalTasksProfile p,
+					.pendingTasksProfile p {
+						color: var(--textGray);
+						padding: 5px 0px 5px 0px;
+					}
+
+					.totalBounty {
+						font-size: 18px;
+						display: flex;
+						color: var(--koynsText);
+						font-weight: 800;
+						padding: 10px 5px 0px 5px;
+
+						.bountyValue {
+							padding: 0px 5px 0px 5px;
+							color: #a49464;
+						}
+					}
+				}
+
+				.employeeProfilePage p,
+				.employeeProfilePage h4 {
+					display: flex;
+					justify-content: center;
+				}
+
+				.employeeProfilePage img {
+					height: 150px;
+					width: 150px;
+				}
+
+				// .totalBounty {
+				// }
+			}
+
+			.employeeDetailsGrid {
+				display: grid;
+				grid-template-rows: 1fr 1fr;
+				grid-template-columns: 1fr 1fr 1fr;
+				width: 65%;
+				height: 100%;
+				padding: 20px;
+				background-color: var(--bgWhite);
+				border-radius: 10px;
+
+				.employeeDetailBlock {
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					padding-left: 10px;
+
+					.tierBadge {
+						height: 40px;
+						width: 40px;
+					}
+
+					h4 {
+						color: var(--textGray);
+						font-weight: 800;
+						padding: 10px 5px 10px 5px;
+					}
+
+					p {
+						color: var(--textBlack);
+						font-weight: 500;
+						padding: 10px 5px 10px 5px;
+					}
+				}
+			}
+			.taskCountWrapper {
+				display: flex;
+				flex-direction: row;
+				width: 68%;
+				height: 100%;
+				background-color: rgba(255, 255, 255, 0.897);
+
+				.taskCounter {
+					display: flex;
+					flex-direction: column;
+					width: 30%;
+					height: 100%;
+					justify-content: space-between;
+
+					.pendingTaskWrapper {
+						width: 100%;
+						height: 100%;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						flex-direction: column;
+						// border: thin;
+						
+						background: linear-gradient(82.59deg, #e43d1f 0%, #b22222 100%);
+						box-shadow: 0 8px 8px -2px #ca5d59;
+						border-radius: 30px;
+						margin:20px;
+						gap: 20px;
+						
+						// border-top: 4px solid #1a030e ;
+					}
+					.pendingTaskWrapper h3{
+						color: #FFFDFE;
+
+					}
+					.pendingTaskWrapper p{
+						font-size: 50px;
+						color: #FFFDFE;
+						
+					}
+					
+					.completedTaskWrapper {
+						width: 100%;
+						height: 100%;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						flex-direction: column;
+						border: thin;
+						background: linear-gradient(82.59deg, #00c48c 0%, #00a173 100%);
+						box-shadow: 0 8px 8px -2px #95d683;
+						border-radius: 30px;
+						margin:20px;
+						gap: 20px;
+						
+						
+					}
+					.completedTaskWrapper h3{
+						color: #FFFDFE;
+
+					}
+					.completedTaskWrapper p{
+						color: #FFFDFE;
+						font-size: 50px;
+						
+
+					}
+
+					.totalTaskWrapper {
+						width: 100%;
+						height: 100%;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						flex-direction: column;
+						border: thin;
+						background: linear-gradient(82.59deg, #a7a7a7 0%, #808080 100%);
+						box-shadow: 0 8px 8px -2px rgb(168, 167, 167);
+						border-radius: 30px;
+						margin:20px;
+						gap: 20px;
+						font-size: large;
+						
+					}
+					.totalTaskWrapper h3{
+						color: #FFFDFE;
+					}
+					.totalTaskWrapper p{
+						font-size: 50px;
+						color: #FFFDFE;
+					}
+
+
+				}
+				.taskGraph {
+					width: 70%;
+					padding: 100px;
+
+					svg {
+						overflow: visible;
+					}
+				}
+			}
+		}
+
+		.employeeTasksWrapper {
+			display: flex;
+			flex-direction: row;
+			padding: 30px 10px 30px 10px;
+			height: 15%;
+			background-color: var(--bgWhite);
+			border-radius: 10px;
+			.currentTier {
+				width: 25%;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				border: thin;
+				border-radius: 10px;
+				background-color: #F2F5FA;
+				margin-left: 10px;
+				margin-right: 10px;
+
+				.platinumCountWrapper {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					width: 100%;
+					.platinumCount {
+						width: 50px;
+						height: 50px;
+					}
+				}
+			}
+			.bounty {
+				width: 25%;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				border: thin;
+				border-radius: 10px;
+				background-color: #F2F5FA;
+				margin-left: 10px;
+				margin-right: 10px;
+
+				.bountyCountWrapper{
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					width: 100%;
+					gap: 10px;
+					margin-top: 10px;
+					
+					.bountyCount {
+						width: 30px;
+						height: 30px;
+						
+					}
+
+				}
+
+			}
+			.rewards {
+				width: 25%;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				border: thin;
+				border-radius: 10px;
+				background-color: #F2F5FA;
+				margin-left: 10px;
+				margin-right: 10px;
+				.rewardCountWrapper{
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					width: 100%;
+					gap: 10px;
+					.rewardCount {
+						width: 30px;
+						height: 30px;
+					}
+
+				}
+			}
+			.requestButton {
+				width: 25%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 10px;
+				margin: 10px;
+
+			}
+		}
+	}
+}

@@ -17,7 +17,7 @@ export class CreateComementDto {
 	fileUrl: string;
 
 	@IsOptional()
-	@IsNumber()
+	@IsString()
 	mentionCommentId: number;
 }
 
@@ -29,4 +29,10 @@ export class ReviewCommentDto {
 	@IsOptional()
 	@IsNumber()
 	reviewRewardBounty: number;
+}
+
+export class HrRequestDto {
+	@IsNotEmpty()
+	@IsEnum(ReviewStatus)
+	reviewStatus: ReviewStatus;
 }

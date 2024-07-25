@@ -15,6 +15,9 @@ class TaskParticipants extends AbstractEntity {
 	@Column()
 	contribution: number;
 
+	@Column({ nullable: true })
+	specialContribution: number;
+
 	@Column()
 	employeeId: number;
 

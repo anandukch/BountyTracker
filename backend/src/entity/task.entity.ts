@@ -38,9 +38,9 @@ class Task extends AbstractEntity {
 	@Column()
 	totalBounty: number;
 
-	@Column()
-	startDate: Date;
-	
+	@Column({ nullable: true })
+	currentContribution: number;
+
 	@Column()
 	deadLine: Date;
 

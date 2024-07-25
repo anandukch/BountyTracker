@@ -1,12 +1,12 @@
 import { Outlet } from "react-router-dom";
 import "./styles.scss";
-import logo from "../../assets/KoYns-Logo.png";
+// import logo from "../../assets/KoYns-Logo.png";
+import logo from "../../assets/logo.jpg";
 import text from "../../assets/KoYns-Text.png";
 import { useSelector } from "react-redux";
 import Toast from "../Toast/customToast";
 const Hero = () => {
 	const toastMessages = useSelector((state) => state.toasts.toastMessages);
-	console.log(toastMessages);
 
 	return (
 		<>
