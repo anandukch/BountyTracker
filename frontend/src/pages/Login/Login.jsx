@@ -25,8 +25,8 @@ const Login = () => {
 
 	useEffect(() => {
 		if (isError) {
-			createToastError(dispatch, error.data.message);
-			error.errors?.map((message) => createToastError(dispatch, message));
+			createToastError(dispatch, error?.data?.message);
+			error?.errors?.map((message) => createToastError(dispatch, message));
 		}
 	}, [isError, error, dispatch]);
 

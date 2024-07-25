@@ -23,6 +23,7 @@ const RequestList = () => {
 		const data = {
 			employeeId: props.id,
 			requestId: props.commentId,
+			status:props.status
 		};
 		console.log(data);
 		approve(data);
@@ -40,20 +41,6 @@ const RequestList = () => {
 		<div className="requestWrap">
 			<div className="wrapHeading">
 				<h1>Requests List</h1>
-				<div className="searchSort">
-					<Search />
-					<div className="sort">
-						<label></label>
-						<img src={IconFilter} alt="filter"></img>
-						<select id="tier" name="tier">
-							<option value="" disabled selected>
-								Filter
-							</option>
-							<option value="high">Request Time ▼</option>
-							<option value="low">Request Time ▲</option>
-						</select>
-					</div>
-				</div>
 			</div>
 			<div className="listWrapper">
 				<div className="listHeader">
@@ -70,8 +57,11 @@ const RequestList = () => {
 								id={request.employee.id}
 								requestTime={formatDate(request.createdAt)}
 								tier={request.currentTier}
-								onApprove={({ id: id, commentId: commentId }) =>
-									handleApprove({ id: id, commentId: commentId })
+								onApprove={({ id: id, commentId: commentId, status: status }) =>
+									handleApprove({ id: id, commentId: commentId, status: status })
+								}
+								onReject={({ id: id, commentId: commentId, status: status }) =>
+									handleReject({ id: id, commentId: commentId, status: status })
 								}
 								commentId={request.id}
 							/>

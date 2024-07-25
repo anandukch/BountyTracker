@@ -1,6 +1,6 @@
-import { apiWithEmployeeTag } from "./baseApi";
+import { apiWithTags } from "./baseApi";
 
-export const employeeApi = apiWithEmployeeTag.injectEndpoints({
+export const employeeApi = apiWithTags.injectEndpoints({
 	endpoints: (builder) => ({
 		getEmployeeList: builder.query({
 			query: () => "/employees",
@@ -18,22 +18,22 @@ export const employeeApi = apiWithEmployeeTag.injectEndpoints({
 		getEmployee: builder.query({
 			query: (id) => `/employees/${id}`,
 
-			providesTags: ["EMPLOYEE"],
+			providesTags: ["PROFILE"],
 		}),
 
 		getProfile: builder.query({
 			query: () => "/employees/profile",
-			providesTags: ["EMPLOYEE"],
+			providesTags: ["PROFILE"],
 		}),
 
 		getEmployeeCurrentTasks: builder.query({
 			query: () => "/employees/tasks",
-			providesTags: ["EMPLOYEE"],
+			providesTags: ["PROFILE"],
 		}),
 
 		getEmployeeCreatedTasks: builder.query({
 			query: () => "/tasks/created",
-			providesTags: ["EMPLOYEE"],
+			providesTags: ["PROFILE"],
 		}),
 
 		login: builder.mutation({
@@ -42,13 +42,13 @@ export const employeeApi = apiWithEmployeeTag.injectEndpoints({
 				method: "POST",
 				body: data,
 			}),
-			invalidatesTags: ["EMPLOYEE_LIST", "EMPLOYEE"],
+			invalidatesTags: ["EMPLOYEE_LIST", "PROFILE"],
 		}),
 		redeemReward: builder.mutation({
-			query: ({reward} ) => ({
+			query: ({ reward }) => ({
 				url: "/employees/reward",
 				method: "POST",
-				body: {reward},
+				body: { reward },
 			}),
 			invalidatesTags: ["REDEEM"],
 		}),
@@ -57,12 +57,12 @@ export const employeeApi = apiWithEmployeeTag.injectEndpoints({
 			providesTags: ["REDEEM"],
 		}),
 		approveRedeemRequest: builder.mutation({
-			query: ({ employeeId, requestId }) => ({
+			query: ({ employeeId, requestId, status }) => ({
 				url: `/employees/redeem`,
 				method: "PATCH",
-				body: { employeeId, requestId },
+				body: { employeeId, requestId, status },
 			}),
-			invalidatesTags: ["EMPLOYEE", "REDEEM"],
+			invalidatesTags: ["PROFILE", "REDEEM"],
 		}),
 	}),
 });
