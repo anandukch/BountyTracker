@@ -8,18 +8,12 @@ import { Loader } from "../../components/Loader/Loader";
 import { formatDate } from "../../utils/date.utils";
 import { VictoryLabel, VictoryPie } from "victory";
 import platinumBadge from "../../assets/platinumMedal.svg";
-import koynLogo from "../../assets/KoYns-Logo.png";
-import rewardsLogo from "../../assets/rewards.svg";
 import {
 	useGetEmployeeCurrentTasksQuery,
 	useGetProfileQuery,
 	useGetRedeemRequestsQuery,
 	useRedeemRewardMutation,
 } from "../../api/employeeApi";
-import platinumBadge from "../../assets/platinumMedal.svg";
-import { useEffect, useState } from "react";
-import { Loader } from "../../components/Loader/Loader";
-import { formatDate } from "../../utils/date.utils";
 import ListButton from "../../components/Button/ListButton";
 import { addLoggedState } from "../../store/employeeReducer";
 import { PieChart } from "react-minimal-pie-chart";
@@ -52,7 +46,7 @@ const EmployeeProfile = () => {
 			const redeemReq = redeemRequests?.data.filter((request) => {
 				return request.employee.id === employeeData.id;
 			});
-			if(redeemReq.length > 0) setRedeemDisable(true);
+			if (redeemReq.length > 0) setRedeemDisable(true);
 
 			// if (!redeemReq || employeeData.details.rewards === 0) setRedeemDisable(true);
 			// dispatch(addLoggedState({ role: employeeData.role, name: employeeData.name }));
@@ -79,13 +73,13 @@ const EmployeeProfile = () => {
 						<div className="employeeProfilePage">
 							<img src={profilImg} alt="Profile" />
 							<h3 className="employeeNameText">{employee.name}</h3>
-							 
-							<div className="heads">Details
-							<span className="line"></span>
-							<span className="text"> </span>
+
+							<div className="heads">
+								Details
+								<span className="line"></span>
+								<span className="text"> </span>
 							</div>
 							<div className="employeeDetailsGrid">
-								
 								{employeeDetails.map((detail) => (
 									<DetailBlock key={detail.header} header={detail.header} content={detail.content} />
 								))}
