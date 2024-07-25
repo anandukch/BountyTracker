@@ -16,18 +16,6 @@ import ReviewPage from "./pages/ReviewPage/ReviewPage.jsx";
 import NotFound from "./pages/NotFound/NotFound.jsx";
 
 const App = () => {
-	// const { data, isSuccess } = useGetProfileQuery();
-
-	// const dispatch = useDispatch();
-
-	// useEffect(() => {
-	// 	if (isSuccess) {
-	// 		const { data: employeeData } = data;
-	// 		console.log(employeeData);
-	// 		dispatch(addLoggedState(employeeData));
-	// 	}
-	// }, [data, dispatch, isSuccess]);
-
 	const router = createBrowserRouter([
 		{
 			path: "/",
@@ -46,7 +34,7 @@ const App = () => {
 					element: <RegisterEmployee />,
 				},
 			],
-			errorElement:<NotFound/>
+			errorElement: <NotFound />,
 		},
 
 		{

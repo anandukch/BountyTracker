@@ -19,13 +19,11 @@ const RequestList = () => {
 	const { data: redeemRequests, isSuccess } = useGetRedeemRequestsQuery();
 	const [approve, { isSuccess: approveSuccess }] = useApproveRedeemRequestMutation();
 	const handleApprove = (props) => {
-		console.log(props);
 		const data = {
 			employeeId: props.id,
 			requestId: props.commentId,
 			status: props.status,
 		};
-		console.log(data);
 		approve(data);
 	};
 

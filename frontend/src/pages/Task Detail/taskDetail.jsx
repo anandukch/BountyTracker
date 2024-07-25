@@ -104,7 +104,7 @@ const TaskDetail = () => {
 		setComment(e.target.value);
 	};
 	const handleUpload = (e) => {
-		// console.log("file");
+		// .log("file");
 		uploadFile(e.target.files[0]);
 	};
 	const handleReply = (id) => {
@@ -128,8 +128,6 @@ const TaskDetail = () => {
 
 	useEffect(() => {
 		if (taskSuccess) {
-			// console.log("effect 1");
-			// console.log(taskDetail.data);
 			const participants = taskDetail.data.participants;
 			setParticipantList(participants);
 			if (taskDetail.data.createdBy.email === user.email) {
@@ -149,7 +147,6 @@ const TaskDetail = () => {
 	useEffect(() => {
 		getTaskById(taskId);
 		if (joinSuccess) {
-			// console.log("effect 2");
 			dispatch(addJoinedStatus({ status: "joined" }));
 			setJoined(true);
 		}
@@ -157,7 +154,6 @@ const TaskDetail = () => {
 
 	useEffect(() => {
 		if (commentSuccess) {
-			// console.log(commentsData.data);
 			setCommentList(commentsData.data);
 		}
 	}, [commentsData, commentSuccess]);
@@ -274,7 +270,6 @@ const TaskDetail = () => {
 								<div className="commentListWrapper">
 									<div className="commentList">
 										{commentList?.map((comment) => {
-											// console.log(comment);
 											return comment.commentType === "Normal" ? (
 												<CommentComponent
 													comment={comment}

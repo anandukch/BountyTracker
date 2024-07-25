@@ -49,10 +49,6 @@ class TaskService {
 	};
 
 	updateTask = async (id: number, task: Partial<Task>) => {
-		// const existingTask = await this.taskRepository.findOneBy({ id });
-		// console.log(existingTask);
-		// existingTask.status = task.status;
-		// existingTask.currentParticipants = task.currentParticipants;
 		return this.taskRepository.update(id, task);
 	};
 

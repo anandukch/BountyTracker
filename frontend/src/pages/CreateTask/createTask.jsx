@@ -86,7 +86,6 @@ const CreateTask = () => {
 
 	useEffect(() => {
 		if (isError) {
-			console.log(error.data);
 			dispatch(
 				addToastMessage({
 					id: v4(),

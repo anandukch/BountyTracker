@@ -51,7 +51,6 @@ const ReviewPage = () => {
 				employeeId: participant.id,
 				rewardedBounty: participant.rewardedBounty,
 			}));
-			// console.log(participantContributions);
 			navigate(`/tasks/${taskId}`);
 			await completeTask({ taskId, participantContributions })
 				.then(() => {
@@ -60,8 +59,6 @@ const ReviewPage = () => {
 				.catch((error) => {
 					createToastError(dispatch, error);
 				});
-
-			// TODO: logic to submit user bounty
 		}
 	};
 
@@ -131,8 +128,8 @@ const ReviewPage = () => {
 				<div>Review Task</div>
 				{/* <div className="split">
 						Split Equally */}
-					
-					{/* </div> */}
+
+				{/* </div> */}
 			</div>
 
 			<main className="reviewMain">
@@ -147,18 +144,12 @@ const ReviewPage = () => {
 						<div className="Remaining Bounty">{`Remaining Bounty: ${remainingBounty}`}</div>
 					</div>
 				</section>
-			
-				<section className="contributionSection">
-				<div className="contributionHeading">
-					<div className="participantcont">Participant Contributions</div>
-					<Button
-								text="Split Equally"
-								isPrimary={true}
-								onClick={handleSplitEvenly}
-			
-							/> 
 
-				</div>
+				<section className="contributionSection">
+					<div className="contributionHeading">
+						<div className="participantcont">Participant Contributions</div>
+						<Button text="Split Equally" isPrimary={true} onClick={handleSplitEvenly} />
+					</div>
 					{isSuccess &&
 						participantList.map((participant, index) => (
 							<ParticipantContribution

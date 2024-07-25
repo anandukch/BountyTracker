@@ -153,7 +153,6 @@ class TaskController {
 				message: "Tasks created successfully",
 			});
 		} catch (error) {
-			console.log(error);
 
 			next(error);
 		}
@@ -166,7 +165,6 @@ class TaskController {
 				throw new HttpException(400, "Task not found");
 			}
 			const participantContributions = req.body.participantContributions;
-			// console.log(participantContributions);
 
 			const response = await this.taskService.completeTask(parseInt(taskId), participantContributions);
 			res.status(200).json({
@@ -237,7 +235,6 @@ class TaskController {
 			}
 
 			const fileName = req.file ? req.file.filename : null;
-			console.log("filename", fileName);
 
 			await this.commentService.createComment(parseInt(taskId), employee, commentDto, fileName);
 
@@ -277,7 +274,6 @@ class TaskController {
 	public updateTask = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			const { taskId } = req.params;
-			console.log(taskId);
 			if (!taskId) {
 				throw new HttpException(400, "Task not found");
 			}

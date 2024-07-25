@@ -2,22 +2,12 @@ import DetailBlock from "../../components/DetailBlock";
 import "./style.scss";
 import Button from "../../components/Button/Button";
 import profilImg from "../../assets/profile.png";
-import TaskDataHeader from "../../components/TaskDataHeader";
 import { useEffect, useState } from "react";
 import { Loader } from "../../components/Loader/Loader";
 import { formatDate } from "../../utils/date.utils";
-import { VictoryLabel, VictoryPie } from "victory";
+import { VictoryPie } from "victory";
 import platinumBadge from "../../assets/platinumMedal.svg";
-import {
-	useGetEmployeeCurrentTasksQuery,
-	useGetProfileQuery,
-	useGetRedeemRequestsQuery,
-	useGetUserRedeemQuery,
-	useRedeemRewardMutation,
-} from "../../api/employeeApi";
-import ListButton from "../../components/Button/ListButton";
-import { addLoggedState } from "../../store/employeeReducer";
-import { PieChart } from "react-minimal-pie-chart";
+import { useGetProfileQuery, useGetUserRedeemQuery, useRedeemRewardMutation } from "../../api/employeeApi";
 import koynLogo from "../../assets/KoYns-Logo.png";
 import rewardsLogo from "../../assets/rewards.svg";
 import { useNavigate } from "react-router-dom";
@@ -41,37 +31,21 @@ const EmployeeProfile = () => {
 				{ header: "Gender", content: employeeData.details.gender },
 				{ header: "Phone", content: employeeData.details.phoneNo },
 			]);
-
-			// if (redeemRequests?.data.length > 0) setRedeemDisable(true);
-
-			// const redeemReq = redeemRequests?.data.filter((request) => {
-			// 	return request.employee.id === employeeData.id;
-			// });
-			// if(redeemReq.length > 0) setRedeemDisable(true);
-
-			// if (!redeemReq || employeeData.details.rewards === 0) setRedeemDisable(true);
-			// dispatch(addLoggedState({ role: employeeData.role, name: employeeData.name }));
 		}
 	}, [data, isSuccess]);
 
 	useEffect(() => {
 		if (redeemSuccessGet) {
-			if (redeemRequests?.data.length != 0 || employee.details?.rewards==0) {
+			if (redeemRequests?.data.length != 0 || employee.details?.rewards == 0) {
 				setRedeemDisable(true);
 			}
-			
-			
 		}
 	}, [employee, redeemRequests, redeemSuccessGet]);
 	const navigate = useNavigate();
 
-	const [addClass, setAddClass] = useState(0);
 	const handleRedeem = () => {
 		const reward = employee.details.rewards;
 		redeemReward({ reward });
-		if (redeemSuccess) {
-			console.log("redeem request sent");
-		}
 	};
 
 	return (
@@ -127,18 +101,20 @@ const EmployeeProfile = () => {
 							</div>
 						</div>
 						<div className="taskGraph">
-							<VictoryPie
-								colorScale={["tomato", "orange", "gold", "cyan", "navy"]}
-								animate={{ duration: 2000 }}
-								data={[
-									{ x: "Pending", y: employee.pendingTasks || 0, label: "Pending" },
-									{ x: "Completed", y: employee.completedTasks || 0, label: "Completed" },
-								]}
-								innerRadius={90}
-								labelPosition={({ index }) => (index ? "centroid" : "parallel")}
-								labelRadius={({ innerRadius }) => innerRadius + 110} // Adjust label radius
-								padAngle={4}
-							/>
+							{employee.pendingTasks != 0 || employee.completedTasks != 0 && (
+								<VictoryPie
+									colorScale={["tomato", "orange", "gold", "cyan", "navy"]}
+									animate={{ duration: 2000 }}
+									data={[
+										{ x: "Pending", y: employee.pendingTasks || 0, label: "Pending" },
+										{ x: "Completed", y: employee.completedTasks || 0, label: "Completed" },
+									]}
+									innerRadius={90}
+									labelPosition={({ index }) => (index ? "centroid" : "parallel")}
+									labelRadius={({ innerRadius }) => innerRadius + 110} // Adjust label radius
+									padAngle={4}
+								/>
+							)}
 						</div>
 					</div>
 				</div>

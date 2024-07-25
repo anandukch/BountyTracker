@@ -8,7 +8,6 @@ const TaskColumnData = (props) => {
 	};
 
 	if (hasStatusBackground) {
-		// Add additional styles when there is a status background
 		dynamicStyles = {
 			...dynamicStyles,
 			border: `2px solid ${props.color}`,
@@ -23,7 +22,6 @@ const TaskColumnData = (props) => {
 		};
 	}
 
-	// console.log(props.content);
 
 	return (
 		<div className="taskDataColumn" style={dynamicStyles}>

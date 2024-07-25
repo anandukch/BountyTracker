@@ -21,7 +21,6 @@ const taskApi = apiWithTags.injectEndpoints({
 		}),
 		createComment: builder.mutation({
 			query: (data) => {
-				// console.log(data);
 				return {
 					url: `/tasks/${parseInt(data.taskId)}/comments`,
 					method: "POST",
@@ -50,7 +49,6 @@ const taskApi = apiWithTags.injectEndpoints({
 
 		completeTask: builder.mutation({
 			query: ({ taskId, participantContributions }) => {
-				// console.log(taskId, participantContributions);
 				return {
 					url: `tasks/complete/${parseInt(taskId)}`,
 					method: "PATCH",

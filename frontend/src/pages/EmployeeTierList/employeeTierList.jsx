@@ -13,14 +13,12 @@ import { Loader } from "../../components/Loader/Loader";
 const EmployeeTierList = () => {
 	const [list, setList] = useState([]);
 	const { data, isLoading, isSuccess } = useGetEmployeeListQuery();
-	console.log(data);
 	useEffect(() => {
 		if (isSuccess) {
 			const formattedData = data.data.map((employee) => ({
 				...employee,
 				birthday: formatDate(employee.details.birthday),
 			}));
-			console.log(formattedData);
 			setList(formattedData);
 		}
 	}, [data, isSuccess]);
@@ -65,7 +63,6 @@ const EmployeeTierList = () => {
 				</div>
 				<div className="listDataTier">
 					{list.map((employee) => {
-						console.log(employee);
 						return (
 							<GridDataColumn
 								key={employee.id}

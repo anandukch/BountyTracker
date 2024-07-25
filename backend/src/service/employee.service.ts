@@ -139,7 +139,6 @@ class EmployeeService {
 
 		task.currentParticipants += 1;
 		const updatedTask = await this.taskService.updateTask(taskId, task);
-		console.log(updatedTask);
 
 		const taskParticipant = await this.taskParticipantService.create(task, employee);
 
@@ -183,8 +182,6 @@ class EmployeeService {
 	updateBounty = async (employeeId: number, bounty: number) => {
 		const employee = await this.employeeRespository.findOneBy({ id: employeeId }, ["details"]);
 
-		console.log(employee);
-		
 		if (!employee) {
 			throw new EntityNotFoundException("Employee not found");
 		}
@@ -217,7 +214,6 @@ class EmployeeService {
 		await this.employeeRespository.save(employee);
 		return;
 	};
-	
 }
 
 export default EmployeeService;

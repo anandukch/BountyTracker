@@ -30,7 +30,6 @@ server.use(errorMiddleware);
 	try {
 		await dataSource.initialize();
 		console.log("Database connected");
-		
 	} catch (e) {
 		console.log("Failed", e);
 		process.exit(1);

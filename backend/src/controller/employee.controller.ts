@@ -2,22 +2,11 @@ import { NextFunction, Request, Response, Router } from "express";
 import EmployeeService from "../service/employee.service";
 import { RequestWithRole } from "../utils/requestWithRole";
 import HttpException from "../exceptions/http.exceptions";
-import { Role } from "../utils/role.enum";
-import { plainToInstance } from "class-transformer";
-import { validate } from "class-validator";
 import { CreateEmployeeDto } from "../dto/employee.dto";
-import getValidationErrorConstraints from "../utils/validationErrorConstraints";
 import authorize from "../middleware/authorize.middleware";
-import ValidationException from "../exceptions/validationException";
 import { compareDates } from "../utils/date.utils";
 import { TaskStatusEnum } from "../utils/taskStatus.enum";
 import validationMiddleware from "../middleware/validate.middleware";
-import { CreateComementDto, HrRequestDto } from "../dto/comment.dto";
-import CommentService from "../service/comment.service";
-import { commentService } from "../routes/task.routes";
-import Comment from "../entity/comment.entity";
-import ReviewStatus from "../utils/reviewStatus.enum";
-import { log } from "console";
 import RedeemRequestService from "../service/redeemRequest.service";
 class EmployeeController {
 	public router: Router;
@@ -211,8 +200,6 @@ class EmployeeController {
 
 	public requestRewards = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
-			// await commentService.hrRequestComment(req.user);
-			console.log(req.body);
 			await this.redeemRequestService.sendRedeemRequest(req.user, req.body.reward);
 
 			res.status(201).json({
