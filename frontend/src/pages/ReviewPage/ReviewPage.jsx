@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { addToastMessage } from "../../store/toastReducer";
 import { v4 } from "uuid";
 import { createToastError } from "../../utils/createToastError";
+import Button from "../../components/Button/Button";
 
 const ReviewPage = () => {
 	const [participantList, setParticipantList] = useState([]);
@@ -114,7 +115,10 @@ const ReviewPage = () => {
 			{/* {isLoading && <Loader />} */}
 			<div className="wrapHeading">
 				<div>Review Task</div>
-				<div className="balancebounty">Balance KoYnz:</div>
+				{/* <div className="split">
+						Split Equally */}
+					
+					{/* </div> */}
 			</div>
 
 			<main className="reviewMain">
@@ -123,21 +127,24 @@ const ReviewPage = () => {
 						<h2 className="taskTitle">{`Task: ${taskDetails.name}`}</h2>
 						<h2 className="taskId">{`Task #${taskDetails.id}`}</h2>
 					</span>
-					<p className="taskDetails">{`${taskDetails.description}`}</p>
-					<span>
-						<p>{`Total Bounty: ${taskDetails.totalBounty}`}</p>
-						<p>{`Remaining Bounty: ${remainingBounty}`}</p>
-					</span>
-				</section>
-				<div className="contributionHeading">
-					<div>Participant Contributions</div>
-					<div className="split" onClick={handleSplitEvenly}>
-						Split Equally
+					<div className="taskdetails">{`${taskDetails.description}`}</div>
+					<div className="footer">
+						<div className="Total Bounty"> {`Total Bounty: ${taskDetails.totalBounty}`}</div>
+						<div className="Remaining Bounty">{`Remaining Bounty: ${remainingBounty}`}</div>
 					</div>
-
-					<div>Bounty</div>
-				</div>
+				</section>
+			
 				<section className="contributionSection">
+				<div className="contributionHeading">
+					<div className="participantcont">Participant Contributions</div>
+					<Button
+								text="Split Equally"
+								isPrimary={true}
+								onClick={handleSplitEvenly}
+			
+							/> 
+
+				</div>
 					{isSuccess &&
 						participantList.map((participant, index) => (
 							<ParticipantContribution
@@ -160,7 +167,7 @@ const ReviewPage = () => {
 							/>
 						))}
 				</section>
-				<div className="split" onClick={handleContributeConfirm}>
+				<div className="confirm" onClick={handleContributeConfirm}>
 					Confirm
 				</div>
 			</main>

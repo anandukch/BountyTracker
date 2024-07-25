@@ -9,29 +9,55 @@
 	.CustomModal {
 		height: 400px;
 		width: 600px;
-		background-color: white;
+		background-color: #f5ebb1;
 		border-radius: 10px;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: space-between;
 		position: relative;
-
+    
 		&.shrink {
-			min-height: fit-content;
+
+			.content
+			{
+			margin-right: 300px;
+			  background-color: rgba(255, 255, 255, 0.425);
+			   padding:50px;
+			   width:max-content;
+			   margin-top: 5px;
+			   text-align: center;  
+			   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);  
+			   transform: translate(0, 0);  
+			   transition: transform 0.3s ease;  
+			   border-radius: 10px;
+			}
+		 
+			// min-height: fit-content;
+			// padding-bottom: 20px;
+			// border-color:black;
+			// border-style: solid;
+			display: flex;  
+			flex-direction: column;
+			align-items: center;  
+			justify-content: center;  
+			min-height: fit-content;  
 			padding-bottom: 20px;
+			border: 1px solid black; 
 		}
 		img {
-			position: absolute;
-			right: 0;
-			margin: 20px;
-			height: 20px;
-			cursor: pointer;
+		    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 20px;
+    height: 20px;
+    cursor: pointer;
 		}
 		header {
 			padding: 30px;
 			font-size: 24px;
 			font-weight: 700;
+			 
 		}
 
 		.modalButtons {

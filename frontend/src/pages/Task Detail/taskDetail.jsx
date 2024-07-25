@@ -182,7 +182,7 @@ const TaskDetail = () => {
 				</span>
 				<span>
 					<h3>Due : {formatDate(taskDetail?.data.deadLine)}</h3>
-					{formatDate(new Date()) < formatDate(taskDetail?.data.deadLine) && isCreator && (
+					{formatDate(new Date()) < formatDate(taskDetail?.data.deadLine) || isCreator && (
 						<Button text="Complete Task" isPrimary={true} onClick={completeTask} />
 					)}
 				</span>
