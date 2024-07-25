@@ -1,13 +1,13 @@
 .employeeDashboardWrapper {
 	width: 100%;
 	height: 100%;
-	padding: 20px;
+
 	overflow: hidden;
 
 	.employeeDashboard {
 		width: 100%;
 		height: 100%;
-		padding: 10px;
+		padding: 20px;
 		display: flex;
 		flex-direction: column;
 		background-color: transparent;
@@ -20,8 +20,10 @@
 			// flex-direction: row;
 			align-items: center;
 			justify-content: space-between;
-			font-size: larger;
+			font-size: xx-large;
 			padding-left: 15px;
+			font-weight: bolder;
+			// margin-left: 20px;
 		}
 		.employeeDetailsWrapper {
 			border-radius: 20px;
@@ -194,11 +196,12 @@
 				// border-bottom: 2px solid #ccc;
 				// box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.3);
 			}
-
 			.taskBarWrapper {
 				display: flex;
-				padding: 15px;
+				align-items: center;
+				justify-content: center;
 				width: fit-content;
+				gap: 5px;
 				padding: 5px;
 				background-color: var(--bgGray);
 				border-radius: 10px;
@@ -217,12 +220,12 @@
 					background-color: var(--bgGray);
 					font-weight: 800;
 					color: var(--textGray);
-					margin-right: 5px;
+					// margin-right: 5px;
 					border-radius: 5px;
 					cursor: pointer;
-					height: 50px;
+					height: 35px;
 
-					margin-top: 3px;
+					// margin-top: 3px;
 				}
 
 				.activeTab {
@@ -268,7 +271,7 @@
 							transition: transform 0.2s ease;
 						}
 					}
-					.noTasks{
+					.noTasks {
 						display: flex;
 						align-items: center;
 						justify-content: center;
@@ -280,16 +283,12 @@
 						flex-direction: column;
 						gap: 40px;
 						padding: 40px;
-
-
 					}
-					.noTasksImage{
-						
+					.noTasksImage {
 						height: 10%;
 						width: 10%;
-						
-        				filter: drop-shadow(3px 4px 4px  #2A3644);
-						
+
+						filter: drop-shadow(3px 4px 4px #2a3644);
 					}
 				}
 			}
@@ -299,17 +298,18 @@
 
 .list {
 	display: flex;
-
+	height: 50px;
 	justify-content: left;
 
 	.taskBarWrap0 {
 		background-color: #efecda;
-		padding: 15px;
+		padding: 5px;
 		width: fit-content;
-		padding-top: 14px;
-
+		align-content: center;
+		text-align: center;
+		// padding-top: 14px;
 		border-radius: 10px;
-		margin-left: 10px;
+		// margin-left: 10px;
 		border-bottom: 2px solid #ccc;
 		box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.3);
 
@@ -321,12 +321,14 @@
 			background-color: var(--bgGray);
 			font-weight: 800;
 			color: var(--textGray);
-			margin-right: 5px;
+			// margin-right: 5px;
 			border-radius: 5px;
 			cursor: pointer;
-			height: 40px;
+			height: 35px;
 		}
 		.activeTab {
+			height: 35px;
+			align-content: center;
 			background-color: var(--bgWhite);
 			color: var(--navBlack);
 			padding: 10px 20px 10px 20px;
@@ -334,7 +336,7 @@
 			border: none;
 			text-decoration: none;
 			font-weight: 800;
-			margin-right: 5px;
+			// margin-right: 5px;
 			border-radius: 5x;
 		}
 	}
