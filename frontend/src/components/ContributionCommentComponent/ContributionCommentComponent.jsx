@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import "./ContributionCommentComponent.scss";
-import attach from "../../assets/attachwhite.svg";
+import download from "../../assets/download.svg";
 
 const ContributionCommentComponent = ({ comment }) => {
 	return (
@@ -9,7 +9,11 @@ const ContributionCommentComponent = ({ comment }) => {
 				<div className="contributionCommentHead">{comment.employee.name}</div>
 				<div className="contributionCommentBody">
 					<div className="contributionCommentContent">{comment?.content}</div>
-					{comment.fileUrl && <img src={attach} className="attachmentButton"></img>}
+					{comment.fileUrl && (
+						<button className="attachmentButton">
+							<img src={download}></img>
+						</button>
+					)}
 				</div>
 			</div>
 			<span className="replyLink" onClick={() => {}}>

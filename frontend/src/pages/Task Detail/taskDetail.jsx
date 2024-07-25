@@ -47,7 +47,7 @@ const TaskDetail = () => {
 	// 	// pollingInterval: 2000,
 	// });
 
-	const [getCommentByTaskId, { data: commentsData,isSuccess: commentSuccess }] = useLazyGetCommentsByTaskIdQuery();
+	const [getCommentByTaskId, { data: commentsData, isSuccess: commentSuccess }] = useLazyGetCommentsByTaskIdQuery();
 	const [join, { isSuccess: joinSuccess }] = useJoinTaskMutation();
 	const [createComment] = useCreateCommentMutation();
 	const [completeTaskRequest] = useCompleteTaskMutation();
@@ -284,7 +284,10 @@ const TaskDetail = () => {
 													currentEmployeeEmail={user.email}
 												/>
 											) : (
-												<ContributionCommentComponent comment={comment} />
+												<ContributionCommentComponent
+													comment={comment}
+													handleReplyClick={handleReply}
+												/>
 											);
 										})}
 									</div>
@@ -307,6 +310,14 @@ const TaskDetail = () => {
 										onChange={handleTextArea}
 										value={comment}
 									/>
+									{file && (
+										<div className="mentionShowWrapper">
+											<span className="mentionShow">{`${file.name.toString().slice(0, 10)} attached`}</span>
+											<span className="removeMention" onClick={() => uploadFile(undefined)}>
+												x
+											</span>
+										</div>
+									)}
 									<span className="commentButtons">
 										<div className="contributionFileUploadButton">
 											<label htmlFor="file" className="uploadFileLabel">
@@ -319,9 +330,9 @@ const TaskDetail = () => {
 												<img src={attach} alt="Add attachment" />
 											</label>
 										</div>
-										<div className="sendButton">
+										<button className="sendButton">
 											<img src={send} alt="Send Comment" onClick={handleSend} />
-										</div>
+										</button>
 									</span>
 								</div>
 								<div className="reviewCheckBox">
