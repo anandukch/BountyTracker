@@ -21,8 +21,8 @@ const RequestList = () => {
 	const handleApprove = (props) => {
 		console.log(props);
 		const data = {
-			id: props.id,
-			commentId: props.commentId,
+			employeeId: props.id,
+			requestId: props.commentId,
 		};
 		console.log(data);
 		approve(data);

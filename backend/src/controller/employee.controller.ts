@@ -25,17 +25,17 @@ class EmployeeController {
 		this.router = Router();
 		this.router.get("/tasks/not-joined", authorize(), this.getTasksNotJoinedByEmployee);
 		this.router.get("/reward", this.getRewardComments);
+		this.router.patch("/redeem", this.redeemRewards);
 		this.router.post("/reward", authorize(), this.requestRewards);
 		this.router.get("/profile", authorize(), this.getEmployeeProfile);
 		this.router.get("/tasks", authorize(), this.getEmployeeAssignedTasks);
 		this.router.get("/", authorize(), this.getAllEmployees);
-		this.router.patch("/redeem", this.redeemRewards);
 		this.router.get("/:id", this.getEmployeeByID);
 		this.router.post("/login", this.loginEmployee);
 		this.router.post("/", validationMiddleware(CreateEmployeeDto), this.createEmployee);
 		this.router.post("/tasks/:id", authorize(), this.joinTask);
 		this.router.put("/:employeeId/tasks/:taskId/contributions", authorize(), this.giveContribution);
-		
+
 		// this.router.delete("/:id", this.deleteRedeemRequest);
 	}
 
@@ -211,7 +211,8 @@ class EmployeeController {
 	public requestRewards = async (req: RequestWithRole, res: Response, next: NextFunction) => {
 		try {
 			// await commentService.hrRequestComment(req.user);
-			await this.redeemRequestService.sendRedeemRequest(req.user, req.body.amount);
+			console.log(req.body);
+			await this.redeemRequestService.sendRedeemRequest(req.user, req.body.reward);
 
 			res.status(201).json({
 				success: true,
