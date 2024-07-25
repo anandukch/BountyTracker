@@ -21,7 +21,7 @@ import { PieChart } from "react-minimal-pie-chart";
 const EmployeeProfile = () => {
 	const [employee, setEmployee] = useState({});
 	const [employeeDetails, setEmployeeDetails] = useState([]);
-	const [redeemDisable,setRedeemDisable]=useState(false)
+	const [redeemDisable, setRedeemDisable] = useState(false);
 	const [redeemReward, { isSuccess: redeemSuccess }] = useRedeemRewardMutation();
 	const { data, isLoading, isSuccess } = useGetProfileQuery();
 	const { data: redeemRequests } = useGetRedeemRequestsQuery();
@@ -39,14 +39,15 @@ const EmployeeProfile = () => {
 				{ header: "Phone", content: employeeData.details.phoneNo },
 			]);
 			const redeemReq = redeemRequests?.data.filter((request) => request.employee.id === employeeData.id);
-			if (redeemReq) setRedeemDisable(true)
+			if (redeemReq) setRedeemDisable(true);
 			// dispatch(addLoggedState({ role: employeeData.role, name: employeeData.name }));
 		}
 	}, [data, isSuccess]);
 
 	const [addClass, setAddClass] = useState(0);
 	const handleRedeem = () => {
-		redeemReward();
+		console.log();
+		redeemReward(employee.details.rewards);
 		console.log("handle redeem");
 		if (redeemSuccess) console.log("redeem request sent");
 	};
