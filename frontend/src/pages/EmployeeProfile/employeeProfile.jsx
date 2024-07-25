@@ -12,6 +12,7 @@ import {
 	useGetEmployeeCurrentTasksQuery,
 	useGetProfileQuery,
 	useGetRedeemRequestsQuery,
+	useGetUserRedeemQuery,
 	useRedeemRewardMutation,
 } from "../../api/employeeApi";
 import ListButton from "../../components/Button/ListButton";
@@ -26,7 +27,7 @@ const EmployeeProfile = () => {
 	const [redeemDisable, setRedeemDisable] = useState(false);
 	const [redeemReward, { isSuccess: redeemSuccess }] = useRedeemRewardMutation();
 	const { data, isLoading, isSuccess } = useGetProfileQuery();
-	const { data: redeemRequests } = useGetRedeemRequestsQuery();
+	const { data: redeemRequests, isSuccess: redeemSuccessGet } = useGetUserRedeemQuery();
 
 	useEffect(() => {
 		if (isSuccess) {
@@ -41,18 +42,27 @@ const EmployeeProfile = () => {
 				{ header: "Phone", content: employeeData.details.phoneNo },
 			]);
 
-			if (redeemRequests?.data.length > 0) setRedeemDisable(true);
+			// if (redeemRequests?.data.length > 0) setRedeemDisable(true);
 
-			const redeemReq = redeemRequests?.data.filter((request) => {
-				return request.employee.id === employeeData.id;
-			});
-			if (redeemReq.length > 0) setRedeemDisable(true);
+			// const redeemReq = redeemRequests?.data.filter((request) => {
+			// 	return request.employee.id === employeeData.id;
+			// });
+			// if(redeemReq.length > 0) setRedeemDisable(true);
 
 			// if (!redeemReq || employeeData.details.rewards === 0) setRedeemDisable(true);
 			// dispatch(addLoggedState({ role: employeeData.role, name: employeeData.name }));
 		}
 	}, [data, isSuccess]);
 
+	useEffect(() => {
+		if (redeemSuccessGet) {
+			if (redeemRequests?.data.length != 0 || employee.details?.rewards==0) {
+				setRedeemDisable(true);
+			}
+			
+			
+		}
+	}, [employee, redeemRequests, redeemSuccessGet]);
 	const navigate = useNavigate();
 
 	const [addClass, setAddClass] = useState(0);

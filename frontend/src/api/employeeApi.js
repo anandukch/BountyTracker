@@ -50,7 +50,7 @@ export const employeeApi = apiWithTags.injectEndpoints({
 				method: "POST",
 				body: { reward },
 			}),
-			invalidatesTags: ["REDEEM"],
+			invalidatesTags: ["REDEEM", "PROFILE"],
 		}),
 		getRedeemRequests: builder.query({
 			query: () => "/employees/reward",
@@ -64,10 +64,16 @@ export const employeeApi = apiWithTags.injectEndpoints({
 			}),
 			invalidatesTags: ["PROFILE", "REDEEM"],
 		}),
+
+		getUserRedeem: builder.query({
+			query: () => "/employees/reward/user",
+			providesTags: ["REDEEM"],
+		}),
 	}),
 });
 
 export const {
+	useGetUserRedeemQuery,
 	useGetProfileQuery,
 	useGetEmployeeListQuery,
 	useAddEmployeeMutation,
