@@ -114,6 +114,7 @@ const TaskDetail = () => {
 	useEffect(() => {
 		if (taskSuccess) {
 			console.log("effect 1");
+			console.log(taskDetail.data);
 			const participants = taskDetail.data.participants;
 			setParticipantList(participants);
 			if (taskDetail?.data.createdBy.email === user.email) {
@@ -182,9 +183,10 @@ const TaskDetail = () => {
 				</span>
 				<span>
 					<h3>Due : {formatDate(taskDetail?.data.deadLine)}</h3>
-					{formatDate(new Date()) < formatDate(taskDetail?.data.deadLine) && isCreator && (
-						<Button text="Complete Task" isPrimary={true} onClick={completeTask} />
-					)}
+					{taskDetail &&
+						formatDate(new Date()) < formatDate(taskDetail?.data.deadLine) &&
+						taskDetail.data.status != "Completed" &&
+						isCreator && <Button text="Complete Task" isPrimary={true} onClick={completeTask} />}
 				</span>
 			</div>
 			<div className="data">
@@ -252,7 +254,7 @@ const TaskDetail = () => {
 								<div className="commentListWrapper">
 									<div className="commentList">
 										{commentList?.map((comment) => {
-											console.log(comment);
+											// console.log(comment);
 											return comment.commentType === "Normal" ? (
 												<CommentComponent
 													comment={comment}
