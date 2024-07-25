@@ -102,7 +102,10 @@ const TaskDetail = () => {
 	// 	setContribution("");
 	// };
 	const handleReview = () => {
-		setCommentType("Review");
+		setCommentType((prev) => {
+			if (prev == "Normal") return "Review";
+			return "Normal";
+		});
 	};
 	const handleTextArea = (e) => {
 		setComment(e.target.value);
@@ -339,7 +342,13 @@ const TaskDetail = () => {
 								</div>
 								<div className="reviewCheckBox">
 									<label htmlFor="Review">Mark For Review</label>
-									<input type="checkbox" ref={checkboxRef} name="Review" onChange={handleReview} />
+									<input
+										type="checkbox"
+										ref={checkboxRef}
+										name="Review"
+										onChange={handleReview}
+										checked={commentType === "Review"}
+									/>
 								</div>
 							</div>
 						</div>
