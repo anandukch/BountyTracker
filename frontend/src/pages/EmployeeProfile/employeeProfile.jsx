@@ -41,7 +41,7 @@ const EmployeeProfile = () => {
 				{ header: "Phone", content: employeeData.details.phoneNo },
 			]);
 			const redeemReq = redeemRequests?.data.filter(
-				(request) => request.employee.id === employeeData.id && request.status != "PENDING",
+				(request) => request.employee.id === employeeData.id && request.status != "REQUESTED",
 			);
 			if (!redeemReq || employeeData.details.rewards === 0) setRedeemDisable(true);
 			// dispatch(addLoggedState({ role: employeeData.role, name: employeeData.name }));
