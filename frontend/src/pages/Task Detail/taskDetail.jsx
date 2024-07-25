@@ -211,7 +211,7 @@ const TaskDetail = () => {
 				</span>
 				<span>
 					{taskDetail &&
-						formatDate(new Date()) < formatDate(taskDetail?.data.deadLine) &&
+						// formatDate(new Date()) < formatDate(taskDetail?.data.deadLine) &&
 						taskDetail.data.status != "Completed" &&
 						isCreator && <Button text="Review Task" isPrimary={true} onClick={completeTask} />}
 				</span>
