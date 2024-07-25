@@ -15,7 +15,7 @@ const dataSource = new DataSource({
 	password: process.env.DB_PASSWORD,
 	extra: { max: 5, min: 2 },
 	synchronize: false,
-	ssl: { rejectUnauthorized: false },
+	// ssl: { rejectUnauthorized: false },
 	// logging: NODE_ENV == "dev" ? false : true,
 	logging: false,
 	namingStrategy: new SnakeNamingStrategy(),
