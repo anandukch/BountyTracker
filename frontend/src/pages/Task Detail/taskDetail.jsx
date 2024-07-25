@@ -8,9 +8,7 @@ import send from "../../assets/send.svg";
 import Button from "../../components/Button/Button";
 import { useEffect, useRef, useState } from "react";
 import {
-	useCompleteTaskMutation,
 	useCreateCommentMutation,
-	useGetCommentsByTaskIdQuery,
 	useJoinTaskMutation,
 	useLazyGetCommentsByTaskIdQuery,
 	useLazyGetTaskByIdQuery,
@@ -27,10 +25,8 @@ const TaskDetail = () => {
 	const [participantList, setParticipantList] = useState([]);
 	const [joined, setJoined] = useState(false);
 	const [file, uploadFile] = useState();
-	const [showContributionModal, setShowContributionModal] = useState(false);
 	const [comment, setComment] = useState("");
 	const [commentType, setCommentType] = useState("Normal");
-	const [contribution, setContribution] = useState("");
 	const [mentionId, setMentionId] = useState();
 	const [isCreator, setIsCreator] = useState(false);
 
@@ -50,9 +46,6 @@ const TaskDetail = () => {
 	const [getCommentByTaskId, { data: commentsData, isSuccess: commentSuccess }] = useLazyGetCommentsByTaskIdQuery();
 	const [join, { isSuccess: joinSuccess }] = useJoinTaskMutation();
 	const [createComment] = useCreateCommentMutation();
-	const [completeTaskRequest] = useCompleteTaskMutation();
-
-	const loggedState = useSelector((state) => state.employee);
 
 	const navigate = useNavigate();
 

@@ -77,7 +77,7 @@ const EmployeeDashboard = () => {
 					{state.role === "Lead" && (
 						<div className="createTask">
 							<Button
-								text="CreateTask"
+								text="Create Task"
 								isPrimary={true}
 								onClick={() => {
 									navigate("/tasks/create");
