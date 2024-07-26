@@ -10,20 +10,12 @@ import platinumBadge from "../../assets/platinumMedal.svg";
 import koynLogo from "../../assets/KoYns-Logo.png";
 import rewardsLogo from "../../assets/rewards.svg";
 import {
-	useGetEmployeeCurrentTasksQuery,
 	useGetProfileQuery,
-	useGetRedeemRequestsQuery,
+	useGetUserRedeemQuery,
 	useRedeemRewardMutation,
 } from "../../api/employeeApi";
- 
- 
- 
+
 // import { formatDate } from "../../utils/date.utils";
-import ListButton from "../../components/Button/ListButton";
-import { addLoggedState } from "../../store/employeeReducer";
-import { PieChart } from "react-minimal-pie-chart";
-import koynLogo from "../../assets/KoYns-Logo.png";
-import rewardsLogo from "../../assets/rewards.svg";
 import { useNavigate } from "react-router-dom";
 const EmployeeProfile = () => {
 	const [employee, setEmployee] = useState({});
@@ -116,18 +108,18 @@ const EmployeeProfile = () => {
 						</div>
 						<div className="taskGraph">
 							{/* {employee.pendingTasks != 0 || employee.completedTasks != 0 && ( */}
-								<VictoryPie
-									colorScale={["tomato", "orange", "gold", "cyan", "navy"]}
-									animate={{ duration: 2000 }}
-									data={[
-										{ x: "Pending", y: employee.pendingTasks || 0, label: "Pending" },
-										{ x: "Completed", y: employee.completedTasks || 0, label: "Completed" },
-									]}
-									innerRadius={90}
-									labelPosition={({ index }) => (index ? "centroid" : "parallel")}
-									labelRadius={({ innerRadius }) => innerRadius + 110} // Adjust label radius
-									padAngle={4}
-								/>
+							<VictoryPie
+								colorScale={["tomato", "orange", "gold", "cyan", "navy"]}
+								animate={{ duration: 2000 }}
+								data={[
+									{ x: "Pending", y: employee.pendingTasks || 0, label: "Pending" },
+									{ x: "Completed", y: employee.completedTasks || 0, label: "Completed" },
+								]}
+								innerRadius={90}
+								labelPosition={({ index }) => (index ? "centroid" : "parallel")}
+								labelRadius={({ innerRadius }) => innerRadius + 110} // Adjust label radius
+								padAngle={4}
+							/>
 							{/* )} */}
 						</div>
 					</div>
