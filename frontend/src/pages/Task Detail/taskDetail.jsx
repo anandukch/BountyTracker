@@ -9,6 +9,7 @@ import Button from "../../components/Button/Button";
 import { useEffect, useRef, useState } from "react";
 import {
 	useCreateCommentMutation,
+	useGetCommentsByTaskIdQuery,
 	useJoinTaskMutation,
 	useLazyGetCommentsByTaskIdQuery,
 	useLazyGetTaskByIdQuery,
@@ -39,11 +40,12 @@ const TaskDetail = () => {
 	const dispatch = useDispatch();
 
 	const [getTaskById, { data: taskDetail, isSuccess: taskSuccess }] = useLazyGetTaskByIdQuery();
-	// const { data: commentsData, isSuccess: commentSuccess } = useGetCommentsByTaskIdQuery(taskId, {
-	// 	// pollingInterval: 2000,
-	// });
+	const { data: commentsData, isSuccess: commentSuccess } = useGetCommentsByTaskIdQuery(taskId, {
+		pollingInterval: 2000,
+		skipPollingIfUnfocused: true,
+	});
 
-	const [getCommentByTaskId, { data: commentsData, isSuccess: commentSuccess }] = useLazyGetCommentsByTaskIdQuery();
+	// const [getCommentByTaskId, { data: commentsData, isSuccess: commentSuccess }] = useLazyGetCommentsByTaskIdQuery();
 	const [join, { isSuccess: joinSuccess }] = useJoinTaskMutation();
 	const [createComment] = useCreateCommentMutation();
 
@@ -63,15 +65,15 @@ const TaskDetail = () => {
 		},
 	];
 
-	useEffect(() => {
-		getCommentByTaskId(taskId);
-		// const timer = setInterval(() => {
-		// 	// setShowError(false);
-		// 	getCommentByTaskId(taskId);
-		// }, 2000);
+	// useEffect(() => {
+	// 	getCommentByTaskId(taskId);
+	// 	const timer = setInterval(() => {
+	// 		// setShowError(false);
+	// 		getCommentByTaskId(taskId);
+	// 	}, 2000);
 
-		// return () => clearInterval(timer);
-	}, [getCommentByTaskId, taskId]);
+	// 	return () => clearInterval(timer);
+	// }, [getCommentByTaskId, taskId]);
 
 	const handleSend = async () => {
 		const formData = new FormData();

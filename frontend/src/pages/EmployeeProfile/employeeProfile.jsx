@@ -115,7 +115,7 @@ const EmployeeProfile = () => {
 							</div>
 						</div>
 						<div className="taskGraph">
-							{employee.pendingTasks != 0 || employee.completedTasks != 0 && (
+							{/* {employee.pendingTasks != 0 || employee.completedTasks != 0 && ( */}
 								<VictoryPie
 									colorScale={["tomato", "orange", "gold", "cyan", "navy"]}
 									animate={{ duration: 2000 }}
@@ -128,7 +128,7 @@ const EmployeeProfile = () => {
 									labelRadius={({ innerRadius }) => innerRadius + 110} // Adjust label radius
 									padAngle={4}
 								/>
-							)}
+							{/* )} */}
 						</div>
 					</div>
 				</div>
@@ -136,7 +136,7 @@ const EmployeeProfile = () => {
 					<div
 						className="currentTier"
 						onClick={() => {
-							nav;
+							// nav;
 						}}
 					>
 						<p>Platinum Count:</p>
