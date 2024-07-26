@@ -7,9 +7,16 @@ import { Loader } from "../../components/Loader/Loader";
 import { formatDate } from "../../utils/date.utils";
 import { VictoryPie } from "victory";
 import platinumBadge from "../../assets/platinumMedal.svg";
-import { useGetProfileQuery, useGetUserRedeemQuery, useRedeemRewardMutation } from "../../api/employeeApi";
 import koynLogo from "../../assets/KoYns-Logo.png";
 import rewardsLogo from "../../assets/rewards.svg";
+import {
+	useGetEmployeeCurrentTasksQuery,
+	useGetProfileQuery,
+	useGetRedeemRequestsQuery,
+	useRedeemRewardMutation,
+} from "../../api/employeeApi";
+ 
+ 
 import { useNavigate } from "react-router-dom";
 const EmployeeProfile = () => {
 	const [employee, setEmployee] = useState({});
