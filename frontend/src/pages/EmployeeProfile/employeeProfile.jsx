@@ -17,6 +17,13 @@ import {
 } from "../../api/employeeApi";
  
  
+ 
+// import { formatDate } from "../../utils/date.utils";
+import ListButton from "../../components/Button/ListButton";
+import { addLoggedState } from "../../store/employeeReducer";
+import { PieChart } from "react-minimal-pie-chart";
+import koynLogo from "../../assets/KoYns-Logo.png";
+import rewardsLogo from "../../assets/rewards.svg";
 import { useNavigate } from "react-router-dom";
 const EmployeeProfile = () => {
 	const [employee, setEmployee] = useState({});
@@ -149,7 +156,7 @@ const EmployeeProfile = () => {
 						Total Rewards:
 						<span className="rewardCountWrapper">
 							<img className="rewardCount" src={rewardsLogo}></img>
-							<p>{employee?.details?.rewards || 0}</p>
+							<p>{employee?.details?.rewards}</p>
 						</span>
 					</div>
 					{/* {!redeemDisable && ( */}
